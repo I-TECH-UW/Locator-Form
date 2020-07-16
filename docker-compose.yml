@@ -1,0 +1,98 @@
+version: '3.3'
+services:
+
+  locator-form-frontend:
+   image: locator-form
+   build:
+     context: ./locator-form-frontend
+     dockerfile: ./Dockerfile    
+   ports:
+     - 3000:3000
+   networks:
+     - frontend
+     - server-1  
+   volumes:
+     - './locator-form-frontend:/app'
+     - '/app/node_modules'
+   secrets:
+     - source: cert
+     - source: key
+   environment:
+     - CHOKIDAR_USEPOLLING=true
+   tty: true
+   
+  locator-form-data:
+    image: postgres:12-alpine
+    env_file:
+      - ./dev/database/database.env # configure postgres
+    ports:
+      - 25432:5432
+    volumes:
+      - locator-form-data:/var/lib/postgresql/data
+      - ./dev/database:/docker-entrypoint-initdb.d
+    networks:
+      - server-1
+    
+  fhir.openelis.org:
+    build: ./hapi-fhir-jpaserver-starter
+    restart: always
+    environment:
+      - JAVA_OPTS= -Dhapi.properties=/run/secrets/hapi.properties
+    ports:
+      - 8448:8443
+    networks:
+      - frontend
+      - server-1  
+    extra_hosts:
+#    this should be the loopback to the docker host. 
+#    run 
+#    /sbin/ip route|awk '/default/ { print $3 }' 
+#    inside the container to make sure the ip address is correct
+#    make sure connections to 8446 are allowed by your firewall
+      - host.openelis.org:172.20.0.1
+    volumes:
+      - ./dev/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
+    secrets:
+      - source: hapi.properties
+      - source: keystore
+      - source: truststore
+
+  locator-form.openelis.org:
+    image: locator-form-webapp
+    build:
+      context: ./locator-form-webapp
+      dockerfile: docker/docker-build/Dockerfile
+    ports:
+      - 8449:8443
+    networks:
+      - server-1
+    extra_hosts:
+#    this should be the loopback to the docker host. 
+#    run 
+#    /sbin/ip route|awk '/default/ { print $3 }' 
+#    inside the container to make sure the ip address is correct
+#    make sure connections to 8446 are allowed by your firewall
+      - host.openelis.org:172.20.0.1
+    secrets:
+      - source: keystore
+      - source: truststore
+ 
+networks:
+  frontend:
+  server-1:
+  
+volumes:
+  locator-form-data:
+  
+secrets:
+  hapi.properties:
+    file: ./dev/properties/hapi.properties
+  keystore:
+    file: ./dev/ssl/oe_selfsigned.keystore
+  truststore:
+    file: ./dev/ssl/oe_selfsigned.truststore
+  cert:
+    file: ./dev/ssl/oe_selfsigned.crt
+  key:
+    file: ./dev/ssl/oe_selfsigned.key
+
