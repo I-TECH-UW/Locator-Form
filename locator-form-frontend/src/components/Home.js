@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 interface Values {
 	  firstName: string;
 	  lastName: string;
+	  middleInitial: string;
 	  email: string;
 	  acceptedTerms: string;
 	  visitPurpose: string;
@@ -56,7 +57,8 @@ emergencyContact:
 familyTravelCompanions: [
   {
   	 lastName: string;
-	     firstName: string;
+	 firstName: string;
+  	 middleInitial: string;
   	 seatNumber: string;
   	 age: string;
   },
@@ -66,6 +68,7 @@ nonFamilyTravelCompanions: [
 	{
 	    lastName: string;
       firstName: string;
+	middleInitial: string;
 		seatNumber: string;
 		age: string;
 	},
@@ -145,7 +148,7 @@ const MyTextInput = ({ label, ...props }) => {
 	
 	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
-	const initialValues={ firstName: '', lastName: '', email: '',
+	const initialValues={ firstName: '', lastName: '', middleInitial: '', email: '',
           acceptedTerms: false,
           visitPurpose: '', title: '', airlineName: '', flightNumber: '', 
           seatNumber: '', arrivalDate: '',
@@ -190,6 +193,7 @@ const MyTextInput = ({ label, ...props }) => {
   		    {
   		      lastName: "",
   		      firstName: "",
+  		    middleInitial: "",
   		      seatNumber: "",
   		      age: "",
   		    }
@@ -198,6 +202,7 @@ const MyTextInput = ({ label, ...props }) => {
   		    {
   		      lastName: "",
   	    	  firstName: "",
+  	    	middleInitial: "",
   	    	  seatNumber: "",
   		      age: "",
   		    }
@@ -261,6 +266,9 @@ function Home() {
                    	     lastName: Yup.string()
                    	       .max(20, 'Must be 20 characters or less')
                    	       .required('Required'),
+                   	    middleInitial: Yup.string()
+                	       .max(20, 'Must be 20 characters or less')
+                	       .required('Required'),
                    	    sex: Yup.string()
        	             .oneOf(
        	               ['male', 'female'],
@@ -319,16 +327,12 @@ function Home() {
 					             )
 					             .required('Required'),
 					             mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-					         	   .min(10, 'Must be 10 numbers')
-					           	   .required('Required'),
+					         	   .min(10, 'Must be 10 numbers'),
 					  	     businessPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-					         	   .min(10, 'Must be 10 numbers')
-					           	   .required('Required'),
+					         	   .min(10, 'Must be 10 numbers'),
 					  	     homePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-					         	   .min(10, 'Must be 10 numbers')
-					           	   .required('Required'),
-					           	   
-					           	  email: Yup.string()
+					         	   .min(10, 'Must be 10 numbers'),
+				           	  email: Yup.string()
 					              .email('Invalid email address')
 					              .required('Required'),
 					     		 passportNumber: Yup.string()
@@ -413,16 +417,13 @@ function Home() {
 										  	.required('Required'),
 
 										  email: Yup.string()
-										  	.email('Invalid email address')
-										  	.required('Required'),
+										  	.email('Invalid email address'),
 
 										  mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-										  	.min(10, 'Must be 10 numbers')
-										  	.required('Required'),
+										  	.min(10, 'Must be 10 numbers'),
 
 										  otherPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-										  	.min(10, 'Must be 10 numbers')
-										  	.required('Required'),
+										  	.min(10, 'Must be 10 numbers'),
 									 
 									  }),									
 
@@ -496,20 +497,29 @@ function Home() {
                <td>
                
                <MyTextInput
-               label="Surname"
+               label="Last (Family) Name"
                name="lastName"
                type="text"
                placeholder="Doe"
              /> 
-               </td><td>
+               </td>
+               <td>
             	   <MyTextInput
-                     label="Given Name"
+                     label="First (Given) Name"
                      name="firstName"
                      type="text"
                      placeholder="Jane"
                    />
-
                </td>
+            	   <td>
+                   
+                   <MyTextInput
+                   label="Middle Initial"
+                   name="middleInitial"
+                   type="text"
+                   placeholder="M"
+                 /> 
+                   </td>
             <td>
          
             <MySelect label="Sex" name="sex">
