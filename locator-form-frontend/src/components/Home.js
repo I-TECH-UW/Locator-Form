@@ -4,8 +4,12 @@ import "./styles.css";
 import { Formik, Form, Field, FieldArray, useField } from 'formik';
 import styled from "@emotion/styled";
 import * as Yup from 'yup';
+import { useBarcode } from '@createnextapp/react-barcode';
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface Values {
+	  id: string;
 	  firstName: string;
 	  lastName: string;
 	  middleInitial: string;
@@ -15,8 +19,7 @@ interface Values {
 	  title: string;
 		mobilePhone: string;
 		businessPhone: string;
-		homePhone: string;
-sex: string;        
+gender: string;        
 passportNumber: string; 
 nationality: string; 
 portOfEmbarkation: string;
@@ -51,7 +54,6 @@ emergencyContact:
 		country: string;
 		email: string;
 		mobilePhone: string;
-		otherPhone: string;	
 	},
 
 familyTravelCompanions: [
@@ -61,6 +63,8 @@ familyTravelCompanions: [
   	 middleInitial: string;
   	 seatNumber: string;
   	 age: string;
+     nationality: string;
+	 passportNumber: string;
   },
 ],
 
@@ -71,6 +75,8 @@ nonFamilyTravelCompanions: [
 	middleInitial: string;
 		seatNumber: string;
 		age: string;
+	nationality: string;
+	 passportNumber: string;
 	},
 ],
 	
@@ -91,6 +97,22 @@ const MyTextInput = ({ label, ...props }) => {
 	    </>
 	  );
 	};
+	
+	const MynumberInput = ({ label, ...props }) => {
+		  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+		  // which we can spread on <input> and alse replace ErrorMessage entirely.
+		// <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+		  const [field, meta] = useField(props);
+		  return (
+		    <>
+		    <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+		      <input className="number-input" {...field} {...props} />
+		      {meta.touched && meta.error ? (
+		        <div className="error">{meta.error}</div>
+		      ) : null}
+		    </>
+		  );
+		};
 
 	const MyCheckbox = ({ children, ...props }) => {
 	  const [field, meta] = useField({ ...props, type: "checkbox" });
@@ -147,13 +169,15 @@ const MyTextInput = ({ label, ...props }) => {
 	};
 	
 	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
-	const initialValues={ firstName: '', lastName: '', middleInitial: '', email: '',
+	
+	const id = uuidv4();
+		
+	const initialValues={ id, firstName: '', lastName: '', middleInitial: '', email: '',
           acceptedTerms: false,
           visitPurpose: '', title: '', airlineName: '', flightNumber: '', 
           seatNumber: '', arrivalDate: '',
-          mobilePhone: '', businessPhone: '', homePhone: '',
-          sex: '', passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: '',
+          mobilePhone: '', businessPhone: '',
+          gender: '', passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: '',
           fever: '', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
           
           permAddress: 
@@ -186,7 +210,6 @@ const MyTextInput = ({ label, ...props }) => {
   		    	country: '',
   		    	email: '',
   		    	mobilePhone: '',
-  		    	otherPhone: '',
   		    },
     		
     		familyTravelCompanions: [
@@ -196,6 +219,8 @@ const MyTextInput = ({ label, ...props }) => {
   		    middleInitial: "",
   		      seatNumber: "",
   		      age: "",
+  		    nationality: "",
+ 			 passportNumber: "",
   		    }
   		  ],
     		nonFamilyTravelCompanions: [
@@ -205,6 +230,8 @@ const MyTextInput = ({ label, ...props }) => {
   	    	middleInitial: "",
   	    	  seatNumber: "",
   		      age: "",
+  		    nationality: "",
+  			 passportNumber: "",
   		    }
   		  ]
         };
@@ -223,9 +250,25 @@ const MyTextInput = ({ label, ...props }) => {
 			body: json,
 			credentials: 'include'
 		}).then(this.props.history.push('/server'));
-	}      
+	}
+	
+	function equalTo(ref: any, msg: any) {
+		  return Yup.mixed().test({
+		    name: 'equalTo',
+		    exclusive: false,
+		    message: msg || '${path} must be the same as ${reference}',
+		    params: {
+		      reference: ref.path,
+		    },
+		    test: function(value: any) {
+		      return value === this.resolve(ref);
+		    },
+		  });
+		}
+		Yup.addMethod(Yup.string, 'equalTo', equalTo);
 
 function Home() {
+	const { inputRef } = useBarcode({ value: id, });
   return (
     <div className="home">
         <div className="row">
@@ -234,198 +277,199 @@ function Home() {
               <Formik
                initialValues={initialValues}
               validationSchema={Yup.object({
-             	 
+            	  
              	
-                    acceptedTerms: Yup.boolean()
-                      .required('Required')
-                      .oneOf([true], 'You must accept the terms and conditions.'),
-                  
-                     
-                      
-         	         airlineName: Yup.string()
-         	           .max(15, 'Must be 15 characters or less')
-         	           .required('Required'),
-                  flightNumber: Yup.string()
-         	           .max(15, 'Must be 15 characters or less')
-         	           .required('Required'),
-                  seatNumber: Yup.string()
-         	           .max(15, 'Must be 15 characters or less')
-         	           .required('Required'),
-                  arrivalDate: Yup.string()
-                    	   .required('Required'),
-                    	   
-                    		 title: Yup.string()
-                             .oneOf(
-                               ['mr', 'mrs', 'miss', 'other'],
-                               'Invalid Status'
-                             )
-                             .required('Required'),
-                    	      firstName: Yup.string()
-                              .max(15, 'Must be 15 characters or less')
-                              .required('Required'),
-                   	     lastName: Yup.string()
-                   	       .max(20, 'Must be 20 characters or less')
-                   	       .required('Required'),
-                   	    middleInitial: Yup.string()
-                	       .max(20, 'Must be 20 characters or less')
-                	       .required('Required'),
-                   	    sex: Yup.string()
-       	             .oneOf(
-       	               ['male', 'female'],
-       	               'Invalid Sex'
-       	             )
-       	             .required('Required'),
-       	 		 portOfEmbarkation: Yup.string()
-				    .max(20, 'Must be 20 characters or less')
-					.required('Required'), 
-		 countriesVisited: Yup.string()
-						.required('Required'), 
-		 lengthOfStay: Yup.string()
-							.required('Required'), 
-							
-					           fever: Yup.string()
-					             .oneOf(
-					               ['yes', 'no'],
-					               'Invalid Status'
-					             )
-					             .required('Required'),
-					             soreThroat: Yup.string()
-					             .oneOf(
-					               ['yes', 'no'],
-					               'Invalid Status'
-					             )
-					             .required('Required'),
-					             jointPain: Yup.string()
-					             .oneOf(
-					               ['yes', 'no'],
-					               'Invalid Status'
-					             )
-					             .required('Required'),
-					             cough: Yup.string()
-					             .oneOf(
-					               ['yes', 'no'],
-					               'Invalid Status'
-					             )
-					             .required('Required'),
-					             breathingDifficulties: Yup.string()
-					             .oneOf(
-					               ['yes', 'no'],
-					               'Invalid Status'
-					             )
-					             .required('Required'),
-					             rash: Yup.string()
-					             .oneOf(
-					               ['yes', 'no'],
-					               'Invalid Status'
-					             )
-					             .required('Required'),	
-					             
-					             visitPurpose: Yup.string()
-					             .oneOf(
-					               ['business', 'pleasure', 'other'],
-					               'Invalid Job Type'
-					             )
-					             .required('Required'),
-					             mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-					         	   .min(10, 'Must be 10 numbers'),
-					  	     businessPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-					         	   .min(10, 'Must be 10 numbers'),
-					  	     homePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-					         	   .min(10, 'Must be 10 numbers'),
+//                    acceptedTerms: Yup.boolean()
+//                      .required('Required')
+//                      .oneOf([true], 'You must accept the terms and conditions.'),
+//                      
+//         	         airlineName: Yup.string()
+//         	           .max(15, 'Must be 15 characters or less')
+//         	           .required('Required'),
+//                  flightNumber: Yup.string()
+//         	           .max(15, 'Must be 15 characters or less')
+//         	           .required('Required'),
+//                  seatNumber: Yup.string()
+//         	           .max(15, 'Must be 15 characters or less')
+//         	           .required('Required'),
+//                  arrivalDate: Yup.string()
+//                    	   .required('Required'),
+//                    	   
+//                    		 title: Yup.string()
+//                             .oneOf(
+//                               ['mr', 'mrs', 'miss', 'other'],
+//                               'Invalid Status'
+//                             )
+//                             .required('Required'),
+//                    	      firstName: Yup.string()
+//                              .max(15, 'Must be 15 characters or less')
+//                              .required('Required'),
+//                   	     lastName: Yup.string()
+//                   	       .max(20, 'Must be 20 characters or less')
+//                   	       .required('Required'),
+//                   	    middleInitial: Yup.string()
+//                	       .max(20, 'Must be 20 characters or less')
+//                	       .required('Required'),
+//                   	    gender: Yup.string()
+//       	             .oneOf(
+//       	               ['male', 'female'],
+//       	               'Invalid Gender'
+//       	             )
+//       	             .required('Required'),
+//       	 		 portOfEmbarkation: Yup.string()
+//				    .max(20, 'Must be 20 characters or less')
+//					.required('Required'), 
+//		 countriesVisited: Yup.string()
+//						.required('Required'), 
+//		 lengthOfStay: Yup.string()
+//							.required('Required'), 
+//							
+//					           fever: Yup.string()
+//					             .oneOf(
+//					               ['yes', 'no'],
+//					               'Invalid Status'
+//					             )
+//					             .required('Required'),
+//					             soreThroat: Yup.string()
+//					             .oneOf(
+//					               ['yes', 'no'],
+//					               'Invalid Status'
+//					             )
+//					             .required('Required'),
+//					             jointPain: Yup.string()
+//					             .oneOf(
+//					               ['yes', 'no'],
+//					               'Invalid Status'
+//					             )
+//					             .required('Required'),
+//					             cough: Yup.string()
+//					             .oneOf(
+//					               ['yes', 'no'],
+//					               'Invalid Status'
+//					             )
+//					             .required('Required'),
+//					             breathingDifficulties: Yup.string()
+//					             .oneOf(
+//					               ['yes', 'no'],
+//					               'Invalid Status'
+//					             )
+//					             .required('Required'),
+//					             rash: Yup.string()
+//					             .oneOf(
+//					               ['yes', 'no'],
+//					               'Invalid Status'
+//					             )
+//					             .required('Required'),	
+//					             
+//					             visitPurpose: Yup.string()
+//					             .oneOf(
+//					               ['business', 'pleasure', 'other'],
+//					               'Invalid Job Type'
+//					             )
+//					             .required('Required'),
+//					             mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+//					         	   .min(10, 'Must be 10 numbers'),
+//					  	     businessPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+//					         	   .min(10, 'Must be 10 numbers'),
+//					  	    
 				           	  email: Yup.string()
 					              .email('Invalid email address')
 					              .required('Required'),
-					     		 passportNumber: Yup.string()
-								   .max(20, 'Must be 20 characters or less')
-								   .required('Required'),
-						 nationality: Yup.string()
-									.max(20, 'Must be 20 characters or less')
-									.required('Required'),
-									
-									 permAddress: Yup.object().shape ({
-										 
-										 numberAndStreet: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-							             apartmentNumber: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             city: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             stateProvince: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             country: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             zipPostalCode: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-									 }),
-									 
-									  tempAddress: Yup.object().shape ({
-										  
-										  hotelName: Yup.string()
-							              			.max(20, 'Must be 20 characters or less')
-							              			.required('Required'),
-							              
-										 numberAndStreet: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-							             apartmentNumber: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             city: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             stateProvince: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             country: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-
-							             zipPostalCode: Yup.string()
-							                       .max(20, 'Must be 20 characters or less')
-							                       .required('Required'),
-									 }),
-									 
-									  emergencyContact: Yup.object().shape ({
-										  
-										  lastName: Yup.string()
-										  	.max(20, 'Must be 20 characters or less')
-										  	.required('Required'),
-
-										  firstName: Yup.string()
-										  	.max(20, 'Must be 20 characters or less')
-										  	.required('Required'),
-
-										  city: Yup.string()
-										  	.max(20, 'Must be 20 characters or less')
-										  	.required('Required'),
-
-										  country: Yup.string()
-										  	.max(20, 'Must be 20 characters or less')
-										  	.required('Required'),
-
-										  email: Yup.string()
-										  	.email('Invalid email address'),
-
-										  mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-										  	.min(10, 'Must be 10 numbers'),
-
-										  otherPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-										  	.min(10, 'Must be 10 numbers'),
-									 
-									  }),									
+					          confirmEmail: Yup.string()
+					              .oneOf([Yup.ref('confirmEmail'), "Emails must match"])
+					              .required('Email confirm is required'),
+					          confirmEmail: Yup.string().equalTo(Yup.ref('email'), 'Emails must match')
+					              .required('Required'),
+					              
+//					     		 passportNumber: Yup.string()
+//								   .max(20, 'Must be 20 characters or less')
+//								   .required('Required'),
+//						 nationality: Yup.string()
+//									.max(20, 'Must be 20 characters or less')
+//									.required('Required'),
+//									
+//									 permAddress: Yup.object().shape ({
+//										 
+//										 numberAndStreet: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//							             apartmentNumber: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             city: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             stateProvince: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             country: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             zipPostalCode: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//									 }),
+//									 
+//									  tempAddress: Yup.object().shape ({
+//										  
+//										  hotelName: Yup.string()
+//							              			.max(20, 'Must be 20 characters or less')
+//							              			.required('Required'),
+//							              
+//										 numberAndStreet: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//							             apartmentNumber: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             city: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             stateProvince: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             country: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//
+//							             zipPostalCode: Yup.string()
+//							                       .max(20, 'Must be 20 characters or less')
+//							                       .required('Required'),
+//									 }),
+//									 
+//									  emergencyContact: Yup.object().shape ({
+//										  
+//										  lastName: Yup.string()
+//										  	.max(20, 'Must be 20 characters or less')
+//										  	.required('Required'),
+//
+//										  firstName: Yup.string()
+//										  	.max(20, 'Must be 20 characters or less')
+//										  	.required('Required'),
+//
+//										  city: Yup.string()
+//										  	.max(20, 'Must be 20 characters or less')
+//										  	.required('Required'),
+//
+//										  country: Yup.string()
+//										  	.max(20, 'Must be 20 characters or less')
+//										  	.required('Required'),
+//
+//										  email: Yup.string()
+//										  	.email('Invalid email address'),
+//
+//										  mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+//										  	.min(10, 'Must be 10 numbers'),
+//
+//									 
+//									  }),									
 
               })}
               
@@ -453,24 +497,24 @@ function Home() {
          	       <MyTextInput
                       label="Airline Name"
                       name="airlineName"
-                      type="text"
+                      type="medtext"
                       placeholder="Airline Name"
                   />
          	       </td>
          	       <td>
          	       <MyTextInput
-                      label="Flight Number"
+                      label="Flight #"
                       name="flightNumber"
-                      type="text"
-                      placeholder="Flight Number"
+                      type="smalltext"
+                      placeholder="Flight #"
                   />
          	       </td>
          	       <td>
          	       <MyTextInput
-                      label="Seat Number"
+                      label="Seat #"
                       name="seatNumber"
-                      type="text"
-                      placeholder="Seat Number"
+                      type="smalltext"
+                      placeholder="Seat #"
                   />
          	       </td>
          	       <td>
@@ -516,14 +560,14 @@ function Home() {
                    <MyTextInput
                    label="Middle Initial"
                    name="middleInitial"
-                   type="text"
+                   type="smalltext"
                    placeholder="M"
                  /> 
                    </td>
             <td>
          
-            <MySelect label="Sex" name="sex">
-            <option value="">Sex</option>
+            <MySelect label="Gender" name="gender">
+            <option value="">Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </MySelect>
@@ -537,8 +581,8 @@ function Home() {
          <MyTextInput
            label="Proposed Length of Stay in Mauritius (days)"
            name="lengthOfStay"
-           type="number"
-           placeholder="Length of Stay"
+           type="smalltext"
+           placeholder="Days"
          />
         </td> 
         <td>
@@ -632,16 +676,7 @@ function Home() {
               placeholder="Business Phone"
           />
             </td>
-            <td>
-            <MyTextInput
-              label="Home Phone"
-              name="homePhone"
-              type="text"
-              placeholder="Home Phone"
-          />
-            </td>
             </table>
-            
             <table>
             <td>
             
@@ -653,23 +688,33 @@ function Home() {
           />
             </td>
             <td>
+            <MyTextInput
+            label="Confirm Email Address"
+            name="confirmEmail"
+            type="email"
+            placeholder="jane@formik.com"
+          />
+            </td>
+            
+            <td>
+        	   <MyTextInput
+                 label="Nationality"
+                 name="nationality"
+                 type="medtext"
+                 placeholder="Nationality"
+               />
+
+           </td>
+            <td>
        	   <MyTextInput
               label="Passport Number"
               name="passportNumber"
-              type="text"
+              type="medtext"
               placeholder="Passport Number"
             />
 
         </td>
-       	   <td>
-       	   <MyTextInput
-                label="Nationality"
-                name="nationality"
-                type="text"
-                placeholder="Nationality"
-              />
-
-          </td>
+       	 
             </table>
             
             <h5> Permanent Address</h5>
@@ -684,22 +729,23 @@ function Home() {
             </td>
             <td>
             <MyTextInput
-              label="Apartment Number"
+              label="Apartment #"
               name="permAddress.apartmentNumber"
-              type="text"
-              placeholder="Apartment Number"
+              type="smalltext"
+              placeholder="Apartment #"
           />
             </td>
-            </table>
-            <table>
             <td>
             <MyTextInput
               label="City"
               name="permAddress.city"
-              type="text"
+              type="medtext"
               placeholder="City"
           />
             </td>
+            </table>
+            <table>
+           
             <td>
             <MyTextInput
               label="State/Province"
@@ -712,7 +758,7 @@ function Home() {
             <MyTextInput
               label="Country"
               name="permAddress.country"
-              type="text"
+              type="medtext"
               placeholder="Country"
           />
             </td>
@@ -747,22 +793,23 @@ function Home() {
             </td>
             <td>
             <MyTextInput
-              label="Apartment Number"
+              label="Apartment #"
               name="tempAddress.apartmentNumber"
-              type="text"
-              placeholder="Apartment Number"
+              type="smalltext"
+              placeholder="Apartment #"
           />
             </td>
-            </table>
-            <table>
             <td>
             <MyTextInput
               label="City"
               name="tempAddress.city"
-              type="text"
+              type="medtext"
               placeholder="City"
           />
             </td>
+            </table>
+            <table>
+
             <td>
             <MyTextInput
               label="State/Province"
@@ -775,7 +822,7 @@ function Home() {
             <MyTextInput
               label="Country"
               name="tempAddress.country"
-              type="text"
+              type="medtext"
               placeholder="Country"
           />
             </td>
@@ -811,7 +858,7 @@ function Home() {
             <MyTextInput
               label="City"
               name="emergencyContact.city"
-              type="text"
+              type="medtext"
               placeholder="City"
           />
             </td>
@@ -819,7 +866,7 @@ function Home() {
             <MyTextInput
               label="Country"
               name="emergencyContact.country"
-              type="text"
+              type="medtext"
               placeholder="Country"
           />
             </td>
@@ -840,14 +887,6 @@ function Home() {
               name="emergencyContact.mobilePhone"
               type="text"
               placeholder="Mobile Phone"
-          />
-            </td>
-            <td>
-            <MyTextInput
-              label="Other Phone"
-              name="emergencyContact.otherPhone"
-              type="text"
-              placeholder="Other Phone"
           />
             </td>
             </table>    
@@ -900,13 +939,14 @@ function Home() {
                            )}
                        </div>
                          </td>
+                         </table><table>
                          <td>
                          <div className="col">
-                           <label htmlFor={`familyTravelCompanions.${index}.seatNumber`}>Seat Number</label>
+                           <label htmlFor={`familyTravelCompanions.${index}.seatNumber`}>Seat #</label>
                            <Field
                              name={`familyTravelCompanions.${index}.seatNumber`}
-                             placeholder="Seat Number"
-                             type="text"
+                             placeholder="Seat #"
+                             type="smalltext"
                            />
                            {errors.familyTravelCompanions &&
                              errors.familyTravelCompanions[index] &&
@@ -925,7 +965,7 @@ function Home() {
                              <Field
                                name={`familyTravelCompanions.${index}.age`}
                                placeholder="Age"
-                               type="text"
+                               type="smalltext"
                              />
                              {errors.familyTravelCompanions &&
                                errors.familyTravelCompanions[index] &&
@@ -938,6 +978,45 @@ function Home() {
                                )}
                            </div>
                              </td>
+                             
+                             <td>
+                             <div className="col">
+                               <label htmlFor={`familyTravelCompanions.${index}.nationality`}>Nationality #</label>
+                               <Field
+                                 name={`familyTravelCompanions.${index}.nationality`}
+                                 placeholder="Nationality"
+                                 type="medtext"
+                               />
+                               {errors.familyTravelCompanions &&
+                                 errors.familyTravelCompanions[index] &&
+                                 errors.familyTravelCompanions[index].nationality &&
+                                 touched.familyTravelCompanions &&
+                                 touched.familyTravelCompanions[index].nationality && (
+                                   <div className="field-error">
+                                     {errors.familyTravelCompanions[index].nationality}
+                                   </div>
+                                 )}
+                             </div>
+                               </td>
+                               <td>
+                               <div className="col">
+                                 <label htmlFor={`familyTravelCompanions.${index}.passportNumber`}>Passport Number</label>
+                                 <Field
+                                   name={`familyTravelCompanions.${index}.passportNumber`}
+                                   placeholder="Passport Number"
+                                   type="medtext"
+                                 />
+                                 {errors.familyTravelCompanions &&
+                                   errors.familyTravelCompanions[index] &&
+                                   errors.familyTravelCompanions[index].passportNumber &&
+                                   touched.familyTravelCompanions &&
+                                   touched.familyTravelCompanions[index].passportNumber && (
+                                     <div className="field-error">
+                                       {errors.familyTravelCompanions[index].passportNumber}
+                                     </div>
+                                   )}
+                               </div>
+                                 </td>
                          <td>
                        <div className="col">
                          <button
@@ -1013,13 +1092,14 @@ function Home() {
                             )}
                         </div>
                           </td>
+                          </table><table>
                           <td>
                           <div className="col">
-                            <label htmlFor={`nonFamilyTravelCompanions.${index}.seatNumber`}>Seat Number</label>
+                            <label htmlFor={`nonFamilyTravelCompanions.${index}.seatNumber`}>Seat #</label>
                             <Field
                               name={`nonFamilyTravelCompanions.${index}.seatNumber`}
-                              placeholder="Seat Number"
-                              type="text"
+                              placeholder="Seat #"
+                              type="smalltext"
                             />
                             {errors.nonFamilyTravelCompanions &&
                               errors.nonFamilyTravelCompanions[index] &&
@@ -1038,7 +1118,7 @@ function Home() {
                               <Field
                                 name={`nonFamilyTravelCompanions.${index}.age`}
                                 placeholder="Age"
-                                type="text"
+                                type="smalltext"
                               />
                               {errors.nonFamilyTravelCompanions &&
                                 errors.nonFamilyTravelCompanions[index] &&
@@ -1051,6 +1131,44 @@ function Home() {
                                 )}
                             </div>
                               </td>
+                              <td>
+                              <div className="col">
+                                <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}>Nationality #</label>
+                                <Field
+                                  name={`nonFamilyTravelCompanions.${index}.nationality`}
+                                  placeholder="Nationality"
+                                  type="medtext"
+                                />
+                                {errors.nonFamilyTravelCompanions &&
+                                  errors.nonFamilyTravelCompanions[index] &&
+                                  errors.nonFamilyTravelCompanions[index].nationality &&
+                                  touched.nonFamilyTravelCompanions &&
+                                  touched.nonFamilyTravelCompanions[index].nationality && (
+                                    <div className="field-error">
+                                      {errors.nonFamilyTravelCompanions[index].nationality}
+                                    </div>
+                                  )}
+                              </div>
+                                </td>
+                                <td>
+                                <div className="col">
+                                  <label htmlFor={`nonFamilyTravelCompanions.${index}.passportNumber`}>Passport Number</label>
+                                  <Field
+                                    name={`nonFamilyTravelCompanions.${index}.passportNumber`}
+                                    placeholder="Passport Number"
+                                    type="medtext"
+                                  />
+                                  {errors.nonFamilyTravelCompanions &&
+                                    errors.nonFamilyTravelCompanions[index] &&
+                                    errors.nonFamilyTravelCompanions[index].passportNumber &&
+                                    touched.nonFamilyTravelCompanions &&
+                                    touched.nonFamilyTravelCompanions[index].passportNumber && (
+                                      <div className="field-error">
+                                        {errors.nonFamilyTravelCompanions[index].passportNumber}
+                                      </div>
+                                    )}
+                                </div>
+                                  </td>
                           <td>
                         <div className="col">
                           <button
@@ -1088,6 +1206,14 @@ function Home() {
                        
                      </td>
                   </table>
+                  
+                  <table> 
+                  <td>
+                  
+                  <img ref={inputRef} />
+                      
+                    </td>
+                 </table>
          	       
          	      </Form>
                  );

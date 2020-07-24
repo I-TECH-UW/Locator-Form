@@ -112,7 +112,7 @@ h4 {
 h5 {
   font-size: 1.25rem;
   letter-spacing: -0.03rem;
-  line-height: 1.4;
+  line-height: 0.0;
 }
 
 h6 {
@@ -181,6 +181,9 @@ label {
 
 input[type="email"],
 input[type="text"],
+input[type="smalltext"],
+input[type="medtext"],
+input[type="date"],
 input[type="number"] {
   padding: 0.65rem 0.5rem;
   font-size: 1rem;
@@ -211,7 +214,7 @@ input[type="text"],
   }
 }
 
-input[type="email"],
+
 input[type="text"],
 input[type="number"],
 textarea,
@@ -456,7 +459,7 @@ input[type="button"]:focus-visible {
 table {
   width: 100%;
   border-spacing: 0;
-  margin-bottom: 1.563rem;
+  margin-bottom: 0rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -469,7 +472,7 @@ td {
 th {
   font-weight: bold;
   text-align: left;
-  border-bottom: 2px solid var(--gray-300);
+  border-bottom: 0px solid var(--gray-300);
   color: var(--gray-300);
 }
 
@@ -481,7 +484,7 @@ th {
 }
 
 td {
-  border-bottom: 2px solid var(--gray-300);
+  border-bottom: 0px solid var(--gray-300);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -629,11 +632,20 @@ button[type="reset"]:hover {
 }
 
 /* custom */
-input[type="email"],
-input[type="text"]{
-	width: 250px;
+
+input[type="smalltext"]{
+	width: 100px;
 },
-input[type="number"],
+input[type="email"]{
+	width: 150px;
+},
+input[type="medtext"]{
+	width: 150px;
+},
+input[type="text"]{
+	width: 200px;
+},
+input[type="number"]
 textarea,
 select {
   width: 400px;
