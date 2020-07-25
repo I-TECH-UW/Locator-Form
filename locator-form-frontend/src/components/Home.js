@@ -58,6 +58,7 @@ emergencyContact:
 
 familyTravelCompanions: [
   {
+	 id: string;
   	 lastName: string;
 	 firstName: string;
   	 middleInitial: string;
@@ -69,15 +70,16 @@ familyTravelCompanions: [
 ],
 
 nonFamilyTravelCompanions: [
-	{
-	    lastName: string;
-      firstName: string;
+  {
+	id: string;
+	lastName: string;
+    firstName: string;
 	middleInitial: string;
-		seatNumber: string;
-		age: string;
+	seatNumber: string;
+	age: string;
 	nationality: string;
-	 passportNumber: string;
-	},
+	passportNumber: string;
+  },
 ],
 	
 }
@@ -170,9 +172,8 @@ const MyTextInput = ({ label, ...props }) => {
 	
 	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 	
-	const id = uuidv4();
-		
-	const initialValues={ id, firstName: '', lastName: '', middleInitial: '', email: '',
+	const initialValues={ 
+			id: '', firstName: '', lastName: '', middleInitial: '', email: '',
           acceptedTerms: false,
           visitPurpose: '', title: '', airlineName: '', flightNumber: '', 
           seatNumber: '', arrivalDate: '',
@@ -238,18 +239,28 @@ const MyTextInput = ({ label, ...props }) => {
 	
 	const handleSubmit = (values) => {
 		var object = {};
+		
 		var json = JSON.stringify(values);
 		console.log(json);
-		fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/server/`, {
+
+		fetch('https://host.openelis.org:8445/locator-form' , {
 			method: 'POST',
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
+				'Content-Type': 'application/json', 
+				'User-Agent': 'PostmanRuntime/7.26.2', 
+				'Accept': '*/*', 
+				'Cache-Control': 'no-cache', 
+				'Postman-Token': '80c34887-1e01-4ea8-bafe-ac6e450c9960', 
+				'Host': 'host.openelis.org:8445', 
+				'Accept-Encoding': 'gzip, deflate, br', 
+				'Connection': 'keep-alive', 
+				'Content-Length': '629', 
+				'Cookie': 'JSESSIONID=2A0923840E12BA6388BDDF3F8D6AB783', 
 			},
 			body: json,
 			credentials: 'include'
-		}).then(this.props.history.push('/server'));
+		});
+
 	}
 	
 	function equalTo(ref: any, msg: any) {
@@ -266,9 +277,14 @@ const MyTextInput = ({ label, ...props }) => {
 		  });
 		}
 		Yup.addMethod(Yup.string, 'equalTo', equalTo);
+		
+	
+var id = null;
 
 function Home() {
-	const { inputRef } = useBarcode({ value: id, });
+	id = uuidv4();
+	
+	var { inputRef } = useBarcode({ value: id, });
   return (
     <div className="home">
         <div className="row">
@@ -372,14 +388,12 @@ function Home() {
 //					  	     businessPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
 //					         	   .min(10, 'Must be 10 numbers'),
 //					  	    
-				           	  email: Yup.string()
-					              .email('Invalid email address')
-					              .required('Required'),
-					          confirmEmail: Yup.string()
-					              .oneOf([Yup.ref('confirmEmail'), "Emails must match"])
-					              .required('Email confirm is required'),
-					          confirmEmail: Yup.string().equalTo(Yup.ref('email'), 'Emails must match')
-					              .required('Required'),
+//				           	  email: Yup.string()
+//					              .email('Invalid email address')
+//					              .required('Required'),
+//					          confirmEmail: Yup.string().equalTo(Yup.ref('email'), 'Emails must match')
+//					          	   .oneOf([Yup.ref('confirmEmail'), "Emails must match"])
+//					              .required('Email confirm is required'),
 					              
 //					     		 passportNumber: Yup.string()
 //								   .max(20, 'Must be 20 characters or less')
@@ -476,6 +490,7 @@ function Home() {
               
               onSubmit={(values, { setSubmitting }) => {
                   setTimeout(() => {
+                	 values.id = id;
                     alert(JSON.stringify(values, null, 2));
                     handleSubmit(values);
                     setSubmitting(false);
@@ -903,6 +918,7 @@ function Home() {
                      <table>
                      <td>
                        <div className="col">
+                        
                          <label htmlFor={`familyTravelCompanions.${index}.lastName`}>Last (Family) Name</label>
                          <Field
                            name={`familyTravelCompanions.${index}.lastName`}
@@ -1035,7 +1051,7 @@ function Home() {
                  <button
                    type="button"
                    className="secondary"
-                   onClick={() => push({ lastName: "", firstName: "" })}
+                   onClick={() => push({ lastName: "", firstName: "" }) }
                  >
                    Add Travel Companion Family
                  </button>
@@ -1181,6 +1197,7 @@ function Home() {
                         </div>
                         </td>
                         </table>
+                      
                       </div>
                       
                     ))}
