@@ -1,0 +1,15 @@
+package org.itech.locator.form.webapp.api.dto;
+
+import lombok.Data;
+
+@Data
+public class NonFamilyTravelCompanion {
+    private String lastName;
+    private String firstName;
+    private String middleInitial;
+    private String seatNumber;
+    private String age;
+    private String gender;
+    private String nationality;
+    private String passportNumber;
+};

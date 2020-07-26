@@ -220,6 +220,7 @@ const MyTextInput = ({ label, ...props }) => {
   		    middleInitial: "",
   		      seatNumber: "",
   		      age: "",
+  		      gender: "",
   		    nationality: "",
  			 passportNumber: "",
   		    }
@@ -231,6 +232,7 @@ const MyTextInput = ({ label, ...props }) => {
   	    	middleInitial: "",
   	    	  seatNumber: "",
   		      age: "",
+  		    gender: "",
   		    nationality: "",
   			 passportNumber: "",
   		    }
@@ -247,20 +249,12 @@ const MyTextInput = ({ label, ...props }) => {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json', 
-				'User-Agent': 'PostmanRuntime/7.26.2', 
-				'Accept': '*/*', 
-				'Cache-Control': 'no-cache', 
-				'Postman-Token': '80c34887-1e01-4ea8-bafe-ac6e450c9960', 
-				'Host': 'host.openelis.org:8445', 
-				'Accept-Encoding': 'gzip, deflate, br', 
-				'Connection': 'keep-alive', 
-				'Content-Length': '629', 
-				'Cookie': 'JSESSIONID=2A0923840E12BA6388BDDF3F8D6AB783', 
 			},
-			body: json,
-			credentials: 'include'
-		});
-
+			body: json
+		})
+		 .catch( err => {
+			 console.log(err);
+		 })
 	}
 	
 	function equalTo(ref: any, msg: any) {
@@ -491,17 +485,14 @@ function Home() {
               onSubmit={(values, { setSubmitting }) => {
                   setTimeout(() => {
                 	 values.id = id;
-                    alert(JSON.stringify(values, null, 2));
+                    
                     handleSubmit(values);
                     setSubmitting(false);
                   }, 400);
                 }}
               
                render={({ values, errors, touched, handleReset }) => {
-                 console.group("formik");
-                 console.log("touched", touched);
-                 console.log("values", values);
-                 console.groupEnd("formik");
+                
                  return (
                    <Form>
          	       <p> <b>Public Health Passenger Locator Form:</b> To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. &emsp;<b><i>~Thank you for helping us to protect your health.</i></b></p>
@@ -997,6 +988,27 @@ function Home() {
                              
                              <td>
                              <div className="col">
+                               
+                               <MySelect
+                                 label= "Gender" name={`familyTravelCompanions.${index}.gender`}>
+                               <option value="">Gender</option>
+                               <option value="male">Male</option>
+                               <option value="female">Female</option>
+                               </MySelect>
+                               {errors.familyTravelCompanions &&
+                                 errors.familyTravelCompanions[index] &&
+                                 errors.familyTravelCompanions[index].gender &&
+                                 touched.familyTravelCompanions &&
+                                 touched.familyTravelCompanions[index].gender && (
+                                   <div className="field-error">
+                                     {errors.familyTravelCompanions[index].gender}
+                                   </div>
+                                 )}
+                             </div>
+                               </td>
+                             
+                             <td>
+                             <div className="col">
                                <label htmlFor={`familyTravelCompanions.${index}.nationality`}>Nationality #</label>
                                <Field
                                  name={`familyTravelCompanions.${index}.nationality`}
@@ -1147,6 +1159,27 @@ function Home() {
                                 )}
                             </div>
                               </td>
+                              
+                              <td>
+                              <div className="col">
+                                
+                                <MySelect
+                                  label= "Gender" name={`nonFamilyTravelCompanions.${index}.gender`}>
+                                <option value="">Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                </MySelect>
+                                {errors.nonFamilyTravelCompanions &&
+                                  errors.nonFamilyTravelCompanions[index] &&
+                                  errors.nonFamilyTravelCompanions[index].gender &&
+                                  touched.nonFamilyTravelCompanions &&
+                                  touched.nonFamilyTravelCompanions[index].gender && (
+                                    <div className="field-error">
+                                      {errors.nonFamilyTravelCompanions[index].gender}
+                                    </div>
+                                  )}
+                              </div>
+                                </td>
                               <td>
                               <div className="col">
                                 <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}>Nationality #</label>
