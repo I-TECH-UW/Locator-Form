@@ -175,14 +175,17 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
           
           CodeableConcept codeableConcept = new CodeableConcept();
           List<Coding> codingList = new ArrayList<Coding>();
-          Coding coding = new Coding();
-          coding.setCode("covid loinc");
-          coding.setSystem("http://loinc.org");
-          codingList.add(coding);
+          Coding coding0 = new Coding();
+          coding0.setCode("covid loinc");
+          coding0.setSystem("http://loinc.org");
+          codingList.add(coding0);
           
-          coding.setCode("TBD");
-          coding.setSystem("OpenELIS-Global/Lab No");
-          codingList.add(coding);
+          coding0 = null;
+          
+          Coding coding1 = new Coding();
+          coding1.setCode("TBD");
+          coding1.setSystem("OpenELIS-Global/Lab No");
+          codingList.add(coding1);
           codeableConcept.setCoding(codingList);
           
           serviceRequest.setCode(codeableConcept);
