@@ -133,7 +133,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
     @Override
     public ServiceRequest CreateFhirServiceRequest(LocatorFormDTO locatorForm) {
         FamilyTravelCompanion comp = new FamilyTravelCompanion();
-        comp.setAge("99"); // principle traveller 
+        comp.setDateOfBirth(locatorForm.getDateOfBirth());
         comp.setGender(locatorForm.getGender());
         comp.setFirstName(locatorForm.getFirstName());
         comp.setLastName(locatorForm.getLastName());
@@ -147,7 +147,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
     @Override
     public ServiceRequest CreateFhirServiceRequest(NonFamilyTravelCompanion nonComp) {
         FamilyTravelCompanion comp = new FamilyTravelCompanion();
-        comp.setAge(nonComp.getAge());
+        comp.setDateOfBirth(nonComp.getDateOfBirth());
         comp.setGender(nonComp.getGender());
         comp.setFirstName(nonComp.getFirstName());
         comp.setLastName(nonComp.getLastName());
@@ -190,7 +190,6 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
           
           serviceRequest.setCode(codeableConcept);
           serviceRequest.setSubject(subjectRef);
-          
           
       } catch (Exception e) {
           log.debug("FhirTransformServiceImpl:Transform exception: " + e.toString());

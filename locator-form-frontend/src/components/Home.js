@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import * as Yup from 'yup';
 import { useBarcode } from '@createnextapp/react-barcode';
 import { v4 as uuidv4 } from 'uuid';
+import { countryList } from 'react-select-country-list';
 
 
 interface Values {
@@ -13,7 +14,7 @@ interface Values {
 	  firstName: string;
 	  lastName: string;
 	  middleInitial: string;
-	  email: string;
+	  email: string;<br />rea
 	  acceptedTerms: string;
 	  visitPurpose: string;
 	  title: string;
@@ -63,7 +64,7 @@ familyTravelCompanions: [
 	 firstName: string;
   	 middleInitial: string;
   	 seatNumber: string;
-  	 age: string;
+  	 dateOfBirth: string;
      nationality: string;
 	 passportNumber: string;
   },
@@ -76,7 +77,7 @@ nonFamilyTravelCompanions: [
     firstName: string;
 	middleInitial: string;
 	seatNumber: string;
-	age: string;
+    dateOfBirth: string;
 	nationality: string;
 	passportNumber: string;
   },
@@ -178,7 +179,7 @@ const MyTextInput = ({ label, ...props }) => {
           visitPurpose: '', title: '', airlineName: '', flightNumber: '', 
           seatNumber: '', arrivalDate: '',
           mobilePhone: '', businessPhone: '',
-          gender: '', passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: '',
+          gender: '', dateOfBirth: '', passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: '',
           fever: '', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
           
           permAddress: 
@@ -219,7 +220,7 @@ const MyTextInput = ({ label, ...props }) => {
   		      firstName: "",
   		    middleInitial: "",
   		      seatNumber: "",
-  		      age: "",
+  		      dateOfBirth: "",
   		      gender: "",
   		    nationality: "",
  			 passportNumber: "",
@@ -231,7 +232,7 @@ const MyTextInput = ({ label, ...props }) => {
   	    	  firstName: "",
   	    	middleInitial: "",
   	    	  seatNumber: "",
-  		      age: "",
+  	    	dateOfBirth: "",
   		    gender: "",
   		    nationality: "",
   			 passportNumber: "",
@@ -504,7 +505,6 @@ function Home() {
                       label="Airline Name"
                       name="airlineName"
                       type="medtext"
-                      placeholder="Airline Name"
                   />
          	       </td>
          	       <td>
@@ -512,7 +512,6 @@ function Home() {
                       label="Flight #"
                       name="flightNumber"
                       type="smalltext"
-                      placeholder="Flight #"
                   />
          	       </td>
          	       <td>
@@ -520,7 +519,6 @@ function Home() {
                       label="Seat #"
                       name="seatNumber"
                       type="smalltext"
-                      placeholder="Seat #"
                   />
          	       </td>
          	       <td>
@@ -528,7 +526,6 @@ function Home() {
                       label="Arrival Date"
                       name="arrivalDate"
                       type="date"
-                      placeholder="Arrival Date"
                   />
          	       </td>
          	       </table>
@@ -550,7 +547,6 @@ function Home() {
                label="Last (Family) Name"
                name="lastName"
                type="text"
-               placeholder="Doe"
              /> 
                </td>
                <td>
@@ -558,7 +554,6 @@ function Home() {
                      label="First (Given) Name"
                      name="firstName"
                      type="text"
-                     placeholder="Jane"
                    />
                </td>
             	   <td>
@@ -567,18 +562,24 @@ function Home() {
                    label="Middle Initial"
                    name="middleInitial"
                    type="smalltext"
-                   placeholder="M"
                  /> 
                    </td>
             <td>
          
-            <MySelect label="Gender" name="gender">
-            <option value="">Gender</option>
+            <MySelect label="Sex" name="gender">
+            <option value="">Sex</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </MySelect>
             
         </td>
+        <td>
+	       <MyTextInput
+           label="Date Of Birth"
+           name="dateOfBirth"
+           type="date"
+       />
+	       </td>
          </table>
          
          <h5> Health Information</h5>
@@ -588,7 +589,6 @@ function Home() {
            label="Proposed Length of Stay in Mauritius (days)"
            name="lengthOfStay"
            type="smalltext"
-           placeholder="Days"
          />
         </td> 
         <td>
@@ -596,7 +596,6 @@ function Home() {
            label="Countries Visited During Last 6 Months"
            name="countriesVisited"
            type="text"
-           placeholder="Countries Visited During Last 6 Months"
          />
          </td>
          <td>
@@ -604,7 +603,6 @@ function Home() {
            label="Port Of Embarkation"
            name="portOfEmbarkation"
            type="text"
-           placeholder="Port Of Embarkation"
          />
 
         </td>
@@ -671,7 +669,6 @@ function Home() {
               label="Mobile Phone"
               name="mobilePhone"
               type="text"
-              placeholder="Mobile Phone"
           />
             </td>
             <td>
@@ -679,7 +676,6 @@ function Home() {
               label="Business Phone"
               name="businessPhone"
               type="text"
-              placeholder="Business Phone"
           />
             </td>
             </table>
@@ -690,7 +686,6 @@ function Home() {
             label="Email Address"
             name="email"
             type="email"
-            placeholder="jane@formik.com"
           />
             </td>
             <td>
@@ -698,7 +693,6 @@ function Home() {
             label="Confirm Email Address"
             name="confirmEmail"
             type="email"
-            placeholder="jane@formik.com"
           />
             </td>
             
@@ -707,7 +701,6 @@ function Home() {
                  label="Nationality"
                  name="nationality"
                  type="medtext"
-                 placeholder="Nationality"
                />
 
            </td>
@@ -716,13 +709,9 @@ function Home() {
               label="Passport Number"
               name="passportNumber"
               type="medtext"
-              placeholder="Passport Number"
             />
-
         </td>
-       	 
             </table>
-            
             <h5> Permanent Address</h5>
             <table>
             <td>
@@ -730,7 +719,6 @@ function Home() {
               label="Number and Street"
               name="permAddress.numberAndStreet"
               type="text"
-              placeholder="Number and Street"
           />
             </td>
             <td>
@@ -738,7 +726,6 @@ function Home() {
               label="Apartment #"
               name="permAddress.apartmentNumber"
               type="smalltext"
-              placeholder="Apartment #"
           />
             </td>
             <td>
@@ -746,18 +733,15 @@ function Home() {
               label="City"
               name="permAddress.city"
               type="medtext"
-              placeholder="City"
           />
             </td>
             </table>
             <table>
-           
             <td>
             <MyTextInput
               label="State/Province"
               name="permAddress.stateProvince"
               type="text"
-              placeholder="State/Province"
           />
             </td>
             <td>
@@ -765,7 +749,6 @@ function Home() {
               label="Country"
               name="permAddress.country"
               type="medtext"
-              placeholder="Country"
           />
             </td>
             <td>
@@ -773,20 +756,16 @@ function Home() {
               label="Zip/Postal Code"
               name="permAddress.zipPostalCode"
               type="text"
-              placeholder="Zip/Postal Code"
           />
             </td>
             </table>
-            
-            
-            <h5> Temporary Address</h5>
+            <h5> Temporary Address in Mauritius</h5>
             <table>
             <td>
             <MyTextInput
               label="Hotel Name"
               name="tempAddress.hotelName"
               type="text"
-              placeholder="Hotel Name"
           />
             </td>
             <td>
@@ -794,7 +773,6 @@ function Home() {
               label="Number and Street"
               name="tempAddress.numberAndStreet"
               type="text"
-              placeholder="Number and Street"
           />
             </td>
             <td>
@@ -802,7 +780,6 @@ function Home() {
               label="Apartment #"
               name="tempAddress.apartmentNumber"
               type="smalltext"
-              placeholder="Apartment #"
           />
             </td>
             <td>
@@ -810,18 +787,15 @@ function Home() {
               label="City"
               name="tempAddress.city"
               type="medtext"
-              placeholder="City"
           />
             </td>
             </table>
             <table>
-
             <td>
             <MyTextInput
               label="State/Province"
               name="tempAddress.stateProvince"
               type="text"
-              placeholder="State/Province"
           />
             </td>
             <td>
@@ -829,7 +803,6 @@ function Home() {
               label="Country"
               name="tempAddress.country"
               type="medtext"
-              placeholder="Country"
           />
             </td>
             <td>
@@ -837,11 +810,9 @@ function Home() {
               label="Zip/Postal Code"
               name="tempAddress.zipPostalCode"
               type="text"
-              placeholder="Zip/Postal Code"
           />
             </td>
             </table>
-            
             <h5> Emergency Contact Information of someone who can reach you during the next 30 days</h5>
             <table>
             <td>
@@ -849,7 +820,6 @@ function Home() {
               label="Last (Family) Name"
               name="emergencyContact.lastName"
               type="text"
-              placeholder="Last (Family) Name"
           />
             </td>
             <td>
@@ -857,7 +827,6 @@ function Home() {
               label="First (Given) Name"
               name="emergencyContact.firstName"
               type="text"
-              placeholder="First (Given) Name"
           />
             </td>
             <td>
@@ -865,7 +834,6 @@ function Home() {
               label="City"
               name="emergencyContact.city"
               type="medtext"
-              placeholder="City"
           />
             </td>
             <td>
@@ -873,7 +841,6 @@ function Home() {
               label="Country"
               name="emergencyContact.country"
               type="medtext"
-              placeholder="Country"
           />
             </td>
             </table>
@@ -884,7 +851,6 @@ function Home() {
               label="Email"
               name="emergencyContact.email"
               type="text"
-              placeholder="Email"
           />
             </td>
             <td>
@@ -892,11 +858,9 @@ function Home() {
               label="Mobile Phone"
               name="emergencyContact.mobilePhone"
               type="text"
-              placeholder="Mobile Phone"
           />
             </td>
             </table>    
-            
  	       <h5> Travel Companions Family</h5>
            <FieldArray
              name="familyTravelCompanions"
@@ -913,7 +877,6 @@ function Home() {
                          <label htmlFor={`familyTravelCompanions.${index}.lastName`}>Last (Family) Name</label>
                          <Field
                            name={`familyTravelCompanions.${index}.lastName`}
-                           placeholder="Doe"
                            type="text"
                          />
                          {errors.familyTravelCompanions &&
@@ -932,7 +895,6 @@ function Home() {
                          <label htmlFor={`familyTravelCompanions.${index}.firstName`}>First (Given) Name</label>
                          <Field
                            name={`familyTravelCompanions.${index}.firstName`}
-                           placeholder="Jane"
                            type="text"
                          />
                          {errors.familyTravelCompanions &&
@@ -952,7 +914,6 @@ function Home() {
                            <label htmlFor={`familyTravelCompanions.${index}.seatNumber`}>Seat #</label>
                            <Field
                              name={`familyTravelCompanions.${index}.seatNumber`}
-                             placeholder="Seat #"
                              type="smalltext"
                            />
                            {errors.familyTravelCompanions &&
@@ -968,19 +929,18 @@ function Home() {
                            </td>
                            <td>
                            <div className="col">
-                             <label htmlFor={`familyTravelCompanions.${index}.age`}>Age</label>
+                             <label htmlFor={`familyTravelCompanions.${index}.dateOfBirth`}>Date Of Birth</label>
                              <Field
-                               name={`familyTravelCompanions.${index}.age`}
-                               placeholder="Age"
-                               type="smalltext"
+                               name={`familyTravelCompanions.${index}.dateOfBirth`}
+                               type="date"
                              />
                              {errors.familyTravelCompanions &&
                                errors.familyTravelCompanions[index] &&
-                               errors.familyTravelCompanions[index].age &&
+                               errors.familyTravelCompanions[index].dateOfBirth &&
                                touched.familyTravelCompanions &&
-                               touched.familyTravelCompanions[index].age && (
+                               touched.familyTravelCompanions[index].dateOfBirth && (
                                  <div className="field-error">
-                                   {errors.familyTravelCompanions[index].age}
+                                   {errors.familyTravelCompanions[index].dateOfBirth}
                                  </div>
                                )}
                            </div>
@@ -990,8 +950,8 @@ function Home() {
                              <div className="col">
                                
                                <MySelect
-                                 label= "Gender" name={`familyTravelCompanions.${index}.gender`}>
-                               <option value="">Gender</option>
+                                 label= "Sex" name={`familyTravelCompanions.${index}.gender`}>
+                               <option value="">Sex</option>
                                <option value="male">Male</option>
                                <option value="female">Female</option>
                                </MySelect>
@@ -1009,10 +969,9 @@ function Home() {
                              
                              <td>
                              <div className="col">
-                               <label htmlFor={`familyTravelCompanions.${index}.nationality`}>Nationality #</label>
+                               <label htmlFor={`familyTravelCompanions.${index}.nationality`}>Nationality</label>
                                <Field
                                  name={`familyTravelCompanions.${index}.nationality`}
-                                 placeholder="Nationality"
                                  type="medtext"
                                />
                                {errors.familyTravelCompanions &&
@@ -1031,7 +990,6 @@ function Home() {
                                  <label htmlFor={`familyTravelCompanions.${index}.passportNumber`}>Passport Number</label>
                                  <Field
                                    name={`familyTravelCompanions.${index}.passportNumber`}
-                                   placeholder="Passport Number"
                                    type="medtext"
                                  />
                                  {errors.familyTravelCompanions &&
@@ -1071,7 +1029,6 @@ function Home() {
              )}
            />
            <br />  
-	       
 	       <h5> Travel Companions Non-Family</h5>
             <FieldArray
               name="nonFamilyTravelCompanions"
@@ -1087,7 +1044,6 @@ function Home() {
                           <label htmlFor={`nonFamilyTravelCompanions.${index}.lastName`}>Last (Family) Name</label>
                           <Field
                             name={`nonFamilyTravelCompanions.${index}.lastName`}
-                            placeholder="Doe"
                             type="text"
                           />
                           {errors.nonFamilyTravelCompanions &&
@@ -1106,7 +1062,6 @@ function Home() {
                           <label htmlFor={`nonFamilyTravelCompanions.${index}.firstName`}>First (Given) Name</label>
                           <Field
                             name={`nonFamilyTravelCompanions.${index}.firstName`}
-                            placeholder="Jane"
                             type="text"
                           />
                           {errors.nonFamilyTravelCompanions &&
@@ -1126,7 +1081,6 @@ function Home() {
                             <label htmlFor={`nonFamilyTravelCompanions.${index}.seatNumber`}>Seat #</label>
                             <Field
                               name={`nonFamilyTravelCompanions.${index}.seatNumber`}
-                              placeholder="Seat #"
                               type="smalltext"
                             />
                             {errors.nonFamilyTravelCompanions &&
@@ -1142,19 +1096,18 @@ function Home() {
                             </td>
                             <td>
                             <div className="col">
-                              <label htmlFor={`nonFamilyTravelCompanions.${index}.age`}>Age</label>
+                              <label htmlFor={`nonFamilyTravelCompanions.${index}.dateOfBirth`}>Date Of Birth</label>
                               <Field
-                                name={`nonFamilyTravelCompanions.${index}.age`}
-                                placeholder="Age"
-                                type="smalltext"
+                                name={`nonFamilyTravelCompanions.${index}.dateOfBirth`}
+                                type="date"
                               />
                               {errors.nonFamilyTravelCompanions &&
                                 errors.nonFamilyTravelCompanions[index] &&
-                                errors.nonFamilyTravelCompanions[index].age &&
+                                errors.nonFamilyTravelCompanions[index].dateOfBirth &&
                                 touched.nonFamilyTravelCompanions &&
-                                touched.nonFamilyTravelCompanions[index].age && (
+                                touched.nonFamilyTravelCompanions[index].dateOfBirth && (
                                   <div className="field-error">
-                                    {errors.nonFamilyTravelCompanions[index].age}
+                                    {errors.nonFamilyTravelCompanions[index].dateOfBirth}
                                   </div>
                                 )}
                             </div>
@@ -1164,8 +1117,8 @@ function Home() {
                               <div className="col">
                                 
                                 <MySelect
-                                  label= "Gender" name={`nonFamilyTravelCompanions.${index}.gender`}>
-                                <option value="">Gender</option>
+                                  label= "Sex" name={`nonFamilyTravelCompanions.${index}.gender`}>
+                                <option value="">Sex</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 </MySelect>
@@ -1182,10 +1135,9 @@ function Home() {
                                 </td>
                               <td>
                               <div className="col">
-                                <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}>Nationality #</label>
+                                <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}>Nationality</label>
                                 <Field
                                   name={`nonFamilyTravelCompanions.${index}.nationality`}
-                                  placeholder="Nationality"
                                   type="medtext"
                                 />
                                 {errors.nonFamilyTravelCompanions &&
@@ -1204,7 +1156,6 @@ function Home() {
                                   <label htmlFor={`nonFamilyTravelCompanions.${index}.passportNumber`}>Passport Number</label>
                                   <Field
                                     name={`nonFamilyTravelCompanions.${index}.passportNumber`}
-                                    placeholder="Passport Number"
                                     type="medtext"
                                   />
                                   {errors.nonFamilyTravelCompanions &&
@@ -1244,35 +1195,30 @@ function Home() {
                 </div>
               )}
             />            
-         	       
                    <table> 
                    <td>
-                   
                    <MyCheckbox name="acceptedTerms">
-                     I accept the terms and conditions
+                   *I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information.
+                   <br />
+                   *Je déclare qu’ à ma connaissances que toutes les informations fournies sont exactes et complètes. Je suis consients que le fait de ne pas remplie cette forme ou toute fausse declaration de ma part pourra.
                    </MyCheckbox>
-                     </td><td>
+                     </td>
+                     </table>
+                     <table>
+                     <td>
                   <button type="submit">Submit</button> 	 
-                       
                      </td>
                   </table>
-                  
                   <table> 
                   <td>
-                  
                   <img ref={inputRef} />
-                      
                     </td>
                  </table>
-         	       
          	      </Form>
                  );
                }}
              />
            </div>
-              
-              
-              
           </div>
         </div>
     </div>

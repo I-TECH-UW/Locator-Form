@@ -8,7 +8,7 @@ public class NonFamilyTravelCompanion {
     private String firstName;
     private String middleInitial;
     private String seatNumber;
-    private String age;
+    private String dateOfBirth;
     private String gender;
     private String nationality;
     private String passportNumber;

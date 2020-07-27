@@ -19,6 +19,7 @@ public class LocatorFormDTO {
     private String lastName; 
     private String middleInitial; 
     private String gender; 
+    private String dateOfBirth;
     
     private String lengthOfStay; 
     private String countriesVisited; 
