@@ -1,5 +1,10 @@
 {
 	"language.select.label": "Langue",
 	"nav.item.home": "Accueil",
+	"nav.item.flightNumber": "No. de Vol",
+	"nav.item.airline": "Compagnie aérienne",
+	"nav.item.flightInformation": "Information de vol",
+	"nav.item.seat": "Siège",
+	"nav.item.dateOfArrival": "Date d'arrivée",
 	"nav.item.about": "Description"
 }

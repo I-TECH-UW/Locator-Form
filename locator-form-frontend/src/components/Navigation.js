@@ -1,8 +1,8 @@
 import React from "react";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-// import { faLanguage } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormattedMessage } from 'react-intl';
 import { Link, withRouter } from "react-router-dom";
 
@@ -54,7 +54,7 @@ class Navigation extends React.Component {
                   </Link>
                 </li>
                 {/* TODO add this once we can edit resource groups through the app */}
-                {/* <li
+                 <li
                   className={`nav-item  ${
                     this.props.location.pathname === "/resourceGroup" ? "active" : ""
                     }`}
@@ -64,10 +64,10 @@ class Navigation extends React.Component {
                       defaultMessage="Resource Group"
                       description="Go to resource group page" />
                   </Link>
-                </li> */}
+                </li> 
 
                 {/* TODO add this back when/if we want to do internationalization */}
-                {/* <li >
+                 <li >
                   <div className="dropdown">
                     <button type="button" className="btn btn-dark" data-toggle="dropdown">
                       <FontAwesomeIcon icon={faLanguage} style={{ color: 'grey' }} size="2x" />
@@ -77,7 +77,7 @@ class Navigation extends React.Component {
                       <a className="dropdown-item" lang="fr" onClick={this.props.onChangeLanguage}>Français</a>
                     </div>
                   </div>
-                </li> */}
+                </li> 
               </ul>
             </div>
           </div>

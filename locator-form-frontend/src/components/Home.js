@@ -6,7 +6,14 @@ import styled from "@emotion/styled";
 import * as Yup from 'yup';
 import { useBarcode } from '@createnextapp/react-barcode';
 import { v4 as uuidv4 } from 'uuid';
-import { countryList } from 'react-select-country-list';
+import ReactSelect from 'react-select';
+import makeAnimated from 'react-select/animated';
+import { countryOptions } from './docs/data';
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FormattedMessage } from 'react-intl';
+import { Link, withRouter } from "react-router-dom";
+
 
 
 interface Values {
@@ -14,7 +21,6 @@ interface Values {
 	  firstName: string;
 	  lastName: string;
 	  middleInitial: string;
-	  email: string;<br />rea
 	  acceptedTerms: string;
 	  visitPurpose: string;
 	  title: string;
@@ -240,24 +246,6 @@ const MyTextInput = ({ label, ...props }) => {
   		  ]
         };
 	
-	const handleSubmit = (values) => {
-		var object = {};
-		
-		var json = JSON.stringify(values);
-		console.log(json);
-
-		fetch('https://host.openelis.org:8445/locator-form' , {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json', 
-			},
-			body: json
-		})
-		 .catch( err => {
-			 console.log(err);
-		 })
-	}
-	
 	function equalTo(ref: any, msg: any) {
 		  return Yup.mixed().test({
 		    name: 'equalTo',
@@ -272,13 +260,30 @@ const MyTextInput = ({ label, ...props }) => {
 		  });
 		}
 		Yup.addMethod(Yup.string, 'equalTo', equalTo);
-		
 	
+	   const handleSubmit = (values) => {
+           var object = {};
+           
+           var json = JSON.stringify(values);
+           console.log(json);
+
+           fetch('https://host.openelis.org:8445/locator-form' , {
+                   method: 'POST',
+                   headers: {
+                           'Content-Type': 'application/json', 
+                   },
+                   body: json
+           })
+            .catch( err => {
+                    console.log(err);
+            })
+           }
+           
 var id = null;
 
 function Home() {
-	id = uuidv4();
 	
+	id = uuidv4();
 	var { inputRef } = useBarcode({ value: id, });
   return (
     <div className="home">
@@ -482,7 +487,6 @@ function Home() {
 
               })}
               
-              
               onSubmit={(values, { setSubmitting }) => {
                   setTimeout(() => {
                 	 values.id = id;
@@ -493,37 +497,42 @@ function Home() {
                 }}
               
                render={({ values, errors, touched, handleReset }) => {
-                
+            	   
                  return (
                    <Form>
          	       <p> <b>Public Health Passenger Locator Form:</b> To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. &emsp;<b><i>~Thank you for helping us to protect your health.</i></b></p>
+         	       
+         	       <p> <b>Public Health Passenger Locator Form:</b> To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. &emsp;<b><i>~Thank you for helping us to protect your health.</i></b></p>
 
-         	       <h5> Flight Information</h5>
+         	       
+         	       <h5> <FormattedMessage id="nav.item.flightInformation" defaultMessage="Flight Information"/></h5>
          	       <table>
          	       <td>
          	       <MyTextInput
-                      label="Airline Name"
+                      label=<FormattedMessage id="nav.item.airline" defaultMessage="Airline"/>
                       name="airlineName"
                       type="medtext"
                   />
          	       </td>
          	       <td>
+         	      
+                
          	       <MyTextInput
-                      label="Flight #"
+         	       	  label=<FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight"/>
                       name="flightNumber"
                       type="smalltext"
                   />
          	       </td>
          	       <td>
          	       <MyTextInput
-                      label="Seat #"
+                      label=<FormattedMessage id="nav.item.seat" defaultMessage="Seat"/>
                       name="seatNumber"
                       type="smalltext"
                   />
          	       </td>
          	       <td>
          	       <MyTextInput
-                      label="Arrival Date"
+                      label=<FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arraval"/>
                       name="arrivalDate"
                       type="date"
                   />
@@ -591,13 +600,14 @@ function Home() {
            type="smalltext"
          />
         </td> 
-        <td>
+         
+         <td>
          <MyTextInput
-           label="Countries Visited During Last 6 Months"
-           name="countriesVisited"
+           label="Countries visited during last  months"
+           name="countries"
            type="text"
          />
-         </td>
+        </td> 
          <td>
          <MyTextInput
            label="Port Of Embarkation"
@@ -865,6 +875,7 @@ function Home() {
            <FieldArray
              name="familyTravelCompanions"
              render={({ insert, remove, push }) => (
+
                <div>
                  {values.familyTravelCompanions.length > 0 &&
                    values.familyTravelCompanions.map((comp, index) => (
@@ -1209,6 +1220,8 @@ function Home() {
                   <button type="submit">Submit</button> 	 
                      </td>
                   </table>
+                  
+                
                   <table> 
                   <td>
                   <img ref={inputRef} />
