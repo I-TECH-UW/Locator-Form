@@ -6,7 +6,6 @@ import styled from "@emotion/styled";
 import * as Yup from 'yup';
 import { useBarcode } from '@createnextapp/react-barcode';
 import { v4 as uuidv4 } from 'uuid';
-import { countryOptions } from './docs/data';
 import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormattedMessage } from 'react-intl';
