@@ -1,10 +1,72 @@
 {
 	"language.select.label": "Langue",
+	"nav.item.selectLanguage": "Choisir la langue",
 	"nav.item.home": "Accueil",
+	"nav.item.topOfForm": "Formulaire de localisation de passager pour la santé publique: Pour protéger votre santé, lorsque les agents de santé publique soupçonnent la présence d’une maladie contagieuse à bord d’un vol, vous devez remplir le présent formulaire. Les renseignements que vous donnez aideront les agents de santé publique à communiquer avec vous si vous avez été exposé à une maladie contagieuse. Il est important que vous remplissiez le formulaire au complet et que vous donniez des renseignements exacts. Les renseignements recueillis sont destinés à être conservés conformément aux lois applicables et ne serviront qu’aux fins de la protection de la santé publique. ~Nous vous remercions de nous aider à protéger votre santé.",
 	"nav.item.flightNumber": "No. de Vol",
 	"nav.item.airline": "Compagnie aérienne",
 	"nav.item.flightInformation": "Information de vol",
-	"nav.item.seat": "Siège",
+	"nav.item.seat": "No du siège",
 	"nav.item.dateOfArrival": "Date d'arrivée",
-	"nav.item.about": "Description"
+	"nav.item.about": "Description",
+ "nav.item.personalInformation": "Renseignements du passager",
+        "nav.item.title": "Titre",
+        "nav.item.lastFamilyName": "Nom de famille",
+        "nav.item.firstGivenName": "Prénom",
+"nav.item.middleInitial": "Initiale",
+"nav.item.sex": "Sexe",
+"nav.item.male": "Masculin",
+"nav.item.female": "Féminin",
+"nav.item.dateOfBirth" : "Date de naissance",
+
+"nav.item.healthInformation": "Renseignements sanitaires",
+"nav.item.proposedLengthOfStay": "Durée de séjour à Maurice",
+"nav.item.countriesVisited": "Pays visités durant mes 6 derniers mois",
+"nav.item.portOfEmbarkation": "Port d’embarquement",
+"nav.item.areYouSufferingFrom": "Souffrez-vous de",
+"nav.item.fever": "Fièvre",
+"nav.item.soreThroat": "Mal de gorge",
+"nav.item.jointPain": "Douleur articulaire",
+"nav.item.cough": "Toux",
+"nav.item.breathingdifficulties": "Problèmes respiratoires",
+"nav.item.rash": "Éruption cutanée",
+"nav.item.yes": "Oui",
+"nav.item.no": "Non",
+"nav.item.phoneNumbers": "Numéro(s) de téléphone où vous pouvez être rejoint au besoin. Indiquez le code de pays et le code de ville.",
+"nav.item.purposeOfVisit": "Motif de visite",
+"nav.item.work": "Travail",
+"nav.item.holidays": "Vacances",
+"nav.item.mobilePhone": "Portable",
+"nav.item.businessPhone": "Travail",
+"nav.item.emailAddress": "Adresse électronique",
+"nav.item.confirmEmailAddress": "Confirmer adresse électronique",
+"nav.item.nationality": "Nationalité",
+"nav.item.passportNumber": "Numéro du passeport",
+
+"nav.item.permanent Address": "Adresse Permanente",
+"nav.item.numberAndStreet": "Numéro et rue",
+"nav.item.apartmentNumber": "Numéro d’appartement",
+"nav.item.city": "Ville",
+"nav.item.state/Province": "État/Province",
+"nav.item.country": "Pays",
+"nav.item.zipPostalCode": "Code postal",
+
+"nav.item.temporaryAddress": "Adresse temporaire à Maurice",
+"nav.item.hotelName": "Nom de l’hôtel",
+
+"nav.item.emergencyContact": "Contact d’urgence : Coordinnées d’une personne qui pourra vous rejoindre au cours de 30 prochains jours",
+
+"nav.item.travelCompanionsFamily": "Compagnons de voyage- Membres de la famille",
+
+"nav.item.nationality": "Nationalité",
+"nav.item.addTravelCompanionFamily": "Ajouter compagnon familial",
+
+"nav.item.travelCompanionsNonFamily": "Compagnons de voyage- Autres que des membres de la famille",
+"nav.item.alsoIincludeNameOfGroup": "Indiquez le nom du groupe (le cas échéant)",
+"nav.item.addTravelCompanionNonFamily": "Ajouter compagnon non-familial",
+"nav.item.group": "Groupe (voyage organisé, équipe, entreprise, autre)",
+"nav.item.declareInformation": "Je déclare qu’ à ma connaissances que toutes les informations fournies sont exactes et complètes. Je suis consients que le fait de ne pas remplie cette forme ou toute fausse declaration de ma part pourra."
+
+	
+	
 }

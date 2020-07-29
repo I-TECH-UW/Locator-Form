@@ -6,8 +6,6 @@ import styled from "@emotion/styled";
 import * as Yup from 'yup';
 import { useBarcode } from '@createnextapp/react-barcode';
 import { v4 as uuidv4 } from 'uuid';
-import ReactSelect from 'react-select';
-import makeAnimated from 'react-select/animated';
 import { countryOptions } from './docs/data';
 import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -500,10 +498,7 @@ function Home() {
             	   
                  return (
                    <Form>
-         	       <p> <b>Public Health Passenger Locator Form:</b> To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. &emsp;<b><i>~Thank you for helping us to protect your health.</i></b></p>
-         	       
-         	       <p> <b>Public Health Passenger Locator Form:</b> To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. &emsp;<b><i>~Thank you for helping us to protect your health.</i></b></p>
-
+         	       <p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="Public Health Passenger Locator Form: To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health."/></p>
          	       
          	       <h5> <FormattedMessage id="nav.item.flightInformation" defaultMessage="Flight Information"/></h5>
          	       <table>
@@ -532,18 +527,19 @@ function Home() {
          	       </td>
          	       <td>
          	       <MyTextInput
-                      label=<FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arraval"/>
+                      label=<FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival"/>
                       name="arrivalDate"
                       type="date"
                   />
          	       </td>
          	       </table>
          	       
-        	       <h5> Personal Information </h5>
+        	       <h5> <FormattedMessage id="nav.item.personalInformation" defaultMessage="Personal Information"/> </h5>
         	       <table>
         	       <td>
-              	 <MySelect label="Title" name="title">
-                 <option value="">Title</option>
+              	 <MySelect label=<FormattedMessage id="nav.item.title" defaultMessage="Title"/> 
+              	 name="title">
+                 <option value=""></option>
                  <option value="mr">Mr</option>
                  <option value="mrs">Mrs</option>
                  <option value="miss">Miss</option>
@@ -553,14 +549,14 @@ function Home() {
                <td>
                
                <MyTextInput
-               label="Last (Family) Name"
+               label=<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/>
                name="lastName"
                type="text"
              /> 
                </td>
                <td>
             	   <MyTextInput
-                     label="First (Given) Name"
+                     label=<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/>
                      name="firstName"
                      type="text"
                    />
@@ -568,15 +564,16 @@ function Home() {
             	   <td>
                    
                    <MyTextInput
-                   label="Middle Initial"
+                   label=<FormattedMessage id="nav.item.middleInitial" defaultMessage="Middle Initial"/>
                    name="middleInitial"
                    type="smalltext"
                  /> 
                    </td>
             <td>
          
-            <MySelect label="Sex" name="gender">
-            <option value="">Sex</option>
+            <MySelect label=<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/>
+            name="gender">
+            <option value=""></option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </MySelect>
@@ -584,18 +581,18 @@ function Home() {
         </td>
         <td>
 	       <MyTextInput
-           label="Date Of Birth"
+           label=<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth"/>
            name="dateOfBirth"
            type="date"
        />
 	       </td>
          </table>
          
-         <h5> Health Information</h5>
+         <h5> <FormattedMessage id="nav.item.healthInformation" defaultMessage="Health Information"/></h5>
          <table> 
          <td>
          <MyTextInput
-           label="Proposed Length of Stay in Mauritius (days)"
+           label=<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)"/>
            name="lengthOfStay"
            type="smalltext"
          />
@@ -603,14 +600,14 @@ function Home() {
          
          <td>
          <MyTextInput
-           label="Countries visited during last  months"
+           label=<FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months"/>
            name="countries"
            type="text"
          />
         </td> 
          <td>
          <MyTextInput
-           label="Port Of Embarkation"
+           label=<FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation"/>
            name="portOfEmbarkation"
            type="text"
          />
@@ -618,57 +615,59 @@ function Home() {
         </td>
          </table>
          
-         <h5> Are you suffering from?</h5>
+         <h5> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?"/></h5>
          <table> 
          <td>
-        	 <MySelect label="Fever" name="fever">
-             <option value="">Fever</option>
-             <option value="yes">Yes</option>
+        	 <MySelect label=<FormattedMessage id="nav.item.fever" defaultMessage="Fevor"/> 
+        		 name="fever">
+             <option value=""></option>
+             <option value="yes" >Yes</option>
              <option value="no">No</option>
            </MySelect>
            </td>
+         
            <td>
-        	 <MySelect label="Sore Throat" name="soreThroat">
-           <option value="">Sore Throat</option>
+        	 <MySelect label=<FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat"/> name="soreThroat">
+           <option value=""></option>
            <option value="yes">Yes</option>
            <option value="no">No</option>
          </MySelect>
          </td>
          <td>
-         <MySelect label="Joint Pain" name="jointPain">
-         <option value="">Joint Pain</option>
+         <MySelect label=<FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain"/> name="jointPain">
+         <option value=""></option>
          <option value="yes">Yes</option>
          <option value="no">No</option>
         </MySelect>
         </td>
         <td>
-        <MySelect label="Cough" name="cough">
-        <option value="">Cough</option>
+        <MySelect label=<FormattedMessage id="nav.item.cough" defaultMessage="Cough"/> name="cough">
+        <option value=""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         </MySelect>
         </td>
         <td>
-        <MySelect label="Breathing Difficulties" name="breathingDifficulties">
-        <option value="">Difficulties</option>
+        <MySelect label=<FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties"/> name="breathingDifficulties">
+        <option value=""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         </MySelect>
         </td>
         <td>
-        <MySelect label="Rash" name="rash">
-        <option value="">Rash</option>
+        <MySelect label=<FormattedMessage id="nav.item.rash" defaultMessage="Rash"/> name="rash">
+        <option value=""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         </MySelect>
         </td>
         </table>
         
-        <h5> Phone Number(s) Where you can be reached if needed? Include country code and city code. </h5>
+        <h5> <FormattedMessage id="nav.item.phoneNumbers" defaultMessage="Phone Number(s) Where you can be reached if needed? Include country code and city code."/> </h5>
         <table>
             <td>
-            <MySelect label="Purpose of Visit" name="visitPurpose">
-          <option value="">Purpose</option>
+            <MySelect label=<FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit"/> name="visitPurpose">
+          <option value=""></option>
           <option value="business">Business</option>
           <option value="pleasure">Pleasure</option>
           <option value="other">Other</option>
@@ -676,14 +675,14 @@ function Home() {
         </td>
             <td>
             <MyTextInput
-              label="Mobile Phone"
+              label=<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone"/>
               name="mobilePhone"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Business Phone"
+              label=<FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone"/>
               name="businessPhone"
               type="text"
           />
@@ -693,54 +692,52 @@ function Home() {
             <td>
             
             <MyTextInput
-            label="Email Address"
+            label=<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address"/>
             name="email"
             type="email"
           />
             </td>
             <td>
             <MyTextInput
-            label="Confirm Email Address"
+            label=<FormattedMessage id="nav.item.confirmEmailAddress" defaultMessage="Confirm Email Address"/>
             name="confirmEmail"
             type="email"
           />
             </td>
-            
             <td>
         	   <MyTextInput
-                 label="Nationality"
+                 label=<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/>
                  name="nationality"
                  type="medtext"
                />
-
            </td>
             <td>
        	   <MyTextInput
-              label="Passport Number"
+              label=<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number"/>
               name="passportNumber"
               type="medtext"
             />
         </td>
             </table>
-            <h5> Permanent Address</h5>
+            <h5> <FormattedMessage id="nav.item.permanent Address" defaultMessage="Permanent Address"/></h5>
             <table>
             <td>
             <MyTextInput
-              label="Number and Street"
+              label=<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street"/>
               name="permAddress.numberAndStreet"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Apartment #"
+              label=<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number"/>
               name="permAddress.apartmentNumber"
               type="smalltext"
           />
             </td>
             <td>
             <MyTextInput
-              label="City"
+              label=<FormattedMessage id="nav.item.city" defaultMessage="City"/>
               name="permAddress.city"
               type="medtext"
           />
@@ -749,52 +746,52 @@ function Home() {
             <table>
             <td>
             <MyTextInput
-              label="State/Province"
+              label=<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province"/>
               name="permAddress.stateProvince"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Country"
+              label=<FormattedMessage id="nav.item.country" defaultMessage="Country"/>
               name="permAddress.country"
               type="medtext"
           />
             </td>
             <td>
             <MyTextInput
-              label="Zip/Postal Code"
+              label=<FormattedMessage id="nav.item.zipPostalCode" defaulMessage="Zip/Postal Code"/>
               name="permAddress.zipPostalCode"
               type="text"
           />
             </td>
             </table>
-            <h5> Temporary Address in Mauritius</h5>
+            <h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address in Mauritius"/></h5>
             <table>
             <td>
             <MyTextInput
-              label="Hotel Name"
+              label=<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name"/>
               name="tempAddress.hotelName"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Number and Street"
+              label=<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street"/>
               name="tempAddress.numberAndStreet"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Apartment #"
+              label=<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number"/>
               name="tempAddress.apartmentNumber"
               type="smalltext"
           />
             </td>
             <td>
             <MyTextInput
-              label="City"
+              label=<FormattedMessage id="nav.item.city" defaultMessage="City"/>
               name="tempAddress.city"
               type="medtext"
           />
@@ -803,52 +800,52 @@ function Home() {
             <table>
             <td>
             <MyTextInput
-              label="State/Province"
+              label=<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province"/>
               name="tempAddress.stateProvince"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Country"
+              label=<FormattedMessage id="nav.item.country" defaultMessage="Country"/>
               name="tempAddress.country"
               type="medtext"
           />
             </td>
             <td>
             <MyTextInput
-              label="Zip/Postal Code"
+              label=<FormattedMessage id="nav.item.zipPostalCode" defaulMessage="Zip/Postal Code"/>
               name="tempAddress.zipPostalCode"
               type="text"
           />
             </td>
             </table>
-            <h5> Emergency Contact Information of someone who can reach you during the next 30 days</h5>
+            <h5> <FormattedMessage id="nav.item.emergencyContact" defaultMessage="Emergency Contact Information of someone who can reach you during the next 30 days"/></h5>
             <table>
             <td>
             <MyTextInput
-              label="Last (Family) Name"
+              label=<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/>
               name="emergencyContact.lastName"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="First (Given) Name"
+              label=<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/>
               name="emergencyContact.firstName"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="City"
+              label=<FormattedMessage id="nav.item.city" defaultMessage="City"/>
               name="emergencyContact.city"
               type="medtext"
           />
             </td>
             <td>
             <MyTextInput
-              label="Country"
+              label=<FormattedMessage id="nav.item.country" defaultMessage="Country"/>
               name="emergencyContact.country"
               type="medtext"
           />
@@ -858,20 +855,20 @@ function Home() {
         
             <td>
             <MyTextInput
-              label="Email"
+              label=<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address"/>
               name="emergencyContact.email"
               type="text"
           />
             </td>
             <td>
             <MyTextInput
-              label="Mobile Phone"
+              label=<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone"/>
               name="emergencyContact.mobilePhone"
               type="text"
           />
             </td>
             </table>    
- 	       <h5> Travel Companions Family</h5>
+ 	       <h5> <FormattedMessage id="nav.item.addTravelCompanionFamily" defaultMessage="Travel Companions Family"/></h5>
            <FieldArray
              name="familyTravelCompanions"
              render={({ insert, remove, push }) => (
@@ -885,7 +882,7 @@ function Home() {
                      <td>
                        <div className="col">
                         
-                         <label htmlFor={`familyTravelCompanions.${index}.lastName`}>Last (Family) Name</label>
+                         <label htmlFor={`familyTravelCompanions.${index}.lastName`}><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/></label>
                          <Field
                            name={`familyTravelCompanions.${index}.lastName`}
                            type="text"
@@ -903,7 +900,7 @@ function Home() {
                          </td>
                          <td>
                        <div className="col">
-                         <label htmlFor={`familyTravelCompanions.${index}.firstName`}>First (Given) Name</label>
+                         <label htmlFor={`familyTravelCompanions.${index}.firstName`}><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/></label>
                          <Field
                            name={`familyTravelCompanions.${index}.firstName`}
                            type="text"
@@ -922,7 +919,7 @@ function Home() {
                          </table><table>
                          <td>
                          <div className="col">
-                           <label htmlFor={`familyTravelCompanions.${index}.seatNumber`}>Seat #</label>
+                           <label htmlFor={`familyTravelCompanions.${index}.seatNumber`}><FormattedMessage id="nav.item.seat" defaultMessage="Seat"/></label>
                            <Field
                              name={`familyTravelCompanions.${index}.seatNumber`}
                              type="smalltext"
@@ -940,7 +937,7 @@ function Home() {
                            </td>
                            <td>
                            <div className="col">
-                             <label htmlFor={`familyTravelCompanions.${index}.dateOfBirth`}>Date Of Birth</label>
+                             <label htmlFor={`familyTravelCompanions.${index}.dateOfBirth`}><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth"/></label>
                              <Field
                                name={`familyTravelCompanions.${index}.dateOfBirth`}
                                type="date"
@@ -961,8 +958,9 @@ function Home() {
                              <div className="col">
                                
                                <MySelect
-                                 label= "Sex" name={`familyTravelCompanions.${index}.gender`}>
-                               <option value="">Sex</option>
+                               label=<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/> 
+                            	   name={`familyTravelCompanions.${index}.gender`}>
+                               <option value=""></option>
                                <option value="male">Male</option>
                                <option value="female">Female</option>
                                </MySelect>
@@ -980,7 +978,7 @@ function Home() {
                              
                              <td>
                              <div className="col">
-                               <label htmlFor={`familyTravelCompanions.${index}.nationality`}>Nationality</label>
+                               <label htmlFor={`familyTravelCompanions.${index}.nationality`}><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/></label>
                                <Field
                                  name={`familyTravelCompanions.${index}.nationality`}
                                  type="medtext"
@@ -998,7 +996,7 @@ function Home() {
                                </td>
                                <td>
                                <div className="col">
-                                 <label htmlFor={`familyTravelCompanions.${index}.passportNumber`}>Passport Number</label>
+                                 <label htmlFor={`familyTravelCompanions.${index}.passportNumber`}><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number"/></label>
                                  <Field
                                    name={`familyTravelCompanions.${index}.passportNumber`}
                                    type="medtext"
@@ -1034,7 +1032,7 @@ function Home() {
                    className="secondary"
                    onClick={() => push({ lastName: "", firstName: "" }) }
                  >
-                   Add Travel Companion Family
+                 <FormattedMessage id="nav.item.addTravelCompanionFamily" defaultMessage="Add Travel Companion Family"/>
                  </button>
                </div>
              )}
@@ -1052,7 +1050,7 @@ function Home() {
                       <table>
                       <td>
                         <div className="col">
-                          <label htmlFor={`nonFamilyTravelCompanions.${index}.lastName`}>Last (Family) Name</label>
+                          <label htmlFor={`nonFamilyTravelCompanions.${index}.lastName`}><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/></label>
                           <Field
                             name={`nonFamilyTravelCompanions.${index}.lastName`}
                             type="text"
@@ -1070,7 +1068,7 @@ function Home() {
                           </td>
                           <td>
                         <div className="col">
-                          <label htmlFor={`nonFamilyTravelCompanions.${index}.firstName`}>First (Given) Name</label>
+                          <label htmlFor={`nonFamilyTravelCompanions.${index}.firstName`}><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/></label>
                           <Field
                             name={`nonFamilyTravelCompanions.${index}.firstName`}
                             type="text"
@@ -1089,7 +1087,7 @@ function Home() {
                           </table><table>
                           <td>
                           <div className="col">
-                            <label htmlFor={`nonFamilyTravelCompanions.${index}.seatNumber`}>Seat #</label>
+                            <label htmlFor={`nonFamilyTravelCompanions.${index}.seatNumber`}><FormattedMessage id="nav.item.seat" defaultMessage="Seat"/></label>
                             <Field
                               name={`nonFamilyTravelCompanions.${index}.seatNumber`}
                               type="smalltext"
@@ -1107,7 +1105,7 @@ function Home() {
                             </td>
                             <td>
                             <div className="col">
-                              <label htmlFor={`nonFamilyTravelCompanions.${index}.dateOfBirth`}>Date Of Birth</label>
+                              <label htmlFor={`nonFamilyTravelCompanions.${index}.dateOfBirth`}><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth"/></label>
                               <Field
                                 name={`nonFamilyTravelCompanions.${index}.dateOfBirth`}
                                 type="date"
@@ -1128,8 +1126,9 @@ function Home() {
                               <div className="col">
                                 
                                 <MySelect
-                                  label= "Sex" name={`nonFamilyTravelCompanions.${index}.gender`}>
-                                <option value="">Sex</option>
+                                  label=<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/> 
+                                  name={`nonFamilyTravelCompanions.${index}.gender`}>
+                                <option value=""></option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 </MySelect>
@@ -1146,7 +1145,7 @@ function Home() {
                                 </td>
                               <td>
                               <div className="col">
-                                <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}>Nationality</label>
+                                <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/></label>
                                 <Field
                                   name={`nonFamilyTravelCompanions.${index}.nationality`}
                                   type="medtext"
@@ -1164,7 +1163,7 @@ function Home() {
                                 </td>
                                 <td>
                                 <div className="col">
-                                  <label htmlFor={`nonFamilyTravelCompanions.${index}.passportNumber`}>Passport Number</label>
+                                  <label htmlFor={`nonFamilyTravelCompanions.${index}.passportNumber`}><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number"/></label>
                                   <Field
                                     name={`nonFamilyTravelCompanions.${index}.passportNumber`}
                                     type="medtext"
@@ -1201,7 +1200,7 @@ function Home() {
                     className="secondary"
                     onClick={() => push({ lastName: "", firstName: "" })}
                   >
-                    Add Travel Companion Non-Family
+                  <FormattedMessage id="nav.item.addTravelCompanionNonFamily" defaultMessage="Add Travel Companion Non-Family"/>
                   </button>
                 </div>
               )}
@@ -1209,9 +1208,7 @@ function Home() {
                    <table> 
                    <td>
                    <MyCheckbox name="acceptedTerms">
-                   *I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information.
-                   <br />
-                   *Je déclare qu’ à ma connaissances que toutes les informations fournies sont exactes et complètes. Je suis consients que le fait de ne pas remplie cette forme ou toute fausse declaration de ma part pourra.
+                   <FormattedMessage id="nav.item.declareInformation" defaultMessage="*I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information."/>
                    </MyCheckbox>
                      </td>
                      </table>
