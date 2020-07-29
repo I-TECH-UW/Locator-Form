@@ -1,100 +1,58 @@
 version: '3.3'
 services:
-#this is here since we can't just pull a built image from the cloud with our libraries
-  itech-fhir-libraries:
-   image: itech-fhir-libraries
-   build:
-      context: .
-      dockerfile: docker/docker-build/Dockerfile
+   locator-form-frontend:
+      image: locator-form
+      build:
+         context: ./locator-form-frontend
+         dockerfile: ./Dockerfile.prod
+      depends_on:
+         - locator-form.openelis.org
+      restart: always
+      ports:
+         - 443:443
+      secrets:
+         -  source: cert
+         -  source: key
       
-  cs-frontend:
-    image: cs-frontend
-    build:
-      context: ./cs-frontend
-      dockerfile: ./Dockerfile.prod    
-    depends_on:
-      - fhir-server-management.openelis.org
-    restart: always
-    ports:
-      - 443:443
-    secrets:
-      - source: cert
-      - source: key
-    
-  fhir-server-management.openelis.org:
-    image: fhir-server-management-webapp
-    build:
-      context: ./fhir-server-management-webapp
-      dockerfile: docker/docker-build/Dockerfile
-    restart: always
-    ports:
-      - 8443:8443
-    secrets:
-      - source: keystore
-      - source: truststore
-    
-  fhir-proxy.openelis.org:
-    image: fhir-proxy-webapp
-    build:
-      context: ./fhir-proxy-webapp
-      dockerfile: docker/docker-build/Dockerfile
-    restart: always
-    ports:
-      - 8444:8443
-    secrets:
-      - source: keystore
-      - source: truststore
+   locator-form.openelis.org:
+      image: locator-form-webapp
+      build:
+         context: ./locator-form-webapp
+         dockerfile: docker/docker-build/Dockerfile
+      ports:
+         - 8449:8444
+      secrets:
+         -  source: keystore
+         -  source: truststore
       
-  fhir.openelis.org:
-    build: 
-      context: ./hapi-fhir-jpaserver-starter
-      dockerfile: Dockerfile.prod
-    restart: always
-    environment:
-      - JAVA_OPTS= -Dhapi.properties=/run/secrets/hapi.properties
-    ports:
-      - 8445:8443
-    volumes:
-      - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
-    secrets:
-      - source: hapi.properties
-      - source: keystore
-      - source: truststore
-
-  auth.openelis.org:
-    image:
-      quay.io/keycloak/keycloak:10.0.2
-    restart: always
-    environment:
-      - DB_VENDOR=postgres
-      - DB_ADDR=
-      - DB_PORT=
-      - DB_DATABASE=consolidated-server
-      - DB_SCHEMA=keycloak
-      - DB_USER_FILE=/run/secrets/db_user
-      - DB_PASSWORD_FILE=/run/secrets/db_password
-    ports:
-      - 8083:8080
-      - 8446:8443
-    volumes:
-      - ./prod/ssl/cs.crt:/etc/x509/https/tls.crt
-      - ./prod/ssl/cs.key:/etc/x509/https/tls.key
-    secrets:
-      - source: db_user
-      - source: db_password
-
+   fhir.openelis.org:
+      build:
+         context: ./hapi-fhir-jpaserver-starter
+         dockerfile: Dockerfile.prod
+      restart: always
+      environment:
+         - JAVA_OPTS= -Dhapi.properties=/run/secrets/hapi.properties
+      ports:
+         - 8448:8443
+      volumes:
+         - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
+      secrets:
+         -  source: hapi.properties
+         -  source: keystore
+         -  source: truststore
+      
 secrets:
-  hapi.properties:
-    file: ./prod/properties/hapi.properties
-  truststore:
-    file: ./prod/ssl/cs.truststore
-  keystore:
-    file: ./prod/ssl/cs.keystore
-  cert:
-    file: ./prod/ssl/cs.crt
-  key:
-    file: ./prod/ssl/cs.key
-  db_user:
-    file: ./prod/database/user
-  db_password:
-    file: ./prod/database/password
+   hapi.properties:
+      file: ./prod/properties/hapi.properties
+   truststore:
+      file: ./prod/ssl/openelis.org.truststore
+   keystore:
+      file: ./prod/ssl/openelis.org.keystore
+   cert:
+      file: ./prod/ssl/openelis.org.crt
+   key:
+      file: ./prod/ssl/openelis.org.key
+   db_user:
+      file: ./prod/database/user
+   db_password:
+      file: ./prod/database/password
