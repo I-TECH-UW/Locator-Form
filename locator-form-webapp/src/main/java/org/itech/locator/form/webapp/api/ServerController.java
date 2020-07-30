@@ -19,6 +19,7 @@ import org.itech.locator.form.webapp.barcode.LabelContentPair;
 import org.itech.locator.form.webapp.barcode.service.BarcodeService;
 import org.itech.locator.form.webapp.email.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class ServerController {
 	private EmailService emailService;
 
 	@PostMapping()
-	public String submitForm(@RequestBody LocatorFormDTO locatorFormDTO)
+	public ResponseEntity<String> submitForm(@RequestBody LocatorFormDTO locatorFormDTO)
 			throws OutputException, BarcodeException, MessagingException, DocumentException {
 
 		log.trace("Received: " + locatorFormDTO.toString());
@@ -107,9 +108,9 @@ public class ServerController {
 				barcodeService.generateBarcodeFile(idAndLabels));
 		emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
 				+ locatorFormDTO.getFirstName() + ",\n\n"
-				+ " Please bring the attached file (printed off or on your device) to the airport as you will need them when you land in Mauritius",
+				+ "Please bring the attached file (printed off or on your device) to the airport as you will need them when you land in Mauritius",
 				attachments);
 
-		return "Return string";
+		return ResponseEntity.ok("success");
 	}
 }
