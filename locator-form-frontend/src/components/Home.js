@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 //import './styles.css'
-import { Formik, Form, Field, FieldArray, useField } from 'formik';
+ import { Formik, Form, Field, FieldArray, useField } from 'formik';
 import styled from "@emotion/styled";
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
@@ -280,7 +280,6 @@ class Home extends React.Component {
 		var id = null;
 		
 		id = uuidv4();  
-		var Barcode = require('react-barcode');
   return (
     <div className="home">
     	<div className="container">
@@ -1242,18 +1241,7 @@ class Home extends React.Component {
                   </table>
          	       </div>
                    </div>
-                   <div className="row">
-                   <div className="col-lg-12 ">
-                  <Barcode value={id} />
-       	       </div>
-               </div>
          	      </Form>
-                  <div className="row">
-                  <div className="col-lg-12 ">
-                  <br></br>
-                  <br></br>
-      	       </div>
-              </div>
          	       </div>
                    </div>
                  );
