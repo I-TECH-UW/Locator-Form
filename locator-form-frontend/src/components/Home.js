@@ -1,17 +1,11 @@
 import React from "react";
 import { render } from "react-dom";
-import "./styles.css";
+//import './styles.css'
 import { Formik, Form, Field, FieldArray, useField } from 'formik';
 import styled from "@emotion/styled";
 import * as Yup from 'yup';
-import { useBarcode } from '@createnextapp/react-barcode';
 import { v4 as uuidv4 } from 'uuid';
-import { faLanguage } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormattedMessage } from 'react-intl';
-import { Link, withRouter } from "react-router-dom";
-
-
 
 interface Values {
 	  id: string;
@@ -61,42 +55,47 @@ emergencyContact:
 	},
 
 familyTravelCompanions: [
-  {
+{
 	 id: string;
-  	 lastName: string;
+	 lastName: string;
 	 firstName: string;
-  	 middleInitial: string;
-  	 seatNumber: string;
-  	 dateOfBirth: string;
-     nationality: string;
+	 middleInitial: string;
+	 seatNumber: string;
+	 dateOfBirth: string;
+   nationality: string;
 	 passportNumber: string;
-  },
+},
 ],
 
 nonFamilyTravelCompanions: [
-  {
+{
 	id: string;
 	lastName: string;
-    firstName: string;
+  firstName: string;
 	middleInitial: string;
 	seatNumber: string;
-    dateOfBirth: string;
+  dateOfBirth: string;
 	nationality: string;
 	passportNumber: string;
-  },
+},
 ],
 	
 }
 
+
+
+
+
 const MyTextInput = ({ label, ...props }) => {
 	  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-	  // which we can spread on <input> and alse replace ErrorMessage entirely.
+	  // which we can spread on <input> and alse replace ErrorMessage
+		// entirely.
 	// <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
 	  const [field, meta] = useField(props);
 	  return (
 	    <>
 	    <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
-	      <input className="text-input" {...field} {...props} />
+	      <input className="text-input form-control" {...field} {...props} />
 	      {meta.touched && meta.error ? (
 	        <div className="error">{meta.error}</div>
 	      ) : null}
@@ -104,28 +103,12 @@ const MyTextInput = ({ label, ...props }) => {
 	  );
 	};
 	
-	const MynumberInput = ({ label, ...props }) => {
-		  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-		  // which we can spread on <input> and alse replace ErrorMessage entirely.
-		// <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
-		  const [field, meta] = useField(props);
-		  return (
-		    <>
-		    <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
-		      <input className="number-input" {...field} {...props} />
-		      {meta.touched && meta.error ? (
-		        <div className="error">{meta.error}</div>
-		      ) : null}
-		    </>
-		  );
-		};
-
 	const MyCheckbox = ({ children, ...props }) => {
 	  const [field, meta] = useField({ ...props, type: "checkbox" });
 	  return (
 	    <>
 	      <label className="checkbox">
-	        <input {...field} {...props} type="checkbox" />
+	        <input {...field} {...props} type="checkbox" classname="form-control" />
 	        {children}
 	      </label>
 	      {meta.touched && meta.error ? (
@@ -161,12 +144,13 @@ const MyTextInput = ({ label, ...props }) => {
 
 	const MySelect = ({ label, ...props }) => {
 	  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-	  // which we can spread on <input> and alse replace ErrorMessage entirely.
+	  // which we can spread on <input> and alse replace ErrorMessage
+		// entirely.
 	  const [field, meta] = useField(props);
 	  return (
 	    <>
 	      <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
-	      <StyledSelect {...field} {...props} />
+	      <StyledSelect classname="form-control" {...field} {...props} />
 	      {meta.touched && meta.error ? (
 	        <StyledErrorMessage>{meta.error}</StyledErrorMessage>
 	      ) : null}
@@ -258,229 +242,244 @@ const MyTextInput = ({ label, ...props }) => {
 		}
 		Yup.addMethod(Yup.string, 'equalTo', equalTo);
 	
-	   const handleSubmit = (values) => {
-           var object = {};
-           
-           var json = JSON.stringify(values);
-           console.log(json);
 
-           fetch('https://host.openelis.org:8445/locator-form' , {
-                   method: 'POST',
-                   headers: {
-                           'Content-Type': 'application/json', 
-                   },
-                   body: json
-           })
-            .catch( err => {
-                    console.log(err);
-            })
-           }
-           
-var id = null;
+class Home extends React.Component {      
 
-function Home() {
-	
-	id = uuidv4();
-	var { inputRef } = useBarcode({ value: id, });
+	constructor(props) {
+		super(props);
+		this.state = {
+				submitErrorMessage : ""
+		};
+	}
+
+	handleSubmit = (values) => {
+       var object = {};
+       
+       var json = JSON.stringify(values);
+       console.log(json);
+
+       fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form` , {
+               method: 'POST',
+               headers: {
+                       'Content-Type': 'application/json', 
+               },
+               body: json
+       }).then(function(response) {
+    	   if(response.ok) {
+    		     return response.blob();
+    	   } else {
+    	         this.props.history.push('/success/');
+    	   }
+    	}).catch( err => {
+                console.log(err);
+                this.setState({submitErrorMessage: "An error occurred"})
+        })
+       }
+
+  render() {
+		var id = null;
+		
+		id = uuidv4();  
+		var Barcode = require('react-barcode');
   return (
     <div className="home">
+    	<div className="container">
         <div className="row">
-          <div className="col-lg-12">
-              <div>
+          <div className="col-lg-12 ">
               <Formik
                initialValues={initialValues}
               validationSchema={Yup.object({
             	  
              	
-//                    acceptedTerms: Yup.boolean()
-//                      .required('Required')
-//                      .oneOf([true], 'You must accept the terms and conditions.'),
-//                      
-//         	         airlineName: Yup.string()
-//         	           .max(15, 'Must be 15 characters or less')
-//         	           .required('Required'),
-//                  flightNumber: Yup.string()
-//         	           .max(15, 'Must be 15 characters or less')
-//         	           .required('Required'),
-//                  seatNumber: Yup.string()
-//         	           .max(15, 'Must be 15 characters or less')
-//         	           .required('Required'),
-//                  arrivalDate: Yup.string()
-//                    	   .required('Required'),
-//                    	   
-//                    		 title: Yup.string()
-//                             .oneOf(
-//                               ['mr', 'mrs', 'miss', 'other'],
-//                               'Invalid Status'
-//                             )
-//                             .required('Required'),
-//                    	      firstName: Yup.string()
-//                              .max(15, 'Must be 15 characters or less')
-//                              .required('Required'),
-//                   	     lastName: Yup.string()
-//                   	       .max(20, 'Must be 20 characters or less')
-//                   	       .required('Required'),
-//                   	    middleInitial: Yup.string()
-//                	       .max(20, 'Must be 20 characters or less')
-//                	       .required('Required'),
-//                   	    gender: Yup.string()
-//       	             .oneOf(
-//       	               ['male', 'female'],
-//       	               'Invalid Gender'
-//       	             )
-//       	             .required('Required'),
-//       	 		 portOfEmbarkation: Yup.string()
-//				    .max(20, 'Must be 20 characters or less')
-//					.required('Required'), 
-//		 countriesVisited: Yup.string()
-//						.required('Required'), 
-//		 lengthOfStay: Yup.string()
-//							.required('Required'), 
-//							
-//					           fever: Yup.string()
-//					             .oneOf(
-//					               ['yes', 'no'],
-//					               'Invalid Status'
-//					             )
-//					             .required('Required'),
-//					             soreThroat: Yup.string()
-//					             .oneOf(
-//					               ['yes', 'no'],
-//					               'Invalid Status'
-//					             )
-//					             .required('Required'),
-//					             jointPain: Yup.string()
-//					             .oneOf(
-//					               ['yes', 'no'],
-//					               'Invalid Status'
-//					             )
-//					             .required('Required'),
-//					             cough: Yup.string()
-//					             .oneOf(
-//					               ['yes', 'no'],
-//					               'Invalid Status'
-//					             )
-//					             .required('Required'),
-//					             breathingDifficulties: Yup.string()
-//					             .oneOf(
-//					               ['yes', 'no'],
-//					               'Invalid Status'
-//					             )
-//					             .required('Required'),
-//					             rash: Yup.string()
-//					             .oneOf(
-//					               ['yes', 'no'],
-//					               'Invalid Status'
-//					             )
-//					             .required('Required'),	
-//					             
-//					             visitPurpose: Yup.string()
-//					             .oneOf(
-//					               ['business', 'pleasure', 'other'],
-//					               'Invalid Job Type'
-//					             )
-//					             .required('Required'),
-//					             mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-//					         	   .min(10, 'Must be 10 numbers'),
-//					  	     businessPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-//					         	   .min(10, 'Must be 10 numbers'),
-//					  	    
-//				           	  email: Yup.string()
-//					              .email('Invalid email address')
-//					              .required('Required'),
-//					          confirmEmail: Yup.string().equalTo(Yup.ref('email'), 'Emails must match')
-//					          	   .oneOf([Yup.ref('confirmEmail'), "Emails must match"])
-//					              .required('Email confirm is required'),
-//					              
-//					     		 passportNumber: Yup.string()
-//								   .max(20, 'Must be 20 characters or less')
-//								   .required('Required'),
-//						 nationality: Yup.string()
-//									.max(20, 'Must be 20 characters or less')
-//									.required('Required'),
-//									
-//									 permAddress: Yup.object().shape ({
-//										 
-//										 numberAndStreet: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//							             apartmentNumber: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             city: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             stateProvince: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             country: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             zipPostalCode: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//									 }),
-//									 
-//									  tempAddress: Yup.object().shape ({
-//										  
-//										  hotelName: Yup.string()
-//							              			.max(20, 'Must be 20 characters or less')
-//							              			.required('Required'),
-//							              
-//										 numberAndStreet: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//							             apartmentNumber: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             city: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             stateProvince: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             country: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//
-//							             zipPostalCode: Yup.string()
-//							                       .max(20, 'Must be 20 characters or less')
-//							                       .required('Required'),
-//									 }),
-//									 
-//									  emergencyContact: Yup.object().shape ({
-//										  
-//										  lastName: Yup.string()
-//										  	.max(20, 'Must be 20 characters or less')
-//										  	.required('Required'),
-//
-//										  firstName: Yup.string()
-//										  	.max(20, 'Must be 20 characters or less')
-//										  	.required('Required'),
-//
-//										  city: Yup.string()
-//										  	.max(20, 'Must be 20 characters or less')
-//										  	.required('Required'),
-//
-//										  country: Yup.string()
-//										  	.max(20, 'Must be 20 characters or less')
-//										  	.required('Required'),
-//
-//										  email: Yup.string()
-//										  	.email('Invalid email address'),
-//
-//										  mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
-//										  	.min(10, 'Must be 10 numbers'),
-//
-//									 
-//									  }),									
+                    acceptedTerms: Yup.boolean()
+                      .required('Required')
+                      .oneOf([true], 'You must accept the terms and conditions.'),
+                      
+         	         airlineName: Yup.string()
+         	           .max(15, 'Must be 15 characters or less')
+         	           .required('Required'),
+                  flightNumber: Yup.string()
+         	           .max(15, 'Must be 15 characters or less')
+         	           .required('Required'),
+                  seatNumber: Yup.string()
+         	           .max(15, 'Must be 15 characters or less')
+         	           .required('Required'),
+                  arrivalDate: Yup.string()
+                    	   .required('Required'),
+                    	   
+                    		 title: Yup.string()
+                             .oneOf(
+                               ['mr', 'mrs', 'miss', 'other'],
+                               'Invalid Status'
+                             )
+                             .required('Required'),
+                    	      firstName: Yup.string()
+                              .max(15, 'Must be 15 characters or less')
+                              .required('Required'),
+                   	     lastName: Yup.string()
+                   	       .max(20, 'Must be 20 characters or less')
+                   	       .required('Required'),
+                   	    middleInitial: Yup.string()
+                	       .max(20, 'Must be 20 characters or less')
+                	       .required('Required'),
+                   	    gender: Yup.string()
+       	             .oneOf(
+       	               ['male', 'female'],
+       	               'Invalid Gender'
+       	             )
+       	             .required('Required'),
+       	 		 portOfEmbarkation: Yup.string()
+				    .max(20, 'Must be 20 characters or less')
+					.required('Required'), 
+		 countriesVisited: Yup.string()
+						.required('Required'), 
+		 lengthOfStay: Yup.string()
+							.required('Required'), 
+							
+					           fever: Yup.string()
+					             .oneOf(
+					               ['yes', 'no'],
+					               'Invalid Status'
+					             )
+					             .required('Required'),
+					             soreThroat: Yup.string()
+					             .oneOf(
+					               ['yes', 'no'],
+					               'Invalid Status'
+					             )
+					             .required('Required'),
+					             jointPain: Yup.string()
+					             .oneOf(
+					               ['yes', 'no'],
+					               'Invalid Status'
+					             )
+					             .required('Required'),
+					             cough: Yup.string()
+					             .oneOf(
+					               ['yes', 'no'],
+					               'Invalid Status'
+					             )
+					             .required('Required'),
+					             breathingDifficulties: Yup.string()
+					             .oneOf(
+					               ['yes', 'no'],
+					               'Invalid Status'
+					             )
+					             .required('Required'),
+					             rash: Yup.string()
+					             .oneOf(
+					               ['yes', 'no'],
+					               'Invalid Status'
+					             )
+					             .required('Required'),	
+					             
+					             visitPurpose: Yup.string()
+					             .oneOf(
+					               ['business', 'pleasure', 'other'],
+					               'Invalid Job Type'
+					             )
+					             .required('Required'),
+					             mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+					         	   .min(10, 'Must be 10 numbers'),
+					  	     businessPhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+					         	   .min(10, 'Must be 10 numbers'),
+					  	    
+				           	  email: Yup.string()
+					              .email('Invalid email address')
+					              .required('Required'),
+					          confirmEmail: Yup.string().equalTo(Yup.ref('email'), 'Emails must match')
+					          	   .oneOf([Yup.ref('confirmEmail'), "Emails must match"])
+					              .required('Email confirm is required'),
+					              
+					     		 passportNumber: Yup.string()
+								   .max(20, 'Must be 20 characters or less')
+								   .required('Required'),
+						 nationality: Yup.string()
+									.max(20, 'Must be 20 characters or less')
+									.required('Required'),
+									
+									 permAddress: Yup.object().shape ({
+										 
+										 numberAndStreet: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+							             apartmentNumber: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             city: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             stateProvince: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             country: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             zipPostalCode: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+									 }),
+									 
+									  tempAddress: Yup.object().shape ({
+										  
+										  hotelName: Yup.string()
+							              			.max(20, 'Must be 20 characters or less')
+							              			.required('Required'),
+							              
+										 numberAndStreet: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+							             apartmentNumber: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             city: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             stateProvince: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             country: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+
+							             zipPostalCode: Yup.string()
+							                       .max(20, 'Must be 20 characters or less')
+							                       .required('Required'),
+									 }),
+									 
+									  emergencyContact: Yup.object().shape ({
+										  
+										  lastName: Yup.string()
+										  	.max(20, 'Must be 20 characters or less')
+										  	.required('Required'),
+
+										  firstName: Yup.string()
+										  	.max(20, 'Must be 20 characters or less')
+										  	.required('Required'),
+
+										  city: Yup.string()
+										  	.max(20, 'Must be 20 characters or less')
+										  	.required('Required'),
+
+										  country: Yup.string()
+										  	.max(20, 'Must be 20 characters or less')
+										  	.required('Required'),
+
+										  email: Yup.string()
+										  	.email('Invalid email address'),
+
+										  mobilePhone: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+										  	.min(10, 'Must be 10 numbers'),
+
+									 
+									  }),									
 
               })}
               
@@ -488,7 +487,7 @@ function Home() {
                   setTimeout(() => {
                 	 values.id = id;
                     
-                    handleSubmit(values);
+                    this.handleSubmit(values);
                     setSubmitting(false);
                   }, 400);
                 }}
@@ -496,46 +495,60 @@ function Home() {
                render={({ values, errors, touched, handleReset }) => {
             	   
                  return (
+                       <div className="row">
+                       <div className="col-lg-12 ">
                    <Form>
+                   <div className="row">
+                   <div className="col-lg-12 ">
          	       <p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="Public Health Passenger Locator Form: To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health."/></p>
-         	       
+
+         	       </div>
+                   </div>
+                   <div className="row">
+                   <div className="col-lg-12 ">
          	       <h5> <FormattedMessage id="nav.item.flightInformation" defaultMessage="Flight Information"/></h5>
-         	       <table>
-         	       <td>
+         	       </div>
+                   </div>
+                   <div className="row">
+                   <div className="col-lg-3 form-group form-group">
          	       <MyTextInput
                       label=<FormattedMessage id="nav.item.airline" defaultMessage="Airline"/>
                       name="airlineName"
                       type="medtext"
                   />
-         	       </td>
-         	       <td>
+        	       </div>
          	      
-                
+
+                  <div className="col-lg-3 form-group form-group">
          	       <MyTextInput
          	       	  label=<FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight"/>
                       name="flightNumber"
                       type="smalltext"
                   />
-         	       </td>
-         	       <td>
+         	       </div>
+                   <div className="col-lg-3 form-group form-group">
          	       <MyTextInput
                       label=<FormattedMessage id="nav.item.seat" defaultMessage="Seat"/>
                       name="seatNumber"
                       type="smalltext"
                   />
-         	       </td>
-         	       <td>
+         	       </div>
+                   <div className="col-lg-3 form-group form-group">
          	       <MyTextInput
                       label=<FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival"/>
                       name="arrivalDate"
                       type="date"
                   />
-         	       </td>
-         	       </table>
+         	       </div>
+                   </div>
+                   <div className="row">
+                   <div className="col-lg-12 ">
          	       
         	       <h5> <FormattedMessage id="nav.item.personalInformation" defaultMessage="Personal Information"/> </h5>
-        	       <table>
-        	       <td>
+         	       </div>
+                   </div>
+                   <div className="row">
+                   <div className="col-lg-2 form-group">
               	 <MySelect label=<FormattedMessage id="nav.item.title" defaultMessage="Title"/> 
               	 name="title">
                  <option value=""></option>
@@ -544,31 +557,31 @@ function Home() {
                  <option value="miss">Miss</option>
                  <option value="other">Other</option>
                </MySelect>
-               </td>
-               <td>
+               </div>
+               <div className="col-lg-2 form-group">
                
                <MyTextInput
                label=<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/>
                name="lastName"
                type="text"
              /> 
-               </td>
-               <td>
+               </div>
+               <div className="col-lg-2 form-group">
             	   <MyTextInput
                      label=<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/>
                      name="firstName"
                      type="text"
                    />
-               </td>
-            	   <td>
+               </div>
+               <div className="col-lg-2 form-group">
                    
                    <MyTextInput
                    label=<FormattedMessage id="nav.item.middleInitial" defaultMessage="Middle Initial"/>
                    name="middleInitial"
                    type="smalltext"
                  /> 
-                   </td>
-            <td>
+                   </div>
+                   <div className="col-lg-2 form-group">
          
             <MySelect label=<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/>
             name="gender">
@@ -577,297 +590,324 @@ function Home() {
             <option value="female">Female</option>
           </MySelect>
             
-        </td>
-        <td>
+        </div>
+        <div className="col-lg-2 form-group">
 	       <MyTextInput
            label=<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth"/>
            name="dateOfBirth"
            type="date"
        />
-	       </td>
-         </table>
+	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">
          
          <h5> <FormattedMessage id="nav.item.healthInformation" defaultMessage="Health Information"/></h5>
-         <table> 
-         <td>
+	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-4 form-group ">
          <MyTextInput
            label=<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)"/>
            name="lengthOfStay"
            type="smalltext"
          />
-        </td> 
-         
-         <td>
+        </div> 
+
+        <div className="col-lg-4 form-group ">
          <MyTextInput
            label=<FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months"/>
            name="countries"
            type="text"
          />
-        </td> 
-         <td>
+        </div> 
+        <div className="col-lg-4 form-group ">
          <MyTextInput
            label=<FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation"/>
            name="portOfEmbarkation"
            type="text"
          />
 
-        </td>
-         </table>
+	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">
          
          <h5> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?"/></h5>
-         <table> 
-         <td>
+	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-2 form-group ">
         	 <MySelect label=<FormattedMessage id="nav.item.fever" defaultMessage="Fever"/> 
         		 name="fever">
              <option value=""></option>
              <option value="yes" >Yes</option>
              <option value="no">No</option>
            </MySelect>
-           </td>
-         
-           <td>
+           </div>
+
+           <div className="col-lg-2 form-group ">
         	 <MySelect label=<FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat"/> name="soreThroat">
            <option value=""></option>
            <option value="yes">Yes</option>
            <option value="no">No</option>
          </MySelect>
-         </td>
-         <td>
+         </div>
+         <div className="col-lg-2 form-group ">
          <MySelect label=<FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain"/> name="jointPain">
          <option value=""></option>
          <option value="yes">Yes</option>
          <option value="no">No</option>
         </MySelect>
-        </td>
-        <td>
+        </div>
+        <div className="col-lg-2 form-group ">
         <MySelect label=<FormattedMessage id="nav.item.cough" defaultMessage="Cough"/> name="cough">
         <option value=""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         </MySelect>
-        </td>
-        <td>
+        </div>
+        <div className="col-lg-2 form-group ">
         <MySelect label=<FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties"/> name="breathingDifficulties">
         <option value=""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         </MySelect>
-        </td>
-        <td>
+        </div>
+        <div className="col-lg-2 form-group ">
         <MySelect label=<FormattedMessage id="nav.item.rash" defaultMessage="Rash"/> name="rash">
         <option value=""></option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
         </MySelect>
-        </td>
-        </table>
+        </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">
         
         <h5> <FormattedMessage id="nav.item.phoneNumbers" defaultMessage="Phone Number(s) Where you can be reached if needed? Include country code and city code."/> </h5>
-        <table>
-            <td>
+	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-4 form-group ">
             <MySelect label=<FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit"/> name="visitPurpose">
           <option value=""></option>
           <option value="business">Business</option>
           <option value="pleasure">Pleasure</option>
           <option value="other">Other</option>
         </MySelect>
-        </td>
-            <td>
+        </div>
+        <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone"/>
               name="mobilePhone"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone"/>
               name="businessPhone"
               type="text"
           />
-            </td>
-            </table>
-            <table>
-            <td>
+            </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-3 form-group ">
             
             <MyTextInput
             label=<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address"/>
             name="email"
             type="email"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
             label=<FormattedMessage id="nav.item.confirmEmailAddress" defaultMessage="Confirm Email Address"/>
             name="confirmEmail"
             type="email"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
         	   <MyTextInput
                  label=<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/>
                  name="nationality"
                  type="medtext"
                />
-           </td>
-            <td>
+           </div>
+           <div className="col-lg-3 form-group ">
        	   <MyTextInput
               label=<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number"/>
               name="passportNumber"
               type="medtext"
             />
-        </td>
-            </table>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">
             <h5> <FormattedMessage id="nav.item.permanent Address" defaultMessage="Permanent Address"/></h5>
-            <table>
-            <td>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-4 form-group">
             <MyTextInput
               label=<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street"/>
               name="permAddress.numberAndStreet"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group">
             <MyTextInput
               label=<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number"/>
               name="permAddress.apartmentNumber"
               type="smalltext"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group">
             <MyTextInput
               label=<FormattedMessage id="nav.item.city" defaultMessage="City"/>
               name="permAddress.city"
               type="medtext"
           />
-            </td>
-            </table>
-            <table>
-            <td>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province"/>
               name="permAddress.stateProvince"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.country" defaultMessage="Country"/>
               name="permAddress.country"
               type="medtext"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code"/>
               name="permAddress.zipPostalCode"
               type="text"
           />
-            </td>
-            </table>
+            </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">
             <h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address in Mauritius"/></h5>
-            <table>
-            <td>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name"/>
               name="tempAddress.hotelName"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street"/>
               name="tempAddress.numberAndStreet"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number"/>
               name="tempAddress.apartmentNumber"
               type="smalltext"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.city" defaultMessage="City"/>
               name="tempAddress.city"
               type="medtext"
           />
-            </td>
-            </table>
-            <table>
-            <td>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province"/>
               name="tempAddress.stateProvince"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.country" defaultMessage="Country"/>
               name="tempAddress.country"
               type="medtext"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-4 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code"/>
               name="tempAddress.zipPostalCode"
               type="text"
           />
-            </td>
-            </table>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">
             <h5> <FormattedMessage id="nav.item.emergencyContact" defaultMessage="Emergency Contact Information of someone who can reach you during the next 30 days"/></h5>
-            <table>
-            <td>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/>
               name="emergencyContact.lastName"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/>
               name="emergencyContact.firstName"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.city" defaultMessage="City"/>
               name="emergencyContact.city"
               type="medtext"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-3 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.country" defaultMessage="Country"/>
               name="emergencyContact.country"
               type="medtext"
           />
-            </td>
-            </table>
-            <table>
-        
-            <td>
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-6 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address"/>
               name="emergencyContact.email"
               type="text"
           />
-            </td>
-            <td>
+            </div>
+            <div className="col-lg-6 form-group ">
             <MyTextInput
               label=<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone"/>
               name="emergencyContact.mobilePhone"
               type="text"
           />
-            </td>
-            </table>    
+  	       </div>
+           </div>
+           <div className="row">
+           <div className="col-lg-12 ">    
  	       <h5> <FormattedMessage id="nav.item.addTravelCompanionFamily" defaultMessage="Travel Companions Family"/></h5>
+ 	       </div>
+           </div>
            <FieldArray
              name="familyTravelCompanions"
              render={({ insert, remove, push }) => (
@@ -875,14 +915,13 @@ function Home() {
                <div>
                  {values.familyTravelCompanions.length > 0 &&
                    values.familyTravelCompanions.map((comp, index) => (
-                     <div className="row" key={index}>
-                     
-                     <table>
-                     <td>
-                       <div className="col">
+                     <div  key={index}>
+
+                     <div className="row">
+                     <div className="col-lg-6 form-group ">
                         
                          <label htmlFor={`familyTravelCompanions.${index}.lastName`}><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/></label>
-                         <Field
+                         <Field className="form-control"
                            name={`familyTravelCompanions.${index}.lastName`}
                            type="text"
                          />
@@ -896,11 +935,9 @@ function Home() {
                              </div>
                            )}
                        </div>
-                         </td>
-                         <td>
-                       <div className="col">
+                         <div className="col-lg-6 form-group ">
                          <label htmlFor={`familyTravelCompanions.${index}.firstName`}><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/></label>
-                         <Field
+                         <Field className="form-control"
                            name={`familyTravelCompanions.${index}.firstName`}
                            type="text"
                          />
@@ -914,12 +951,11 @@ function Home() {
                              </div>
                            )}
                        </div>
-                         </td>
-                         </table><table>
-                         <td>
-                         <div className="col">
+                       </div>
+                       <div className="row">
+                       <div className="col-lg-1 ">
                            <label htmlFor={`familyTravelCompanions.${index}.seatNumber`}><FormattedMessage id="nav.item.seat" defaultMessage="Seat"/></label>
-                           <Field
+                           <Field className="form-control"
                              name={`familyTravelCompanions.${index}.seatNumber`}
                              type="smalltext"
                            />
@@ -932,12 +968,10 @@ function Home() {
                                  {errors.familyTravelCompanions[index].seatNumber}
                                </div>
                              )}
-                         </div>
-                           </td>
-                           <td>
-                           <div className="col">
+                           </div>
+                           <div className="col-lg-2 form-group ">
                              <label htmlFor={`familyTravelCompanions.${index}.dateOfBirth`}><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth"/></label>
-                             <Field
+                             <Field className="form-control"
                                name={`familyTravelCompanions.${index}.dateOfBirth`}
                                type="date"
                              />
@@ -951,11 +985,7 @@ function Home() {
                                  </div>
                                )}
                            </div>
-                             </td>
-                             
-                             <td>
-                             <div className="col">
-                               
+                           <div className="col-lg-2 form-group ">
                                <MySelect
                                label=<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/> 
                             	   name={`familyTravelCompanions.${index}.gender`}>
@@ -973,12 +1003,10 @@ function Home() {
                                    </div>
                                  )}
                              </div>
-                               </td>
-                             
-                             <td>
-                             <div className="col">
+
+                             <div className="col-lg-3 form-group ">
                                <label htmlFor={`familyTravelCompanions.${index}.nationality`}><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/></label>
-                               <Field
+                               <Field className="form-control"
                                  name={`familyTravelCompanions.${index}.nationality`}
                                  type="medtext"
                                />
@@ -992,11 +1020,9 @@ function Home() {
                                    </div>
                                  )}
                              </div>
-                               </td>
-                               <td>
-                               <div className="col">
+                             <div className="col-lg-3 form-group ">
                                  <label htmlFor={`familyTravelCompanions.${index}.passportNumber`}><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number"/></label>
-                                 <Field
+                                 <Field className="form-control"
                                    name={`familyTravelCompanions.${index}.passportNumber`}
                                    type="medtext"
                                  />
@@ -1010,9 +1036,7 @@ function Home() {
                                      </div>
                                    )}
                                </div>
-                                 </td>
-                         <td>
-                       <div className="col">
+                               <div className="col-lg-1 ">
                          <button
                            type="button"
                            className="secondary"
@@ -1021,8 +1045,7 @@ function Home() {
                            X
                          </button>
                        </div>
-                       </td>
-                       </table>
+                       </div>
                      </div>
                      
                    ))}
@@ -1036,21 +1059,24 @@ function Home() {
                </div>
              )}
            />
-           <br />  
-	       <h5> Travel Companions Non-Family</h5>
+
+           <div className="row">
+           <div className="col-lg-12 ">    
+           <h5> Travel Companions Non-Family</h5>
+  	       </div>
+           </div>
             <FieldArray
               name="nonFamilyTravelCompanions"
               render={({ insert, remove, push }) => (
                 <div>
                   {values.nonFamilyTravelCompanions.length > 0 &&
                     values.nonFamilyTravelCompanions.map((comp, index) => (
-                      <div className="row" key={index}>
-                      
-                      <table>
-                      <td>
-                        <div className="col">
+                      <div  key={index}>
+
+                      <div className="row">
+                      <div className="col-lg-6 form-group ">
                           <label htmlFor={`nonFamilyTravelCompanions.${index}.lastName`}><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name"/></label>
-                          <Field
+                          <Field className="form-control"
                             name={`nonFamilyTravelCompanions.${index}.lastName`}
                             type="text"
                           />
@@ -1064,11 +1090,9 @@ function Home() {
                               </div>
                             )}
                         </div>
-                          </td>
-                          <td>
-                        <div className="col">
+                        <div className="col-lg-6 form-group ">
                           <label htmlFor={`nonFamilyTravelCompanions.${index}.firstName`}><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name"/></label>
-                          <Field
+                          <Field className="form-control"
                             name={`nonFamilyTravelCompanions.${index}.firstName`}
                             type="text"
                           />
@@ -1082,12 +1106,11 @@ function Home() {
                               </div>
                             )}
                         </div>
-                          </td>
-                          </table><table>
-                          <td>
-                          <div className="col">
+                           </div>
+                           <div className="row">
+                           <div className="col-lg-1">
                             <label htmlFor={`nonFamilyTravelCompanions.${index}.seatNumber`}><FormattedMessage id="nav.item.seat" defaultMessage="Seat"/></label>
-                            <Field
+                            <Field className="form-control"
                               name={`nonFamilyTravelCompanions.${index}.seatNumber`}
                               type="smalltext"
                             />
@@ -1101,11 +1124,9 @@ function Home() {
                                 </div>
                               )}
                           </div>
-                            </td>
-                            <td>
-                            <div className="col">
+                          <div className="col-lg-2 form-group">
                               <label htmlFor={`nonFamilyTravelCompanions.${index}.dateOfBirth`}><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth"/></label>
-                              <Field
+                              <Field className="form-control"
                                 name={`nonFamilyTravelCompanions.${index}.dateOfBirth`}
                                 type="date"
                               />
@@ -1119,11 +1140,7 @@ function Home() {
                                   </div>
                                 )}
                             </div>
-                              </td>
-                              
-                              <td>
-                              <div className="col">
-                                
+                              <div className="col-lg-2 form-group">
                                 <MySelect
                                   label=<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/> 
                                   name={`nonFamilyTravelCompanions.${index}.gender`}>
@@ -1141,11 +1158,9 @@ function Home() {
                                     </div>
                                   )}
                               </div>
-                                </td>
-                              <td>
-                              <div className="col">
+                              <div className="col-lg-3 form-group">
                                 <label htmlFor={`nonFamilyTravelCompanions.${index}.nationality`}><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/></label>
-                                <Field
+                                <Field className="form-control"
                                   name={`nonFamilyTravelCompanions.${index}.nationality`}
                                   type="medtext"
                                 />
@@ -1159,11 +1174,9 @@ function Home() {
                                     </div>
                                   )}
                               </div>
-                                </td>
-                                <td>
-                                <div className="col">
+                              <div className="col-lg-3 form-group">
                                   <label htmlFor={`nonFamilyTravelCompanions.${index}.passportNumber`}><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number"/></label>
-                                  <Field
+                                  <Field className="form-control"
                                     name={`nonFamilyTravelCompanions.${index}.passportNumber`}
                                     type="medtext"
                                   />
@@ -1177,8 +1190,7 @@ function Home() {
                                       </div>
                                     )}
                                 </div>
-                                  </td>
-                          <td>
+                                <div className="col-lg-1">
                         <div className="col">
                           <button
                             type="button"
@@ -1188,12 +1200,14 @@ function Home() {
                             X
                           </button>
                         </div>
-                        </td>
-                        </table>
+              	       </div>
+                       </div>
                       
                       </div>
                       
                     ))}
+                   <div className="row">
+                   <div className="col-lg-12 ">
                   <button
                     type="button"
                     className="secondary"
@@ -1201,9 +1215,13 @@ function Home() {
                   >
                   <FormattedMessage id="nav.item.addTravelCompanionNonFamily" defaultMessage="Add Travel Companion Non-Family"/>
                   </button>
+         	       </div>
+                   </div>
                 </div>
               )}
             />            
+                   <div className="row">
+                   <div className="col-lg-12 ">
                    <table> 
                    <td>
                    <MyCheckbox name="acceptedTerms">
@@ -1211,27 +1229,42 @@ function Home() {
                    </MyCheckbox>
                      </td>
                      </table>
+         	       </div>
+                   </div>
+                   <div className="row">
+                   <div className="col-lg-12 ">
                      <table>
                      <td>
-                  <button type="submit">Submit</button> 	 
+                  <button type="submit">Submit</button> 	
+                  { this.state.submitErrorMessage &&
+                	  <div className="error"> { this.state.submitErrorMessage } </div> }
                      </td>
                   </table>
-                  
-                
-                  <table> 
-                  <td>
-                  <img ref={inputRef} />
-                    </td>
-                 </table>
+         	       </div>
+                   </div>
+                   <div className="row">
+                   <div className="col-lg-12 ">
+                  <Barcode value={id} />
+       	       </div>
+               </div>
          	      </Form>
+                  <div className="row">
+                  <div className="col-lg-12 ">
+                  <br></br>
+                  <br></br>
+      	       </div>
+              </div>
+         	       </div>
+                   </div>
                  );
                }}
              />
-           </div>
           </div>
         </div>
     </div>
+    </div>
   );
+  }
 }
 
 export default Home;
