@@ -391,7 +391,7 @@ function Home() {
 //					          confirmEmail: Yup.string().equalTo(Yup.ref('email'), 'Emails must match')
 //					          	   .oneOf([Yup.ref('confirmEmail'), "Emails must match"])
 //					              .required('Email confirm is required'),
-					              
+//					              
 //					     		 passportNumber: Yup.string()
 //								   .max(20, 'Must be 20 characters or less')
 //								   .required('Required'),
@@ -617,7 +617,7 @@ function Home() {
          <h5> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?"/></h5>
          <table> 
          <td>
-        	 <MySelect label=<FormattedMessage id="nav.item.fever" defaultMessage="Fevor"/> 
+        	 <MySelect label=<FormattedMessage id="nav.item.fever" defaultMessage="Fever"/> 
         		 name="fever">
              <option value=""></option>
              <option value="yes" >Yes</option>
@@ -759,7 +759,7 @@ function Home() {
             </td>
             <td>
             <MyTextInput
-              label=<FormattedMessage id="nav.item.zipPostalCode" defaulMessage="Zip/Postal Code"/>
+              label=<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code"/>
               name="permAddress.zipPostalCode"
               type="text"
           />
@@ -813,7 +813,7 @@ function Home() {
             </td>
             <td>
             <MyTextInput
-              label=<FormattedMessage id="nav.item.zipPostalCode" defaulMessage="Zip/Postal Code"/>
+              label=<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code"/>
               name="tempAddress.zipPostalCode"
               type="text"
           />

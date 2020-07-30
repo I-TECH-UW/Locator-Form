@@ -52,7 +52,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
         localFhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
     }
     
-    public Bundle CreateFhirResource(Resource resource, UUID id) {
+    public Bundle createFhirResource(Resource resource, UUID id) {
         log.debug("FhirServerTransformServiceImpl:CreateFhirResource: " + 
                 resource.getResourceType() + " " +
                 id.toString()
@@ -115,7 +115,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
     }
 
     @Override
-    public Task CreateFhirTask(LocatorFormDTO locatorForm) {
+    public Task createFhirTask(LocatorFormDTO locatorForm) {
         org.hl7.fhir.r4.model.Task fhirTask = new org.hl7.fhir.r4.model.Task();
         
       String taskId = locatorForm.getId().toString();
@@ -131,7 +131,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
     }
     
     @Override
-    public ServiceRequest CreateFhirServiceRequest(LocatorFormDTO locatorForm) {
+    public ServiceRequest createFhirServiceRequest(LocatorFormDTO locatorForm) {
         FamilyTravelCompanion comp = new FamilyTravelCompanion();
         comp.setDateOfBirth(locatorForm.getDateOfBirth());
         comp.setGender(locatorForm.getGender());
@@ -141,11 +141,11 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
         comp.setNationality(locatorForm.getNationality());
         comp.setPassportNumber(locatorForm.getPassportNumber());
         comp.setSeatNumber(locatorForm.getSeatNumber());
-        return CreateFhirServiceRequest(comp);
+        return createFhirServiceRequest(comp);
     }
     
     @Override
-    public ServiceRequest CreateFhirServiceRequest(NonFamilyTravelCompanion nonComp) {
+    public ServiceRequest createFhirServiceRequest(NonFamilyTravelCompanion nonComp) {
         FamilyTravelCompanion comp = new FamilyTravelCompanion();
         comp.setDateOfBirth(nonComp.getDateOfBirth());
         comp.setGender(nonComp.getGender());
@@ -155,11 +155,11 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
         comp.setNationality(nonComp.getNationality());
         comp.setPassportNumber(nonComp.getPassportNumber());
         comp.setSeatNumber(nonComp.getSeatNumber());
-        return CreateFhirServiceRequest(comp);
+        return createFhirServiceRequest(comp);
     }
 
     @Override
-    public ServiceRequest CreateFhirServiceRequest(FamilyTravelCompanion comp) {
+    public ServiceRequest createFhirServiceRequest(FamilyTravelCompanion comp) {
       
       Bundle pResp = new Bundle();
       ServiceRequest serviceRequest = new ServiceRequest();
@@ -169,7 +169,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
           Reference subjectRef = new Reference();
           
           org.hl7.fhir.r4.model.Patient fhirPatient = CreateFhirPatient(comp);
-          pResp = CreateFhirResource(fhirPatient, UUID.randomUUID());
+          pResp = createFhirResource(fhirPatient, UUID.randomUUID());
 //          log.debug("pResp: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(pResp));
           subjectRef.setReference(pResp.getEntryFirstRep().getResponse().getLocation());
           
