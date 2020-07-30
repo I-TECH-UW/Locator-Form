@@ -4,11 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import Keycloak from 'keycloak-js';
-
   ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <App/>
     </React.StrictMode>,
     document.getElementById('root')
   );
