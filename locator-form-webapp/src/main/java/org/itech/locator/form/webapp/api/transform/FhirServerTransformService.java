@@ -11,7 +11,7 @@ public interface FhirServerTransformService {
     
     public Bundle createFhirResource(Resource resource, UUID id);
 
-    public org.hl7.fhir.r4.model.Patient createFhirPatient(LocatorFormDTO locatorFormDTO);
+    public org.hl7.fhir.r4.model.Patient createFhirPatient(LocatorFormDTO locatorFormDTO, UUID uuid);
     
     public org.hl7.fhir.r4.model.Task createFhirTask(LocatorFormDTO locatorFormDTO);
     
