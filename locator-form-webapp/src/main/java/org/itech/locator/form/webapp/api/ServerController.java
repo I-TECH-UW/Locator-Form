@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.DocumentException;
 
 import ca.uhn.fhir.context.FhirContext;
@@ -47,10 +49,12 @@ public class ServerController {
 	private BarcodeService barcodeService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	ObjectMapper objectMapper;
 
 	@PostMapping()
 	public ResponseEntity<String> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO)
-			throws OutputException, BarcodeException, MessagingException, DocumentException {
+			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		if (!locatorFormDTO.getAcceptedTerms()) {
 			return ResponseEntity.badRequest().body("must accept terms");
 		}
@@ -71,7 +75,6 @@ public class ServerController {
 		idAndLabels.add(new LabelContentPair("Main ServiceRequest ID", uuid.toString()));
 		log.trace("fhirSR: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(srResponse));
 		basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
-
 
 		for (TravelCompanion comp : locatorFormDTO.getFamilyTravelCompanions()) {
 
@@ -102,7 +105,9 @@ public class ServerController {
 			basedOnRef0 = null;
 		}
 
-		fhirTask.setDescription(locatorFormDTO.toString());
+		String locatorFormJSON = null;
+        locatorFormJSON = objectMapper.writeValueAsString(locatorFormDTO);
+		fhirTask.setDescription(locatorFormJSON);
 
 		log.trace("fhirTask: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(fhirTask));
 		org.hl7.fhir.r4.model.Bundle tResponse = fhirServerTransformService.createFhirResource(fhirTask,

@@ -85,7 +85,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
     }
 
 
-    public org.hl7.fhir.r4.model.Patient createFhirPatient(TravelCompanion comp) {
+    public org.hl7.fhir.r4.model.Patient createFhirPatient(TravelCompanion comp, UUID uuid) {
 		org.hl7.fhir.r4.model.Patient fhirPatient = new org.hl7.fhir.r4.model.Patient();
 
 		HumanName humanName = new HumanName();
@@ -94,6 +94,15 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
 		humanName.addGiven(comp.getFirstName());
 		humanNameList.add(humanName);
 		fhirPatient.setName(humanNameList);
+		
+		String patientId = uuid.toString();
+        Identifier identifier = new Identifier();
+        identifier.setId(patientId);
+        identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+        List<Identifier> identifierList = new ArrayList<>();
+        identifierList.add(identifier);
+        fhirPatient.setIdentifier(identifierList);
+		
 		fhirPatient.setBirthDate(Date.from(comp.getDateOfBirth().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		switch (comp.getSex()) {
 		case MALE:
@@ -110,15 +119,25 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
     }
 
     @Override
-	public org.hl7.fhir.r4.model.Patient createFhirPatient(LocatorFormDTO locatorForm) {
+	public org.hl7.fhir.r4.model.Patient createFhirPatient(LocatorFormDTO locatorForm, UUID uuid) {
         org.hl7.fhir.r4.model.Patient fhirPatient = new org.hl7.fhir.r4.model.Patient();
 
         HumanName humanName = new HumanName();
         List<HumanName> humanNameList = new ArrayList<>();
         humanName.setFamily(locatorForm.getLastName());
         humanName.addGiven(locatorForm.getFirstName());
+        humanName.addGiven(locatorForm.getMiddleInitial());
         humanNameList.add(humanName);
         fhirPatient.setName(humanNameList);
+        
+        String patientId = uuid.toString();
+        Identifier identifier = new Identifier();
+        identifier.setId(patientId);
+        identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+        List<Identifier> identifierList = new ArrayList<>();
+        identifierList.add(identifier);
+        fhirPatient.setIdentifier(identifierList);
+        
 		fhirPatient
 				.setBirthDate(Date.from(locatorForm.getDateOfBirth().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		switch (locatorForm.getSex()) {
@@ -142,7 +161,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
       String taskId = locatorForm.getId().toString();
       Identifier identifier = new Identifier();
       identifier.setId(taskId);
-      identifier.setSystem("LocatorForm/TaskId"); // fix hardcode
+      identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
       List<Identifier> identifierList = new ArrayList<>();
       identifierList.add(identifier);
 
@@ -172,18 +191,20 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
       ServiceRequest serviceRequest = new ServiceRequest();
 
       try {
-
-          Reference subjectRef = new Reference();
-
-          org.hl7.fhir.r4.model.Patient fhirPatient = createFhirPatient(comp);
-          pResp = createFhirResource(fhirPatient, UUID.randomUUID());
-			log.trace("pResp: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(pResp));
-          subjectRef.setReference(pResp.getEntryFirstRep().getResponse().getLocation());
+          // patient is created here and used for SR subjectRef
+          UUID uuid = UUID.randomUUID();
+          org.hl7.fhir.r4.model.Patient fhirPatient = createFhirPatient(comp, uuid);
+	      
+	      pResp = createFhirResource(fhirPatient, uuid);
+	      log.trace("pResp: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(pResp));
+          
+	      Reference subjectRef = new Reference();
+	      subjectRef.setReference(pResp.getEntryFirstRep().getResponse().getLocation());
 
           CodeableConcept codeableConcept = new CodeableConcept();
           List<Coding> codingList = new ArrayList<>();
           Coding coding0 = new Coding();
-          coding0.setCode("covid loinc");
+          coding0.setCode("14682-9");
           coding0.setSystem("http://loinc.org");
           codingList.add(coding0);
 
@@ -205,5 +226,4 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
 
       return serviceRequest;
     }
-
 }
