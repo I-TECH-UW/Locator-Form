@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StringType;
-import org.itech.locator.form.webapp.api.dto.FamilyTravelCompanion;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
-import org.itech.locator.form.webapp.api.dto.NonFamilyTravelCompanion;
+import org.itech.locator.form.webapp.api.dto.TravelCompanion;
 import org.itech.locator.form.webapp.api.transform.FhirServerTransformService;
 import org.itech.locator.form.webapp.barcode.LabelContentPair;
 import org.itech.locator.form.webapp.barcode.service.BarcodeService;
@@ -49,40 +49,46 @@ public class ServerController {
 	private EmailService emailService;
 
 	@PostMapping()
-	public ResponseEntity<String> submitForm(@RequestBody LocatorFormDTO locatorFormDTO)
+	public ResponseEntity<String> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO)
 			throws OutputException, BarcodeException, MessagingException, DocumentException {
+		if (!locatorFormDTO.getAcceptedTerms()) {
+			return ResponseEntity.badRequest().body("must accept terms");
+		}
 
 		log.trace("Received: " + locatorFormDTO.toString());
 		org.hl7.fhir.r4.model.Bundle srResponse = null;
 		List<String> basedOn = new ArrayList<>();
 		List<Reference> basedOnRef = new ArrayList<>();
 
+		List<LabelContentPair> idAndLabels = new ArrayList<>();
+		idAndLabels.add(new LabelContentPair("Task ID", locatorFormDTO.getId().toString()));
+
 		org.hl7.fhir.r4.model.Task fhirTask = fhirServerTransformService.createFhirTask(locatorFormDTO);
 		org.hl7.fhir.r4.model.ServiceRequest fhirServiceRequest = fhirServerTransformService
 				.createFhirServiceRequest(locatorFormDTO);
-		srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, UUID.randomUUID());
+		UUID uuid = UUID.randomUUID();
+		srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
+		idAndLabels.add(new LabelContentPair("Main ServiceRequest ID", uuid.toString()));
 		log.trace("fhirSR: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(srResponse));
 		basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
 
-		List<LabelContentPair> idAndLabels = new ArrayList<>();
-		idAndLabels.add(new LabelContentPair("Main ID", locatorFormDTO.getId().toString()));
 
-		for (FamilyTravelCompanion comp : locatorFormDTO.getFamilyTravelCompanions()) {
+		for (TravelCompanion comp : locatorFormDTO.getFamilyTravelCompanions()) {
 
 			fhirServiceRequest = fhirServerTransformService.createFhirServiceRequest(comp);
-			UUID uuid = UUID.randomUUID();
+			uuid = UUID.randomUUID();
 			srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
 			basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
-			idAndLabels.add(new LabelContentPair("Family Companion ID", uuid.toString()));
+			idAndLabels.add(new LabelContentPair("Family Companion ServiceRequest ID", uuid.toString()));
 		}
 
-		for (NonFamilyTravelCompanion comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
+		for (TravelCompanion comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
 
 			fhirServiceRequest = fhirServerTransformService.createFhirServiceRequest(comp);
-			UUID uuid = UUID.randomUUID();
+			uuid = UUID.randomUUID();
 			srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
 			basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
-			idAndLabels.add(new LabelContentPair("Non-Family Companion ID", uuid.toString()));
+			idAndLabels.add(new LabelContentPair("Non-Family Companion ServiceRequest ID", uuid.toString()));
 		}
 
 		for (String id : basedOn) {
