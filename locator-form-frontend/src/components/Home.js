@@ -430,10 +430,9 @@ class Home extends React.Component {
                                 <MySelect label={<FormattedMessage id="nav.item.title" defaultMessage="Title"/>} 
                                           name="title">
                                 <option value=""></option>
-                                <option value="MR">Mr</option>
-                                <option value="MRS">Mrs</option>
-                                <option value="MISS">Miss</option>
-                                <option value="OTHER">Other</option>
+                                <option value="MR">Mr M.</option>
+                                <option value="MRS">Mrs Mme</option>
+                                <option value="MISS">Miss Mlle</option>
                               </MySelect>
                             </div>
                             <div className="col-lg-3 form-group">
@@ -575,9 +574,9 @@ class Home extends React.Component {
             <MySelect label={<FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit"/>} 
                       name="visitPurpose">
                         <option value=""></option>
-            <option value="business">Business</option>
-            <option value="pleasure">Pleasure</option>
-            <option value="other">Other</option>
+            <option value="business">Business Travail</option>
+            <option value="pleasure">Pleasure Vacances</option>
+            <option value="other">Other Autre</option>
                       </MySelect>
         </div>
         <div className="col-lg-4 form-group ">
@@ -796,7 +795,7 @@ class Home extends React.Component {
       <div id="travelCompanionsInformation" className="section">
         <div className="row">
           <div className="col-lg-12 ">
-            <h5> <FormattedMessage id="nav.item.addTravelCompanionFamily" defaultMessage="Travel Companions Family" /></h5>
+            <h5> <FormattedMessage id="nav.item.travelCompanionsFamily" defaultMessage="Travel Companions Family" /></h5>
           </div>
         </div>
         <FieldArray
@@ -956,7 +955,7 @@ class Home extends React.Component {
 
     <div className="row">
       <div className="col-lg-12 ">
-        <h5> Travel Companions Non-Family</h5>
+        <h5> <FormattedMessage id="nav.item.travelCompanionsNonFamily" defaultMessage="Travel Companions Non-Family" /></h5>
       </div>
     </div>
     <FieldArray
@@ -1127,7 +1126,7 @@ class Home extends React.Component {
   <div id="submitInformation" className="section">
     <div className="row">
       <div className="col-lg-12 ">
-        <button type="submit">Submit</button>
+        <button type="submit"><FormattedMessage id="nav.item.submit" defaultMessage="Submit" /></button>
         {this.state.submitErrorMessage &&
           <span className="error-large"> {this.state.submitErrorMessage} </span>}
       </div>
