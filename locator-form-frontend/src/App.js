@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home, Success } from "./components";
+import { Navigation, Footer, Home } from "./components";
 import { IntlProvider } from 'react-intl';
 
 import messages_en from './i18n/en.json';
@@ -50,16 +50,17 @@ class App extends React.Component {
         defaultLocale={i18nConfig.defaultLocale}
         messages={i18nConfig.messages}
       >
-        <div className="App">
+        <div className="App" id="page">
           <Router>
             <Navigation onChangeLanguage={this.onChangeLanguage} />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/success/:id" exact component={Success}/>
-            </Switch>
+              <div id="content">
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                </Switch>
+              </div>
             <Footer />
           </Router>
-        </div>
+          </div>
       </IntlProvider>
     );
   }

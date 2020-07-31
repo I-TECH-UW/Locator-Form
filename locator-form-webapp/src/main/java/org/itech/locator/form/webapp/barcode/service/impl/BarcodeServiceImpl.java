@@ -16,6 +16,8 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.Barcode128;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import net.sourceforge.barbecue.BarcodeException;
@@ -49,17 +51,28 @@ public class BarcodeServiceImpl implements BarcodeService {
 			throws OutputException, BarcodeException, DocumentException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		Document document = new Document(new Rectangle(PageSize.LETTER));
+		document.addTitle("Locator-Form Barcodes");
 		PdfWriter writer = PdfWriter.getInstance(document, stream);
 		document.open();
+		PdfPTable table = new PdfPTable(1);
+
 		for (LabelContentPair pair : barcodeContentToLabel) {
+			PdfPCell cell = new PdfPCell();
 			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
 			Chunk chunk = new Chunk(pair.getLabel(), font);
-			document.add(chunk);
+			cell.addElement(chunk);
+			cell.setBorder(Rectangle.NO_BORDER);
+			table.addCell(cell);
+
+			cell = new PdfPCell();
 			Barcode128 code128 = new Barcode128();
 			code128.setGenerateChecksum(true);
 			code128.setCode(pair.getBarcodeContent());
-			document.add(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+			cell.addElement(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+			cell.setBorder(Rectangle.NO_BORDER);
+			table.addCell(cell);
 		}
+		document.add(table);
 		document.close();
 		writer.close();
 

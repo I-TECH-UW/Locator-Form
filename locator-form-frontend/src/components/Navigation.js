@@ -39,8 +39,8 @@ class Navigation extends React.Component {
                       <FontAwesomeIcon icon={faLanguage} style={{ color: 'grey' }} size="3x" />
                     </button>
                     <div className="dropdown-menu">
-                      <a className="dropdown-item" lang="en" onClick={this.props.onChangeLanguage}>English</a>
-                      <a className="dropdown-item" lang="fr" onClick={this.props.onChangeLanguage}>Français</a>
+                      <div><button className="dropdown-item language-button" lang="en" onClick={this.props.onChangeLanguage}>English</button></div>
+                      <div><button className="dropdown-item language-button" lang="fr" onClick={this.props.onChangeLanguage}>Français</button></div>
                     </div>
                   </div>
                 </li> 
