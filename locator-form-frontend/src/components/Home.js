@@ -16,6 +16,7 @@ const MyTextInput = ({ label, ...props }) => {
   return (
     <>
       <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+      
       <input className="text-input form-control" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
@@ -82,12 +83,12 @@ const MySelect = ({ label, ...props }) => {
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const initialValues = {
-  id: '', firstName: '', lastName: '', middleInitial: '', email: '',
+  id: '', firstName: '', lastName: '', middleInitial: '', email: '', confirmEmail: '',
   acceptedTerms: false,
   visitPurpose: '', title: '', airlineName: '', flightNumber: '',
   seatNumber: '', arrivalDate: '',
   mobilePhone: '', businessPhone: '',
-  gender: '', dateOfBirth: '', passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: '',
+  sex: '', dateOfBirth: '', passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: '',
   fever: '', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
 
   permAddress:
@@ -129,7 +130,7 @@ const initialValues = {
     //   middleInitial: "",
     //   seatNumber: "",
     //   dateOfBirth: "",
-    //   gender: "",
+    //   sex: "",
     //   nationality: "",
     //   passportNumber: "",
     // }
@@ -141,7 +142,7 @@ const initialValues = {
     //   middleInitial: "",
     //   seatNumber: "",
     //   dateOfBirth: "",
-    //   gender: "",
+    //   sex: "",
     //   nationality: "",
     //   passportNumber: "",
     // }
@@ -157,7 +158,7 @@ class Home extends React.Component {
     };
   }
 
-  handleSubmit = (values) => {
+  handleSubmit = (values, that) => {
 
     var json = JSON.stringify(values);
     console.log(json);
@@ -169,13 +170,13 @@ class Home extends React.Component {
       body: json
     }).then(function (response) {
       if (response.ok) {
-        return response.blob();
+        that.setState({'submitSuccess' : true});
       } else {
-        this.setState({'submitSuccess' : true});
+        throw new Error("didn't receive ok");
       }
     }).catch(err => {
       console.log(err);
-      this.setState({ submitErrorMessage: "An error occurred" })
+      that.setState({ 'submitErrorMessage': "An error occurred" })
     })
   }
 
@@ -205,7 +206,7 @@ class Home extends React.Component {
                     .required('Required'),
                   title: Yup.string()
                     .oneOf(
-                      ['mr', 'mrs', 'miss', 'other'],
+                      ['MR', 'MRS', 'MISS', 'OTHER'],
                       'Invalid Status'
                     )
                     .required('Required'),
@@ -218,10 +219,10 @@ class Home extends React.Component {
                   middleInitial: Yup.string()
                     .max(20, 'Must be 20 characters or less')
                     .required('Required'),
-                  gender: Yup.string()
+                  sex: Yup.string()
                     .oneOf(
                       ['male', 'female'],
-                      'Invalid Gender'
+                      'Invalid Sex'
                     )
                     .required('Required'),
                   portOfEmbarkation: Yup.string()
@@ -234,37 +235,37 @@ class Home extends React.Component {
 
                   fever: Yup.string()
                     .oneOf(
-                      ['yes', 'no'],
+                      ['true', 'false'],
                       'Invalid Status'
                     )
                     .required('Required'),
                   soreThroat: Yup.string()
                     .oneOf(
-                      ['yes', 'no'],
+                      ['true', 'false'],
                       'Invalid Status'
                     )
                     .required('Required'),
                   jointPain: Yup.string()
                     .oneOf(
-                      ['yes', 'no'],
+                      ['true', 'false'],
                       'Invalid Status'
                     )
                     .required('Required'),
                   cough: Yup.string()
                     .oneOf(
-                      ['yes', 'no'],
+                      ['true', 'false'],
                       'Invalid Status'
                     )
                     .required('Required'),
                   breathingDifficulties: Yup.string()
                     .oneOf(
-                      ['yes', 'no'],
+                      ['true', 'false'],
                       'Invalid Status'
                     )
                     .required('Required'),
                   rash: Yup.string()
                     .oneOf(
-                      ['yes', 'no'],
+                      ['true', 'false'],
                       'Invalid Status'
                     )
                     .required('Required'),
@@ -362,10 +363,12 @@ class Home extends React.Component {
                 })}
 
                 onSubmit={(values, { setSubmitting }) => {
+                    // get the Home object
+                    const that = this;
                   setTimeout(() => {
                     values.id = id;
 
-                    this.handleSubmit(values);
+                    this.handleSubmit(values, that);
                     setSubmitting(false);
                   }, 400);
                 }}
@@ -427,10 +430,10 @@ class Home extends React.Component {
                                 <MySelect label={<FormattedMessage id="nav.item.title" defaultMessage="Title"/>} 
                                           name="title">
                                 <option value=""></option>
-                                <option value="mr">Mr</option>
-                                <option value="mrs">Mrs</option>
-                                <option value="miss">Miss</option>
-                                <option value="other">Other</option>
+                                <option value="MR">Mr</option>
+                                <option value="MRS">Mrs</option>
+                                <option value="MISS">Miss</option>
+                                <option value="OTHER">Other</option>
                               </MySelect>
                             </div>
                             <div className="col-lg-3 form-group">
@@ -459,7 +462,7 @@ class Home extends React.Component {
                             <div className="col-lg-1 form-group">
 
                               <MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/>} 
-                                name="gender">
+                                name="sex">
                                 <option value=""> </option>
                               <option value="male">Male</option>
                               <option value="female">Female</option>
@@ -493,7 +496,7 @@ class Home extends React.Component {
                           <div className="col-lg-4 form-group ">
                             <MyTextInput
                               label={<FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months"/>}
-                              name="countries"
+                              name="countriesVisited"
                               type="text"
                             />
                           </div>
@@ -517,45 +520,45 @@ class Home extends React.Component {
                           <div className="col-lg-2 form-group ">
                             <MySelect label={<FormattedMessage id="nav.item.fever" defaultMessage="Fever"/>} name="fever">
                               <option value=""></option>
-                            <option value="yes" >Yes</option>
-                            <option value="no">No </option>
+                            <option value="true" >Yes</option>
+                            <option value="false">No </option>
                           </MySelect>
                         </div>
 
                         <div className="col-lg-2 form-group ">
                           <MySelect label={<FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat"/>} name="soreThroat">
                             <option value=""></option>
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
                           </MySelect>
                       </div>
                       <div className="col-lg-2 form-group ">
                         <MySelect label={<FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain"/>} name="jointPain">
                           <option value=""></option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
                         </MySelect>
                     </div>
                     <div className="col-lg-2 form-group ">
                       <MySelect label={<FormattedMessage id="nav.item.cough" defaultMessage="Cough"/>} name="cough">
                         <option value=""></option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
                       </MySelect>
                     </div>
                     <div className="col-lg-2 form-group ">
                 <MySelect label={<FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties"/>} name="breathingDifficulties">
                         <option value=""></option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
                       </MySelect>
             </div>
             <div className="col-lg-2 form-group ">
               <MySelect label={<FormattedMessage id="nav.item.rash" defaultMessage="Rash"/>} 
                         name="rash">
                         <option value=""></option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
                       </MySelect>
           </div>
         </div>
@@ -876,18 +879,18 @@ class Home extends React.Component {
                       <div className="col-lg-1 form-group ">
                         <MySelect
                           label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/>}
-                            	   name={`familyTravelCompanions.${index}.gender`}>
+                            	   name={`familyTravelCompanions.${index}.sex`}>
                                <option value=""></option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                                </MySelect>
                       {props.errors.familyTravelCompanions &&
                         props.errors.familyTravelCompanions[index] &&
-                        props.errors.familyTravelCompanions[index].gender &&
+                        props.errors.familyTravelCompanions[index].sex &&
                         props.touched.familyTravelCompanions &&
-                        props.touched.familyTravelCompanions[index].gender && (
+                        props.touched.familyTravelCompanions[index].sex && (
                           <div className="field-error">
-                            {props.errors.familyTravelCompanions[index].gender}
+                            {props.errors.familyTravelCompanions[index].sex}
                           </div>
                         )}
                     </div>
@@ -1034,18 +1037,18 @@ class Home extends React.Component {
                   <div className="col-lg-1 form-group">
                     <MySelect
                       label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex"/>}
-                                  name={`nonFamilyTravelCompanions.${index}.gender`}>
+                                  name={`nonFamilyTravelCompanions.${index}.sex`}>
                                 <option value=""></option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                                 </MySelect>
                   {props.errors.nonFamilyTravelCompanions &&
                     props.errors.nonFamilyTravelCompanions[index] &&
-                    props.errors.nonFamilyTravelCompanions[index].gender &&
+                    props.errors.nonFamilyTravelCompanions[index].sex &&
                     props.touched.nonFamilyTravelCompanions &&
-                    props.touched.nonFamilyTravelCompanions[index].gender && (
+                    props.touched.nonFamilyTravelCompanions[index].sex && (
                       <div className="field-error">
-                        {props.errors.nonFamilyTravelCompanions[index].gender}
+                        {props.errors.nonFamilyTravelCompanions[index].sex}
                       </div>
                     )}
                 </div>

@@ -23,13 +23,13 @@
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-barcode": "^1.4.0",
-    "react-bootstrap-dropdown-menu": "^1.1.15",
     "react-dom": "^16.13.1",
     "react-intl": "^4.5.7",
     "react-localization": "^1.0.15",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-select": "^3.1.0",
+    "react-tooltip": "^4.2.7",
     "yup": "^0.29.2"
   },
   "scripts": {
