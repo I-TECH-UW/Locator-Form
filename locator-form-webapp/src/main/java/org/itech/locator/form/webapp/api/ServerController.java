@@ -53,10 +53,10 @@ public class ServerController {
 	ObjectMapper objectMapper;
 
 	@PostMapping()
-	public ResponseEntity<String> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO)
+	public ResponseEntity<List<LabelContentPair>> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		if (!locatorFormDTO.getAcceptedTerms()) {
-			return ResponseEntity.badRequest().body("must accept terms");
+			return ResponseEntity.badRequest().build();
 		}
 
 		log.trace("Received: " + locatorFormDTO.toString());
@@ -65,14 +65,15 @@ public class ServerController {
 		List<Reference> basedOnRef = new ArrayList<>();
 
 		List<LabelContentPair> idAndLabels = new ArrayList<>();
-		idAndLabels.add(new LabelContentPair("Task ID", locatorFormDTO.getId().toString()));
+		UUID taskUuid = UUID.randomUUID();
+//		idAndLabels.add(new LabelContentPair("Task ID", taskUuid.toString()));
 
-		org.hl7.fhir.r4.model.Task fhirTask = fhirServerTransformService.createFhirTask(locatorFormDTO);
+		org.hl7.fhir.r4.model.Task fhirTask = fhirServerTransformService.createFhirTask(locatorFormDTO, taskUuid);
 		org.hl7.fhir.r4.model.ServiceRequest fhirServiceRequest = fhirServerTransformService
 				.createFhirServiceRequest(locatorFormDTO);
 		UUID uuid = UUID.randomUUID();
 		srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
-		idAndLabels.add(new LabelContentPair("Main ServiceRequest ID", uuid.toString()));
+		idAndLabels.add(new LabelContentPair(locatorFormDTO.getFirstName() + "'s Service Request ID", uuid.toString()));
 		log.trace("fhirSR: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(srResponse));
 		basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
 
@@ -82,7 +83,7 @@ public class ServerController {
 			uuid = UUID.randomUUID();
 			srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
 			basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
-			idAndLabels.add(new LabelContentPair("Family Companion ServiceRequest ID", uuid.toString()));
+			idAndLabels.add(new LabelContentPair(comp.getFirstName() + "'s Service Request ID", uuid.toString()));
 		}
 
 		for (TravelCompanion comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
@@ -91,7 +92,7 @@ public class ServerController {
 			uuid = UUID.randomUUID();
 			srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
 			basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
-			idAndLabels.add(new LabelContentPair("Non-Family Companion ServiceRequest ID", uuid.toString()));
+			idAndLabels.add(new LabelContentPair(comp.getFirstName() + "'s Service Request ID", uuid.toString()));
 		}
 
 		for (String id : basedOn) {
@@ -110,18 +111,18 @@ public class ServerController {
 		fhirTask.setDescription(locatorFormJSON);
 
 		log.trace("fhirTask: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(fhirTask));
-		org.hl7.fhir.r4.model.Bundle tResponse = fhirServerTransformService.createFhirResource(fhirTask,
-				locatorFormDTO.getId());
+		org.hl7.fhir.r4.model.Bundle tResponse = fhirServerTransformService.createFhirResource(fhirTask, taskUuid);
 		log.trace("tResponse: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(tResponse));
 
 		Map<String, ByteArrayOutputStream> attachments = new HashMap<>();
-		attachments.put("locatorFormBarcodes" + locatorFormDTO.getId() + ".pdf",
+		attachments.put("locatorFormBarcodes" + taskUuid + ".pdf",
 				barcodeService.generateBarcodeFile(idAndLabels));
 		emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
 				+ locatorFormDTO.getFirstName() + ",\n\n"
 				+ "Please bring the attached file (printed off or on your device) to the airport as you will need them when you land in Mauritius",
 				attachments);
 
-		return ResponseEntity.ok("success");
+		return ResponseEntity.ok(idAndLabels);
 	}
+
 }

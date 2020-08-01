@@ -1,6 +1,7 @@
 import React from "react";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
+import './styles.css'
 import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, withRouter } from "react-router-dom";
@@ -34,8 +35,8 @@ class Navigation extends React.Component {
 
                 {/* TODO add this back when/if we want to do internationalization */}
                  <li >
-                  <div className="dropdown">
-                    <button type="button" className="btn btn-dark" data-toggle="dropdown">
+                  <div className="dropdown hover-dropdown">
+                    <button type="button" className="btn btn-dark btn-primary " data-toggle="dropdown">
                       <FontAwesomeIcon icon={faLanguage} style={{ color: 'grey' }} size="3x" />
                     </button>
                     <div className="dropdown-menu">

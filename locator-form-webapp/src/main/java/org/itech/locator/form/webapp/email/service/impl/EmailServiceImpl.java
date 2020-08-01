@@ -34,16 +34,15 @@ public class EmailServiceImpl implements EmailService {
 	public void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(text);
 		javaMailSender.send(message);
 	}
 
 	@Override
 	public void sendMessageWithAttachment(String to, String subject, String text, String attachmentFileName,
-			String pathToAttachment)
-			throws MessagingException {
+			String pathToAttachment) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);

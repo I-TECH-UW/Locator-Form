@@ -3,7 +3,29 @@
 	"nav.item.home": "Home",
 	"nav.item.about": "About",
 
-	"error.field.required": "Required",
+	"nav.item.title.option.mr": "Mr",
+	"nav.item.title.option.mrs": "Mrs",
+	"nav.item.title.option.miss": "Miss",
 
-	"error.field.serverName.notunique": "Already in use"
+	"nav.item.sex.option.male": "Male",
+	"nav.item.sex.option.female": "Female",
+
+	"nav.item.symptoms.option.yes": "Yes",
+	"nav.item.symptoms.option.no": "No",
+
+	"nav.item.purposeOfVisit.option.business": "Business",
+	"nav.item.purposeOfVisit.option.pleasure": "Vacation",
+	"nav.item.purposeOfVisit.option.other": "Other",
+
+	"error.required": "Required",
+	"error.char.max.exceeded": "Too many characters",
+	"error.char.min.notreached": "Too few characters",
+	"error.terms.unaccepted": "You must accept the terms and conditions",
+	"error.email.invalid": "Invalid email",
+	"error.email.doesnotmatch": "Emails must match",
+	"error.phone.invalid": "Phone number is not valid",
+	"error.invalid.selection": "Invalid option chosen",
+	"error.submit": "An error occured"
+
+	
 }
