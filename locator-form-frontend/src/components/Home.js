@@ -58,7 +58,7 @@ const MyCheckbox = ({ children, ...props }) => {
         {children}
       </label>
       {meta.touched && meta.error ? (
-        <div className="error"><FormattedMessage id={meta.error} defaultMessage={meta.error} /></div>
+        <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
       ) : null}
     </>
   );
@@ -74,7 +74,7 @@ const MySelect = ({ label, ...props }) => {
       <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
       <StyledSelect className="form-control" {...field} {...props} />
       {meta.touched && meta.error ? (
-        <div className="error"><FormattedMessage id={meta.error} defaultMessage={meta.error} /></div>
+        <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
       ) : null}
     </>
   );
@@ -1124,7 +1124,7 @@ class Home extends React.Component {
                         <div className="row">
                           <div className="col-lg-12 ">
                             <MyCheckbox name="acceptedTerms">
-                              <FormattedMessage id="nav.item.declareInformation" defaultMessage="*I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information." />
+                              <StyledErrorMessage><FormattedMessage id="nav.item.declareInformation" defaultMessage="*I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information." /></StyledErrorMessage>
                             </MyCheckbox>
                           </div>
                         </div>
