@@ -40,52 +40,48 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class FhirServerTransformServiceImpl implements FhirServerTransformService {
 
-    @Autowired
-    private FhirContext fhirContext;
+	@Autowired
+	private FhirContext fhirContext;
 
-    @Value("${org.itech.locator.form.fhirstore.uri}")
-    private String localFhirStorePath;
+	@Value("${org.itech.locator.form.fhirstore.uri}")
+	private String localFhirStorePath;
 
-    IGenericClient localFhirClient;
+	IGenericClient localFhirClient;
 
-    @PostConstruct
-    public void instantiateLocalFhirClient() {
-        localFhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-    }
+	@PostConstruct
+	public void instantiateLocalFhirClient() {
+		localFhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
+	}
 
-    @Override
+	@Override
 	public Bundle createFhirResource(Resource resource, UUID id) {
-        log.debug("FhirServerTransformServiceImpl:CreateFhirResource: " +
-                resource.getResourceType() + " " +
-                id.toString()
-        );
-        Bundle bundle = new Bundle();
-        Bundle resp = new Bundle();
-        Identifier identifier = new Identifier();
-        String resourceType = resource.getResourceType().toString();
+		log.debug("FhirServerTransformServiceImpl:CreateFhirResource: " + resource.getResourceType() + " "
+				+ id.toString());
+		Bundle bundle = new Bundle();
+		Bundle resp = new Bundle();
+		Identifier identifier = new Identifier();
+		String resourceType = resource.getResourceType().toString();
 //        resource.setId(IdType.newRandomUuid());
 //        resource.setIdElement(IdType.newRandomUuid());
-        identifier.setSystem(resource.getId());
-        resource.castToIdentifier(identifier);
+		identifier.setSystem(resource.getId());
+		resource.castToIdentifier(identifier);
 
-        try {
+		try {
 
-            bundle.addEntry()
-                    .setFullUrl(resource.getIdElement().getValue())
-                    .setResource(resource).getRequest().setUrl(resourceType + "/" + id).setMethod(Bundle.HTTPVerb.PUT);
+			bundle.addEntry().setFullUrl(resource.getIdElement().getValue()).setResource(resource).getRequest()
+					.setUrl(resourceType + "/" + id).setMethod(Bundle.HTTPVerb.PUT);
 
 //            log.debug("CreateFhirResource: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
 
-            resp = localFhirClient.transaction().withBundle(bundle).execute();
-        } catch (Exception e) {
-            log.debug("FhirServerTransformServiceImpl:Transform exception: " + e.toString());
-            e.printStackTrace();
-        }
-        return resp;
-    }
+			resp = localFhirClient.transaction().withBundle(bundle).execute();
+		} catch (Exception e) {
+			log.debug("FhirServerTransformServiceImpl:Transform exception: " + e.toString());
+			e.printStackTrace();
+		}
+		return resp;
+	}
 
-
-    public org.hl7.fhir.r4.model.Patient createFhirPatient(TravelCompanion comp, UUID uuid) {
+	public org.hl7.fhir.r4.model.Patient createFhirPatient(TravelCompanion comp, UUID uuid) {
 		org.hl7.fhir.r4.model.Patient fhirPatient = new org.hl7.fhir.r4.model.Patient();
 
 		HumanName humanName = new HumanName();
@@ -94,136 +90,144 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
 		humanName.addGiven(comp.getFirstName());
 		humanNameList.add(humanName);
 		fhirPatient.setName(humanNameList);
-		
+
 		String patientId = uuid.toString();
-        Identifier identifier = new Identifier();
-        identifier.setId(patientId);
-        identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-        List<Identifier> identifierList = new ArrayList<>();
-        identifierList.add(identifier);
-        fhirPatient.setIdentifier(identifierList);
-		
+		Identifier identifier = new Identifier();
+		identifier.setId(patientId);
+		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+		List<Identifier> identifierList = new ArrayList<>();
+		identifierList.add(identifier);
+		fhirPatient.setIdentifier(identifierList);
+
 		fhirPatient.setBirthDate(Date.from(comp.getDateOfBirth().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		switch (comp.getSex()) {
 		case MALE:
 			fhirPatient.setGender(AdministrativeGender.MALE);
+			break;
 		case FEMALE:
 			fhirPatient.setGender(AdministrativeGender.FEMALE);
+			break;
 		case OTHER:
 			fhirPatient.setGender(AdministrativeGender.OTHER);
+			break;
 		case UNKNOWN:
 			fhirPatient.setGender(AdministrativeGender.UNKNOWN);
+			break;
 		}
 
 		return fhirPatient;
-    }
+	}
 
-    @Override
+	@Override
 	public org.hl7.fhir.r4.model.Patient createFhirPatient(LocatorFormDTO locatorForm, UUID uuid) {
-        org.hl7.fhir.r4.model.Patient fhirPatient = new org.hl7.fhir.r4.model.Patient();
+		org.hl7.fhir.r4.model.Patient fhirPatient = new org.hl7.fhir.r4.model.Patient();
 
-        HumanName humanName = new HumanName();
-        List<HumanName> humanNameList = new ArrayList<>();
-        humanName.setFamily(locatorForm.getLastName());
-        humanName.addGiven(locatorForm.getFirstName());
-        humanName.addGiven(locatorForm.getMiddleInitial());
-        humanNameList.add(humanName);
-        fhirPatient.setName(humanNameList);
-        
-        String patientId = uuid.toString();
-        Identifier identifier = new Identifier();
-        identifier.setId(patientId);
-        identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-        List<Identifier> identifierList = new ArrayList<>();
-        identifierList.add(identifier);
-        fhirPatient.setIdentifier(identifierList);
-        
+		HumanName humanName = new HumanName();
+		List<HumanName> humanNameList = new ArrayList<>();
+		humanName.setFamily(locatorForm.getLastName());
+		humanName.addGiven(locatorForm.getFirstName());
+		humanName.addGiven(locatorForm.getMiddleInitial());
+		humanNameList.add(humanName);
+		fhirPatient.setName(humanNameList);
+
+		String patientId = uuid.toString();
+		Identifier identifier = new Identifier();
+		identifier.setId(patientId);
+		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+		List<Identifier> identifierList = new ArrayList<>();
+		identifierList.add(identifier);
+		fhirPatient.setIdentifier(identifierList);
+
 		fhirPatient
 				.setBirthDate(Date.from(locatorForm.getDateOfBirth().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		switch (locatorForm.getSex()) {
-        case MALE:
-        fhirPatient.setGender(AdministrativeGender.MALE);
-        case FEMALE:
-            fhirPatient.setGender(AdministrativeGender.FEMALE);
+		case MALE:
+			fhirPatient.setGender(AdministrativeGender.MALE);
+			break;
+		case FEMALE:
+			fhirPatient.setGender(AdministrativeGender.FEMALE);
+			break;
 		case OTHER:
 			fhirPatient.setGender(AdministrativeGender.OTHER);
+			break;
 		case UNKNOWN:
 			fhirPatient.setGender(AdministrativeGender.UNKNOWN);
-        }
+			break;
+		}
 
-        return fhirPatient;
-    }
+		return fhirPatient;
+	}
 
-    @Override
-    public Task createFhirTask(LocatorFormDTO locatorForm) {
-        org.hl7.fhir.r4.model.Task fhirTask = new org.hl7.fhir.r4.model.Task();
+	@Override
+	public Task createFhirTask(LocatorFormDTO locatorForm, UUID uuid) {
+		org.hl7.fhir.r4.model.Task fhirTask = new org.hl7.fhir.r4.model.Task();
 
-      String taskId = locatorForm.getId().toString();
-      Identifier identifier = new Identifier();
-      identifier.setId(taskId);
-      identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-      List<Identifier> identifierList = new ArrayList<>();
-      identifierList.add(identifier);
+		String taskId = uuid.toString();
+		Identifier identifier = new Identifier();
+		identifier.setId(taskId);
+		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+		List<Identifier> identifierList = new ArrayList<>();
+		identifierList.add(identifier);
 
-      fhirTask.setIdentifier(identifierList);
+		fhirTask.setIdentifier(identifierList);
 
-      return fhirTask;
-    }
+		return fhirTask;
+	}
 
-    @Override
-    public ServiceRequest createFhirServiceRequest(LocatorFormDTO locatorForm) {
+	@Override
+	public ServiceRequest createFhirServiceRequest(LocatorFormDTO locatorForm) {
 		TravelCompanion comp = new TravelCompanion();
-        comp.setDateOfBirth(locatorForm.getDateOfBirth());
+		comp.setDateOfBirth(locatorForm.getDateOfBirth());
 		comp.setSex(locatorForm.getSex());
-        comp.setFirstName(locatorForm.getFirstName());
-        comp.setLastName(locatorForm.getLastName());
-        comp.setMiddleInitial(locatorForm.getMiddleInitial());
-        comp.setNationality(locatorForm.getNationality());
-        comp.setPassportNumber(locatorForm.getPassportNumber());
-        comp.setSeatNumber(locatorForm.getSeatNumber());
-        return createFhirServiceRequest(comp);
-    }
+		comp.setFirstName(locatorForm.getFirstName());
+		comp.setLastName(locatorForm.getLastName());
+		comp.setMiddleInitial(locatorForm.getMiddleInitial());
+		comp.setNationality(locatorForm.getNationality());
+		comp.setPassportNumber(locatorForm.getPassportNumber());
+		comp.setSeatNumber(locatorForm.getSeatNumber());
+		return createFhirServiceRequest(comp);
+	}
 
-    @Override
-    public ServiceRequest createFhirServiceRequest(TravelCompanion comp) {
+	@Override
+	public ServiceRequest createFhirServiceRequest(TravelCompanion comp) {
 
-      Bundle pResp = new Bundle();
-      ServiceRequest serviceRequest = new ServiceRequest();
+		Bundle pResp = new Bundle();
+		ServiceRequest serviceRequest = new ServiceRequest();
 
-      try {
-          // patient is created here and used for SR subjectRef
-          UUID uuid = UUID.randomUUID();
-          org.hl7.fhir.r4.model.Patient fhirPatient = createFhirPatient(comp, uuid);
-	      
-	      pResp = createFhirResource(fhirPatient, uuid);
-	      log.trace("pResp: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(pResp));
-          
-	      Reference subjectRef = new Reference();
-	      subjectRef.setReference(pResp.getEntryFirstRep().getResponse().getLocation());
+		try {
+			// patient is created here and used for SR subjectRef
+			UUID uuid = UUID.randomUUID();
+			org.hl7.fhir.r4.model.Patient fhirPatient = createFhirPatient(comp, uuid);
 
-          CodeableConcept codeableConcept = new CodeableConcept();
-          List<Coding> codingList = new ArrayList<>();
-          Coding coding0 = new Coding();
-          coding0.setCode("14682-9");
-          coding0.setSystem("http://loinc.org");
-          codingList.add(coding0);
+			pResp = createFhirResource(fhirPatient, uuid);
+			log.trace("pResp: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(pResp));
 
-          coding0 = null;
+			Reference subjectRef = new Reference();
+			subjectRef.setReference(pResp.getEntryFirstRep().getResponse().getLocation());
 
-          Coding coding1 = new Coding();
-          coding1.setCode("TBD");
-          coding1.setSystem("OpenELIS-Global/Lab No");
-          codingList.add(coding1);
-          codeableConcept.setCoding(codingList);
+			CodeableConcept codeableConcept = new CodeableConcept();
+			List<Coding> codingList = new ArrayList<>();
+			Coding coding0 = new Coding();
+			coding0.setCode("14682-9");
+			coding0.setSystem("http://loinc.org");
+			codingList.add(coding0);
 
-          serviceRequest.setCode(codeableConcept);
-          serviceRequest.setSubject(subjectRef);
+			coding0 = null;
 
-      } catch (Exception e) {
-          log.debug("FhirTransformServiceImpl:Transform exception: " + e.toString());
-          e.printStackTrace();
-      }
+			Coding coding1 = new Coding();
+			coding1.setCode("TBD");
+			coding1.setSystem("OpenELIS-Global/Lab No");
+			codingList.add(coding1);
+			codeableConcept.setCoding(codingList);
 
-      return serviceRequest;
-    }
+			serviceRequest.setCode(codeableConcept);
+			serviceRequest.setSubject(subjectRef);
+
+		} catch (Exception e) {
+			log.debug("FhirTransformServiceImpl:Transform exception: " + e.toString());
+			e.printStackTrace();
+		}
+
+		return serviceRequest;
+	}
 }

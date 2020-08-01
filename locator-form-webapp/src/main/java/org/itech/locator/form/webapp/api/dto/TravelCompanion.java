@@ -18,7 +18,6 @@ public class TravelCompanion {
 	@NotBlank
 	@Size(max = 50)
     private String firstName;
-	@NotBlank
 	@Size(max = 3)
     private String middleInitial;
 	@NotBlank

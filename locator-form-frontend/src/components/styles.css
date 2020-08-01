@@ -90,37 +90,37 @@ h6 {
 h1 {
   font-size: 3.052rem;
   letter-spacing: -0.15rem;
-  line-height: 1;
+  /* line-height: 1; */
 }
 
 h2 {
   font-size: 2.441rem;
   letter-spacing: -0.12rem;
-  line-height: 1.2;
+  /* line-height: 1.2; */
 }
 
 h3 {
   font-size: 1.953rem;
   letter-spacing: -0.09rem;
-  line-height: 1.2;
+  /* line-height: 1.2; */
 }
 
 h4 {
   font-size: 1.563rem;
   letter-spacing: -0.06rem;
-  line-height: 1.3;
+  /* line-height: 1.3; */
 }
 
 h5 {
   font-size: 1.25rem;
   letter-spacing: -0.03rem;
-  line-height: 0.0;
+  /* line-height: 0.0; */
 }
 
 h6 {
   font-size: 1rem;
   letter-spacing: 0;
-  line-height: 1.5;
+  /* line-height: 1.5; */
 }
 
 p {
@@ -200,7 +200,8 @@ input[type="number"] {
 
 @media (prefers-color-scheme: dark) {
   input[type="email"],
-input[type="text"],
+  input[type="text"],
+  input[type="date"],
   input[type="number"] {
     background-color: var(--gray-800);
     border-color: var(--gray-700);
@@ -210,6 +211,7 @@ input[type="text"],
   input[type="email"]::placeholder,
   input[type="text"]::placeholder,
   input[type="number"]::placeholder,
+  input[type="date"]::placeholder,
   select,
   textarea {
     color: var(--gray-500);
@@ -340,7 +342,7 @@ input[type="checkbox"]:checked:focus-visible {
 
 @media (prefers-color-scheme: dark) {
   input[type="checkbox"]:checked {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="78.369" height="78.369" viewBox="0 0 78.369 78.369"><path fill="%23343434" d="M78.05 19.015l-48.592 48.59c-.428.43-1.12.43-1.548 0L.32 40.016c-.427-.426-.427-1.12 0-1.547l6.704-6.704c.428-.427 1.12-.427 1.548 0l20.113 20.112 41.113-41.113c.43-.427 1.12-.427 1.548 0l6.703 6.704c.427.427.427 1.12 0 1.548z"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="78.369" viewBox="0 0 78.369 78.369"><path fill="%23343434" d="M78.05 19.015l-48.592 48.59c-.428.43-1.12.43-1.548 0L.32 40.016c-.427-.426-.427-1.12 0-1.547l6.704-6.704c.428-.427 1.12-.427 1.548 0l20.113 20.112 41.113-41.113c.43-.427 1.12-.427 1.548 0l6.703 6.704c.427.427.427 1.12 0 1.548z"/></svg>');
     background-color: white;
     border: 2px solid white;
   }
@@ -703,11 +705,22 @@ button[type="submit"] {
   padding-bottom: 2.5rem;    /* Footer height */
 }
 
+@media (prefers-color-scheme: dark) {
+  .jumbotron {
+    background: DarkSlateGrey;
+  }
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 2.5rem; 
 } 
+
+.hover-dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
 
 

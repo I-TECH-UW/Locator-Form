@@ -1,7 +1,6 @@
 package org.itech.locator.form.webapp.api.dto;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -28,9 +27,6 @@ public class LocatorFormDTO {
 		BUSINESS, PLEASURE, OTHER
 	}
 
-	@NotNull
-    private UUID id;
-
 	@NotBlank
 	@Size(max = 100)
     private String airlineName;
@@ -52,7 +48,6 @@ public class LocatorFormDTO {
 	@NotBlank
 	@Size(max = 100)
     private String lastName;
-	@NotBlank
 	@Size(max = 3)
     private String middleInitial;
 	@NotNull
