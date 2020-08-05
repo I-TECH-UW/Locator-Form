@@ -20,7 +20,7 @@ public class LocatorFormDTO {
 	}
 
 	public enum Title {
-		MR, MRS, MISS, OTHER
+		MR, MRS, MISS, DR, OTHER
 	}
 
 	public enum VisitPurpose {

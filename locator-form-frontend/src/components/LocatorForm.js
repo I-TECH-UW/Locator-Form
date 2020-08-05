@@ -224,7 +224,7 @@ class LocatorForm extends React.Component {
         throw new Error("didn't receive ok");
       }
     }).catch(err => {
-      console.log(err);
+	  console.log(err);
       that.setState({ 'submitErrorKey': 'error.submit' })
     })
   }
@@ -251,7 +251,7 @@ class LocatorForm extends React.Component {
 
 		title: Yup.string()
 			.oneOf(
-			['mr', 'mrs', 'miss', 'other'],
+			['mr', 'mrs', 'miss', 'dr', 'other'],
 			'error.invalid.selection'
 			)
 			.required('error.required'),
@@ -462,9 +462,8 @@ class LocatorForm extends React.Component {
 
 		onSubmit={(values, { setSubmitting }) => {
 		// get the Home object
-		const that = this;
 		setTimeout(() => {
-			this.handleSubmit(values, this.props.onSuccess, that);
+			this.handleSubmit(values, this, this.props.onSuccess);
 			setSubmitting(false);
 		}, 400);
 		}}
@@ -531,6 +530,7 @@ class LocatorForm extends React.Component {
 							{"value": "mr","label": this.props.intl.formatMessage({id: 'nav.item.title.option.mr'})},
 							{"value": "mrs","label": this.props.intl.formatMessage({id: 'nav.item.title.option.mrs'})},
 							{"value": "miss","label": this.props.intl.formatMessage({id: 'nav.item.title.option.miss'})},
+							{"value": "dr","label": this.props.intl.formatMessage({id: 'nav.item.title.option.dr'})},
 						]}
 					/>
 					}
@@ -1029,15 +1029,15 @@ class LocatorForm extends React.Component {
 							</div>
 							<div className="col-lg-3 form-group ">
 							<Field className="form-control"
-								name={`familyTravelCompanions.${index}.dateOfBirth`}
-								render={({ field, form }) => (
+								name={`familyTravelCompanions.${index}.dateOfBirth`}>
+								{({field, form, meta}) => 
 								<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 									name={field.name}
 									type="date"
 								/>
-								)}
-							/>
+								}
+							</Field>
 							</div>
 							<div className="col-lg-1 form-group ">
 							<Field name={`familyTravelCompanions.${index}.sex`}>
@@ -1092,10 +1092,20 @@ class LocatorForm extends React.Component {
 						</div>
 
 					))}
+
 					<button
 					type="button"
 					className="secondary"
-					onClick={() => push({ lastName: "", firstName: "" })}
+					onClick={() => push({ 
+						lastName: "",
+						firstName: "",
+						middleInitial: "",
+						seatNumber: "",
+						dateOfBirth: "",
+						sex: "",
+						nationality: "",
+						passportNumber: "", 
+					})}
 					>
 					<FormattedMessage id="nav.item.addTravelCompanionFamily" defaultMessage="Add Travel Companion Family" />
 					</button>
@@ -1112,7 +1122,7 @@ class LocatorForm extends React.Component {
 				</div>
 			</div>
 			<FieldArray
-				name="familyTravelCompanions"
+				name="nonFamilyTravelCompanions"
 				render={({ remove, push }) => (
 
 				<div className="travelCompanion">
@@ -1163,15 +1173,15 @@ class LocatorForm extends React.Component {
 							</div>
 							<div className="col-lg-3 form-group ">
 							<Field className="form-control"
-								name={`nonFamilyTravelCompanions.${index}.dateOfBirth`}
-								render={({ field, form }) => (
+								name={`nonFamilyTravelCompanions.${index}.dateOfBirth`}>
+								{({field, form, meta}) => 
 								<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 									name={field.name}
 									type="date"
 								/>
-								)}
-							/>
+								}
+							</Field>
 							</div>
 							<div className="col-lg-1 form-group ">
 							<Field name={`nonFamilyTravelCompanions.${index}.sex`}>
@@ -1233,7 +1243,16 @@ class LocatorForm extends React.Component {
 						<button
 						type="button"
 						className="secondary"
-						onClick={() => push({ lastName: "", firstName: "" })}
+						onClick={() => push({
+							lastName: "",
+							firstName: "",
+							middleInitial: "",
+							seatNumber: "",
+							dateOfBirth: "",
+							sex: "",
+							nationality: "",
+							passportNumber: "",  
+						})}
 						>
 						<FormattedMessage id="nav.item.addTravelCompanionNonFamily" defaultMessage="Add Travel Companion Non-Family" />
 						</button>
@@ -1256,7 +1275,7 @@ class LocatorForm extends React.Component {
 			<div id="submitInformation" className="section">
 			<div className="row">
 				<div className="col-lg-12 ">
-				<button type="submit" ><FormattedMessage id="nav.item.submit" defaultMessage="Submit" /></button>
+				<button type="submit" disabled={!props.dirty || !props.isValid}><FormattedMessage id="nav.item.submit" defaultMessage="Submit" /></button>
 				{this.state.submitErrorKey &&
 					<span className="error-large"><StyledErrorMessage> <FormattedMessage id={this.state.submitErrorKey} defaultMessage="An error occured" /></StyledErrorMessage> </span>}
 				</div>

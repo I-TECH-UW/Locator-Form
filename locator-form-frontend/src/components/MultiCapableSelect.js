@@ -1,6 +1,5 @@
 import React from "react";
 import Select from "react-select";
-import { setFieldTouched } from 'formik';
 
 // interface Option {
 //   label: string;
