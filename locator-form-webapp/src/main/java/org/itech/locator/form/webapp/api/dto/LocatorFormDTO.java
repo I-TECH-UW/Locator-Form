@@ -28,7 +28,7 @@ public class LocatorFormDTO {
 	}
 
 	@NotBlank
-	@Size(max = 100)
+	@Size(max = 50)
     private String airlineName;
 	@NotBlank
 	@Size(max = 15)
@@ -43,10 +43,10 @@ public class LocatorFormDTO {
 	@NotNull
 	private Title title;
 	@NotBlank
-	@Size(max = 40)
+	@Size(max = 50)
     private String firstName;
 	@NotBlank
-	@Size(max = 100)
+	@Size(max = 50)
     private String lastName;
 	@Size(max = 3)
     private String middleInitial;
@@ -59,10 +59,10 @@ public class LocatorFormDTO {
 	@NotNull
 	private Integer lengthOfStay;
 
-	@Size(max = 200)
-    private String countriesVisited;
+	@Size(max = 50)
+	private String[] countriesVisited;
 	@NotBlank
-	@Size(max = 40)
+	@Size(max = 50)
     private String portOfEmbarkation;
 
 	@NotNull
@@ -95,7 +95,7 @@ public class LocatorFormDTO {
 	@Size(max = 50)
     private String nationality;
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 20)
     private String passportNumber;
 
 	@Valid

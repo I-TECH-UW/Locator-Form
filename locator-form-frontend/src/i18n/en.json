@@ -17,9 +17,11 @@
 	"nav.item.purposeOfVisit.option.pleasure": "Vacation",
 	"nav.item.purposeOfVisit.option.other": "Other",
 
+	"nav.item.select.placeholder": "Select",
 	"error.required": "Required",
 	"error.char.max.exceeded": "Too many characters",
 	"error.char.min.notreached": "Too few characters",
+	"error.lengthOfStay.noninteger": "Must be a positive integer",
 	"error.terms.unaccepted": "You must accept the terms and conditions",
 	"error.email.invalid": "Invalid email",
 	"error.email.doesnotmatch": "Emails must match",

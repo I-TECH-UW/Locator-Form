@@ -10,7 +10,7 @@ public class Address {
 	@NotBlank
 	@Size(max = 50)
     private String numberAndStreet;
-	@Size(max = 10)
+	@Size(max = 20)
     private String apartmentNumber;
 	@NotBlank
 	@Size(max = 50)
@@ -20,7 +20,6 @@ public class Address {
 	@NotBlank
 	@Size(max = 50)
     private String country;
-	@NotBlank
-	@Size(max = 50)
+	@Size(max = 20)
     private String zipPostalCode;
 }
