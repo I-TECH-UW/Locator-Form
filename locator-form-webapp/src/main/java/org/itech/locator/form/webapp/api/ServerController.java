@@ -61,8 +61,8 @@ public class ServerController {
 
 		log.trace("Received: " + locatorFormDTO.toString());
 		org.hl7.fhir.r4.model.Bundle srResponse = null;
-		List<String> basedOn = new ArrayList<>();
-		List<Reference> basedOnRef = new ArrayList<>();
+		List<String> basedOns = new ArrayList<>();
+		List<Reference> basedOnRefs = new ArrayList<>();
 
 		List<LabelContentPair> idAndLabels = new ArrayList<>();
 		UUID taskUuid = UUID.randomUUID();
@@ -75,14 +75,14 @@ public class ServerController {
 		srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
 		idAndLabels.add(new LabelContentPair(locatorFormDTO.getFirstName() + "'s Service Request ID", uuid.toString()));
 		log.trace("fhirSR: " + fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(srResponse));
-		basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
+		basedOns.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
 
 		for (TravelCompanion comp : locatorFormDTO.getFamilyTravelCompanions()) {
 
 			fhirServiceRequest = fhirServerTransformService.createFhirServiceRequest(comp);
 			uuid = UUID.randomUUID();
 			srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
-			basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
+			basedOns.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
 			idAndLabels.add(new LabelContentPair(comp.getFirstName() + "'s Service Request ID", uuid.toString()));
 		}
 
@@ -91,19 +91,19 @@ public class ServerController {
 			fhirServiceRequest = fhirServerTransformService.createFhirServiceRequest(comp);
 			uuid = UUID.randomUUID();
 			srResponse = fhirServerTransformService.createFhirResource(fhirServiceRequest, uuid);
-			basedOn.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
+			basedOns.add(srResponse.getEntryFirstRep().getResponse().getLocation().toString());
 			idAndLabels.add(new LabelContentPair(comp.getFirstName() + "'s Service Request ID", uuid.toString()));
 		}
 
-		for (String id : basedOn) {
-			StringType basedOn0 = new StringType();
-			Reference basedOnRef0 = new Reference();
-			basedOn0.setValue(id.toString());
-			basedOnRef0.setReference(basedOn0.asStringValue());
-			basedOnRef0.setType("ServiceRequest");
-			fhirTask.addBasedOn(basedOnRef0);
-			basedOn0 = null;
-			basedOnRef0 = null;
+		for (String id : basedOns) {
+			StringType basedOn = new StringType();
+			Reference basedOnRef = new Reference();
+			basedOn.setValue(id.toString());
+			basedOnRef.setReference(basedOn.asStringValue());
+			basedOnRef.setType("ServiceRequest");
+			fhirTask.addBasedOn(basedOnRef);
+			basedOn = null;
+			basedOnRef = null;
 		}
 
 		String locatorFormJSON = null;

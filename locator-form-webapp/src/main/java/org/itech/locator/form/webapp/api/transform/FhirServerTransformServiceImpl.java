@@ -45,6 +45,8 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
 
 	@Value("${org.itech.locator.form.fhirstore.uri}")
 	private String localFhirStorePath;
+	@Value("${org.itech.locator.form.loinccodes}")
+	private String[] loincCodes;
 
 	IGenericClient localFhirClient;
 
@@ -207,12 +209,14 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
 
 			CodeableConcept codeableConcept = new CodeableConcept();
 			List<Coding> codingList = new ArrayList<>();
-			Coding coding0 = new Coding();
-			coding0.setCode("14682-9");
-			coding0.setSystem("http://loinc.org");
-			codingList.add(coding0);
+			for (String loincCode : loincCodes) {
+				Coding coding0 = new Coding();
+				coding0.setCode(loincCode);
+				coding0.setSystem("http://loinc.org");
+				codingList.add(coding0);
 
-			coding0 = null;
+				coding0 = null;
+			}
 
 			Coding coding1 = new Coding();
 			coding1.setCode("TBD");
