@@ -723,4 +723,30 @@ button[type="submit"] {
   margin-top: 0;
 }
 
+.rotation-animation {
+    animation: div-rotate 0.7s infinite steps(8);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    transform-origin: 50% 51%;
+    -webkit-transform-origin: 50% 51%;
+}
+
+@keyframes div-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes div-rotate {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+
 
