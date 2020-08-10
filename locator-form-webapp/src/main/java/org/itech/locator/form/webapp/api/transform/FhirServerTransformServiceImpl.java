@@ -18,6 +18,7 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Task;
+import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.TravelCompanion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +169,7 @@ public class FhirServerTransformServiceImpl implements FhirServerTransformServic
 		Identifier identifier = new Identifier();
 		identifier.setId(taskId);
 		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+		fhirTask.setStatus(TaskStatus.REQUESTED);
 		List<Identifier> identifierList = new ArrayList<>();
 		identifierList.add(identifier);
 
