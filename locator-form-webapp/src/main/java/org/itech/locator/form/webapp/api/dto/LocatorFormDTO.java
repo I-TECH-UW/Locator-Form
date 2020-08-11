@@ -13,11 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class LocatorFormDTO {
-
-	public enum Sex {
-		MALE, FEMALE, OTHER, UNKNOWN
-	}
+public class LocatorFormDTO extends Traveller {
 
 	public enum Title {
 		MR, MRS, MISS, DR, OTHER
@@ -42,19 +38,6 @@ public class LocatorFormDTO {
 
 	@NotNull
 	private Title title;
-	@NotBlank
-	@Size(max = 50)
-    private String firstName;
-	@NotBlank
-	@Size(max = 50)
-    private String lastName;
-	@Size(max = 3)
-    private String middleInitial;
-	@NotNull
-	private Sex sex;
-	@NotNull
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dateOfBirth;
 
 	@NotNull
 	private Integer lengthOfStay;
@@ -106,9 +89,9 @@ public class LocatorFormDTO {
     private EmergencyContact emergencyContact;
 
 	@Valid
-    private TravelCompanion[] familyTravelCompanions;
+    private Traveller[] familyTravelCompanions;
 	@Valid
-	private TravelCompanion[] nonFamilyTravelCompanions;
+	private Traveller[] nonFamilyTravelCompanions;
 
 	@NotNull
 	private Boolean acceptedTerms;

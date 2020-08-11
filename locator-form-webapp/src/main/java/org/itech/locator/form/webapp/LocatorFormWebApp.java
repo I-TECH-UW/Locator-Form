@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @ComponentScan("org.itech")
 @PropertySource(value = { "classpath:application.properties" })
 @EnableAsync
-public class FhirServerManagementWebApp {
+public class LocatorFormWebApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FhirServerManagementWebApp.class, args);
+		SpringApplication.run(LocatorFormWebApp.class, args);
 	}
 
 }

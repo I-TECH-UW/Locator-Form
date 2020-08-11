@@ -6,12 +6,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.itech.locator.form.webapp.api.dto.LocatorFormDTO.Sex;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
 @Data
-public class TravelCompanion {
+public class Traveller {
+
+	public enum Sex {
+		MALE, FEMALE, OTHER, UNKNOWN
+	}
 	@NotBlank
 	@Size(max = 50)
     private String lastName;
@@ -24,6 +28,7 @@ public class TravelCompanion {
 	@Size(max = 50)
     private String seatNumber;
 	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	@NotNull
 	private Sex sex;

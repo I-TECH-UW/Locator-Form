@@ -28,7 +28,7 @@ class Home extends React.Component {
         <div className="home container">
           <div className="row">
             <div className="col-lg-12 success-large text-center">
-              <FormattedMessage id="submit.success.msg" defaultMessage="Thank you for filling out our online form. Please monitor your email for further instructions." />
+              <FormattedMessage id="submit.success.msg" defaultMessage="Thank you for filling out our online form. Please monitor your email for any further instructions. If you do not receive an email, please print or save this page somewhere you can access when you land in Mauritius " />
             </div>
           </div>
             {this.state.labelContentPairs.map(function(labelContentPair){
