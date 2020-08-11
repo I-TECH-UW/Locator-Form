@@ -107,6 +107,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Override
 	public Patient createFhirPatient(Traveller comp) {
 		Patient fhirPatient = new Patient();
+		String patientId = UUID.randomUUID().toString();
+		fhirPatient.setId(patientId);
 
 		HumanName humanName = new HumanName();
 		List<HumanName> humanNameList = new ArrayList<>();
@@ -115,7 +117,6 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		humanNameList.add(humanName);
 		fhirPatient.setName(humanNameList);
 
-		String patientId = UUID.randomUUID().toString();
 		Identifier identifier = new Identifier();
 		identifier.setId(patientId);
 		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
@@ -146,8 +147,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Override
 	public Task createFhirTask() {
 		Task fhirTask = new Task();
-
 		String taskId = UUID.randomUUID().toString();
+		fhirTask.setId(taskId);
+
 		Identifier identifier = new Identifier();
 		identifier.setId(taskId);
 		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
@@ -164,6 +166,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	public ServiceRequestPatientPair createFhirServiceRequestPatient(Traveller comp) {
 
 		ServiceRequest serviceRequest = new ServiceRequest();
+		String id = UUID.randomUUID().toString();
+		serviceRequest.setId(id);
 
 		// patient is created here and used for SR subjectRef
 		Patient fhirPatient = createFhirPatient(comp);

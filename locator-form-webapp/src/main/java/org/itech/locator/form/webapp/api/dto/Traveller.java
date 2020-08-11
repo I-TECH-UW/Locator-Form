@@ -25,7 +25,7 @@ public class Traveller {
 	@Size(max = 3)
     private String middleInitial;
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 15)
     private String seatNumber;
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")

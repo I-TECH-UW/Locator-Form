@@ -1,5 +1,6 @@
 package org.itech.locator.form.webapp.fhir.service.transform;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hl7.fhir.r4.model.Bundle;
@@ -25,7 +26,7 @@ public interface FhirTransformService {
 	public class TransactionObjects {
 		public Bundle bundle;
 		public Task task;
-		public List<ServiceRequestPatientPair> serviceRequestPatientPairs;
+		public List<ServiceRequestPatientPair> serviceRequestPatientPairs = new ArrayList<>();
 	}
 
 	public class ServiceRequestPatientPair {
