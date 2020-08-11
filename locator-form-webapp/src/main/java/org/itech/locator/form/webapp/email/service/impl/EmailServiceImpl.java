@@ -35,7 +35,7 @@ public class EmailServiceImpl implements EmailService {
 	@Async
 	public void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setFrom(from);
+		message.setFrom(from);
 		message.setTo(to);
 		message.setSubject(subject);
 		message.setText(text);
@@ -48,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
 			String pathToAttachment) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//		helper.setFrom(from);
+		helper.setFrom(from);
 		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setText(text);
@@ -63,7 +63,7 @@ public class EmailServiceImpl implements EmailService {
 			throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//		helper.setFrom(from);
+		helper.setFrom(from);
 		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setText(text);
@@ -77,7 +77,7 @@ public class EmailServiceImpl implements EmailService {
 			throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//		helper.setFrom(from);
+		helper.setFrom(from);
 		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setText(text);
@@ -93,7 +93,7 @@ public class EmailServiceImpl implements EmailService {
 			Map<String, ByteArrayOutputStream> pdfsByName) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//		helper.setFrom(from);
+		helper.setFrom(from);
 		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setText(text);
