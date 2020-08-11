@@ -88,7 +88,7 @@ const MyCheckbox = ({ children, ...props }) => {
   );
 };
 
-const MySelect = ({ label, options, isMulti, form, ...props }) => {
+const MySelect = ({ label, options, isMulti, isSearchable,  form, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage
   // entirely.
@@ -102,6 +102,7 @@ const MySelect = ({ label, options, isMulti, form, ...props }) => {
         form={form}
         name={field.name}
 		isMulti={isMulti}
+		isSearchable={isSearchable}
 		placeholder={props.placeholder} />
       {meta.touched && meta.error ? (
         <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
@@ -612,6 +613,7 @@ class LocatorForm extends React.Component {
 					name={field.name} 
 					options={countriesList}
 					isMulti={true}
+					isSearchable={true}
 					placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
 					label={<FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months" />}
 					/>}
@@ -838,7 +840,7 @@ class LocatorForm extends React.Component {
 					{({field, form, meta}) => 
 					<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
 						name={field.name} form={form} placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
-						options={countriesList}
+						options={countriesList} isSearchable={true}
 						/>
 					}
 				</Field>
@@ -951,7 +953,7 @@ class LocatorForm extends React.Component {
 					{({field, form, meta}) => 
 					<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
 						name={field.name} form={form} placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
-						options={countriesList}
+						options={countriesList} isSearchable={true}
 						/>
 					}
 				</Field>

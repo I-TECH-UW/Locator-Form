@@ -17,9 +17,9 @@ export const MultiCapableSelect = ({
   field,
   form: { setFieldValue },
   options,
-  isMulti,
   placeholder,
-  isSearchable,
+  isMulti = false,
+  isSearchable = false,
   ...props
 }) => {
   const onChange = (option) => {
