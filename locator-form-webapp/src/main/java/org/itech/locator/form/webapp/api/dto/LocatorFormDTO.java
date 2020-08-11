@@ -29,9 +29,6 @@ public class LocatorFormDTO extends Traveller {
 	@NotBlank
 	@Size(max = 15)
     private String flightNumber;
-	@NotBlank
-	@Size(max = 15)
-    private String seatNumber;
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate arrivalDate;
@@ -74,12 +71,6 @@ public class LocatorFormDTO extends Traveller {
 	@Size(max = 50)
 	@Email
     private String email;
-	@NotBlank
-	@Size(max = 50)
-    private String nationality;
-	@NotBlank
-	@Size(max = 20)
-    private String passportNumber;
 
 	@Valid
     private Address permanentAddress;
