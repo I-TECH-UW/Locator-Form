@@ -81,11 +81,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		Reference basedOnRef = new Reference();
 		basedOnRef.setReference(ResourceType.ServiceRequest.toString() + "/"
-				+ fhirServiceRequestPatient.serviceRequest.getIdElement().getId());
+				+ fhirServiceRequestPatient.serviceRequest.getIdElement().getIdPart());
 		basedOnRef.setType(ResourceType.ServiceRequest.toString());
 		transactionInfo.task.addBasedOn(basedOnRef);
 		transactionInfo.serviceRequestPatientPairs.add(fhirServiceRequestPatient);
-//		idAndLabels.add(new LabelContentPair(locatorFormDTO.getFirstName() + "'s Service Request ID", sRequestUuid));
 	}
 
 	private BundleEntryComponent createTransactionBundleComponent(Resource fhirResource) {
