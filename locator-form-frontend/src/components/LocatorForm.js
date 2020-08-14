@@ -602,7 +602,8 @@ class LocatorForm extends React.Component {
 				<MyTextInput
 					label={<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)" />}
 					name="lengthOfStay"
-					type="text"
+					keyboardType="numeric"
+					type="number"
 				/>
 				</div>
 
@@ -783,11 +784,16 @@ class LocatorForm extends React.Component {
 				/>
 				</div>
 				<div className="col-lg-3 form-group ">
-				<MyTextInput
+				<Field name="nationality">
+					{({field, form, meta}) => 
+					<MySelect form={form}  
+					name={field.name} 
+					options={countriesList}
+					isSearchable={true}
+					placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
 					label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
-					name="nationality"
-					type="text"
-				/>
+					/>}
+				</Field>
 				</div>
 				<div className="col-lg-3 form-group ">
 				<MyTextInput
@@ -995,7 +1001,7 @@ class LocatorForm extends React.Component {
 						<div key={index}>
 
 						<div className="row">
-							<div className="col-lg-6 form-group ">
+							<div className="col-lg-4 form-group ">
 							<Field className="form-control"
 								name={`familyTravelCompanions.${index}.lastName`}>
 								{({field, form, meta}) => 
@@ -1007,7 +1013,7 @@ class LocatorForm extends React.Component {
 								}
 							</Field>
 							</div>
-							<div className="col-lg-6 form-group ">
+							<div className="col-lg-4 form-group ">
 							<Field className="form-control"
 								name={`familyTravelCompanions.${index}.firstName`}
 								>
@@ -1020,9 +1026,23 @@ class LocatorForm extends React.Component {
 								}
 							</Field>
 							</div>
+							<div className="col-lg-2 form-group ">
+							<Field name={`familyTravelCompanions.${index}.sex`}>
+								{({field, form, meta}) => 
+								<MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
+									name={field.name} form={form} placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
+									options={
+									[ 
+										{"value": "male","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.male'})},
+										{"value": "female","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.female'})},
+									]}
+									/>
+								}
+							</Field>
+							</div>
 						</div>
 						<div className="row">
-							<div className="col-lg-1 ">
+							<div className="col-lg-2 ">
 							<Field className="form-control"
 								name={`familyTravelCompanions.${index}.seatNumber`}
 								>
@@ -1047,30 +1067,18 @@ class LocatorForm extends React.Component {
 								}
 							</Field>
 							</div>
-							<div className="col-lg-1 form-group ">
-							<Field name={`familyTravelCompanions.${index}.sex`}>
-								{({field, form, meta}) => 
-								<MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
-									name={field.name} form={form} placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
-									options={
-									[ 
-										{"value": "male","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.male'})},
-										{"value": "female","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.female'})},
-									]}
-									/>
-								}
-							</Field>
-							</div>
 
 							<div className="col-lg-3 form-group ">
 							<Field className="form-control"
 								name={`familyTravelCompanions.${index}.nationality`}
 								>
 								{({field, form, meta}) => 
-									<MyTextInput
+									<MySelect form={form}  
+										name={field.name} 
+										options={countriesList}
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
 										label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
-										name={field.name}
-										type="text"
 									/>
 								}
 							</Field>
@@ -1139,7 +1147,7 @@ class LocatorForm extends React.Component {
 						<div key={index}>
 
 						<div className="row">
-							<div className="col-lg-6 form-group ">
+							<div className="col-lg-4 form-group ">
 							<Field className="form-control"
 								name={`nonFamilyTravelCompanions.${index}.lastName`}>
 								{({field, form, meta}) => 
@@ -1151,7 +1159,7 @@ class LocatorForm extends React.Component {
 								}
 							</Field>
 							</div>
-							<div className="col-lg-6 form-group ">
+							<div className="col-lg-4 form-group ">
 							<Field className="form-control"
 								name={`nonFamilyTravelCompanions.${index}.firstName`}
 								>
@@ -1164,9 +1172,23 @@ class LocatorForm extends React.Component {
 								}
 							</Field>
 							</div>
+							<div className="col-lg-2 form-group ">
+							<Field name={`nonFamilyTravelCompanions.${index}.sex`}>
+								{({field, form, meta}) => 
+								<MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
+									name={field.name} form={form} placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
+									options={
+									[ 
+										{"value": "male","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.male'})},
+										{"value": "female","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.female'})},
+									]}
+									/>
+								}
+							</Field>
+							</div>
 						</div>
 						<div className="row">
-							<div className="col-lg-1 ">
+							<div className="col-lg-2 ">
 							<Field className="form-control"
 								name={`nonFamilyTravelCompanions.${index}.seatNumber`}
 								>
@@ -1191,30 +1213,18 @@ class LocatorForm extends React.Component {
 								}
 							</Field>
 							</div>
-							<div className="col-lg-1 form-group ">
-							<Field name={`nonFamilyTravelCompanions.${index}.sex`}>
-								{({field, form, meta}) => 
-								<MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
-									name={field.name} form={form} placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
-									options={
-									[ 
-										{"value": "male","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.male'})},
-										{"value": "female","label": this.props.intl.formatMessage({id: 'nav.item.sex.option.female'})},
-									]}
-									/>
-								}
-							</Field>
-							</div>
 
 							<div className="col-lg-3 form-group ">
 							<Field className="form-control"
 								name={`nonFamilyTravelCompanions.${index}.nationality`}
 								>
 								{({field, form, meta}) => 
-									<MyTextInput
+									<MySelect form={form}  
+										name={field.name} 
+										options={countriesList}
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({id: 'nav.item.select.placeholder'})}
 										label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
-										name={field.name}
-										type="text"
 									/>
 								}
 							</Field>
@@ -1232,15 +1242,13 @@ class LocatorForm extends React.Component {
 							</Field>
 							</div>
 							<div className="col-lg-1">
-							<div className="col">
 								<button
-								type="button"
-								className="secondary"
-								onClick={() => remove(index)}
+									type="button"
+									className="secondary"
+									onClick={() => remove(index)}
 								>
 								X
-		</button>
-							</div>
+								</button>
 							</div>
 						</div>
 						</div>
