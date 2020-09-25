@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, withRouter } from "react-router-dom";
 
 
-class Navigation extends React.Component {
+class Header extends React.Component {
 
   render() {
     return (
       <div className="navigation">
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg">
+                <img src="favicon.ico" alt="logo" height="80" />
           <div className="container">
             <Link className="navbar-brand" to="/">
               {/* {languages.title} */}
@@ -31,13 +32,11 @@ class Navigation extends React.Component {
             <div className="collapse navbar-collapse" id="navbarResponsive">
               <ul className="navbar-nav ml-auto">
                 
-                
 
-                {/* TODO add this back when/if we want to do internationalization */}
                  <li >
                   <div className="dropdown hover-dropdown">
-                    <button type="button" className="btn btn-dark btn-primary " data-toggle="dropdown">
-                      <FontAwesomeIcon icon={faLanguage} style={{ color: 'grey' }} size="3x" />
+                    <button type="button" className="btn language-select-button " data-toggle="dropdown">
+                      <FontAwesomeIcon icon={faLanguage} style={{ color: 'white' }} size="3x" />
                     </button>
                     <div className="dropdown-menu">
                       <div><button className="dropdown-item language-button" lang="en" onClick={this.props.onChangeLanguage}>English</button></div>
@@ -54,4 +53,4 @@ class Navigation extends React.Component {
   }
 }
 
-export default withRouter(Navigation);
+export default withRouter(Header);

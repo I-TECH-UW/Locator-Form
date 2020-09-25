@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home } from "./components";
+import Layout from './components/layout/Layout';
+// import { Navigation, Footer, Home } from "./components";
+import { Home } from "./components";
 import { IntlProvider } from 'react-intl';
 
 import messages_en from './i18n/en.json';
@@ -52,13 +54,15 @@ class App extends React.Component {
       >
         <div className="App" id="page">
           <Router>
-            <Navigation onChangeLanguage={this.onChangeLanguage} />
+            {/* <Navigation onChangeLanguage={this.onChangeLanguage} /> */}
+            <Layout onChangeLanguage={this.onChangeLanguage}>
               <div id="content">
                 <Switch>
                   <Route path="/" exact component={Home} />
                 </Switch>
               </div>
-            <Footer />
+            </Layout>
+            {/* <Footer /> */}
           </Router>
           </div>
       </IntlProvider>

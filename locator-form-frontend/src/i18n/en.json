@@ -3,10 +3,24 @@
 	"nav.item.home": "Home",
 	"nav.item.about": "About",
 
+	"nav.item.step.passengerType": "Passenger Type",
+	"nav.item.step.flight": "Flight",
+	"nav.item.step.personalInfo": "Personal Info",
+	"nav.item.step.recentTravel": "Recent Travel",
+	"nav.item.step.health": "Health",
+	"nav.item.step.contactInfo": "Contact Info",
+	"nav.item.step.addresses": "Addresses",
+	"nav.item.step.emergencyContact": "Emergency Contact",
+	"nav.item.step.travelCompanion": "Travel Companions",
+	"nav.item.step.confirmation": "Confirmation",
+
 	"nav.item.title.option.mr": "Mr",
 	"nav.item.title.option.mrs": "Mrs",
 	"nav.item.title.option.miss": "Miss",
 	"nav.item.title.option.dr": "Dr",
+
+	"nav.item.resident": "Resident",
+	"nav.item.nonresident": "Non-Resident",
 
 	"nav.item.sex.option.male": "Male",
 	"nav.item.sex.option.female": "Female",

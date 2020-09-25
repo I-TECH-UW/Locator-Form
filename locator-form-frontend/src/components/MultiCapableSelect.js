@@ -23,12 +23,19 @@ export const MultiCapableSelect = ({
   ...props
 }) => {
   const onChange = (option) => {
-    setFieldValue(
-      field.name,
-      isMulti
-        ? (option).map((item) => item.value)
-        : (option).value
+    if (option == null) {
+      setFieldValue(
+        field.name,
+        []
+      )
+    } else {
+      setFieldValue(
+        field.name,
+        isMulti
+          ? (option).map((item) => item.value)
+          : (option).value
     );
+    }
   };
 
   const getValue = () => {
