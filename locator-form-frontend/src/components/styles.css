@@ -113,7 +113,7 @@ p {
   margin-bottom: 1.563rem;
 }
 
-p > *:last-child {
+p>*:last-child {
   margin-bottom: 0;
 }
 
@@ -156,8 +156,7 @@ label {
 
 body {
   padding: 0;
-/*   margin: calc((100vh / 25) * 1.563) calc((100vw / 25) * 1.563); */
-  background-color: #e0e9f1;
+  background-color: white;
   font-weight: 400;
   line-height: 1.563;
   color: var(--text-color);
@@ -165,26 +164,112 @@ body {
   height: 100%;
 }
 
+#root,#page {
+  height:100%;
+}
+
 .back-button {
   background-color: #00aded;
 }
 
 .next-button {
-background-color: #00aded
+  background-color: #00aded
+}
+
+#nav-icon {
+  width: 52px;
+  height: 36px;
+  float: left;
 }
 
 .navbar {
-  background-color: #f2f2f2
+  background-color: #F9F9F9;
+  padding: 0rem 0rem;
+  height: 48px;
 }
+
+.navbar .container-fluid {
+  padding: 0rem 0rem 0rem 2rem;
+}
+
+.no-padding {
+  padding: 0;
+}
+
 
 .jumbotron {
   background-color: white;
 }
 
-.language-select-button {
-  margin: 15px;
-  background-color: #465159
+
+#language-select-button:hover {
+  color: black;
 }
+
+.navbar-left {
+  background-color: #00aded;
+  padding-right: 1rem;
+}
+
+.language-select-button {
+  border-radius: 0 !important;
+  background-color: #465159;
+  margin: 0rem;
+  color: white;
+  outline: none !important;
+    box-shadow: none !important;
+}
+
+.languagepicker .dropdown-menu  {
+  margin: 0;
+  padding:0;
+  border:0;
+  width: 100%;
+  min-width: 0rem;
+}
+
+.language-button {
+  border-radius: 0 !important;
+  background-color: #465159;
+  color: white;
+  margin: 0;
+  outline: none !important;
+    box-shadow: none !important;
+}
+.language-select-button:hover,.language-button:hover {
+  background-color: #00aded;
+}
+
+.language-select {
+  width: 52px;
+  height: 40px;
+}
+
+/* .languagepicker {
+  background-color: #465159;
+  display: inline-block;
+  padding: 0;
+  height: 40px;
+  overflow: hidden;
+  transition: all .3s ease;
+  margin: 0;
+  vertical-align: top;
+  float: right;
+} */
+
+/* .languagepicker:hover {
+  height: 81px;
+} */
+
+/* .languagepicker a {
+  color: #FFF;
+  text-decoration: none;
+} */
+
+.languagepicker li {
+  border-top: 1px solid #333;
+}
+
 
 input[type="email"],
 input[type="text"],
@@ -211,7 +296,7 @@ select {
   width: 100%;
 }
 
-select.form-control  {
+select.form-control {
   border: 2px solid var(--gray-200);
   border-radius: 10px;
   color: var(--gray-700);
@@ -361,6 +446,7 @@ button {
 }
 
 @media (hover: hover) {
+
   input[type="submit"]:hover,
   input[type="reset"]:hover,
   input[type="button"]:hover,
@@ -418,11 +504,11 @@ code {
   border-radius: 10px;
 }
 
-p > code {
+p>code {
   white-space: normal;
 }
 
-pre > code {
+pre>code {
   line-height: 1.563em;
   display: block;
   padding: 1rem;
@@ -432,7 +518,7 @@ pre > code {
 }
 
 /* Forces a new-line at the end of a code block for layout purposes. */
-pre > code::after {
+pre>code::after {
   content: " ";
 }
 
@@ -524,7 +610,7 @@ button:disabled {
   cursor: not-allowed !important;
 }
 
-button + button {
+button+button {
   margin-left: 0.5rem;
 }
 
@@ -573,25 +659,14 @@ label.checkbox {
 } */
 
 
-#page {
-  position: relative;
-  min-height: 100vh;
+.full-height {
+    min-height: 100%;
+    height:auto !important;
+    height: 100%;
 }
-
-
-#content {
-  padding-bottom: 2.5rem;    /* Footer height */
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem; 
-} 
 
 .error\.required:after {
-  content:" *";
+  content: " *";
 }
 
 .hover-dropdown:hover .dropdown-menu {
@@ -600,28 +675,31 @@ label.checkbox {
 }
 
 .rotation-animation {
-    animation: div-rotate 0.7s infinite steps(8);
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    transform-origin: 50% 51%;
-    -webkit-transform-origin: 50% 51%;
+  animation: div-rotate 0.7s infinite steps(8);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  transform-origin: 50% 51%;
+  -webkit-transform-origin: 50% 51%;
 }
 
 @keyframes div-rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
 @-webkit-keyframes div-rotate {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 .hidden-section {
@@ -785,6 +863,3 @@ label.checkbox {
     background: DarkSlateGrey;
   }
 } */
-
-
-

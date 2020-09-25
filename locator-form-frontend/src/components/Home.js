@@ -18,7 +18,7 @@ class Home extends React.Component {
       return (
         <div className="home">
           <div className="container pt-3">
-            <LocatorForm/>
+            
           </div >
         </div >
       );

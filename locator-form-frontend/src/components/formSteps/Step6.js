@@ -52,21 +52,6 @@ class Step6 extends React.Component {
 					</div>
 					<div className="row">
 						<div className="col-lg-4 form-group ">
-							<Field name="visitPurpose">
-								{({ field, form, meta }) =>
-									<MySelect label={<FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />}
-										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-										options={
-											[
-												{ "value": "business", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.business' }) },
-												{ "value": "pleasure", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.pleasure' }) },
-												{ "value": "other", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.other' }) },
-											]}
-									/>
-								}
-							</Field>
-						</div>
-						<div className="col-lg-4 form-group ">
 							<Field name="mobilePhone">
 								{({ field, form, meta }) =>
 									<MyPhoneInput

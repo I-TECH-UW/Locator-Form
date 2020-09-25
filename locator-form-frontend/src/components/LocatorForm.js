@@ -50,10 +50,10 @@ const muiMobileTheme = createMuiTheme({
         width: "75%"
       },
       colorPrimary: {
-        'background-color': '#aad4e3',
+        'background-color': '#c8e0c1',
       },
       barColorPrimary: {
-        'background-color': '#00aded',
+        'background-color': '#5b954a',
       },
     },
   }
@@ -168,12 +168,21 @@ class LocatorForm extends React.Component {
     const  currentValidationShema = validationSchema[this.state.activeStep];
     return (
       <>
-        {this.state.activeStep !== 10 &&
-          <div className="jumbotron">
-            <h1><FormattedMessage id="nav.item.header" defaultMessage="Public Health Passenger Locator Form" /></h1>
-            <p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health." /></p>
+          <div className="row" style={{background: '#e0e9f1'}} >
+              <div className="col-lg-12 ">
+                <div className="container pt-3">
+                  {this.state.activeStep !== 10 &&
+                    <div className="jumbotron">
+                      <h1><FormattedMessage id="nav.item.header" defaultMessage="Public Health Passenger Locator Form" /></h1>
+                      <p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health." /></p>
+                    </div>
+                  }
+                </div>
+              </div>
           </div>
-        }
+          <div className="row flex-grow-1" style={{background: '#f2f2f2'}}>
+              <div className="col-lg-12 ">
+          <div className="container pt-3">
         {this.state.activeStep < steps.length &&
           <MuiThemeProvider theme={muiMobileTheme}>
             <MobileStepper variant="progress" className="stepper" steps={steps.length} activeStep={this.state.activeStep} position="static" />
@@ -206,7 +215,6 @@ class LocatorForm extends React.Component {
                 <div >
                   <button
                     disabled={this.state.activeStep === 0}
-                    variant="contained"
                     type="button"
                     className="back-button"
                     onClick={this._handleBack}>
@@ -215,7 +223,6 @@ class LocatorForm extends React.Component {
                   <button
                     disabled={this.state.isSubmitting || !formikProps.dirty || !formikProps.isValid}
                     type="submit"
-                    variant="contained"
                     className="next-button"
                   >
                     {steps.length - 1 === this.state.activeStep ? <FormattedMessage id="nav.item.next" defaultMessage="Submit" /> : <FormattedMessage id="nav.item.next" defaultMessage="Next" />}
@@ -230,7 +237,9 @@ class LocatorForm extends React.Component {
           </Form >
         )}
         </Formik>
-      </>
+      </div>
+      </div>
+      </div></>
     )
   }
 }
