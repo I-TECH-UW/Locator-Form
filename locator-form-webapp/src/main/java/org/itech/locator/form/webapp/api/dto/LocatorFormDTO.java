@@ -23,6 +23,13 @@ public class LocatorFormDTO extends Traveller {
 		BUSINESS, PLEASURE, OTHER
 	}
 
+	public enum TravellerType {
+		RESIDENT, NONRESIDENT
+	}
+
+	@NotNull
+	private TravellerType travellerType;
+
 	@NotBlank
 	@Size(max = 50)
     private String airlineName;
@@ -41,21 +48,14 @@ public class LocatorFormDTO extends Traveller {
 
 	@Size(max = 50)
 	private String[] countriesVisited;
-	@NotBlank
 	@Size(max = 50)
     private String portOfEmbarkation;
 
-	@NotNull
 	private Boolean fever;
-	@NotNull
 	private Boolean soreThroat;
-	@NotNull
 	private Boolean jointPain;
-	@NotNull
 	private Boolean cough;
-	@NotNull
 	private Boolean breathingDifficulties;
-	@NotNull
 	private Boolean rash;
 
 	@NotNull
@@ -71,6 +71,9 @@ public class LocatorFormDTO extends Traveller {
 	@Size(max = 50)
 	@Email
     private String email;
+
+	@Size(max = 50)
+	private String nationalID;
 
 	@Valid
     private Address permanentAddress;

@@ -171,9 +171,15 @@ body {
 .back-button {
   background-color: #00aded;
 }
+.back-button:hover:enabled {
+  color: #00aded;
+}
 
 .next-button {
   background-color: #00aded
+}
+.next-button:hover:enabled {
+  color: #00aded;
 }
 
 #nav-icon {
@@ -202,9 +208,6 @@ body {
 }
 
 
-#language-select-button:hover {
-  color: black;
-}
 
 .navbar-left {
   background-color: #00aded;
@@ -216,8 +219,39 @@ body {
   background-color: #465159;
   margin: 0rem;
   color: white;
-  outline: none !important;
+  outline: none ;
     box-shadow: none !important;
+}
+.language-select-button:hover {
+  border-right: 1px solid #465159;
+}
+.language-select-button:hover:enabled,.language-button:hover:enabled {
+  color: black;
+  background-color: #00aded;
+}
+
+.input-icon-button {
+  border-radius: 0 !important;
+  border: 2px solid var(--gray-200);
+  border-left: 0px;
+  outline: none ;
+  box-shadow: none !important;
+  background-color: white;
+  padding: 0.41rem 0.5rem;
+  color: var(--gray-800);
+  font-size: 1rem;
+  margin: 0;
+}
+.input-icon-button:hover:enabled,.input-icon-button:enabled:focus {
+  background-color: var(--gray-400);
+  border-radius: 0 !important;
+  border: 2px solid var(--gray-400);
+  border-left: 0px;
+  outline: none ;
+  box-shadow: none !important;
+  padding: 0.41rem 0.5rem;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .languagepicker .dropdown-menu  {
@@ -236,13 +270,23 @@ body {
   outline: none !important;
     box-shadow: none !important;
 }
-.language-select-button:hover,.language-button:hover {
-  background-color: #00aded;
-}
 
 .language-select {
   width: 52px;
   height: 40px;
+}
+
+.confirm-button {
+  background-color: #008000E0;
+}
+.confirm-button:hover:enabled {
+  color: #008000E0;
+}
+.reject-button {
+  background-color: #e5354bE0;
+}
+.reject-button:hover:enabled {
+  color: #e5354bE0;
 }
 
 /* .languagepicker {
@@ -447,12 +491,12 @@ button {
 
 @media (hover: hover) {
 
-  input[type="submit"]:hover,
-  input[type="reset"]:hover,
-  input[type="button"]:hover,
-  button:hover {
+  input[type="submit"]:hover:enabled,
+  input[type="reset"]:hover:enabled,
+  input[type="button"]:hover:enabled,
+  button:hover:enabled {
     cursor: pointer;
-    background-color: var(--gray-800);
+    background-color: #FFFFFF;
   }
 }
 

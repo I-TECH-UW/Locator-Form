@@ -1,45 +1,8 @@
 import React from "react"
-import { FormattedMessage, injectIntl } from 'react-intl'
-import { Field, useFormikContext } from 'formik';
-import { MyRadioInputGroup, MyTextInput, MySelect, MyPhoneInput, MyCheckbox, MyHiddenInput, StyledErrorMessage } from '../MyInputs'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSpinner } from "@fortawesome/free-solid-svg-icons"
-import { countriesList } from '../data/countries.json'
-import { StepContent } from "@material-ui/core"
+import { FormattedMessage } from 'react-intl'
+import { MyCheckbox } from '../inputs/MyInputs'
 
 class Confirmation extends React.Component {
-
-	constructor(props) {
-		super(props)
-		this.state = {
-			submitErrorKey: '',
-			tempAddressSameAsPermAddress: false
-		}
-	}
-
-
-	toggleTempAddress = (formik) => {
-		var previousValue = this.state.tempAddressSameAsPermAddress
-		this.setState({ tempAddressSameAsPermAddress: !previousValue })
-		if (previousValue) {
-			formik.values.temporaryAddress.hotelName = ""
-			formik.values.temporaryAddress.numberAndStreet = ""
-			formik.values.temporaryAddress.apartmentNumber = ""
-			formik.values.temporaryAddress.city = ""
-			formik.values.temporaryAddress.stateProvince = ""
-			formik.values.temporaryAddress.country = ""
-		} else {
-			// These values are just to pass the validation. 
-			// Actual values are copied into form at submit time from permanentAddress
-			formik.values.temporaryAddress.hotelName = "N/A"
-			formik.values.temporaryAddress.numberAndStreet = "N/A"
-			formik.values.temporaryAddress.apartmentNumber = "N/A"
-			formik.values.temporaryAddress.city = "N/A"
-			formik.values.temporaryAddress.stateProvince = "N/A"
-			formik.values.temporaryAddress.country = "N/A"
-		}
-
-	}
 
 	render() {
 

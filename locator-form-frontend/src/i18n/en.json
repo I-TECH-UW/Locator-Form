@@ -42,7 +42,9 @@
 	"error.email.doesnotmatch": "Emails must match",
 	"error.phone.invalid": "Phone number is not valid",
 	"error.invalid.selection": "Invalid option chosen",
-	"error.submit": "An error occured"
+	"error.submit": "An error occured",
+	"error.search.infohighway.error": "An error occurred while searching",
+	"error.search.infohighway.notfound": "No resident was found with that National ID"
 
 	
 }

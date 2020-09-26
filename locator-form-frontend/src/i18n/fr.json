@@ -96,5 +96,7 @@
 	"error.email.doesnotmatch": "Les adresses électronique doivent correspondre",
 	"error.phone.invalid": "Téléphone invalide",
 	"error.invalid.selection": "Invalide",
-	"error.submit": "Une erreur est survenue"
+	"error.submit": "Une erreur est survenue",
+	"error.search.infohighway.error": "Une erreur est survenue",
+	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable"
 }

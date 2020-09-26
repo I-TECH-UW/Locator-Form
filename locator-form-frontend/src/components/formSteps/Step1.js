@@ -1,7 +1,6 @@
 import React from "react"
-import { FormattedMessage, injectIntl } from 'react-intl'
-import { Formik, Form, Field, FieldArray, useField } from 'formik'
-import { MyRadioInputGroup } from '../MyInputs'
+import { FormattedMessage } from 'react-intl'
+import { MyRadioInputGroup } from '../inputs/MyInputs'
 
 // workaround for conditional validation in permanent address
 const onInputChange = (e, form) => {

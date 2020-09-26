@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from './components/layout/Layout';
-// import { Navigation, Footer, Home } from "./components";
 import { LocatorForm } from "./components";
 import { IntlProvider } from 'react-intl';
 
@@ -52,7 +51,7 @@ class App extends React.Component {
         defaultLocale={i18nConfig.defaultLocale}
         messages={i18nConfig.messages}
       >
-        <div className="App" id="page">
+        <>
           <Router>
             {/* <Navigation onChangeLanguage={this.onChangeLanguage} /> */}
             <Layout onChangeLanguage={this.onChangeLanguage}>
@@ -62,7 +61,7 @@ class App extends React.Component {
             </Layout>
             {/* <Footer /> */}
           </Router>
-          </div>
+          </>
       </IntlProvider>
     );
   }

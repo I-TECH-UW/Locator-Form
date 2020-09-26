@@ -1,26 +1,14 @@
-import React, { useState } from 'react'
-import * as Yup from 'yup'
-import { Formik, Form, Field, FieldArray, useField, useFormikContext } from 'formik'
-import styled from "@emotion/styled"
+import React from 'react'
+import { Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { countriesList } from './data/countries.json'
-import MultiCapableSelect from "./MultiCapableSelect"
-import { PhoneInputField } from './PhoneInputField'
-import { faSpinner } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
 import validationSchema from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
-import { Paper, CssBaseline } from '@material-ui/core'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import MobileStepper from '@material-ui/core/MobileStepper'
 import {
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-  CircularProgress
+  createMuiTheme,
+  MobileStepper,
+  CircularProgress, 
+  MuiThemeProvider
 } from '@material-ui/core'
 
 // const muiTheme = createMuiTheme({
@@ -50,10 +38,10 @@ const muiMobileTheme = createMuiTheme({
         width: "75%"
       },
       colorPrimary: {
-        'background-color': '#c8e0c1',
+        'background-color': '#00800050',
       },
       barColorPrimary: {
-        'background-color': '#5b954a',
+        'background-color': '#008000',
       },
     },
   }
@@ -164,7 +152,7 @@ class LocatorForm extends React.Component {
 
 
   render() {
-    // const currentValidationShema = this.state.activeStep === 6 ? validationSchema[this.state.activeStep] : Yup.object().shape({})
+    // const  currentValidationShema = validationSchema[20];
     const  currentValidationShema = validationSchema[this.state.activeStep];
     return (
       <>
@@ -239,7 +227,8 @@ class LocatorForm extends React.Component {
         </Formik>
       </div>
       </div>
-      </div></>
+      </div>
+      </>
     )
   }
 }

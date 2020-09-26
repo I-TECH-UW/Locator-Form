@@ -1,5 +1,6 @@
 export default {
   travellerType: '',
+  
   airlineName: '', flightNumber: '', seatNumber: '',
   title: '',firstName: '', lastName: '', middleInitial: '', 
   acceptedTerms: false,

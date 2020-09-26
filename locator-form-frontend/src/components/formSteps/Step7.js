@@ -1,9 +1,7 @@
 import React from "react"
-import { FormattedMessage, injectIntl } from 'react-intl'
-import { Formik, Form, Field, FieldArray, useField } from 'formik'
-import { MyRadioInputGroup, MyTextInput, MySelect, MyPhoneInput, MyCheckbox, MyHiddenInput, StyledErrorMessage } from '../MyInputs'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { FormattedMessage } from 'react-intl'
+import { Field } from 'formik'
+import { MyTextInput, MySelect, MyCheckbox, MyHiddenInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.json'
 
 class Step7 extends React.Component {
@@ -11,7 +9,6 @@ class Step7 extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			submitErrorKey: '',
 			tempAddressSameAsPermAddress: false
 		}
 	}

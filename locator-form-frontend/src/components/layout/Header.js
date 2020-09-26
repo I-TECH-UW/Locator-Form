@@ -2,10 +2,9 @@ import React from "react"
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import './styles.css'
-import { FormattedMessage, injectIntl } from 'react-intl'
 import { faLanguage } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Link, withRouter } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 
 
 class Header extends React.Component {

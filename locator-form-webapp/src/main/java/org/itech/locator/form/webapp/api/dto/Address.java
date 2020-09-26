@@ -7,6 +7,8 @@ import lombok.Data;
 
 @Data
 public class Address {
+	@Size(max = 50)
+	private String hotelName;
 	@NotBlank
 	@Size(max = 50)
     private String numberAndStreet;

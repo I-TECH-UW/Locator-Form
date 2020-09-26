@@ -1,7 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, FieldArray, useField } from 'formik';
+import { Field, useField } from 'formik';
 import styled from "@emotion/styled";
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import MultiCapableSelect from "./MultiCapableSelect"
 import { PhoneInputField } from './PhoneInputField'
 
@@ -27,9 +27,6 @@ export const StyledErrorMessage = styled.div`
 	    content: " ";
 	    font-size: 10px;
 	  }
-	  @media (prefers-color-scheme: dark) {
-	    color: var(--red-300);
-	  }
 	`;
 
 const StyledLabel = styled.label`
@@ -45,9 +42,32 @@ export const MyTextInput = ({ label, ...props }) => {
   return (
     <>
       <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
-      <input className="text-input form-control" {...field} {...props} />
+      <div className="input-group">
+        <input className="text-input form-control" {...field} {...props} />
+        {props.iconClickable &&
+          <span className="input-group-btn">
+            <button className="input-icon-button" 
+            type="button"
+            onClick={e => {
+              props.iconOnClick(e)
+						}}>{props.icon}</button>
+          </span>
+        }
+      </div>
+      {!props.iconClickable &&
+        <i>{props.icon}</i>
+      }
+      <div className="error">
+        <StyledErrorMessage>
+          {props.additionalErrorMessage}
+        </StyledErrorMessage>
+      </div>
       {meta.touched && meta.error ? (
-        <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
+        <div className="error">
+          <StyledErrorMessage>
+            <FormattedMessage id={meta.error} defaultMessage={meta.error} />
+          </StyledErrorMessage>
+        </div>
       ) : null}
     </>
   );
