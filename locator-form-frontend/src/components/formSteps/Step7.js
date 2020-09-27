@@ -6,40 +6,6 @@ import { countriesList } from '../data/countries.json'
 
 class Step7 extends React.Component {
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			tempAddressSameAsPermAddress: false
-		}
-	}
-
-
-	toggleTempAddress = (formik) => {
-		var previousValue = this.state.tempAddressSameAsPermAddress
-		this.setState({ tempAddressSameAsPermAddress: !previousValue })
-		if (previousValue) {
-			formik.values.lengthOfStay = ""
-			formik.values.temporaryAddress.hotelName = ""
-			formik.values.temporaryAddress.numberAndStreet = ""
-			formik.values.temporaryAddress.apartmentNumber = ""
-			formik.values.temporaryAddress.city = ""
-			formik.values.temporaryAddress.stateProvince = ""
-			formik.values.temporaryAddress.country = ""
-		} else {
-			// These values are just to pass the validation. 
-			// Actual values are copied into form at submit time from permanentAddress
-			formik.values.lengthOfStay = "1"
-			formik.values.temporaryAddress.hotelName = "N/A"
-			formik.values.temporaryAddress.hotelName = "N/A"
-			formik.values.temporaryAddress.numberAndStreet = "N/A"
-			formik.values.temporaryAddress.apartmentNumber = "N/A"
-			formik.values.temporaryAddress.city = "N/A"
-			formik.values.temporaryAddress.stateProvince = "N/A"
-			formik.values.temporaryAddress.country = "N/A"
-		}
-
-	}
-
 	render() {
 		return <div>
 
@@ -110,13 +76,13 @@ class Step7 extends React.Component {
 							<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address (Quarantine site or hotel address)" /></h5>
 						</div>
 					</div>
-					<div className="row">
+					{/* <div className="row">
 						<div className="col-lg-5 form-group ">
 							<MyCheckbox name="tempAddrCheckbox" onClick={e => this.toggleTempAddress(this.props.formikProps)}>
 								<FormattedMessage id="nav.item.tempAddrCheckbox" defaultMessage="Temporary Address Same as Permanent Address" />
 							</MyCheckbox>
 						</div>
-					</div>
+					</div> */}
 					<div className={this.state.tempAddressSameAsPermAddress ? "hidden-section" : ""}>
 						<div className="row">
 							<div className="col-lg-4 form-group ">

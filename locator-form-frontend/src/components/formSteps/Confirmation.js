@@ -14,9 +14,14 @@ class Confirmation extends React.Component {
 
 
 			<div id="travellerTypeInformation" className="section">
+				<div className="row">
+					<div className="col-lg-12 ">
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.travellerSection" defaultMessage="Traveller" /></h5>
+					</div>
+				</div>
 			<div className="row">
 				<div className="col-lg-12 form-group form-group">
-					<FormattedMessage id="nav.item.travellerType" defaultMessage="Passenger Type" />: {travellerType}
+					<span className="confirm-field"><FormattedMessage id="nav.item.travellerType" defaultMessage="Passenger Type" />: </span><span className="confirm-value">{travellerType}</span>
 				</div>
 			</div>
 			</div>
@@ -24,21 +29,21 @@ class Confirmation extends React.Component {
 			<div id="flightInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.flightInformation" defaultMessage="Flight Information" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.flightInformation" defaultMessage="Flight Information" /></h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-3 form-group form-group">
-						<FormattedMessage id="nav.item.airline" defaultMessage="Airline" />: {airlineName}
+						<span className="confirm-field"><FormattedMessage id="nav.item.airline" defaultMessage="Airline" />: </span><span className="confirm-value">{airlineName}</span>
 					</div>
 					<div className="col-lg-3 form-group form-group">
-						<FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight" />: {flightNumber}
+						<span className="confirm-field"><FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight" />: </span><span className="confirm-value">{flightNumber}</span>
 					</div>
 					<div className="col-lg-3 form-group form-group">
-						<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: {seatNumber}
+						<span className="confirm-field"><FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: </span><span className="confirm-value">{seatNumber}</span>
 					</div>
 					<div className="col-lg-3 form-group form-group">
-						<FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival" />: {arrivalDate}
+						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival" />: </span><span className="confirm-value">{arrivalDate}</span>
 					</div>
 				</div>
 			</div>
@@ -46,162 +51,161 @@ class Confirmation extends React.Component {
 				<div className="row">
 					<div className="col-lg-12 ">
 
-						<h5> <FormattedMessage id="nav.item.personalInformation" defaultMessage="Personal Information" /> </h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.personalInformation" defaultMessage="Personal Information" /> </h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-2 form-group">
-						<FormattedMessage id="nav.item.title" defaultMessage="Title" />: {title}
+						<span className="confirm-field"><FormattedMessage id="nav.item.title" defaultMessage="Title" />: </span><span className="confirm-value">{title}</span>
 					</div>
 					<div className="col-lg-4 form-group">
-						<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: {lastName}
+						<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{lastName}</span>
 					</div>
 					<div className="col-lg-4 form-group">
-						<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: {firstName}
+						<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{firstName}</span>
 					</div>
 					<div className="col-lg-2 form-group">
-						<FormattedMessage id="nav.item.middleInitial" defaultMessage="Middle Initial" />: {middleInitial}
+						<span className="confirm-field"><FormattedMessage id="nav.item.middleInitial" defaultMessage="Middle Initial" />: </span><span className="confirm-value">{middleInitial}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-2 form-group">
-						<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: {sex}
+						<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{sex}</span>
 					</div>
 					<div className="col-lg-3 form-group">
-						<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />: {dateOfBirth}
+						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />: </span><span className="confirm-value">{dateOfBirth}</span>
 					</div>
 				</div>
 			</div>
 			<div id="healthInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.healthInformation" defaultMessage="Health Information" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.healthInformation" defaultMessage="Health Information" /></h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)" />: {lengthOfStay}
+						<span className="confirm-field"><FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)" />: </span><span className="confirm-value">{lengthOfStay}</span>
 					</div>
 
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months" />: {countriesVisited}
+						<span className="confirm-field"><FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months" />: </span><span className="confirm-value">{countriesVisited}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation (ie Airport Code)" />: {portOfEmbarkation}
+						<span className="confirm-field"><FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation (ie Airport Code)" />: </span><span className="confirm-value">{portOfEmbarkation}</span>
 					</div>
 				</div>
 			</div>
 			<div id="sufferingInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-
-						<h5> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?" /></h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.fever" defaultMessage="Fever" />: {fever}
+						<span className="confirm-field"><FormattedMessage id="nav.item.fever" defaultMessage="Fever" />: </span><span className="confirm-value">{fever}</span>
 					</div>
 
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat" />: {soreThroat}
+						<span className="confirm-field"><FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat" />: </span><span className="confirm-value">{soreThroat}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain" />: {jointPain}
+						<span className="confirm-field"><FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain" />: </span><span className="confirm-value">{jointPain}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.cough" defaultMessage="Cough" />: {cough}
+						<span className="confirm-field"><FormattedMessage id="nav.item.cough" defaultMessage="Cough" />: </span><span className="confirm-value">{cough}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties" />: {breathingDifficulties}
+						<span className="confirm-field"><FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties" />: </span><span className="confirm-value">{breathingDifficulties}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.rash" defaultMessage="Rash" />: {rash}
+						<span className="confirm-field"><FormattedMessage id="nav.item.rash" defaultMessage="Rash" />: </span><span className="confirm-value">{rash}</span>
 					</div>
 				</div>
 			</div>
 			<div id="contactInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.phoneNumbers" defaultMessage="Phone Number(s) Where you can be reached if needed? Include country code and city code." /> </h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.phoneNumbers" defaultMessage="Phone Number(s) Where you can be reached if needed? Include country code and city code." /> </h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: {visitPurpose}
+						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{visitPurpose}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />{mobilePhone}
+						<span className="confirm-field"><FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: </span><span className="confirm-value">{mobilePhone}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone" />{businessPhone}
+						<span className="confirm-field"><FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone" />: </span><span className="confirm-value">{businessPhone}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-3 form-group ">
 
-						<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: {email}
+						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{email}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: {nationality}
+						<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span><span className="confirm-value">{nationality}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />: {passportNumber}
+						<span className="confirm-field"><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />: </span><span className="confirm-value">{passportNumber}</span>
 					</div>
 				</div>
 			</div >
 			<div id="permanentAddressInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.permanent Address" defaultMessage="Permanent Address" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.permanent Address" defaultMessage="Permanent Address" /></h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-4 form-group">
-						<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />: {permanentAddress.numberAndStreet}
+						<span className="confirm-field"><FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />: </span><span className="confirm-value">{permanentAddress.numberAndStreet}</span>
 					</div>
 					<div className="col-lg-4 form-group">
-						<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />: {permanentAddress.apartmentNumber}
+						<span className="confirm-field"><FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />: </span><span className="confirm-value">{permanentAddress.apartmentNumber}</span>
 					</div>
 					<div className="col-lg-4 form-group">
-						<FormattedMessage id="nav.item.city" defaultMessage="City" />: {permanentAddress.city}
+						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{permanentAddress.city}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />: {permanentAddress.stateProvince}
+						<span className="confirm-field"><FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />: </span><span className="confirm-value">{permanentAddress.stateProvince}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.country" defaultMessage="Country" />: {permanentAddress.country}
+						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span><span className="confirm-value">{permanentAddress.country}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />: {permanentAddress.zipPostalCode}
+						<span className="confirm-field"><FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />: </span><span className="confirm-value">{permanentAddress.zipPostalCode}</span>
 					</div>
 				</div>
 			</div>
 			<div id="temporaryAddressInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address in Mauritius" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address in Mauritius" /></h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-5 form-group ">
-						<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />: {temporaryAddress.hotelName}
+						<span className="confirm-field"><FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />: </span><span className="confirm-value">{temporaryAddress.hotelName}</span>
 					</div>
 					<div className="col-lg-5 form-group ">
-						<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />: {temporaryAddress.numberAndStreet}
+						<span className="confirm-field"><FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />: </span><span className="confirm-value">{temporaryAddress.numberAndStreet}</span>
 					</div>
 					<div className="col-lg-2 form-group ">
-						<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />: {temporaryAddress.apartmentNumber}
+						<span className="confirm-field"><FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />: </span><span className="confirm-value">{temporaryAddress.apartmentNumber}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-6 form-group ">
-						<FormattedMessage id="nav.item.city" defaultMessage="City" />: {temporaryAddress.city}
+						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{temporaryAddress.city}</span>
 					</div>
 					<div className="col-lg-6 form-group ">
-						<FormattedMessage id="nav.item.district" defaultMessage="District" />: {temporaryAddress.stateProvince}
+						<span className="confirm-field"><FormattedMessage id="nav.item.district" defaultMessage="District" />: </span><span className="confirm-value">{temporaryAddress.stateProvince}</span>
 					</div>
 					{/* <div className="col-lg-4 form-group ">
 				<MySelect
@@ -212,71 +216,71 @@ class Confirmation extends React.Component {
 				</MySelect>
 				</div> */}
 					{/* <div className="col-lg-4 form-group ">
-				<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />: {temporaryAddress.zipPostalCode}
+				<span className="confirm-field"><FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />: </span><span className="confirm-value">{temporaryAddress.zipPostalCode}</span>
 				</div> */}
 				</div>
 			</div>
 			<div id="emergencyContactInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.emergencyContact" defaultMessage="Emergency Contact Information of someone who can reach you during the next 30 days" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.emergencyContact" defaultMessage="Emergency Contact Information of someone who can reach you during the next 30 days" /></h5>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-3 form-group ">
-						<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: {emergencyContact.lastName}
+						<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{emergencyContact.lastName}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: {emergencyContact.firstName}
+						<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{emergencyContact.firstName}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<FormattedMessage id="nav.item.city" defaultMessage="City" />: {emergencyContact.city}
+						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{emergencyContact.city}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<FormattedMessage id="nav.item.country" defaultMessage="Country" />: {emergencyContact.country}
+						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span><span className="confirm-value">{emergencyContact.country}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-6 form-group ">
-						<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: {emergencyContact.email}
+						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{emergencyContact.email}</span>
 					</div>
 					<div className="col-lg-6 form-group ">
-						<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: {emergencyContact.mobilePhone}
+						<span className="confirm-field"><FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: </span><span className="confirm-value">{emergencyContact.mobilePhone}</span>
 					</div>
 				</div>
 			</div>
 			<div id="travelCompanionsInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.travelCompanionsFamily" defaultMessage="Travel Companions Family" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.travelCompanionsFamily" defaultMessage="Travel Companions Family" /></h5>
 					</div>
 				</div>
 				{familyTravelCompanions.map((companion) => {
 					return <>
 					<div className="row">
 											<div className="col-lg-4 form-group ">
-					<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: {companion.lastName}
+					<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{companion.lastName}</span>
 					</div>
 											<div className="col-lg-4 form-group ">
-					<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: {companion.firstName}
+					<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{companion.firstName}</span>
 					</div>
 											<div className="col-lg-2 form-group ">
-					<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: {companion.sex}
+					<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{companion.sex}</span>
 					</div>
 											<div className="col-lg-2 form-group ">
-					<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: {companion.seatNumber}
+					<span className="confirm-field"><FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: </span><span className="confirm-value">{companion.seatNumber}</span>
 					</div>
 
 					</div>
 					<div className="row">
 											<div className="col-lg-3 form-group ">
-					<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: {companion.dateOfBirth}
+					<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{companion.dateOfBirth}</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: {companion.nationality}
+					<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{companion.nationality}</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: {companion.passportNumber}
+					<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{companion.passportNumber}</span>
 					</div>
 					</div>
 					</>;
@@ -285,35 +289,35 @@ class Confirmation extends React.Component {
 			<div id="nonFamilyTravelCompanionInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5> <FormattedMessage id="nav.item.travelCompanionsNonFamily" defaultMessage="Travel Companions Non-Family" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.travelCompanionsNonFamily" defaultMessage="Travel Companions Non-Family" /></h5>
 					</div>
 				</div>
 				{nonFamilyTravelCompanions.map((companion) => {
 					return <>
 					<div className="row">
 											<div className="col-lg-4 form-group ">
-					<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: {companion.lastName}
+					<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{companion.lastName}</span>
 					</div>
 											<div className="col-lg-4 form-group ">
-					<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: {companion.firstName}
+					<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{companion.firstName}</span>
 					</div>
 											<div className="col-lg-2 form-group ">
-					<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: {companion.sex}
+					<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{companion.sex}</span>
 					</div>
 											<div className="col-lg-2 form-group ">
-					<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: {companion.seatNumber}
+					<span className="confirm-field"><FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: </span><span className="confirm-value">{companion.seatNumber}</span>
 					</div>
 
 					</div>
 					<div className="row">
 											<div className="col-lg-3 form-group ">
-					<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: {companion.dateOfBirth}
+					<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{companion.dateOfBirth}</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: {companion.nationality}
+					<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{companion.nationality}</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: {companion.passportNumber}
+					<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{companion.passportNumber}</span>
 					</div>
 					</div>
 					</>;

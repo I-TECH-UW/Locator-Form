@@ -53,7 +53,6 @@ class App extends React.Component {
       >
         <>
           <Router>
-            {/* <Navigation onChangeLanguage={this.onChangeLanguage} /> */}
             <Layout onChangeLanguage={this.onChangeLanguage}>
                 <Switch>
                   <Route path="/" exact component={LocatorForm} />

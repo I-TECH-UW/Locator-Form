@@ -26,7 +26,7 @@ class Step3 extends React.Component {
 			},
 		}).then(async response => {
 			this.setState({ searching: true });
-			const status = await response.status;
+			const status = response.status;
 			if (response.ok) {
 				const resident = response.json();
 				this.onSuccess(resident)

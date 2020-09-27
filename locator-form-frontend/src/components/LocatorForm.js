@@ -29,6 +29,13 @@ import {
 
 const muiMobileTheme = createMuiTheme({
   overrides: {
+    MuiMobileStepper: {
+      root :{
+        '@media (prefers-color-scheme: dark)': {
+        'background-color': '#1e1e1e'
+        },
+      }
+    },
     MuiLinearProgress: {
       root: {
         maxWidth: "100%",
@@ -142,7 +149,7 @@ class LocatorForm extends React.Component {
     }
   }
 
-  _handleBack = () => {
+  _handleBack = (formikProps) => {
     this.setState({ activeStep: this.state.activeStep - 1 })
   }
 
@@ -152,11 +159,12 @@ class LocatorForm extends React.Component {
 
 
   render() {
-    // const  currentValidationShema = validationSchema[20];
-    const  currentValidationShema = validationSchema[this.state.activeStep];
+    // const  currentValidationShema = validationSchema[this.state.activeStep];
+    const  currentValidationShema = this.state.activeStep === 6 ? validationSchema[this.state.activeStep] : validationSchema[20];
     return (
       <>
-          <div className="row" style={{background: '#e0e9f1'}} >
+        <div className="container-fluid d-flex min-vh-100 flex-column content">
+          <div className="row dark-row">
               <div className="col-lg-12 ">
                 <div className="container pt-3">
                   {this.state.activeStep !== 10 &&
@@ -168,7 +176,7 @@ class LocatorForm extends React.Component {
                 </div>
               </div>
           </div>
-          <div className="row flex-grow-1" style={{background: '#f2f2f2'}}>
+          <div className="row light-row flex-grow-1">
               <div className="col-lg-12 ">
           <div className="container pt-3">
         {this.state.activeStep < steps.length &&
@@ -193,7 +201,7 @@ class LocatorForm extends React.Component {
             <div className="row">
               <div className="col-lg-12 ">
                 {this.state.activeStep < steps.length &&
-                  <h5><FormattedMessage id={steps[this.state.activeStep]} /></h5>
+                  <h2 className="question-header"><FormattedMessage id={steps[this.state.activeStep]} /></h2>
                 }
               </div>
             </div>
@@ -205,26 +213,30 @@ class LocatorForm extends React.Component {
                     disabled={this.state.activeStep === 0}
                     type="button"
                     className="back-button"
-                    onClick={this._handleBack}>
+                    onClick={() => this._handleBack(formikProps)}>
                     <FormattedMessage id="nav.item.back" defaultMessage="Back" />
                   </button>
                   <button
                     disabled={this.state.isSubmitting || !formikProps.dirty || !formikProps.isValid}
                     type="submit"
-                    className="next-button"
+                    className={steps.length - 1 === this.state.activeStep ? 'confirm-button' : 'next-button'}
                   >
-                    {steps.length - 1 === this.state.activeStep ? <FormattedMessage id="nav.item.next" defaultMessage="Submit" /> : <FormattedMessage id="nav.item.next" defaultMessage="Next" />}
+                    {steps.length - 1 === this.state.activeStep ? <FormattedMessage id="nav.item.submit" defaultMessage="Submit" /> : <FormattedMessage id="nav.item.next" defaultMessage="Next" />}
                   </button>
                   {this.state.isSubmitting && (
                     <CircularProgress
                       size={24}
                     />
                   )}
+                  {this.state.submitErrorKey &&
+                    <div className="error"><FormattedMessage id={this.state.submitErrorKey} defaultMessage="Error"/></div>
+                  }
                 </div>}
             </div>
           </Form >
         )}
         </Formik>
+      </div>
       </div>
       </div>
       </div>

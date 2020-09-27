@@ -2,7 +2,9 @@
 	"language.select.label": "Langue",
 	"nav.item.selectLanguage": "Choisir la langue",
 	"nav.item.home": "Accueil",
+	"nav.item.healthwebsite": "le ministère de la Santé",
 
+	"nav.item.travellerSection": "Passager",
 	"nav.item.step.passengerType": "Type de Passager",
 	"nav.item.step.flight": "Vol",
 	"nav.item.step.personalInfo": "Renseignements du passager",

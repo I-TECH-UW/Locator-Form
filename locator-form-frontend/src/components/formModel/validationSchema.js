@@ -2,6 +2,13 @@ import * as Yup from 'yup'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 
 
+function isBlankOrValidPhoneNumber(phoneNumber) {
+	if (phoneNumber === undefined || phoneNumber === '+1' || phoneNumber === '') {
+		return true;
+	} else {
+		return isValidPhoneNumber(phoneNumber);
+	}
+}
 
 export default [
 	//step 1
@@ -24,6 +31,12 @@ export default [
 			.max(15, 'error.char.max.exceeded')
 			.required('error.required'),
 		arrivalDate: Yup.string()
+			.required('error.required'),
+		visitPurpose: Yup.string()
+			.oneOf(
+				['business', 'pleasure', 'other'],
+				'error.invalid.selection'
+			)
 			.required('error.required'),
 	}),
 	//step 3
@@ -105,21 +118,15 @@ export default [
 	}),
 	//step 6
 	Yup.object().shape({
-		visitPurpose: Yup.string()
-			.oneOf(
-				['business', 'pleasure', 'other'],
-				'error.invalid.selection'
-			)
-			.required('error.required'),
 		mobilePhone: Yup.string()
 			.test('is-phone',
 				'error.phone.invalid',
-				value => isValidPhoneNumber(value)
+				value => isBlankOrValidPhoneNumber(value)
 			),
 		businessPhone: Yup.string()
 			.test('is-phone',
 				'error.phone.invalid',
-				value => isValidPhoneNumber(value)
+				value => isBlankOrValidPhoneNumber(value)
 			),
 		email: Yup.string()
 			.email('error.email.invalid')
@@ -221,7 +228,7 @@ export default [
 			mobilePhone: Yup.string()
 				.test('is-phone',
 					'error.phone.invalid',
-					value => isValidPhoneNumber(value)
+					value => isBlankOrValidPhoneNumber(value)
 				),
 		}),
 	}),

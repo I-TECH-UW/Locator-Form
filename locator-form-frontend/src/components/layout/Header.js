@@ -1,67 +1,75 @@
 import React from "react"
-import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import './styles.css'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { faLanguage } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { withRouter } from "react-router-dom"
-
+import { logDOM } from "@testing-library/react"
 
 class Header extends React.Component {
 
+  logo = () => {
+    return (<>
+      <picture>
+        <source srcset={`images/logo-${this.props.intl.locale}-dark.png`} media="(prefers-color-scheme: dark)" />
+        <img className="logo" src={`images/logo-${this.props.intl.locale}.png`} alt="logo" />
+      </picture>
+    </>
+    )
+  }
+
   render() {
     return (
-      <div className="navigation">
-        <nav className="navbar navbar-expand-lg">
-          <div className="top-nav-container container-fluid" >
-            <img id="nav-icon" src="favicon.ico" alt="logo" />
-            <div className="navbar-left">
-            <div className="dropdown nav-item dropdown hover-dropdown languagepicker">
+      <>
+        <nav className="navbar navbar-expand-lg py-0 px-0 navbar-1 sticky-top">
+          <div className="navbar-brand">
+            <div className="my-navbar-button div-link">
+              <a href="https://health.govmu.org/" target="_blank" rel="noopener noreferrer" >
+                <span className="div-link-span"></span>
+              </a>
+              <div id="mynav-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div id="mynav-item">
+                <FormattedMessage id="nav.item.healthwebsite" defaultMessage="Ministry of Health and Wellness" />
+              </div>
+            </div>
+          </div>
+          <ul className="navbar-nav ml-auto navbar-right">
+            <li className="nav-item dropdown hover-dropdown languagepicker">
               <button type="button" className="btn language-select-button" data-toggle="dropdown">
                 <FontAwesomeIcon id="language-icon" icon={faLanguage} size="2x" />
               </button>
-              <ul className="dropdown-menu">
-                <li><button className="dropdown-item language-button" lang="en" onClick={this.props.onChangeLanguage}>EN</button></li>
-                <li><button className="dropdown-item language-button" lang="fr" onClick={this.props.onChangeLanguage}>FR</button></li>
-              </ul>
-            </div>
-            </div>
-            {/* <Link className="navbar-brand" to="/">
-               {languages.title} 
-            </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
-              <ul className="navbar-nav ml-auto">
-                
+              <div class="dropdown-menu">
+                <button className="dropdown-item language-button"
+                  lang="en"
+                  onClick={(e) => {
+                    this.props.onChangeLanguage(e)
+                  }}
+                >EN</button>
+                <button className="dropdown-item language-button"
+                  lang="fr"
+                  onClick={(e) => {
+                    this.props.onChangeLanguage(e)
+                  }}
+                >FR</button>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <nav id="navbar-2" className="navbar navbar-expand-lg navbar-2 sticky-top">
 
-                 <li >
-                  <div className="dropdown hover-dropdown">
-                    <button type="button" className="btn language-select-button " data-toggle="dropdown">
-                      <FontAwesomeIcon icon={faLanguage} style={{ color: 'white' }} size="3x" />
-                    </button>
-                    <div className="dropdown-menu">
-                      <div><a className="dropdown-item language-button" lang="en" onClick={this.props.onChangeLanguage}>English</a></div>
-                      <div><a className="dropdown-item language-button" lang="fr" onClick={this.props.onChangeLanguage}>Français</a></div>
-                    </div>
-                  </div>
-                </li> 
-              </ul>
-            </div> */}
+          <div className="navbar-brand">
+            {this.logo()}
           </div>
         </nav>
-      </div>
+      </>
     )
   }
 }
 
-export default withRouter(Header)
+export default withRouter(injectIntl(Header))

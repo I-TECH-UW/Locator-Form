@@ -117,8 +117,8 @@ export const MyCheckbox = ({ children, ...props }) => {
     <>
       <label className="checkbox">
         <input {...field} {...props} type="checkbox" className="form-control" />
-        {children}
       </label>
+        {children}
       {meta.touched && meta.error ? (
         <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
       ) : null}
