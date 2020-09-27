@@ -159,8 +159,8 @@ class LocatorForm extends React.Component {
 
 
   render() {
-    // const  currentValidationShema = validationSchema[this.state.activeStep];
-    const  currentValidationShema = this.state.activeStep === 6 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    const  currentValidationShema = validationSchema[this.state.activeStep];
+    // const  currentValidationShema = this.state.activeStep === 6 ? validationSchema[this.state.activeStep] : validationSchema[20];
     return (
       <>
         <div className="container-fluid d-flex min-vh-100 flex-column content">
