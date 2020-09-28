@@ -111,10 +111,6 @@ class LocatorForm extends React.Component {
 
   submitForm = (values) => {
     this.setState({ isSubmitting: true })
-    if (this.state.tempAddressSameAsPermAddress) {
-      values.temporaryAddress = values.permanentAddress
-      values.lengthOfStay = -1
-    }
     var json = JSON.stringify(values)
     console.log(json)
     fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form`, {
@@ -149,7 +145,7 @@ class LocatorForm extends React.Component {
     }
   }
 
-  _handleBack = (formikProps) => {
+  _handleBack = () => {
     this.setState({ activeStep: this.state.activeStep - 1 })
   }
 
@@ -213,7 +209,7 @@ class LocatorForm extends React.Component {
                     disabled={this.state.activeStep === 0}
                     type="button"
                     className="back-button"
-                    onClick={() => this._handleBack(formikProps)}>
+                    onClick={() => this._handleBack()}>
                     <FormattedMessage id="nav.item.back" defaultMessage="Back" />
                   </button>
                   <button

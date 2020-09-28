@@ -327,8 +327,9 @@ class Confirmation extends React.Component {
 				<div id="acceptInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">
-							<MyCheckbox name="acceptedTerms">
-								<FormattedMessage id="nav.item.declareInformation" defaultMessage="*I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information." />
+							<MyCheckbox
+								className="required-field-field" name="acceptedTerms">
+								<FormattedMessage id="nav.item.declareInformation" defaultMessage="I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information." />
 							</MyCheckbox>
 						</div>
 					</div>

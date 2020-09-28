@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { MyTextInput, MySelect } from '../inputs/MyInputs'
+import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
 
 class Step3 extends React.Component {
 
@@ -112,6 +112,7 @@ class Step3 extends React.Component {
 						label={<FormattedMessage id="nav.item.nationalId" defaultMessage="National ID" />}
 						name="nationalID"
 						type="text"
+						requireField={true}
 						icon={<FontAwesomeIcon icon={faSearch}/>}
 						iconClickable={true}
 						iconOnClick={e => {
@@ -144,6 +145,7 @@ class Step3 extends React.Component {
 								{({ field, form, meta }) =>
 									<MySelect disabled={this.state.searching || this.state.confirming} label={<FormattedMessage id="nav.item.title" defaultMessage="Title" />}
 										name="title" form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										requireField={true}
 										options={
 											[
 												{ "value": "mr", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.mr' }) },
@@ -160,6 +162,7 @@ class Step3 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
 								name="lastName"
+								requireField={true}
 								type="text"
 								disabled={this.state.searching || this.state.confirming} 
 							/>
@@ -168,6 +171,7 @@ class Step3 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
 								name="firstName"
+								requireField={true}
 								type="text"
 								disabled={this.state.searching || this.state.confirming} 
 							/>
@@ -188,6 +192,7 @@ class Step3 extends React.Component {
 								{({ field, form, meta }) =>
 									<MySelect disabled={this.state.searching || this.state.confirming} label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
 										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										requireField={true}
 										options={
 											[
 												{ "value": "male", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.male' }) },
@@ -202,6 +207,8 @@ class Step3 extends React.Component {
 								label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 								name="dateOfBirth"
 								type="date"
+								requireField={true}
+								max={dateInputToday()}
 								disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>

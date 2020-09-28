@@ -1,7 +1,7 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field, FieldArray } from 'formik'
-import { MyTextInput, MySelect } from '../inputs/MyInputs'
+import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.json'
 
 class Step9 extends React.Component {
@@ -30,6 +30,7 @@ class Step9 extends React.Component {
 														name={`familyTravelCompanions.${index}.lastName`}>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
 																name={field.name}
 																type="text"
@@ -43,6 +44,7 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
 																name={field.name}
 																type="text"
@@ -53,7 +55,8 @@ class Step9 extends React.Component {
 												<div className="col-lg-2 form-group ">
 													<Field name={`familyTravelCompanions.${index}.sex`}>
 														{({ field, form, meta }) =>
-															<MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
+															<MySelect
+																requireField={true} label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
 																name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 																options={
 																	[
@@ -72,6 +75,7 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 																name={field.name}
 																type="text"
@@ -84,9 +88,11 @@ class Step9 extends React.Component {
 														name={`familyTravelCompanions.${index}.dateOfBirth`}>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 																name={field.name}
 																type="date"
+																max={dateInputToday()}
 															/>
 														}
 													</Field>
@@ -101,6 +107,7 @@ class Step9 extends React.Component {
 																name={field.name}
 																options={countriesList}
 																isSearchable={true}
+																requireField={true}
 																placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 																label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
 															/>
@@ -114,6 +121,7 @@ class Step9 extends React.Component {
 															<MyTextInput
 																label={<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />}
 																name={field.name}
+																requireField={true}
 																type="text"
 															/>
 														}
@@ -122,7 +130,7 @@ class Step9 extends React.Component {
 												<div className="col-lg-1 ">
 													<button
 														type="button"
-														className="secondary"
+														className="remove-button"
 														onClick={() => remove(index)}
 													>
 														X
@@ -135,7 +143,7 @@ class Step9 extends React.Component {
 
 								<button
 									type="button"
-									className="secondary"
+									className="add-button"
 									onClick={() => push({
 										lastName: "",
 										firstName: "",
@@ -176,6 +184,7 @@ class Step9 extends React.Component {
 														name={`nonFamilyTravelCompanions.${index}.lastName`}>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
 																name={field.name}
 																type="text"
@@ -189,6 +198,7 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
 																name={field.name}
 																type="text"
@@ -199,7 +209,8 @@ class Step9 extends React.Component {
 												<div className="col-lg-2 form-group ">
 													<Field name={`nonFamilyTravelCompanions.${index}.sex`}>
 														{({ field, form, meta }) =>
-															<MySelect label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
+															<MySelect
+																requireField={true} label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
 																name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 																options={
 																	[
@@ -218,6 +229,7 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 																name={field.name}
 																type="text"
@@ -230,9 +242,11 @@ class Step9 extends React.Component {
 														name={`nonFamilyTravelCompanions.${index}.dateOfBirth`}>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 																name={field.name}
 																type="date"
+																max={dateInputToday()}
 															/>
 														}
 													</Field>
@@ -244,6 +258,7 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MySelect form={form}
+																requireField={true}
 																name={field.name}
 																options={countriesList}
 																isSearchable={true}
@@ -258,6 +273,7 @@ class Step9 extends React.Component {
 														name={`nonFamilyTravelCompanions.${index}.passportNumber`}>
 														{({ field, form, meta }) =>
 															<MyTextInput
+																requireField={true}
 																label={<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />}
 																name={field.name}
 																type="text"
@@ -268,7 +284,7 @@ class Step9 extends React.Component {
 												<div className="col-lg-1">
 													<button
 														type="button"
-														className="secondary"
+														className="remove-button"
 														onClick={() => remove(index)}
 													>
 														X
@@ -282,7 +298,7 @@ class Step9 extends React.Component {
 									<div className="col-lg-12 ">
 										<button
 											type="button"
-											className="secondary"
+											className="add-button"
 											onClick={() => push({
 												lastName: "",
 												firstName: "",

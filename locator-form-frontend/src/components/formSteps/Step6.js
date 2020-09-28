@@ -22,7 +22,7 @@ class Step6 extends React.Component {
 								{({ field, form, meta }) =>
 									<MyPhoneInput
 										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
-										form={form} name="mobilePhone"
+									form={form} name="mobilePhone"
 									/>
 								}
 							</Field>
@@ -43,12 +43,14 @@ class Step6 extends React.Component {
 
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
+								requireField={true}
 								name="email"
 								type="email"
 							/>
 						</div>
 						<div className="col-lg-3 form-group ">
 							<MyTextInput
+								requireField={true}
 								label={<FormattedMessage id="nav.item.confirmEmailAddress" defaultMessage="Confirm Email Address" />}
 								name="confirmEmail"
 								type="email"
@@ -59,6 +61,7 @@ class Step6 extends React.Component {
 								{({ field, form, meta }) =>
 									<MySelect form={form}
 										name={field.name}
+										requireField={true}
 										options={countriesList}
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
@@ -68,6 +71,7 @@ class Step6 extends React.Component {
 						</div>
 						<div className="col-lg-3 form-group ">
 							<MyTextInput
+								requireField={true}
 								label={<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />}
 								name="passportNumber"
 								type="text"

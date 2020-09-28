@@ -10,6 +10,9 @@ function isBlankOrValidPhoneNumber(phoneNumber) {
 	}
 }
 
+const today = new Date();
+today.setHours(0,0,0,0);
+
 export default [
 	//step 1
 	Yup.object().shape({
@@ -30,7 +33,8 @@ export default [
 		seatNumber: Yup.string()
 			.max(15, 'error.char.max.exceeded')
 			.required('error.required'),
-		arrivalDate: Yup.string()
+		arrivalDate: Yup.date()
+			.min(today, "error.date.past")
 			.required('error.required'),
 		visitPurpose: Yup.string()
 			.oneOf(
@@ -66,6 +70,9 @@ export default [
 				'error.invalid.selection'
 			)
 			.required('error.required'),
+		dateOfBirth: Yup.date()
+						.max(today, "error.date.future")
+						.required('error.required'),
 		nationalID: Yup.string()
 				.when('travellerType', {
 					is: 'resident',
@@ -167,11 +174,7 @@ export default [
 					then: Yup.string().required('error.required')
 				}),
 			stateProvince: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.when('travellerType', {
-					is: 'resident',
-					then: Yup.string().required('error.required')
-				}),
+				.max(50, 'error.char.max.exceeded'),
 			country: Yup.string()
 				.max(50, 'error.char.max.exceeded')
 				.when('travellerType', {
@@ -187,8 +190,10 @@ export default [
 		}),
 		lengthOfStay: Yup.string()
 			.matches('^[0-9]*$', 'error.lengthOfStay.noninteger')
-			.required('error.required'),
-
+			.when('travellerType', {
+				is: 'nonresident',
+				then: Yup.string().required('error.required')
+			}),
 		temporaryAddress: Yup.object().shape({
 			hotelName: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
@@ -224,12 +229,13 @@ export default [
 				.max(50, 'error.char.max.exceeded')
 				.required('error.required'),
 			email: Yup.string()
-				.email('error.email.invalid'),
+				.email('error.email.invalid')
+				.required('error.required'),
 			mobilePhone: Yup.string()
 				.test('is-phone',
 					'error.phone.invalid',
 					value => isBlankOrValidPhoneNumber(value)
-				),
+				).required('error.required'),
 		}),
 	}),
 	//step 9
@@ -245,7 +251,8 @@ export default [
 						.max(3, 'error.char.max.exceeded'),
 					seatNumber: Yup.string()
 						.required('error.required'),
-					dateOfBirth: Yup.string()
+					dateOfBirth: Yup.date()
+						.max(today, "error.date.future")
 						.required('error.required'),
 					sex: Yup.string()
 						.oneOf(
@@ -271,7 +278,8 @@ export default [
 						.max(3, 'error.char.max.exceeded'),
 					seatNumber: Yup.string()
 						.required('error.required'),
-					dateOfBirth: Yup.string()
+					dateOfBirth: Yup.date()
+						.max(today, "error.date.future")
 						.required('error.required'),
 					sex: Yup.string()
 						.oneOf(

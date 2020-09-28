@@ -29,19 +29,35 @@ export const StyledErrorMessage = styled.div`
 	  }
 	`;
 
-const StyledLabel = styled.label`
+export const StyledLabel = styled.label`
 	  margin-top: 1rem;	
-	`;
-	
+  `;
+  
+export const dateInputToday = () => {
+		var now = new Date()
+
+		var month = now.getMonth() + 1
+		var day = now.getDate()
+		var year = now.getFullYear()
+
+		if (month < 10)
+			month = '0' + month.toString()
+		if (day < 10)
+			day = '0' + day.toString()
+
+		var minDate = year + '-' + month + '-' + day
+		return minDate
+}
+  
 export const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage
   // entirely.
-  // <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+  // <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
   const [field, meta] = useField(props);
   return (
     <>
-      <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+      <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
       <div className="input-group">
         <input className="text-input form-control" {...field} {...props} />
         {props.iconClickable &&
@@ -77,11 +93,11 @@ export const MyRadioInputGroup = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage
   // entirely.
-  // <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+  // <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
   const [meta] = useField(props);
   return (
     <>
-      <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+      <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
       {Object.keys(props.values).map(value =>
     	<label key={value}>
 	  		<Field name={props.name} type="radio" value={value} className="form-control radio-button" {...props}/>
@@ -133,7 +149,7 @@ export const MySelect = ({ label, options, isMulti, isSearchable,  form, ...prop
   const [field, meta] = useField(props);
   return (
     <>
-      <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+      <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
       <StyledSelect {...field} {...props}
         options={options}
         field={field}
@@ -156,7 +172,7 @@ export const MyPhoneInput = ({ label, options, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
-      <StyledLabel htmlFor={props.id || props.name}>{label}</StyledLabel>
+      <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
       <StyledPhoneInput {...field} {...props}
         field={field}
         form={props.form}

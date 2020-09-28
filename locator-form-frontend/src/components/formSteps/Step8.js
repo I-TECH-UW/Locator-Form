@@ -21,6 +21,7 @@ class Step8 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
 								name="emergencyContact.lastName"
+								requireField={true}
 								type="text"
 							/>
 						</div>
@@ -28,6 +29,7 @@ class Step8 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
 								name="emergencyContact.firstName"
+								requireField={true}
 								type="text"
 							/>
 						</div>
@@ -35,6 +37,7 @@ class Step8 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.city" defaultMessage="City" />}
 								name="emergencyContact.city"
+								requireField={true}
 								type="text"
 							/>
 						</div>
@@ -44,6 +47,7 @@ class Step8 extends React.Component {
 									<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
 										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={countriesList} isSearchable={true}
+										requireField={true}
 									/>
 								}
 							</Field>
@@ -55,12 +59,14 @@ class Step8 extends React.Component {
 								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
 								name="emergencyContact.email"
 								type="text"
+								requireField={true}
 							/>
 						</div>
 						<div className="col-lg-6 form-group ">
 							<Field name="emergencyContact.mobilePhone">
 								{({ field, form, meta }) =>
 									<MyPhoneInput
+										requireField={true}
 										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
 										form={form} name="emergencyContact.mobilePhone"
 									/>

@@ -23,6 +23,7 @@ class Step1 extends React.Component {
 							onChange={ e => {
 								onInputChange(e, this.props.formikProps)}
 							}
+							requireField={true}
 							values={{ resident: 'nav.item.resident', nonresident: 'nav.item.nonresident' }}
 						/>
 					</div>
