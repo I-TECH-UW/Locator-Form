@@ -31,8 +31,7 @@ export default [
 			.max(15, 'error.char.max.exceeded')
 			.required('error.required'),
 		seatNumber: Yup.string()
-			.max(15, 'error.char.max.exceeded')
-			.required('error.required'),
+			.max(15, 'error.char.max.exceeded'),
 		arrivalDate: Yup.date()
 			.min(today, "error.date.past")
 			.required('error.required'),
@@ -130,7 +129,7 @@ export default [
 				'error.phone.invalid',
 				value => isBlankOrValidPhoneNumber(value)
 			),
-		businessPhone: Yup.string()
+		fixedPhone: Yup.string()
 			.test('is-phone',
 				'error.phone.invalid',
 				value => isBlankOrValidPhoneNumber(value)
@@ -188,6 +187,11 @@ export default [
 					then: Yup.string().required('error.required')
 				}),
 		}),
+		travellerType: Yup.string()
+			.oneOf(
+				['resident', 'nonresident'],
+				'error.invalid.selection')
+			.required('error.required'),
 		lengthOfStay: Yup.string()
 			.matches('^[0-9]*$', 'error.lengthOfStay.noninteger')
 			.when('travellerType', {
@@ -249,8 +253,8 @@ export default [
 						.required('error.required'),
 					middleInitial: Yup.string()
 						.max(3, 'error.char.max.exceeded'),
-					seatNumber: Yup.string()
-						.required('error.required'),
+					// seatNumber: Yup.string()
+					// 	.required('error.required'),
 					dateOfBirth: Yup.date()
 						.max(today, "error.date.future")
 						.required('error.required'),
@@ -276,8 +280,8 @@ export default [
 						.required('error.required'),
 					middleInitial: Yup.string()
 						.max(3, 'error.char.max.exceeded'),
-					seatNumber: Yup.string()
-						.required('error.required'),
+					// seatNumber: Yup.string()
+					// 	.required('error.required'),
 					dateOfBirth: Yup.date()
 						.max(today, "error.date.future")
 						.required('error.required'),

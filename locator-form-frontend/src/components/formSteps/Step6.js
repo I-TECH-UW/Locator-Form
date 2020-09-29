@@ -2,7 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
 import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
-import { countriesList } from '../data/countries.json'
+import { countriesList } from '../data/countries.js'
 
 class Step6 extends React.Component {
 
@@ -28,11 +28,11 @@ class Step6 extends React.Component {
 							</Field>
 						</div>
 						<div className="col-lg-4 form-group ">
-							<Field name="businessPhone">
+							<Field name="fixedPhone">
 								{({ field, form, meta }) =>
 									<MyPhoneInput
-										label={<FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone" />}
-										form={form} name="businessPhone"
+										label={<FormattedMessage id="nav.item.fixedPhone" defaultMessage="Fixed Phone" />}
+										form={form} name="fixedPhone"
 									/>
 								}
 							</Field>

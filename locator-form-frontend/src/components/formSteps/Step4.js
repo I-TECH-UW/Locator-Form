@@ -2,7 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
 import { MyTextInput, MySelect } from '../inputs/MyInputs'
-import { countriesList } from '../data/countries.json'
+import { countriesList } from '../data/countries.js'
 
 class Step4 extends React.Component {
 
@@ -27,7 +27,7 @@ class Step4 extends React.Component {
 						</div>
 						<div className="col-lg-4 form-group ">
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation (ie Airport Code)" />}
+								label={<FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation" />}
 								name="portOfEmbarkation"
 								type="text"
 							/>

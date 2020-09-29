@@ -2,7 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field, FieldArray } from 'formik'
 import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
-import { countriesList } from '../data/countries.json'
+import { countriesList } from '../data/countries.js'
 
 class Step9 extends React.Component {
 
@@ -75,7 +75,6 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MyTextInput
-																requireField={true}
 																label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 																name={field.name}
 																type="text"
@@ -229,7 +228,6 @@ class Step9 extends React.Component {
 													>
 														{({ field, form, meta }) =>
 															<MyTextInput
-																requireField={true}
 																label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 																name={field.name}
 																type="text"

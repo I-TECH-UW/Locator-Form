@@ -1,6 +1,9 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { MyCheckbox } from '../inputs/MyInputs'
+import { getCountryFromCode } from '../data/countries.js'
+
+
 
 class Confirmation extends React.Component {
 
@@ -8,8 +11,9 @@ class Confirmation extends React.Component {
 
 		const { travellerType, airlineName, flightNumber, seatNumber, arrivalDate, title, firstName, lastName, middleInitial,
 			sex,dateOfBirth, lengthOfStay,countriesVisited, portOfEmbarkation, fever, soreThroat, jointPain, cough, breathingDifficulties, rash, visitPurpose,
-			mobilePhone, businessPhone, email, passportNumber, nationality, permanentAddress, temporaryAddress, emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
+			mobilePhone, fixedPhone, email, passportNumber, nationality, permanentAddress, temporaryAddress, emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
 		} = this.props.formikProps.values;
+
 		return <div>
 
 
@@ -19,11 +23,11 @@ class Confirmation extends React.Component {
 						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.travellerSection" defaultMessage="Traveller" /></h5>
 					</div>
 				</div>
-			<div className="row">
-				<div className="col-lg-12 form-group form-group">
-					<span className="confirm-field"><FormattedMessage id="nav.item.travellerType" defaultMessage="Passenger Type" />: </span><span className="confirm-value">{travellerType}</span>
+				<div className="row">
+					<div className="col-lg-12 form-group">
+						<span className="confirm-field"><FormattedMessage id="nav.item.travellerType" defaultMessage="Passenger Type" />: </span><span className="confirm-value">{travellerType}</span>
+					</div>
 				</div>
-			</div>
 			</div>
 
 			<div id="flightInformation" className="section">
@@ -33,16 +37,16 @@ class Confirmation extends React.Component {
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-lg-3 form-group form-group">
+					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.airline" defaultMessage="Airline" />: </span><span className="confirm-value">{airlineName}</span>
 					</div>
-					<div className="col-lg-3 form-group form-group">
+					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight" />: </span><span className="confirm-value">{flightNumber}</span>
 					</div>
-					<div className="col-lg-3 form-group form-group">
+					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.seat" defaultMessage="Seat" />: </span><span className="confirm-value">{seatNumber}</span>
 					</div>
-					<div className="col-lg-3 form-group form-group">
+					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival" />: </span><span className="confirm-value">{arrivalDate}</span>
 					</div>
 				</div>
@@ -50,7 +54,6 @@ class Confirmation extends React.Component {
 			<div id="personalInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-
 						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.personalInformation" defaultMessage="Personal Information" /> </h5>
 					</div>
 				</div>
@@ -89,7 +92,16 @@ class Confirmation extends React.Component {
 					</div>
 
 					<div className="col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months" />: </span><span className="confirm-value">{countriesVisited}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months" />: </span><span className="confirm-value">
+							{countriesVisited.map((option, index) => {
+								return  (
+								<React.Fragment key={option}>
+									{index !== 0 && ', '}
+									{getCountryFromCode(option)}
+								</React.Fragment>
+								)
+							})}
+						</span>
 					</div>
 					<div className="col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation (ie Airport Code)" />: </span><span className="confirm-value">{portOfEmbarkation}</span>
@@ -138,7 +150,7 @@ class Confirmation extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: </span><span className="confirm-value">{mobilePhone}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone" />: </span><span className="confirm-value">{businessPhone}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.fixedPhone" defaultMessage="Fixed Phone" />: </span><span className="confirm-value">{fixedPhone}</span>
 					</div>
 				</div>
 				<div className="row">
@@ -147,7 +159,10 @@ class Confirmation extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{email}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span><span className="confirm-value">{nationality}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span>
+						<span className="confirm-value">
+							{getCountryFromCode(nationality)}
+						</span>
 					</div>
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />: </span><span className="confirm-value">{passportNumber}</span>
@@ -176,7 +191,10 @@ class Confirmation extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />: </span><span className="confirm-value">{permanentAddress.stateProvince}</span>
 					</div>
 					<div className="col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span><span className="confirm-value">{permanentAddress.country}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span>
+						<span className="confirm-value">
+							{getCountryFromCode(permanentAddress.country)}
+						</span>
 					</div>
 					<div className="col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />: </span><span className="confirm-value">{permanentAddress.zipPostalCode}</span>
@@ -237,7 +255,10 @@ class Confirmation extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{emergencyContact.city}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span><span className="confirm-value">{emergencyContact.country}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span>
+						<span className="confirm-value">
+							{getCountryFromCode(emergencyContact.country)}
+						</span>
 					</div>
 				</div>
 				<div className="row">
@@ -274,13 +295,16 @@ class Confirmation extends React.Component {
 					</div>
 					<div className="row">
 											<div className="col-lg-3 form-group ">
-					<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{companion.dateOfBirth}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />: </span><span className="confirm-value">{companion.dateOfBirth}</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{companion.nationality}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span>
+					<span className="confirm-value">
+						{getCountryFromCode(companion.nationality)}
+					</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{companion.passportNumber}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />: </span><span className="confirm-value">{companion.passportNumber}</span>
 					</div>
 					</div>
 					</>;
@@ -311,13 +335,16 @@ class Confirmation extends React.Component {
 					</div>
 					<div className="row">
 											<div className="col-lg-3 form-group ">
-					<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{companion.dateOfBirth}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />: </span><span className="confirm-value">{companion.dateOfBirth}</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{companion.nationality}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span>
+					<span className="confirm-value">
+						{getCountryFromCode(companion.nationality)}
+					</span>
 					</div>
 											<div className="col-lg-3 form-group ">
-					<span className="confirm-field"><FormattedMessage id="nav.item.sex" defaultMessage="Sex" />: </span><span className="confirm-value">{companion.passportNumber}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />: </span><span className="confirm-value">{companion.passportNumber}</span>
 					</div>
 					</div>
 					</>;

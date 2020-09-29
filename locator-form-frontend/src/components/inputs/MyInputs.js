@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, useField } from 'formik';
+import { useField } from 'formik';
 import styled from "@emotion/styled";
 import { FormattedMessage } from 'react-intl';
 import MultiCapableSelect from "./MultiCapableSelect"
@@ -94,21 +94,46 @@ export const MyRadioInputGroup = ({ label, ...props }) => {
   // which we can spread on <input> and alse replace ErrorMessage
   // entirely.
   // <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
-  const [meta] = useField(props);
+  const [field, meta] = useField(props);
+  
   return (
     <>
-      <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
-      {Object.keys(props.values).map(value =>
-    	<label key={value}>
-	  		<Field name={props.name} type="radio" value={value} className="form-control radio-button" {...props}/>
-     		<FormattedMessage id={props.values[value]} defaultMessage={props.values[value]} />
-	  	</label>
+      <StyledLabel 
+        className={`${props.requireField ? 'required-field' : ''} input-label`} 
+        htmlFor={props.id || props.name}
+      >
+        {label}
+      </StyledLabel>
+      {props.options.map(option => {
+        return (
+          <React.Fragment key={option.key}> 
+            <label htmlFor={option.value}>
+            <input type="radio" 
+              // className="radio-button"
+              id={option.value}
+              {...field}
+              value={option.value}
+              onChange={props.onInputChange}
+              checked={field.value === option.value}
+            />
+            <FormattedMessage id={option.key} defaultMessage={option.value} />
+          </label>
+          </React.Fragment>
         )
-	  }
-      
-	  
+      })}
+      {/* {Object.keys(props.values).map(value =>
+        <label key={value}>
+          <Field name={props.name} type="radio" value={value} className="form-control radio-button" {...props}/>
+          <FormattedMessage id={props.values[value]} defaultMessage={props.values[value]} />
+        </label>
+          )
+      } */}
       {meta.touched && meta.error ? (
-        <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
+        <div className="error">
+          <StyledErrorMessage>
+            <FormattedMessage id={meta.error} defaultMessage={meta.error} />
+          </StyledErrorMessage>
+        </div>
       ) : null}
     </>
   );

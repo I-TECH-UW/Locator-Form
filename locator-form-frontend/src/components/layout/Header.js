@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { faLanguage } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { withRouter } from "react-router-dom"
-import { logDOM } from "@testing-library/react"
 
 class Header extends React.Component {
 

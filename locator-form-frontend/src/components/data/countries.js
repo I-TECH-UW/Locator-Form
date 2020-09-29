@@ -1,5 +1,4 @@
-{"countriesList":
-  [
+export const countriesList = [
   {
     "value": "AF",
     "label": "Afghanistan"
@@ -976,4 +975,13 @@
     "value": "ZW",
     "label": "Zimbabwe"
   }
-]}
+];
+
+export const getCountryFromCode = (code) => {	
+  console.log("searching for country: " + code)
+  if (code) {
+    return countriesList.find((e) => e.value === code).label;
+  } else {
+    return null;
+  }
+}

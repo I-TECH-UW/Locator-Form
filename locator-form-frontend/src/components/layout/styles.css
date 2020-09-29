@@ -767,6 +767,7 @@ input[type="checkbox"]:checked:focus-visible {
 }
 
 input[type="radio"] {
+  display: inline-block;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

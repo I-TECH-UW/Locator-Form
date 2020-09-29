@@ -31,7 +31,6 @@ class Step2 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 								name="seatNumber"
-								requireField={true}
 								type="text"
 							/>
 						</div>

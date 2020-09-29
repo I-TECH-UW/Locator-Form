@@ -62,7 +62,7 @@
 	"nav.item.work": "Travail",
 	"nav.item.holidays": "Vacances",
 	"nav.item.mobilePhone": "Portable",
-	"nav.item.businessPhone": "Travail",
+	"nav.item.fixedPhone": "Fixe",
 	"nav.item.emailAddress": "Adresse électronique",
 	"nav.item.confirmEmailAddress": "Confirmer adresse électronique",
 	"nav.item.nationality": "Nationalité",
@@ -92,6 +92,8 @@
 	"error.required": "Requis",
 	"error.char.max.exceeded": "Trop grand",
 	"error.char.min.notreached": "Trop petit",
+	"error.date.past": "La date ne doit pas être avant aujourd'hui",
+	"error.date.future": "La date ne doit pas être après aujourd'hui",
 	"error.lengthOfStay.noninteger": "Doit être un numéro",
 	"error.terms.unaccepted": "Vous devez accepter les modalités et conditions de vente",
 	"error.email.invalid": "Adresse électronique invalide",
@@ -102,3 +104,4 @@
 	"error.search.infohighway.error": "Une erreur est survenue",
 	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable"
 }
+

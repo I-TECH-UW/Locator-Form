@@ -34,6 +34,8 @@
 
 	"nav.item.select.placeholder": "Select",
 	"error.required": "Required",
+	"error.date.past": "Date cannot be in the past",
+	"error.date.future": "Date cannot be in the future",
 	"error.char.max.exceeded": "Too many characters",
 	"error.char.min.notreached": "Too few characters",
 	"error.lengthOfStay.noninteger": "Must be a positive integer",

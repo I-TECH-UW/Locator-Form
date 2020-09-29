@@ -1,14 +1,15 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, MyCheckbox, MyHiddenInput } from '../inputs/MyInputs'
-import { countriesList } from '../data/countries.json'
+import { MyTextInput, MySelect, MyHiddenInput } from '../inputs/MyInputs'
+import { countriesList } from '../data/countries.js'
 
 class Step7 extends React.Component {
 
 	
 
 	render() {
+    	console.log("errors: " + JSON.stringify(this.props.formikProps.errors))
 		return <div>
 
 			<div className="step" id="step7">
@@ -27,7 +28,7 @@ class Step7 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />}
 								name="permanentAddress.numberAndStreet"
-								className={this.props.formikProps.values.travellerType === 'resident' ? "required" : ""}
+								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
 								type="text"
 							/>
 						</div>
@@ -42,7 +43,7 @@ class Step7 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.city" defaultMessage="City" />}
 								name="permanentAddress.city"
-								className={this.props.formikProps.values.travellerType === 'resident' ? "required" : ""}
+								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
 								type="text"
 							/>
 						</div>
@@ -61,7 +62,7 @@ class Step7 extends React.Component {
 									<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
 										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={countriesList} isSearchable={true}
-										className={this.props.formikProps.values.travellerType === 'resident' ? "required" : ""}
+								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
 									/>
 								}
 							</Field>
@@ -70,7 +71,7 @@ class Step7 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />}
 								name="permanentAddress.zipPostalCode"
-								className={this.props.formikProps.values.travellerType === 'resident' ? "required" : ""}
+								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
 								type="text"
 							/>
 						</div>
@@ -140,7 +141,6 @@ class Step7 extends React.Component {
 								label={<FormattedMessage id="nav.item.district" defaultMessage="District" />}
 								name="temporaryAddress.stateProvince"
 								type="text"
-								requireField={true}
 							/>
 							<MyHiddenInput
 								name="temporaryAddress.country"

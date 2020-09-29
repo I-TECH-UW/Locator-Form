@@ -24,7 +24,6 @@ public class Traveller {
     private String firstName;
 	@Size(max = 3)
     private String middleInitial;
-	@NotBlank
 	@Size(max = 15)
     private String seatNumber;
 	@NotNull
@@ -35,7 +34,6 @@ public class Traveller {
 	@NotBlank
 	@Size(max = 50)
     private String nationality;
-	@NotBlank
 	@Size(max = 50)
     private String passportNumber;
 }

@@ -2,7 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field,  } from 'formik'
 import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
-import { countriesList } from '../data/countries.json'
+import { countriesList } from '../data/countries.js'
 
 class Step8 extends React.Component {
 

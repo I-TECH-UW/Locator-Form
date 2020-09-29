@@ -139,24 +139,29 @@ class LocatorForm extends React.Component {
     if (steps.length - 1 === this.state.activeStep) {
       this.submitForm(values)
     } else {
-      this.setState({ activeStep: this.state.activeStep + 1 })
+      this.setState({ 
+        activeStep: this.state.activeStep + 1,
+     })
       actions.setTouched({})
       actions.setSubmitting(false)
     }
   }
 
-  _handleBack = () => {
-    this.setState({ activeStep: this.state.activeStep - 1 })
+  _handleBack = (formikProps) => {
+    this.setState({ 
+      activeStep: this.state.activeStep - 1 ,
+    })
+    formikProps.setErrors({})
   }
 
   onSuccess = (labelContentPairs) => {
     this.setState({ 'submitSuccess': true, 'labelContentPairs': labelContentPairs })
   }
 
-
   render() {
-    const  currentValidationShema = validationSchema[this.state.activeStep];
-    // const  currentValidationShema = this.state.activeStep === 6 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    // const currentValidationShema = validationSchema[this.state.activeStep];
+    const  currentValidationShema = this.state.activeStep === 7 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    console.log('step: ' + this.state.activeStep)
     return (
       <>
         <div className="container-fluid d-flex min-vh-100 flex-column content">
@@ -197,7 +202,9 @@ class LocatorForm extends React.Component {
             <div className="row">
               <div className="col-lg-12 ">
                 {this.state.activeStep < steps.length &&
-                  <h2 className="question-header"><FormattedMessage id={steps[this.state.activeStep]} /></h2>
+                  <h2 className="question-header">
+                      <FormattedMessage id={steps[this.state.activeStep]} />
+                  </h2>
                 }
               </div>
             </div>
@@ -209,11 +216,11 @@ class LocatorForm extends React.Component {
                     disabled={this.state.activeStep === 0}
                     type="button"
                     className="back-button"
-                    onClick={() => this._handleBack()}>
+                    onClick={() => this._handleBack(formikProps)}>
                     <FormattedMessage id="nav.item.back" defaultMessage="Back" />
                   </button>
                   <button
-                    disabled={this.state.isSubmitting || !formikProps.dirty || !formikProps.isValid}
+                    disabled={this.state.isSubmitting || !formikProps.isValid || !formikProps.dirty }
                     type="submit"
                     className={steps.length - 1 === this.state.activeStep ? 'confirm-button' : 'next-button'}
                   >
