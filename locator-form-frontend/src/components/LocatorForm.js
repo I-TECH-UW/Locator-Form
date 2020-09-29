@@ -158,12 +158,12 @@ class LocatorForm extends React.Component {
 
   scrollToTopOfQuestionsRef = () => {
     // not working for some reason on step 4,6,8,9
-    const inputElements = document.getElementsByTagName('input')
-  if (inputElements.length > 0) {
-    inputElements.item(0).focus();
-  }
-  console.log('scrollto: ' + this.topOfQuestionsRef.current.offsetTop)
-    window.scrollTo(0, 640)
+  //   const inputElements = document.getElementsByTagName('input')
+  // if (inputElements.length > 0) {
+  //   inputElements.item(0).focus();
+  // }
+    console.log('scrollto: ' + this.topOfQuestionsRef.current.offsetTop - 125)
+    window.scrollTo(0, this.topOfQuestionsRef.current.offsetTop - 125)
     // window.scrollTo(0, 0)
   }
 
@@ -172,8 +172,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-    // const currentValidationShema = validationSchema[this.state.activeStep];
-    const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    const currentValidationShema = validationSchema[this.state.activeStep];
+    // const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>
