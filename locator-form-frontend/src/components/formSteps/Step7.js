@@ -13,10 +13,6 @@ class Step7 extends React.Component {
 		return <div>
 
 			<div className="step" id="step7">
-				<MyHiddenInput
-					name="permanentAddress.travellerType"
-					type="hidden"
-				/>
 				<div id="permanentAddressInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">

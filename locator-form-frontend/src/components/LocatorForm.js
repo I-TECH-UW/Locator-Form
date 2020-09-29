@@ -140,17 +140,16 @@ class LocatorForm extends React.Component {
     if (steps.length - 1 === this.state.activeStep) {
       this.submitForm(values)
     } else {
-     this.scrollToTopOfQuestionsRef()
       this.setState({ 
         activeStep: this.state.activeStep + 1,
      })
       actions.setTouched({})
       actions.setSubmitting(false)
+     this.scrollToTopOfQuestionsRef()
     }
   }
 
   _handleBack = (formikProps) => {
-     this.scrollToTopOfQuestionsRef()
     this.setState({ 
       activeStep: this.state.activeStep - 1 ,
     })
@@ -159,7 +158,13 @@ class LocatorForm extends React.Component {
 
   scrollToTopOfQuestionsRef = () => {
     // not working for some reason on step 4,6,8,9
-    // window.scrollTo(0, this.topOfQuestionsRef.current.offsetTop)
+    const inputElements = document.getElementsByTagName('input')
+  if (inputElements.length > 0) {
+    inputElements.item(0).focus();
+  }
+  console.log('scrollto: ' + this.topOfQuestionsRef.current.offsetTop)
+    window.scrollTo(0, 640)
+    // window.scrollTo(0, 0)
   }
 
   onSuccess = (labelContentPairs) => {
@@ -167,8 +172,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-    const currentValidationShema = validationSchema[this.state.activeStep];
-    // const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    // const currentValidationShema = validationSchema[this.state.activeStep];
+    const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>
@@ -176,7 +181,7 @@ class LocatorForm extends React.Component {
           <div className="row dark-row">
               <div className="col-lg-12 ">
                 <div className="container pt-3">
-                  {this.state.activeStep !== 10 &&
+                  {this.state.activeStep !== 10 && 
                     <div className="jumbotron">
                       <h1><FormattedMessage id="nav.item.header" defaultMessage="Public Health Passenger Locator Form" /></h1>
                       <p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health." /></p>
@@ -185,7 +190,7 @@ class LocatorForm extends React.Component {
                 </div>
               </div>
           </div>
-          <div className="row light-row flex-grow-1">
+          <div className="row light-row flex-grow-1" ref={this.topOfQuestionsRef}>
               <div className="col-lg-12 ">
           <div className="container pt-3">
         {this.state.activeStep < steps.length &&
@@ -216,7 +221,7 @@ class LocatorForm extends React.Component {
                 }
               </div>
             </div>
-            <div className="questions"  ref={this.topOfQuestionsRef}>
+            <div className="questions">
               {this._renderStepContent(this.state.activeStep, formikProps)}
               {this.state.activeStep < steps.length &&
                 <div >
