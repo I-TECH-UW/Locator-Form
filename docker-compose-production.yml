@@ -20,7 +20,7 @@ services:
          context: ./locator-form-webapp
          dockerfile: docker/docker-build/Dockerfile
       ports:
-         - 8449:8444
+         - 8449:8443
       secrets:
          -  source: keystore
          -  source: truststore
