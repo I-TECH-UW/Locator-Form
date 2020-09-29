@@ -194,13 +194,13 @@ body {
   text-transform: uppercase;
   background-color: #f9f9f9;
   /* height: 3rem; */
-  z-index: 2;
+  z-index: 2001;
 }
 
 .navbar-2 {
   top: 3rem;
   background-color: #f2f2f2;
-  z-index: 1;
+  z-index: 2000;
 }
 
 .div-link {
