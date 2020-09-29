@@ -43,7 +43,6 @@ public class LocatorFormDTO extends Traveller {
 	@NotNull
 	private Title title;
 
-	@NotNull
 	private Integer lengthOfStay;
 
 	@Size(max = 50)
