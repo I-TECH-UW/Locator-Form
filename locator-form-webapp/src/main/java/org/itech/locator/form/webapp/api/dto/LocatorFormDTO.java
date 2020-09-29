@@ -59,10 +59,8 @@ public class LocatorFormDTO extends Traveller {
 
 	@NotNull
 	private VisitPurpose visitPurpose;
-	@NotBlank
 	@Size(max = 15)
     private String mobilePhone;
-	@NotBlank
 	@Size(max = 15)
     private String fixedPhone;
 
