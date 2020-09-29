@@ -140,7 +140,7 @@ class LocatorForm extends React.Component {
     if (steps.length - 1 === this.state.activeStep) {
       this.submitForm(values)
     } else {
-     this.scrollTotopOfQuestionsRef()
+     this.scrollToTopOfQuestionsRef()
       this.setState({ 
         activeStep: this.state.activeStep + 1,
      })
@@ -150,7 +150,7 @@ class LocatorForm extends React.Component {
   }
 
   _handleBack = (formikProps) => {
-     this.scrollTotopOfQuestionsRef()
+     this.scrollToTopOfQuestionsRef()
     this.setState({ 
       activeStep: this.state.activeStep - 1 ,
     })
