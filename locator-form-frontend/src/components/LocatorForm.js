@@ -71,6 +71,7 @@ class LocatorForm extends React.Component {
 
   constructor(props) {
     super(props)
+    this.topOfQuestionsRef = React.createRef();
     this.state = {
       activeStep: 0,
       submitErrorKey: '',
@@ -139,6 +140,7 @@ class LocatorForm extends React.Component {
     if (steps.length - 1 === this.state.activeStep) {
       this.submitForm(values)
     } else {
+     this.scrollTotopOfQuestionsRef()
       this.setState({ 
         activeStep: this.state.activeStep + 1,
      })
@@ -148,10 +150,16 @@ class LocatorForm extends React.Component {
   }
 
   _handleBack = (formikProps) => {
+     this.scrollTotopOfQuestionsRef()
     this.setState({ 
       activeStep: this.state.activeStep - 1 ,
     })
     formikProps.setErrors({})
+  }
+
+  scrollToTopOfQuestionsRef = () => {
+    // not working for some reason on step 4,6,8,9
+    // window.scrollTo(0, this.topOfQuestionsRef.current.offsetTop)
   }
 
   onSuccess = (labelContentPairs) => {
@@ -159,8 +167,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-    const currentValidationShema = validationSchema[this.state.activeStep];
-    // const  currentValidationShema = this.state.activeStep === 7 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    // const currentValidationShema = validationSchema[this.state.activeStep];
+    const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>
@@ -208,7 +216,7 @@ class LocatorForm extends React.Component {
                 }
               </div>
             </div>
-            <div className="questions">
+            <div className="questions"  ref={this.topOfQuestionsRef}>
               {this._renderStepContent(this.state.activeStep, formikProps)}
               {this.state.activeStep < steps.length &&
                 <div >

@@ -1,10 +1,14 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
-import { Field,  } from 'formik'
+import { Field  } from 'formik'
 import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 
 class Step8 extends React.Component {
+
+	getDefaultCountryCode =() => {
+		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
+	}
 
 	render() {
 		return <div>
@@ -55,18 +59,11 @@ class Step8 extends React.Component {
 					</div>
 					<div className="row">
 						<div className="col-lg-6 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
-								name="emergencyContact.email"
-								type="text"
-								requireField={true}
-							/>
-						</div>
-						<div className="col-lg-6 form-group ">
 							<Field name="emergencyContact.mobilePhone">
 								{({ field, form, meta }) =>
 									<MyPhoneInput
 										requireField={true}
+										defaultCountryCode={this.getDefaultCountryCode()}
 										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
 										form={form} name="emergencyContact.mobilePhone"
 									/>

@@ -181,11 +181,11 @@ export default [
 					then: Yup.string().required('error.required')
 				}),
 			zipPostalCode: Yup.string()
-				.max(20, 'error.char.max.exceeded')
-				.when('travellerType', {
-					is: 'resident',
-					then: Yup.string().required('error.required')
-				}),
+				.max(20, 'error.char.max.exceeded'),
+				// .when('travellerType', {
+				// 	is: 'resident',
+				// 	then: Yup.string().required('error.required')
+				// }),
 		}),
 		travellerType: Yup.string()
 			.oneOf(
@@ -207,14 +207,14 @@ export default [
 			apartmentNumber: Yup.string()
 				.max(20, 'error.char.max.exceeded'),
 			city: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
+				.max(50, 'error.char.max.exceeded'),
+				// .required('error.required'),
 			stateProvince: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
 				// .required('error.required'),
 			country: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
+				.max(50, 'error.char.max.exceeded'),
+				// .required('error.required'),
 		}),
 	}),
 	//step 8
@@ -231,9 +231,6 @@ export default [
 				.required('error.required'),
 			country: Yup.string()
 				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
-			email: Yup.string()
-				.email('error.email.invalid')
 				.required('error.required'),
 			mobilePhone: Yup.string()
 				.test('is-phone',

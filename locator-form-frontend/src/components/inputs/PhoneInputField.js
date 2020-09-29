@@ -20,6 +20,7 @@ export const PhoneInputField = ({
 	options,
 	isMulti,
 	placeholder,
+	defaultCountryCode,
 	...props
 }) => {
 	const onChange = (phoneNumber) => {
@@ -33,13 +34,18 @@ export const PhoneInputField = ({
 		return field.value;
 	};
 
+	let defaultCountry = "US"
+	if (defaultCountryCode) {
+		defaultCountry = defaultCountryCode
+	}
+
 	return (
 		<PhoneInput
 			{...field}
 			{...props}
 			name={field.name}
 			international={true}
-			defaultCountry="US"
+			defaultCountry={defaultCountry}
 			limitMaxLength={true}
 			value={getValue()}
 			onChange={onChange}

@@ -17,6 +17,7 @@ html {
   padding: 0;
   text-decoration-skip-ink: "auto";
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 :root {

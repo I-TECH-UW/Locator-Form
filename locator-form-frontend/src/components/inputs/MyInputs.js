@@ -105,6 +105,10 @@ export const MyRadioInputGroup = ({ label, ...props }) => {
         {label}
       </StyledLabel>
       {props.options.map(option => {
+        let inputChange = field.onChange;
+        if (props.onInputChange) {
+          inputChange = props.onInputChange
+        }
         return (
           <React.Fragment key={option.key}> 
             <label htmlFor={option.value}>
@@ -113,7 +117,7 @@ export const MyRadioInputGroup = ({ label, ...props }) => {
               id={option.value}
               {...field}
               value={option.value}
-              onChange={props.onInputChange}
+              onChange={inputChange}
               checked={field.value === option.value}
             />
             <FormattedMessage id={option.key} defaultMessage={option.value} />

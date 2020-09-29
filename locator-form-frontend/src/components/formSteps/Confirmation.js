@@ -219,12 +219,12 @@ class Confirmation extends React.Component {
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-lg-6 form-group ">
+					{/* <div className="col-lg-6 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{temporaryAddress.city}</span>
-					</div>
-					<div className="col-lg-6 form-group ">
+					</div> */}
+					{/* <div className="col-lg-6 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.district" defaultMessage="District" />: </span><span className="confirm-value">{temporaryAddress.stateProvince}</span>
-					</div>
+					</div> */}
 					{/* <div className="col-lg-4 form-group ">
 				<MySelect
 					label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />: {temporaryAddress.country"

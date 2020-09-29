@@ -48,35 +48,38 @@ class Step7 extends React.Component {
 							/>
 						</div>
 					</div>
-					<div className="row">
-						<div className="col-lg-4 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />}
-								name="permanentAddress.stateProvince"
-								type="text"
-							/>
+					{this.props.formikProps.values.travellerType !== 'resident' &&
+						<div className="row">
+							<div className="col-lg-4 form-group ">
+								<MyTextInput
+									label={<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />}
+									name="permanentAddress.stateProvince"
+									type="text"
+								/>
+							</div>
+							<div className="col-lg-4 form-group ">
+								<Field name="permanentAddress.country">
+									{({ field, form, meta }) =>
+										<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
+											name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+											options={countriesList} isSearchable={true}
+									requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
+										/>
+									}
+								</Field>
+							</div>
+							<div className="col-lg-4 form-group ">
+								<MyTextInput
+									label={<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />}
+									name="permanentAddress.zipPostalCode"
+									requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
+									type="text"
+								/>
+							</div>
 						</div>
-						<div className="col-lg-4 form-group ">
-							<Field name="permanentAddress.country">
-								{({ field, form, meta }) =>
-									<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
-										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-										options={countriesList} isSearchable={true}
-								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
-									/>
-								}
-							</Field>
-						</div>
-						<div className="col-lg-4 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />}
-								name="permanentAddress.zipPostalCode"
-								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
-								type="text"
-							/>
-						</div>
-					</div>
+					}
 				</div>
+
 				<div id="temporaryAddressInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">
@@ -129,19 +132,6 @@ class Step7 extends React.Component {
 					</div>
 					<div className="row">
 						<div className="col-lg-6 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.city" defaultMessage="City" />}
-								name="temporaryAddress.city"
-								type="text"
-								requireField={true}
-							/>
-						</div>
-						<div className="col-lg-6 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.district" defaultMessage="District" />}
-								name="temporaryAddress.stateProvince"
-								type="text"
-							/>
 							<MyHiddenInput
 								name="temporaryAddress.country"
 								type="hidden"

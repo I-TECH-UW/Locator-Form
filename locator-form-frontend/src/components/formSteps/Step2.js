@@ -2,6 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
 import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
+import { airlines } from '../data/airlines'
 
 class Step2 extends React.Component {
 
@@ -12,12 +13,18 @@ class Step2 extends React.Component {
 				<div id="flightInformation" className="section">
 					<div className="row">
 						<div className="col-lg-4 form-group">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.airline" defaultMessage="Airline" />}
-								name="airlineName"
-								requireField={true}
-								type="text"
-							/>
+							<Field name="airlineName">
+								{({ field, form, meta }) =>
+									<MySelect label={<FormattedMessage id="nav.item.airline" defaultMessage="Airline" />}
+										name={field.name} 
+										form={form}
+										requireField={true} 
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										options={airlines}
+									/>
+								}
+							</Field>
 						</div>
 						<div className="col-lg-4 form-group">
 							<MyTextInput

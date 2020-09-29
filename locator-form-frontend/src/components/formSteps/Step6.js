@@ -6,9 +6,12 @@ import { countriesList } from '../data/countries.js'
 
 class Step6 extends React.Component {
 
+	getDefaultCountryCode = () => {
+		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
+	}
+
 	render() {
 		return <div>
-
 			<div className="step" id="step6">
 				<div id="contactInformation" className="section">
 					<div className="row">
@@ -22,7 +25,7 @@ class Step6 extends React.Component {
 								{({ field, form, meta }) =>
 									<MyPhoneInput
 										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
-									form={form} name="mobilePhone"
+										defaultCountryCode={this.getDefaultCountryCode()} form={form} name="mobilePhone"
 									/>
 								}
 							</Field>
@@ -32,6 +35,7 @@ class Step6 extends React.Component {
 								{({ field, form, meta }) =>
 									<MyPhoneInput
 										label={<FormattedMessage id="nav.item.fixedPhone" defaultMessage="Fixed Phone" />}
+										defaultCountryCode={this.getDefaultCountryCode()}
 										form={form} name="fixedPhone"
 									/>
 								}
