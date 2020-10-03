@@ -5,7 +5,13 @@ import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 
 class Step6 extends React.Component {
-
+	state = {
+			value: { label: this.props.val, value: this.props.val },
+	}
+	
+	handleChange(value) {
+		this.setState({ value: value });
+	}
 	getDefaultCountryCode = () => {
 		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
 	}
@@ -66,6 +72,9 @@ class Step6 extends React.Component {
 									<MySelect form={form}
 										name={field.name}
 										requireField={true}
+										value={this.state.value}
+										defaultValue={{ label: "Mauritius", value: "MU" }}
+										onChange={value => this.handleChange(value)}
 										options={countriesList}
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}

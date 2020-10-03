@@ -39,7 +39,7 @@ class Step7 extends React.Component {
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.city" defaultMessage="City" />}
 								name="permanentAddress.city"
-								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
+								requireField={false}
 								type="text"
 							/>
 						</div>
@@ -108,6 +108,7 @@ class Step7 extends React.Component {
 								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
 								name="temporaryAddress.hotelName"
 								type="text"
+								requireField={true}
 							/>
 						</div>
 						<div className="col-lg-5 form-group ">

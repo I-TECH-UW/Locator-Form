@@ -15,7 +15,7 @@ public class EmergencyContact {
     private String firstName;
 	@NotBlank
 	@Size(max = 50)
-    private String city;
+    private String address;
 	@NotBlank
 	@Size(max = 50)
     private String country;

@@ -33,6 +33,7 @@
 	"nav.item.purposeOfVisit.option.other": "Other",
 
 	"nav.item.select.placeholder": "Select",
+	"nav.item.select.Mauritius": "Mauritius",
 	"error.required": "Required",
 	"error.date.past": "Date cannot be in the past",
 	"error.date.future": "Date cannot be in the future",

@@ -38,7 +38,7 @@ export default {
   {
     lastName: '',
     firstName: '',
-    city: '',
+    address: '',
     country: '',
     email: '',
     mobilePhone: '',

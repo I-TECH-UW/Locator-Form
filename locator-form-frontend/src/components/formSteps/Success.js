@@ -18,7 +18,7 @@ class Success extends React.Component {
 						<div className="col-lg-12 ">
 							<h5>{labelContentPair.label}:</h5>
 							{labelContentPair.barcodeContent}
-							{/* <Barcode value={labelContentPair.barcodeContent} /> */}
+							{ <Barcode value={labelContentPair.barcodeContent} /> }
 						</div>
 					</div>)
 			})}
