@@ -486,6 +486,10 @@ body {
   color: #00aded;
 }
 
+.notation {
+  color: #e5354bE0;
+}
+
 
 @media (prefers-color-scheme: dark) {
 

@@ -5,8 +5,16 @@ import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 
 class Step8 extends React.Component {
+	state = {
+			value: { label: this.props.val, value: this.props.val },
+	}
+	
+	handleChange(value) {
+		this.setState({ value: value });
+	}
 
 	getDefaultCountryCode =() => {
+		console.log(`getDefaultCountryCode:`, this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US');
 		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
 	}
 
@@ -39,8 +47,8 @@ class Step8 extends React.Component {
 						</div>
 						<div className="col-lg-3 form-group ">
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.city" defaultMessage="City" />}
-								name="emergencyContact.city"
+								label={<FormattedMessage id="nav.item.address" defaultMessage="Address" />}
+								name="emergencyContact.address"
 								requireField={true}
 								type="text"
 							/>
@@ -49,8 +57,13 @@ class Step8 extends React.Component {
 							<Field name="emergencyContact.country">
 								{({ field, form, meta }) =>
 									<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
-										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-										options={countriesList} isSearchable={true}
+										name={field.name} form={form} 
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										value={this.state.value}
+										defaultValue={{ label: "Mauritius", value: "MU" }}
+										onChange={value => this.handleChange(value)}
+										options={countriesList} 
+										isSearchable={true}
 										requireField={true}
 									/>
 								}

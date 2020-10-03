@@ -71,6 +71,7 @@
 	"nav.item.numberAndStreet": "Numéro et rue",
 	"nav.item.apartmentNumber": "Numéro d’appartement",
 	"nav.item.city": "Ville",
+	"nav.item.address": "Address",
 	"nav.item.state/Province": "État/Province",
 	"nav.item.district": "District",
 	"nav.item.country": "Pays",

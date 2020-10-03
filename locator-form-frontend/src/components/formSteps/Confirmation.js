@@ -252,7 +252,7 @@ class Confirmation extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{emergencyContact.firstName}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{emergencyContact.city}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.address" defaultMessage="Address" />: </span><span className="confirm-value">{emergencyContact.address}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.country" defaultMessage="Country" />: </span>

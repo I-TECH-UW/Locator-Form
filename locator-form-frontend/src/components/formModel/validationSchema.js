@@ -147,8 +147,8 @@ export default [
 			.max(20, 'error.char.max.exceeded')
 			.required('error.required'),
 		nationality: Yup.string()
-			.max(50, 'error.char.max.exceeded')
-			.required('error.required'),
+			.max(50, 'error.char.max.exceeded'),
+//			.required('error.required'),
 	}),
 	//step 7
 	Yup.object().shape({
@@ -167,11 +167,11 @@ export default [
 			apartmentNumber: Yup.string()
 				.max(20, 'error.char.max.exceeded'),
 			city: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.when('travellerType', {
-					is: 'resident',
-					then: Yup.string().required('error.required')
-				}),
+				.max(50, 'error.char.max.exceeded'),
+//				.when('travellerType', {
+//					is: 'resident',
+//					then: Yup.string().required('error.required')
+//				}),
 			stateProvince: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
 			country: Yup.string()
@@ -226,12 +226,12 @@ export default [
 			firstName: Yup.string()
 				.max(50, 'error.char.max.exceeded')
 				.required('error.required'),
-			city: Yup.string()
+			address: Yup.string()
 				.max(50, 'error.char.max.exceeded')
 				.required('error.required'),
 			country: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
+				.max(50, 'error.char.max.exceeded'),
+//				.required('error.required'),
 			mobilePhone: Yup.string()
 				.test('is-phone',
 					'error.phone.invalid',

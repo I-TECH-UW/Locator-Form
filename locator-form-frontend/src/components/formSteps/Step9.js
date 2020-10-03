@@ -12,6 +12,7 @@ class Step9 extends React.Component {
 				<div id="travelCompanionsInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">
+							<h6 class="notation"> <FormattedMessage id="nav.item.travelCompanionsNotation" defaultMessage="If you fill the information about your travel companions on this locator form, individual locator forms will not be required for these companions. Barcodes will be generated for each companion" /></h6>
 							<h5> <FormattedMessage id="nav.item.travelCompanionsFamily" defaultMessage="Travel Companions Family" /></h5>
 						</div>
 					</div>
