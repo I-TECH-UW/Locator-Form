@@ -59,8 +59,6 @@ class Step8 extends React.Component {
 									<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
 										name={field.name} form={form} 
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-										value={this.state.value}
-										defaultValue={{ label: "Mauritius", value: "MU" }}
 										onChange={value => this.handleChange(value)}
 										options={countriesList} 
 										isSearchable={true}

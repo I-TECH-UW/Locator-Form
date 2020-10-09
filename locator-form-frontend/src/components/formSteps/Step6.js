@@ -5,6 +5,7 @@ import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 
 class Step6 extends React.Component {
+
 	state = {
 			value: { label: this.props.val, value: this.props.val },
 	}
@@ -67,20 +68,22 @@ class Step6 extends React.Component {
 							/>
 						</div>
 						<div className="col-lg-3 form-group ">
-							<Field name="nationality">
-								{({ field, form, meta }) =>
-									<MySelect form={form}
-										name={field.name}
-										requireField={true}
-										value={this.state.value}
-										defaultValue={{ label: "Mauritius", value: "MU" }}
-										onChange={value => this.handleChange(value)}
-										options={countriesList}
-										isSearchable={true}
-										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-										label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
-									/>}
-							</Field>
+						<Field className="form-control"
+							name={`nationality`}
+						>
+						
+                        {({ field, form, meta }) =>
+                                <MySelect form={form}
+                                        name={field.name}
+                                        requireField={true}
+                                        onChange={value => this.handleChange(value)}
+                                        options={countriesList}
+                                        isSearchable={true}
+                                        placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+                                        label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
+                                />}
+                        </Field>
+                                        
 						</div>
 						<div className="col-lg-3 form-group ">
 							<MyTextInput

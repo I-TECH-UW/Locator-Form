@@ -143,6 +143,8 @@ class LocatorForm extends React.Component {
       this.setState({ 
         activeStep: this.state.activeStep + 1,
      })
+      var json = JSON.stringify(values)
+      console.log(json)
       actions.setTouched({})
       actions.setSubmitting(false)
      this.scrollToTopOfQuestionsRef()
