@@ -1,5 +1,7 @@
 package org.itech.soap.infohighway.client;
 
+import javax.xml.bind.JAXBElement;
+
 import org.itech.soap.infohighway.ObjectFactory;
 import org.itech.soap.infohighway.Query;
 import org.itech.soap.infohighway.QueryResponse;
@@ -63,8 +65,11 @@ public class InfoHighwayClient extends WebServiceGatewaySupport {
 		qwsInput.getQwsInputParams().add(qwsInputParam);
 
 		query.setQueryInput(qwsInput);
+		@SuppressWarnings("unchecked")
+		JAXBElement<QueryResponse> response = (JAXBElement<QueryResponse>) getWebServiceTemplate()
+				.marshalSendAndReceive(factory.createQuery(query));
 
-		return (QueryResponse) getWebServiceTemplate().marshalSendAndReceive(factory.createQuery(query));
+		return response.getValue();
 	}
 
 }
