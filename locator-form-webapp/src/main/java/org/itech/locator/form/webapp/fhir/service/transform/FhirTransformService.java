@@ -19,10 +19,6 @@ public interface FhirTransformService {
 
 	Task createFhirTask();
 
-	ServiceRequestPatientPair createFhirServiceRequestPatient(Traveller comp);
-
-	Patient createFhirPatient(Traveller traveller);
-
 	public class TransactionObjects {
 		public Bundle bundle;
 		public Task task;
@@ -40,5 +36,9 @@ public interface FhirTransformService {
 	}
 
 	List<LabelContentPair> createLabelContentPair(TransactionObjects transactionObjects);
+
+	Patient createFhirPatient(LocatorFormDTO lfdto, Traveller comp);
+
+	ServiceRequestPatientPair createFhirServiceRequestPatient(LocatorFormDTO lfdto, Traveller comp);
 
 }

@@ -7,16 +7,21 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hl7.fhir.r4.model.Address;
+import org.hl7.fhir.r4.model.Address.AddressType;
+import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.Bundle.HTTPVerb;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Patient.ContactComponent;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
@@ -43,6 +48,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Value("${org.itech.locator.form.loinccodes}")
 	private String[] loincCodes;
 
+	@Value("${org.itech.locator.form.barcodelength:36}")
+	private Integer barcodeLength;
+
 	@Autowired
 	private ObjectMapper objectMapper;
 
@@ -58,16 +66,17 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
-		ServiceRequestPatientPair fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO);
+		ServiceRequestPatientPair fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO,
+				locatorFormDTO);
 		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
 		for (Traveller comp : locatorFormDTO.getFamilyTravelCompanions()) {
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(comp);
+			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 		}
 
 		for (Traveller comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(comp);
+			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 		}
 
@@ -104,7 +113,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-	public Patient createFhirPatient(Traveller comp) {
+	public Patient createFhirPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
 		Patient fhirPatient = new Patient();
 		String patientId = UUID.randomUUID().toString();
 		fhirPatient.setId(patientId);
@@ -116,11 +125,24 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		humanNameList.add(humanName);
 		fhirPatient.setName(humanNameList);
 
+		List<Identifier> identifierList = new ArrayList<>();
+
 		Identifier identifier = new Identifier();
 		identifier.setId(patientId);
 		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-		List<Identifier> identifierList = new ArrayList<>();
 		identifierList.add(identifier);
+
+		identifier = new Identifier();
+		identifier.setId(comp.getPassportNumber());
+		identifier.setSystem("passport"); // fix hardcode
+		identifierList.add(identifier);
+
+		if (!StringUtils.isAllBlank(locatorFormDTO.getNationalID()) && comp == locatorFormDTO) {
+			identifier = new Identifier();
+			identifier.setId(locatorFormDTO.getNationalID());
+			identifier.setSystem("http://govmu.org"); // fix hardcode
+			identifierList.add(identifier);
+		}
 		fhirPatient.setIdentifier(identifierList);
 
 		fhirPatient.setBirthDate(Date.from(comp.getDateOfBirth().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -139,9 +161,41 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			break;
 		}
 
+		fhirPatient.addTelecom().setSystem(ContactPointSystem.SMS).setValue(locatorFormDTO.getMobilePhone());
+		fhirPatient.addTelecom().setSystem(ContactPointSystem.PHONE).setValue(locatorFormDTO.getFixedPhone());
+		fhirPatient.addTelecom().setSystem(ContactPointSystem.EMAIL).setValue(locatorFormDTO.getEmail());
+
+		ContactComponent contact = fhirPatient.addContact();//
+		HumanName contactName = new HumanName().addGiven(locatorFormDTO.getEmergencyContact().getFirstName())
+				.setFamily(locatorFormDTO.getEmergencyContact().getLastName());
+		contact.setName(contactName)//
+				.addTelecom()//
+				.setSystem(ContactPointSystem.SMS)//
+				.setValue(locatorFormDTO.getEmergencyContact().getMobilePhone());
+
+		Address permAddress = fhirPatient.addAddress();
+		permAddress.setCity(locatorFormDTO.getPermanentAddress().getCity())//
+				.setCountry(locatorFormDTO.getPermanentAddress().getCountry())//
+				.setPostalCode(locatorFormDTO.getPermanentAddress().getZipPostalCode())//
+				.setState(locatorFormDTO.getPermanentAddress().getStateProvince())//
+				.addLine(locatorFormDTO.getPermanentAddress().getApartmentNumber())//
+				.addLine(locatorFormDTO.getPermanentAddress().getNumberAndStreet())//
+				.setUse(AddressUse.HOME)//
+				.setType(AddressType.PHYSICAL);
+
+		Address tempAddress = fhirPatient.addAddress();
+		tempAddress.setCity(locatorFormDTO.getTemporaryAddress().getCity())//
+				.setCountry(locatorFormDTO.getTemporaryAddress().getCountry())//
+				.setPostalCode(locatorFormDTO.getTemporaryAddress().getZipPostalCode())//
+				.setState(locatorFormDTO.getTemporaryAddress().getStateProvince())//
+				.addLine(locatorFormDTO.getTemporaryAddress().getApartmentNumber())//
+				.addLine(locatorFormDTO.getTemporaryAddress().getHotelName())//
+				.addLine(locatorFormDTO.getTemporaryAddress().getNumberAndStreet())//
+				.setUse(AddressUse.TEMP)//
+				.setType(AddressType.PHYSICAL);
+
 		return fhirPatient;
 	}
-
 
 	@Override
 	public Task createFhirTask() {
@@ -162,14 +216,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-	public ServiceRequestPatientPair createFhirServiceRequestPatient(Traveller comp) {
+	public ServiceRequestPatientPair createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
 
 		ServiceRequest serviceRequest = new ServiceRequest();
 		String id = UUID.randomUUID().toString();
 		serviceRequest.setId(id);
 
 		// patient is created here and used for SR subjectRef
-		Patient fhirPatient = createFhirPatient(comp);
+		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
 
 		Reference subjectRef = new Reference();
 		subjectRef.setReference(ResourceType.Patient + "/" + fhirPatient.getIdElement().getIdPart());
@@ -203,7 +257,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		for (ServiceRequestPatientPair sRequestPatientPair : transactionObjects.serviceRequestPatientPairs) {
 			String patientName = sRequestPatientPair.patient.getNameFirstRep().getGivenAsSingleString();
 			String serviceRequestId = sRequestPatientPair.serviceRequest.getIdElement().getIdPart();
-			idAndLabels.add(new LabelContentPair(patientName + "'s Service Identifier", serviceRequestId));
+			idAndLabels.add(new LabelContentPair(patientName + "'s Service Identifier",
+					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
 		}
 		return idAndLabels;
 	}
