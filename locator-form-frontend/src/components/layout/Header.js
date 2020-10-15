@@ -11,7 +11,7 @@ class Header extends React.Component {
   logo = () => {
     return (<>
       <picture>
-        <source srcset={`images/logo-${this.props.intl.locale}-dark.png`} media="(prefers-color-scheme: dark)" />
+        {/* <source srcset={`images/logo-${this.props.intl.locale}-dark.png`} media="(prefers-color-scheme: dark)" /> */}
         <img className="logo" src={`images/logo-${this.props.intl.locale}.png`} alt="logo" />
       </picture>
     </>

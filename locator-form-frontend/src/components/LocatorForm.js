@@ -29,13 +29,13 @@ import {
 
 const muiMobileTheme = createMuiTheme({
   overrides: {
-    MuiMobileStepper: {
-      root :{
-        '@media (prefers-color-scheme: dark)': {
-        'background-color': '#1e1e1e'
-        },
-      }
-    },
+    // MuiMobileStepper: {
+    //   root :{
+    //     '@media (prefers-color-scheme: dark)': {
+    //     'background-color': '#1e1e1e'
+    //     },
+    //   }
+    // },
     MuiLinearProgress: {
       root: {
         maxWidth: "100%",

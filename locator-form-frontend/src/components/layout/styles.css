@@ -491,7 +491,7 @@ body {
 }
 
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
 
 .navbar-1 {
   color: #FFFFFF;
@@ -660,7 +660,7 @@ body {
   color: white;
   background-color: #1e1e1e;
 }
-}
+} */
 
 
 input[type="email"],
