@@ -24,6 +24,8 @@ public class EmailServiceImpl implements EmailService {
 
 	@Value("${org.itech.locator.form.email.from:noreply@itech.org}")
 	private String from;
+	@Value("${org.itech.locator.form.email.from:noreply@itech.org}")
+	private String bcc;
 
 	private JavaMailSender javaMailSender;
 
@@ -37,6 +39,7 @@ public class EmailServiceImpl implements EmailService {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom(from);
 		message.setTo(to);
+		message.setBcc(bcc);
 		message.setSubject(subject);
 		message.setText(text);
 		javaMailSender.send(message);
@@ -50,6 +53,7 @@ public class EmailServiceImpl implements EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
+		helper.setBcc(bcc);
 		helper.setSubject(subject);
 		helper.setText(text);
 		FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
@@ -65,6 +69,7 @@ public class EmailServiceImpl implements EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
+		helper.setBcc(bcc);
 		helper.setSubject(subject);
 		helper.setText(text);
 		helper.addAttachment(attachment.getName(), attachment);
@@ -79,6 +84,7 @@ public class EmailServiceImpl implements EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
+		helper.setBcc(bcc);
 		helper.setSubject(subject);
 		helper.setText(text);
 		for (File attachment : attachments) {
@@ -95,6 +101,7 @@ public class EmailServiceImpl implements EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
+		helper.setBcc(bcc);
 		helper.setSubject(subject);
 		helper.setText(text);
 		for (Entry<String, ByteArrayOutputStream> pdfByName : pdfsByName.entrySet()) {
