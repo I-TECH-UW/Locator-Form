@@ -53,6 +53,7 @@ public class EmailServiceImpl implements EmailService {
 			String pathToAttachment) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
+		message.addFrom(InternetAddress.parse(from));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
@@ -70,6 +71,7 @@ public class EmailServiceImpl implements EmailService {
 			throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
+		message.addFrom(InternetAddress.parse(from));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
@@ -86,6 +88,7 @@ public class EmailServiceImpl implements EmailService {
 			throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
+		message.addFrom(InternetAddress.parse(from));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
@@ -104,6 +107,7 @@ public class EmailServiceImpl implements EmailService {
 			Map<String, ByteArrayOutputStream> pdfsByName) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
+		message.addFrom(InternetAddress.parse(from));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);

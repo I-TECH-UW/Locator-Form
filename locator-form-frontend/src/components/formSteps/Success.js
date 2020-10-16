@@ -1,8 +1,8 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import Summary from './Summary'
-// import { jsPDF } from 'jspdf'
-// import html2canvas from 'html2canvas'
+import { jsPDF } from 'jspdf'
+import html2canvas from 'html2canvas'
 
 class Success extends React.Component {
 
@@ -12,7 +12,7 @@ class Success extends React.Component {
 	// 		const imgData = canvas.toDataURL('image/png');
 	// 		const pdf = new jsPDF();
 	// 		pdf.addImage(imgData, 'PNG', 0, 0);
-	// 		pdf.save("download.pdf");
+	// 		pdf.save("locatorForm.pdf");
 	// 	});
 	// }
 

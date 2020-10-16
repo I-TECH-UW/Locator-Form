@@ -139,7 +139,6 @@ class LocatorForm extends React.Component {
   handleSubmit = (values, actions) => {
     if (steps.length - 1 === this.state.activeStep) {
       this.submitForm(values);
-      this.scrollToTopOfPage();
     } else {
       this.setState({ 
         activeStep: this.state.activeStep + 1,
@@ -176,6 +175,7 @@ class LocatorForm extends React.Component {
 
   onSuccess = (labelContentPairs) => {
     this.setState({ 'submitSuccess': true, 'labelContentPairs': labelContentPairs })
+    this.scrollToTopOfPage();
   }
 
   render() {
