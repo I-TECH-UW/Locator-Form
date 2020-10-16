@@ -60,7 +60,10 @@ class Step3 extends React.Component {
 		this.props.formikProps.setFieldValue('firstName', resident.firstName);
 		this.props.formikProps.setFieldValue('lastName', resident.lastInitial);
 		this.props.formikProps.setFieldValue('nationalID', resident.nationalID);
-		this.setState({ confirming: true, searching: false});
+		this.setState({ 
+			confirming: true, 
+			searching: false,
+			searchFailed: false,});
 	}
 
 	confirm = () => {
