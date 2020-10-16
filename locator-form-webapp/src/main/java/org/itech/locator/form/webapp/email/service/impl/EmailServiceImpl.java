@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.activation.DataSource;
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
 
@@ -24,7 +26,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Value("${org.itech.locator.form.email.from:noreply@itech.org}")
 	private String from;
-	@Value("${org.itech.locator.form.email.from:noreply@itech.org}")
+	@Value("${org.itech.locator.form.email.bcc:noreply@itech.org}")
 	private String bcc;
 
 	private JavaMailSender javaMailSender;
@@ -50,6 +52,7 @@ public class EmailServiceImpl implements EmailService {
 	public void sendMessageWithAttachment(String to, String subject, String text, String attachmentFileName,
 			String pathToAttachment) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
@@ -66,6 +69,7 @@ public class EmailServiceImpl implements EmailService {
 	public void sendMessageWithAttachment(String to, String subject, String text, File attachment)
 			throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
@@ -81,6 +85,7 @@ public class EmailServiceImpl implements EmailService {
 	public void sendMessageWithAttachment(String to, String subject, String text, Iterable<File> attachments)
 			throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);
@@ -98,6 +103,7 @@ public class EmailServiceImpl implements EmailService {
 	public void sendMessageWithAttachment(String to, String subject, String text,
 			Map<String, ByteArrayOutputStream> pdfsByName) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(from);
 		helper.setTo(to);

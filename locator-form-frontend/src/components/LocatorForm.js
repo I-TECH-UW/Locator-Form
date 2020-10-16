@@ -138,16 +138,17 @@ class LocatorForm extends React.Component {
 
   handleSubmit = (values, actions) => {
     if (steps.length - 1 === this.state.activeStep) {
-      this.submitForm(values)
+      this.submitForm(values);
+      this.scrollToTopOfPage();
     } else {
       this.setState({ 
         activeStep: this.state.activeStep + 1,
-     })
+      })
       var json = JSON.stringify(values)
-      console.log(json)
-      actions.setTouched({})
-      actions.setSubmitting(false)
-     this.scrollToTopOfQuestionsRef()
+      console.log(json);
+      actions.setTouched({});
+      actions.setSubmitting(false);
+      this.scrollToTopOfQuestionsRef();
     }
   }
 
@@ -156,6 +157,10 @@ class LocatorForm extends React.Component {
       activeStep: this.state.activeStep - 1 ,
     })
     formikProps.setErrors({})
+  }
+
+  scrollToTopOfPage = () => {
+    window.scrollTo(0, 0)
   }
 
   scrollToTopOfQuestionsRef = () => {
@@ -174,8 +179,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-    const currentValidationShema = validationSchema[this.state.activeStep];
-    // const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    // const currentValidationShema = validationSchema[this.state.activeStep];
+    const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>
@@ -226,7 +231,7 @@ class LocatorForm extends React.Component {
                 }
               </div>
             </div>
-            <div className="questions">
+            <div className="questions" id="questions">
               {this._renderStepContent(this.state.activeStep, formikProps)}
               {this.state.activeStep < steps.length &&
                 <div >

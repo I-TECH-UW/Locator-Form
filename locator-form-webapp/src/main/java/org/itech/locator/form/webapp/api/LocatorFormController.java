@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import org.hl7.fhir.r4.model.Bundle;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.barcode.LabelContentPair;
-import org.itech.locator.form.webapp.barcode.service.BarcodeService;
+import org.itech.locator.form.webapp.barcode.service.SummaryService;
 import org.itech.locator.form.webapp.email.service.EmailService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
@@ -41,7 +41,7 @@ public class LocatorFormController {
 	@Autowired
 	protected FhirTransformService fhirTransformService;
 	@Autowired
-	private BarcodeService barcodeService;
+	private SummaryService barcodeService;
 	@Autowired
 	private EmailService emailService;
 	@Autowired
@@ -63,12 +63,11 @@ public class LocatorFormController {
 		List<LabelContentPair> idAndLabels = fhirTransformService.createLabelContentPair(transactionObjects);
 		Map<String, ByteArrayOutputStream> attachments = new HashMap<>();
 		attachments.put("locatorFormBarcodes" + transactionObjects.task.getIdElement().getIdPart() + ".pdf",
-				barcodeService.generateBarcodeFile(idAndLabels));
+				barcodeService.generateSummaryFile(idAndLabels, locatorFormDTO));
 		emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
 				+ locatorFormDTO.getFirstName() + ",\n\n"
 				+ "Please bring the attached file (printed off or on your device) to the airport as you will need them when you land in Mauritius",
 				attachments);
-
 		return ResponseEntity.ok(idAndLabels);
 	}
 
