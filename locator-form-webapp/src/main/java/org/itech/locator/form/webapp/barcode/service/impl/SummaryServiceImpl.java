@@ -363,8 +363,7 @@ public class SummaryServiceImpl implements SummaryService {
 		for (LabelContentPair pair : barcodeContentToLabel) {
 			PdfPCell cell = new PdfPCell();
 			cell.setColspan(4);
-			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-			Chunk chunk = new Chunk(pair.getLabel(), font);
+			Chunk chunk = new Chunk(pair.getLabel(), headFont);
 			cell.addElement(chunk);
 			cell.setBorder(Rectangle.NO_BORDER);
 			table.addCell(cell);
