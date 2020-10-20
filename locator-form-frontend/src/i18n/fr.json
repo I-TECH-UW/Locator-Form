@@ -105,6 +105,8 @@
 	"error.invalid.selection": "Invalide",
 	"error.submit": "Une erreur est survenue",
 	"error.search.infohighway.error": "Une erreur est survenue",
-	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable"
+	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable",
+	"error.date.invalidformat":"La date doit correspondre à aaaa-mm-jj",
+	"date.format":"aaaa-mm-jj"
 }
 

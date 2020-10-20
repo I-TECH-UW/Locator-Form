@@ -92,6 +92,7 @@ class Step9 extends React.Component {
 																label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 																name={field.name}
 																type="date"
+																placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 																max={dateInputToday()}
 															/>
 														}
@@ -245,6 +246,7 @@ class Step9 extends React.Component {
 																label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 																name={field.name}
 																type="date"
+																placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 																max={dateInputToday()}
 															/>
 														}

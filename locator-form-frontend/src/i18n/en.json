@@ -47,7 +47,9 @@
 	"error.invalid.selection": "Invalid option chosen",
 	"error.submit": "An error occured",
 	"error.search.infohighway.error": "An error occurred while searching",
-	"error.search.infohighway.notfound": "No resident was found with that National ID"
+	"error.search.infohighway.notfound": "No resident was found with that National ID",
+	"error.date.invalidformat":"Date must match yyyy-mm-dd",
+	"date.format": "yyyy-mm-dd"
 
 	
 }

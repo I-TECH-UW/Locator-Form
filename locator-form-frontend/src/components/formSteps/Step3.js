@@ -210,6 +210,7 @@ class Step3 extends React.Component {
 								label={<FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />}
 								name="dateOfBirth"
 								type="date"
+								placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 								requireField={true}
 								max={dateInputToday()}
 								disabled={this.state.searching || this.state.confirming} 

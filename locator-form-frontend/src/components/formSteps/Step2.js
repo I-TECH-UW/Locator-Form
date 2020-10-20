@@ -49,6 +49,7 @@ class Step2 extends React.Component {
 								name="arrivalDate"
 								requireField={true}
 								type="date"
+								placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 								min={dateInputToday()}
 							/>
 						</div>

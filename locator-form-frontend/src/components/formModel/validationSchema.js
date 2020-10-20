@@ -1,5 +1,6 @@
 import * as Yup from 'yup'
 import { isValidPhoneNumber } from 'react-phone-number-input'
+import { parse, isDate } from "date-fns";
 
 
 function isBlankOrValidPhoneNumber(phoneNumber) {
@@ -8,6 +9,14 @@ function isBlankOrValidPhoneNumber(phoneNumber) {
 	} else {
 		return isValidPhoneNumber(phoneNumber);
 	}
+}
+
+function parseDateString(value, originalValue) {
+	const parsedDate = isDate(originalValue)
+    ? originalValue
+    : parse(originalValue, "yyyy-MM-dd", new Date());
+
+  return parsedDate;
 }
 
 const today = new Date();
@@ -32,7 +41,8 @@ export default [
 			.required('error.required'),
 		seatNumber: Yup.string()
 			.max(15, 'error.char.max.exceeded'),
-		arrivalDate: Yup.date()
+		arrivalDate: Yup.date().transform(parseDateString)
+			.typeError("error.date.invalidformat")
 			.min(today, "error.date.past")
 			.required('error.required'),
 		visitPurpose: Yup.string()
@@ -69,7 +79,8 @@ export default [
 				'error.invalid.selection'
 			)
 			.required('error.required'),
-		dateOfBirth: Yup.date()
+		dateOfBirth: Yup.date().transform(parseDateString)
+						.typeError("error.date.invalidformat")
 						.max(today, "error.date.future")
 						.required('error.required'),
 		nationalID: Yup.string()
@@ -252,7 +263,8 @@ export default [
 						.max(3, 'error.char.max.exceeded'),
 					// seatNumber: Yup.string()
 					// 	.required('error.required'),
-					dateOfBirth: Yup.date()
+					dateOfBirth: Yup.date().transform(parseDateString)
+						.typeError("error.date.invalidformat")
 						.max(today, "error.date.future")
 						.required('error.required'),
 					sex: Yup.string()
@@ -279,7 +291,8 @@ export default [
 						.max(3, 'error.char.max.exceeded'),
 					// seatNumber: Yup.string()
 					// 	.required('error.required'),
-					dateOfBirth: Yup.date()
+					dateOfBirth: Yup.date().transform(parseDateString)
+						.typeError("error.date.invalidformat")
 						.max(today, "error.date.future")
 						.required('error.required'),
 					sex: Yup.string()

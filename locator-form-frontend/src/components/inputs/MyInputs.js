@@ -48,7 +48,7 @@ export const dateInputToday = () => {
 		var minDate = year + '-' + month + '-' + day
 		return minDate
 }
-  
+
 export const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and alse replace ErrorMessage
