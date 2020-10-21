@@ -146,13 +146,13 @@ class Step9 extends React.Component {
 									type="button"
 									className="add-button"
 									onClick={() => push({
-										lastName: "",
+										lastName: this.props.formikProps.values.lastName,
 										firstName: "",
 										middleInitial: "",
 										seatNumber: "",
 										dateOfBirth: "",
 										sex: "",
-										nationality: "",
+										nationality: this.props.formikProps.values.nationality,
 										passportNumber: "",
 									})}
 								>
@@ -307,7 +307,7 @@ class Step9 extends React.Component {
 												seatNumber: "",
 												dateOfBirth: "",
 												sex: "",
-												nationality: "",
+												nationality: this.props.formikProps.values.nationality,
 												passportNumber: "",
 											})}
 										>

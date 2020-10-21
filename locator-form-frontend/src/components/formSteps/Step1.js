@@ -6,6 +6,8 @@ import { MyRadioInputGroup } from '../inputs/MyInputs'
 const onInputChange = (e, form) => {
 	form.handleChange(e)
 	if (e.target.value === 'resident') {
+		form.setFieldValue('nationality', 'MU')
+		form.setFieldValue('emergencyContact.country', 'MU')
 		form.setFieldValue('permanentAddress.country', 'MU')
 	} else {
 		form.setFieldValue('permanentAddress.country', '')

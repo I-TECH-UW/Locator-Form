@@ -15,27 +15,21 @@ import Select from "react-select";
 
 export const MultiCapableSelect = ({
   field,
-  form: { setFieldValue },
+  form: { setFieldValue, setFieldTouched },
   options,
   placeholder,
   isMulti = false,
   isSearchable = false,
   ...props
 }) => {
+
   const onChange = (option) => {
-    if (option == null) {
-      setFieldValue(
-        field.name,
-        []
-      )
-    } else {
-      setFieldValue(
-        field.name,
-        isMulti
-          ? (option).map((item) => item.value)
-          : (option).value
-    );
-    }
+    setFieldValue(field.name, 
+      isMulti ? 
+        option !== null ? 
+          option.map((item) => item.value) 
+          : []  
+        : option.value );
   };
 
   const getValue = () => {
@@ -54,13 +48,18 @@ export const MultiCapableSelect = ({
         {...props}
       name={field.name}
       value={getValue()}
-      onChange={onChange}
+      onChange={async e => {
+        await onChange(e); 
+        setFieldTouched(field.name);
+      }}
       placeholder={placeholder}
       options={options}
       isSearchable={isSearchable}
       onBlur={(e) => {
-        e.target.name = field.name;
-        field.onBlur(e);
+        e.preventDefault();
+        setFieldTouched (field.name)
+        // e.target.name = field.name;
+        // field.onBlur(e);
       }}
       isMulti={isMulti}
     />
