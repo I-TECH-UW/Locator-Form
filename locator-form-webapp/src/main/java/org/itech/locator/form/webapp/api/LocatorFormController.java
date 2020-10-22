@@ -66,7 +66,7 @@ public class LocatorFormController {
 				barcodeService.generateSummaryFile(idAndLabels, locatorFormDTO));
 		emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
 				+ locatorFormDTO.getFirstName() + ",\n\n"
-				+ "Please bring the attached file (printed off or on your device) to the airport as you will need them when you land in Mauritius",
+				+ "Please bring a printed copy of the attached file to the Airport of Mauritius as you will need them when you land in Mauritius",
 				attachments);
 		return ResponseEntity.ok(idAndLabels);
 	}
