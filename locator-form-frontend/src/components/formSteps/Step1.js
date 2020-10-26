@@ -10,7 +10,9 @@ const onInputChange = (e, form) => {
 		form.setFieldValue('emergencyContact.country', 'MU')
 		form.setFieldValue('permanentAddress.country', 'MU')
 	} else {
-		form.setFieldValue('permanentAddress.country', '')
+		// form.setFieldValue('permanentAddress.country', '')
+		// form.setFieldValue('nationality', '')
+		// form.setFieldValue('emergencyContact.country', '')
 	}
 	form.setFieldValue('permanentAddress.travellerType', e.target.value)
 	form.setFieldValue('travellerType', e.target.value)

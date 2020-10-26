@@ -1,8 +1,9 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import Summary from './Summary'
-import { jsPDF } from 'jspdf'
-import html2canvas from 'html2canvas'
+import Barcode from 'react-barcode'
+// import { jsPDF } from 'jspdf'
+// import html2canvas from 'html2canvas'
 
 class Success extends React.Component {
 
@@ -55,12 +56,13 @@ class Success extends React.Component {
 
 	render() {
 
-		var Barcode = require('react-barcode')
 		return (<div>
 			{/* <iframe id="ifmcontentstoprint" style={{height: '0px', width: '0px', position: 'absolute'}}></iframe> */}
 			<div className="row no-print">
 				<div className="col-lg-12 success-large text-center">
-					<FormattedMessage id="submit.success.msg" defaultMessage="Thank you for filling out our online form. Please monitor your email for any further instructions. If you do not receive an email, please print or save the Summary PDF somewhere you can access when you land in Mauritius " />
+					<p style={{whiteSpace: 'pre'}}>
+						<FormattedMessage id="submit.success.msg" />
+					</p>
 				</div>
 			</div>
 			<div className="row no-print">
