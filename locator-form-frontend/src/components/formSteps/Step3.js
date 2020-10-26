@@ -122,7 +122,7 @@ class Step3 extends React.Component {
 							this.checkNationalIdOnServer(this.props.formikProps.values.nationalID)
 						}}
 						additionalErrorMessage={errorMessage()}
-						disabled={this.state.searching || this.state.confirming} 
+						// disabled={this.state.searching || this.state.confirming} 
 					/>
 				</div>
 					{this.state.confirming && 
@@ -146,7 +146,9 @@ class Step3 extends React.Component {
 						<div className="col-lg-2 form-group">
 							<Field name="title">
 								{({ field, form, meta }) =>
-									<MySelect disabled={this.state.searching || this.state.confirming} label={<FormattedMessage id="nav.item.title" defaultMessage="Title" />}
+									<MySelect 
+									// disabled={this.state.searching || this.state.confirming} 
+									label={<FormattedMessage id="nav.item.title" defaultMessage="Title" />}
 										name="title" form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										requireField={true}
 										options={
@@ -167,7 +169,7 @@ class Step3 extends React.Component {
 								name="lastName"
 								requireField={true}
 								type="text"
-								disabled={this.state.searching || this.state.confirming} 
+								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
 						<div className="col-lg-4 form-group">
@@ -176,7 +178,7 @@ class Step3 extends React.Component {
 								name="firstName"
 								requireField={true}
 								type="text"
-								disabled={this.state.searching || this.state.confirming} 
+								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
 						<div className="col-lg-2 form-group">
@@ -185,7 +187,7 @@ class Step3 extends React.Component {
 								label={<FormattedMessage id="nav.item.middleInitial" defaultMessage="Middle Initial" />}
 								name="middleInitial"
 								type="text"
-								disabled={this.state.searching || this.state.confirming} 
+								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
 					</div>
@@ -193,7 +195,9 @@ class Step3 extends React.Component {
 						<div className="col-lg-2 form-group">
 							<Field name="sex">
 								{({ field, form, meta }) =>
-									<MySelect disabled={this.state.searching || this.state.confirming} label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
+									<MySelect 
+									// disabled={this.state.searching || this.state.confirming} 
+									label={<FormattedMessage id="nav.item.sex" defaultMessage="Sex" />}
 										name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										requireField={true}
 										options={
@@ -213,7 +217,7 @@ class Step3 extends React.Component {
 								placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 								requireField={true}
 								max={dateInputToday()}
-								disabled={this.state.searching || this.state.confirming} 
+								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
 					</div>

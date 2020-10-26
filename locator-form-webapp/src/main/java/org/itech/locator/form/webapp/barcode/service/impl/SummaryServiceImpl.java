@@ -1,6 +1,8 @@
 package org.itech.locator.form.webapp.barcode.service.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,8 +11,10 @@ import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.barcode.LabelContentPair;
 import org.itech.locator.form.webapp.barcode.service.SummaryService;
+import org.itech.locator.form.webapp.country.Country;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -25,11 +29,15 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.output.OutputException;
 
 @Service
+@Slf4j
 public class SummaryServiceImpl implements SummaryService {
+
+	private Country[] countries;
 
 	@Override
 	public ByteArrayOutputStream generateBarcodeFile(String barcodeLabel, String barcodeContent)
@@ -52,8 +60,7 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	@Override
-	public ByteArrayOutputStream generateSummaryFile(List<LabelContentPair> barcodeContentToLabel,
-			LocatorFormDTO dto)
+	public ByteArrayOutputStream generateSummaryFile(List<LabelContentPair> barcodeContentToLabel, LocatorFormDTO dto)
 			throws OutputException, BarcodeException, DocumentException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		Document document = new Document(new Rectangle(PageSize.LETTER));
@@ -68,8 +75,7 @@ public class SummaryServiceImpl implements SummaryService {
 		hcell.setColspan(4);
 		table.addCell(hcell);
 
-		hcell = new PdfPCell(
-				new Phrase("Passenger Type: " + Objects.toString(dto.getTravellerType(), "")));
+		hcell = new PdfPCell(new Phrase("Passenger Type: " + Objects.toString(dto.getTravellerType(), "")));
 		hcell.setColspan(4);
 		table.addCell(hcell);
 
@@ -130,13 +136,17 @@ public class SummaryServiceImpl implements SummaryService {
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
+		List<String> countriesVisitedByName = new ArrayList<>();
+		for (String countryVisited : dto.getCountriesVisited()) {
+			countriesVisitedByName.add(getCountryLabelForValue(countryVisited));
+		}
+
 		hcell = new PdfPCell(new Phrase(
-				"Countries visited during last 6 months: " + StringUtils.join(dto.getCountriesVisited(), ", ")));
+				"Countries visited during last 6 months: " + StringUtils.join(countriesVisitedByName, ", ")));
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
-		hcell = new PdfPCell(
-				new Phrase("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), "")));
+		hcell = new PdfPCell(new Phrase("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), "")));
 		hcell.setColspan(2);
 		table.addCell(hcell);
 
@@ -189,7 +199,8 @@ public class SummaryServiceImpl implements SummaryService {
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
-		hcell = new PdfPCell(new Phrase("Nationality: " + Objects.toString(dto.getNationality(), "")));
+		hcell = new PdfPCell(
+				new Phrase("Nationality: " + Objects.toString(getCountryLabelForValue(dto.getNationality()), "")));
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
@@ -215,18 +226,18 @@ public class SummaryServiceImpl implements SummaryService {
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
+		hcell = new PdfPCell(
+				new Phrase("State/Province: " + Objects.toString(dto.getPermanentAddress().getStateProvince(), "")));
+		hcell.setColspan(1);
+		table.addCell(hcell);
+
 		hcell = new PdfPCell(new Phrase(
-				"State/Province: " + Objects.toString(dto.getPermanentAddress().getStateProvince(), "")));
+				"Country: " + Objects.toString(getCountryLabelForValue(dto.getPermanentAddress().getCountry()), "")));
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
 		hcell = new PdfPCell(
-				new Phrase("Country: " + Objects.toString(dto.getPermanentAddress().getCountry(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Zip/Postal Code: " + Objects.toString(dto.getPermanentAddress().getZipPostalCode(), "")));
+				new Phrase("Zip/Postal Code: " + Objects.toString(dto.getPermanentAddress().getZipPostalCode(), "")));
 		hcell.setColspan(3);
 		table.addCell(hcell);
 
@@ -253,23 +264,22 @@ public class SummaryServiceImpl implements SummaryService {
 		hcell.setColspan(4);
 		table.addCell(hcell);
 
-		hcell = new PdfPCell(new Phrase(
-				"Last (Family) Name: " + Objects.toString(dto.getEmergencyContact().getLastName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"First (Given) Name: " + Objects.toString(dto.getEmergencyContact().getFirstName(), "")));
+		hcell = new PdfPCell(
+				new Phrase("Last (Family) Name: " + Objects.toString(dto.getEmergencyContact().getLastName(), "")));
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
 		hcell = new PdfPCell(
-				new Phrase("Address: " + Objects.toString(dto.getEmergencyContact().getAddress(), "")));
+				new Phrase("First (Given) Name: " + Objects.toString(dto.getEmergencyContact().getFirstName(), "")));
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
-		hcell = new PdfPCell(
-				new Phrase("Country: " + Objects.toString(dto.getEmergencyContact().getCountry(), "")));
+		hcell = new PdfPCell(new Phrase("Address: " + Objects.toString(dto.getEmergencyContact().getAddress(), "")));
+		hcell.setColspan(1);
+		table.addCell(hcell);
+
+		hcell = new PdfPCell(new Phrase(
+				"Country: " + Objects.toString(getCountryLabelForValue(dto.getEmergencyContact().getCountry()), "")));
 		hcell.setColspan(1);
 		table.addCell(hcell);
 
@@ -286,13 +296,11 @@ public class SummaryServiceImpl implements SummaryService {
 
 		for (Traveller companion : dto.getFamilyTravelCompanions()) {
 
-			hcell = new PdfPCell(
-					new Phrase("Last (Family) Name: " + Objects.toString(companion.getLastName(), "")));
+			hcell = new PdfPCell(new Phrase("Last (Family) Name: " + Objects.toString(companion.getLastName(), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(
-					new Phrase("First (Given) Name: " + Objects.toString(companion.getFirstName(), "")));
+			hcell = new PdfPCell(new Phrase("First (Given) Name: " + Objects.toString(companion.getFirstName(), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
@@ -304,17 +312,16 @@ public class SummaryServiceImpl implements SummaryService {
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(
-					new Phrase("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), "")));
+			hcell = new PdfPCell(new Phrase("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Nationality: " + Objects.toString(companion.getNationality(), "")));
+			hcell = new PdfPCell(new Phrase(
+					"Nationality: " + Objects.toString(getCountryLabelForValue(companion.getNationality()), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(
-					new Phrase("Passport Number: " + Objects.toString(companion.getPassportNumber(), "")));
+			hcell = new PdfPCell(new Phrase("Passport Number: " + Objects.toString(companion.getPassportNumber(), "")));
 			hcell.setColspan(2);
 			table.addCell(hcell);
 		}
@@ -327,13 +334,11 @@ public class SummaryServiceImpl implements SummaryService {
 
 		for (Traveller companion : dto.getNonFamilyTravelCompanions()) {
 
-			hcell = new PdfPCell(
-					new Phrase("Last (Family) Name: " + Objects.toString(companion.getLastName(), "")));
+			hcell = new PdfPCell(new Phrase("Last (Family) Name: " + Objects.toString(companion.getLastName(), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(
-					new Phrase("First (Given) Name: " + Objects.toString(companion.getFirstName(), "")));
+			hcell = new PdfPCell(new Phrase("First (Given) Name: " + Objects.toString(companion.getFirstName(), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
@@ -345,17 +350,16 @@ public class SummaryServiceImpl implements SummaryService {
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(
-					new Phrase("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), "")));
+			hcell = new PdfPCell(new Phrase("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Nationality: " + Objects.toString(companion.getNationality(), "")));
+			hcell = new PdfPCell(new Phrase(
+					"Nationality: " + Objects.toString(getCountryLabelForValue(companion.getNationality()), "")));
 			hcell.setColspan(1);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(
-					new Phrase("Passport Number: " + Objects.toString(companion.getPassportNumber(), "")));
+			hcell = new PdfPCell(new Phrase("Passport Number: " + Objects.toString(companion.getPassportNumber(), "")));
 			hcell.setColspan(2);
 			table.addCell(hcell);
 		}
@@ -382,6 +386,32 @@ public class SummaryServiceImpl implements SummaryService {
 		writer.close();
 
 		return stream;
+	}
+
+	private Country[] getCountries() {
+		if (countries == null) {
+			ObjectMapper mapper = new ObjectMapper();
+			ClassLoader cLoader = this.getClass().getClassLoader();
+			try {
+				countries = mapper.readValue(cLoader.getResourceAsStream("countries.js"), Country[].class);
+			} catch (IOException e) {
+				log.error("could not parse countries file, using values instead of label");
+				countries = new Country[0];
+			}
+		}
+		return countries;
+	}
+
+	private String getCountryLabelForValue(String value) {
+		if (value == null) {
+			return null;
+		}
+		for (Country country : getCountries()) {
+			if (country.getValue().equals(value)) {
+				return country.getLabel();
+			}
+		}
+		return value;
 	}
 
 }
