@@ -59,10 +59,8 @@ class Success extends React.Component {
 		return (<div>
 			{/* <iframe id="ifmcontentstoprint" style={{height: '0px', width: '0px', position: 'absolute'}}></iframe> */}
 			<div className="row no-print">
-				<div className="col-lg-12 success-large text-center">
-					<p style={{whiteSpace: 'pre'}}>
+				<div className="col-lg-12 success-large text-center" style={{whiteSpace: 'pre-wrap'}}>
 						<FormattedMessage id="submit.success.msg" />
-					</p>
 				</div>
 			</div>
 			<div className="row no-print">
@@ -75,7 +73,7 @@ class Success extends React.Component {
 				{this.props.labelContentPairs.map(function (labelContentPair) {
 					return (
 						<div className="row">
-							<div className="col-lg-12 ">
+							<div className="col-lg-12">
 								<h5>{labelContentPair.label}:</h5>
 								<Barcode value={labelContentPair.barcodeContent} />
 							</div>
