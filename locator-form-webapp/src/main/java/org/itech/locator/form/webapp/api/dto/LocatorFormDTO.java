@@ -16,7 +16,7 @@ import lombok.Data;
 public class LocatorFormDTO extends Traveller {
 
 	public enum Title {
-		MR, MRS, MISS, DR, OTHER
+		MR, MRS, MS, MISS, DR, OTHER
 	}
 
 	public enum VisitPurpose {

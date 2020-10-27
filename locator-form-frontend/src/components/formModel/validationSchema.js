@@ -61,7 +61,7 @@ export default [
 			.required('error.required'),
 		title: Yup.string()
 			.oneOf(
-				['mr', 'mrs', 'miss', 'dr', 'other'],
+				['mr', 'mrs', 'ms', 'miss', 'dr', 'other'],
 				'error.invalid.selection'
 			)
 			.required('error.required'),

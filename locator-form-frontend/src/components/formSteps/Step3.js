@@ -155,6 +155,7 @@ class Step3 extends React.Component {
 											[
 												{ "value": "mr", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.mr' }) },
 												{ "value": "mrs", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.mrs' }) },
+												{ "value": "ms", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.ms' }) },
 												{ "value": "miss", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.miss' }) },
 												{ "value": "dr", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.dr' }) },
 											]}
