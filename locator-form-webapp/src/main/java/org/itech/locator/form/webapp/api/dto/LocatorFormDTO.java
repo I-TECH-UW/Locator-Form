@@ -50,6 +50,7 @@ public class LocatorFormDTO extends Traveller {
 	@Size(max = 50)
     private String portOfEmbarkation;
 
+	private Boolean hadCovidBefore;
 	private Boolean fever;
 	private Boolean soreThroat;
 	private Boolean jointPain;

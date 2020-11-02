@@ -9,6 +9,13 @@ class Step5 extends React.Component {
 
 			<div className="step" id="step5">
 				<div id="sufferingInformation" className="section">
+					<div className="row">
+						<div className="col-lg-12 ">
+							<h6>
+								<FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?" />
+							</h6>
+						</div>
+					</div>
 					<div className="row align-items-end">
 						<div className="col-xl-2 col-lg-4 form-group ">
 							<MyRadioInputGroup
@@ -65,6 +72,18 @@ class Step5 extends React.Component {
 							<MyRadioInputGroup
 								label={<FormattedMessage id="nav.item.rash" defaultMessage="Rash" />}
 								name="rash"
+								options={[
+									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
+									{ key: 'nav.item.symptoms.option.no', value: 'false'}
+								]}
+							/>
+						</div>
+					</div>
+					<div className="row align-items-end">
+						<div className="col-lg-12 form-group ">
+							<MyRadioInputGroup
+								label={<FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past?" />}
+								name="hadCovidBefore"
 								options={[
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}

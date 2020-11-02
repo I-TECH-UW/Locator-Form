@@ -96,6 +96,11 @@ export default [
 	}),
 	//step 5
 	Yup.object().shape({
+		hadCovidBefore: Yup.string()
+			.oneOf(
+				['true', 'false'],
+				'error.invalid.selection'
+			),
 		fever: Yup.string()
 			.oneOf(
 				['true', 'false'],

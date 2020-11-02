@@ -9,7 +9,7 @@ class Summary extends React.Component {
 	render() {
 
 		const { travellerType, airlineName, flightNumber, seatNumber, arrivalDate, title, firstName, lastName, middleInitial,
-			sex,dateOfBirth, lengthOfStay,countriesVisited, portOfEmbarkation, fever, soreThroat, jointPain, cough, breathingDifficulties, rash, visitPurpose,
+			sex,dateOfBirth, lengthOfStay,countriesVisited, portOfEmbarkation, hadCovidBefore, fever, soreThroat, jointPain, cough, breathingDifficulties, rash, visitPurpose,
 			mobilePhone, fixedPhone, email, passportNumber, nationality, permanentAddress, temporaryAddress, emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
 		} = this.props.formikProps.values;
 
@@ -132,6 +132,11 @@ class Summary extends React.Component {
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.rash" defaultMessage="Rash" />: </span><span className="confirm-value">{rash}</span>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-lg-12 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past?" />: </span><span className="confirm-value">{hadCovidBefore}</span>
 					</div>
 				</div>
 			</div>
