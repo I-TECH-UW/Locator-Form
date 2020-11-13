@@ -1067,20 +1067,29 @@ label.checkbox {
   display: none;
 }
 
+@page {
+  size: Letter;
+}
+
 @media print {
 
 .no-print { display: none; }
 
-.print-page-break  { page-break-before:always; }
+.print-page-break  {
+  page-break-before: always;
+}
 
-.print-no-break {page-break-inside: avoid;}
+.print-page-break-after  {
+  page-break-after: always;
+}
+
+.print-no-break {
+  page-break-inside: avoid;
+}
 
 .barcode {
   display: block;
   width: 100%;
-  page-break-before: auto;
-  page-break-after: auto; 
-  page-break-inside: avoid;
 }
 
 h1,

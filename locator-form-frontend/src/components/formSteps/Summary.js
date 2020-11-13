@@ -15,11 +15,10 @@ class Summary extends React.Component {
 
 		return <div>
 
-
 			<div id="travellerTypeInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.travellerSection" defaultMessage="Traveller" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.travellersection" defaultMessage="Traveller" /></h5>
 					</div>
 				</div>
 				<div className="row">

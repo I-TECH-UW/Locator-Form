@@ -380,8 +380,11 @@ public class SummaryServiceImpl implements SummaryService {
 			cell.addElement(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
 			cell.setBorder(Rectangle.NO_BORDER);
 			table.addCell(cell);
+			document.add(table);
+			table = new PdfPTable(4);
+			table.setWidthPercentage(100);
+			document.newPage();
 		}
-		document.add(table);
 		document.close();
 		writer.close();
 
