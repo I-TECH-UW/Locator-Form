@@ -4,6 +4,7 @@ import { Field } from 'formik'
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
+import { CircularProgress } from '@material-ui/core'
 
 class Step3 extends React.Component {
 
@@ -19,13 +20,13 @@ class Step3 extends React.Component {
 
 	checkNationalIdOnServer = (nationalId) => {
 		console.log('National Id: ' + nationalId)
+		this.setState({ searching: true });
 		fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/resident/${nationalId}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		}).then(async response => {
-			this.setState({ searching: true });
 			const status = response.status;
 			if (response.ok) {
 				const resident = await response.json();
@@ -124,6 +125,11 @@ class Step3 extends React.Component {
 						additionalErrorMessage={errorMessage()}
 						// disabled={this.state.searching || this.state.confirming} 
 					/>
+					{this.state.searching && (
+						<CircularProgress
+						size={24}
+						/>
+					)}
 				</div>
 					{this.state.confirming && 
 						nationalIDInputConfirm()

@@ -15,5 +15,7 @@ public class InfoHighwayConfigProperties {
 	private URI uri;
 	private String username;
 	private char[] password;
+	private int connectionTimeout = -1;
+	private int readTimeout = -1;
 
 }
