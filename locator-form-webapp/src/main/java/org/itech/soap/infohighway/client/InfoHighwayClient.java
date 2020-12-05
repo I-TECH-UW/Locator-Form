@@ -9,6 +9,9 @@ import org.itech.soap.infohighway.QwsInput;
 import org.itech.soap.infohighway.QwsInputParam;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class InfoHighwayClient extends WebServiceGatewaySupport {
 
 	private ObjectFactory factory = new ObjectFactory();
@@ -53,6 +56,7 @@ public class InfoHighwayClient extends WebServiceGatewaySupport {
 	}
 
 	public QueryResponse getClientByNationalID(String nationalID) {
+		log.debug("searching by national id");
 		Query query = factory.createQuery();
 		QwsInputParam qwsInputParam = factory.createQwsInputParam();
 		qwsInputParam.getValues().add(nationalID);
@@ -65,10 +69,12 @@ public class InfoHighwayClient extends WebServiceGatewaySupport {
 		qwsInput.getQwsInputParams().add(qwsInputParam);
 
 		query.setQueryInput(qwsInput);
+		log.debug("sending request to infohighway...");
 		@SuppressWarnings("unchecked")
 		JAXBElement<QueryResponse> response = (JAXBElement<QueryResponse>) getWebServiceTemplate()
 				.marshalSendAndReceive(factory.createQuery(query));
 
+		log.debug("received response from infohighway...");
 		return response.getValue();
 	}
 

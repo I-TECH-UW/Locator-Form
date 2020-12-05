@@ -31,7 +31,7 @@ public class InfoHighwayClientConfig {
 		client.setDefaultUri(configProperties.getUri().toString());
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
-		client.setMessageSender(messageSender);
+//		client.setMessageSender(messageSender);
 		return client;
 	}
 
