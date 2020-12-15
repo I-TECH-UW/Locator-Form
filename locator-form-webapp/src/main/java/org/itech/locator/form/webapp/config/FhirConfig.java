@@ -1,6 +1,6 @@
 package org.itech.locator.form.webapp.config;
 
-import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.client.HttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,9 +12,9 @@ import ca.uhn.fhir.rest.client.api.IRestfulClientFactory;
 @Configuration
 public class FhirConfig {
 
-	CloseableHttpClient httpClient;
+	HttpClient httpClient;
 
-	public FhirConfig(CloseableHttpClient httpClient) {
+	public FhirConfig(HttpClient httpClient) {
 		this.httpClient = httpClient;
 	}
 

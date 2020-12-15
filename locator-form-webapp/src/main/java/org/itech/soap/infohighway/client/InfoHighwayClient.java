@@ -56,7 +56,6 @@ public class InfoHighwayClient extends WebServiceGatewaySupport {
 	}
 
 	public QueryResponse getClientByNationalID(String nationalID) {
-		log.debug("searching by national id");
 		Query query = factory.createQuery();
 		QwsInputParam qwsInputParam = factory.createQwsInputParam();
 		qwsInputParam.getValues().add(nationalID);

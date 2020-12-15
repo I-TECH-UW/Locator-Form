@@ -2,6 +2,7 @@ package org.itech.locator.form.webapp.config;
 
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -9,7 +10,9 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender.RemoveSoapHeadersInterceptor;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,11 +47,22 @@ public class HttpClientConfig {
 	}
 
 	@Bean
-	public CloseableHttpClient httpClient() throws Exception {
+	@Primary
+	public HttpClient httpClient() throws Exception {
 		log.debug("creating httpClient");
 		CloseableHttpClient httpClient = HttpClientBuilder.create()//
 				.setSSLSocketFactory(sslConnectionSocketFactory())//
 				.build();
 		return httpClient;
 	}
+
+	@Bean("soapHttpClient")
+	public HttpClient soapHttpClient() throws Exception {
+		log.debug("creating soap httpClient");
+		CloseableHttpClient httpClient = HttpClientBuilder.create()//
+				.setSSLSocketFactory(sslConnectionSocketFactory())//
+				.addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
+		return httpClient;
+	}
+
 }
