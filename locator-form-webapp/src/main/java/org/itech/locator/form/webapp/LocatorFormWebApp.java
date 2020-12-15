@@ -4,11 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @ComponentScan("org.itech")
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySources({ @PropertySource("classpath:application.properties"),
+		@PropertySource(value = "file:/var/lib/locatorform/app.properties", ignoreResourceNotFound = true) })
 @EnableAsync
 public class LocatorFormWebApp {
 

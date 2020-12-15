@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HttpClientConfig {
 
-
 	@Value("${server.ssl.trust-store}")
 	private Resource trustStore;
 
@@ -41,8 +40,7 @@ public class HttpClientConfig {
 	}
 
 	public SSLContext sslContext() throws Exception {
-		return SSLContextBuilder.create()
-				.loadKeyMaterial(keyStore.getFile(), keyStorePassword, keyPassword)
+		return SSLContextBuilder.create().loadKeyMaterial(keyStore.getFile(), keyStorePassword, keyPassword)
 				.loadTrustMaterial(trustStore.getFile(), trustStorePassword).build();
 	}
 
@@ -61,7 +59,8 @@ public class HttpClientConfig {
 		log.debug("creating soap httpClient");
 		CloseableHttpClient httpClient = HttpClientBuilder.create()//
 				.setSSLSocketFactory(sslConnectionSocketFactory())//
-				.addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
+				.addInterceptorFirst(new RemoveSoapHeadersInterceptor())//
+				.build();
 		return httpClient;
 	}
 
