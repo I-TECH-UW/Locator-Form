@@ -16,6 +16,6 @@ public class InfoHighwayConfigProperties {
 	private String username;
 	private char[] password;
 	private int connectionTimeout = -1;
-	private int readTimeout = -1;
+	private int socketTimeout = -1;
 
 }

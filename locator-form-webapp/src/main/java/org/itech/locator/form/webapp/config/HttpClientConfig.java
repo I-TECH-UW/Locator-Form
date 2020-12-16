@@ -8,11 +8,13 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.itech.soap.infohighway.config.InfoHighwayConfigProperties;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -49,6 +51,12 @@ public class HttpClientConfig {
 	@Value("${org.openhim.basicauth.password:}")
 	private String openHimPassword;
 
+	private InfoHighwayConfigProperties infoHighwayConfigProperties;
+
+	public HttpClientConfig(InfoHighwayConfigProperties infoHighwayConfigProperties) {
+		this.infoHighwayConfigProperties = infoHighwayConfigProperties;
+	}
+
 	public SSLConnectionSocketFactory sslConnectionSocketFactory() throws Exception {
 		return new SSLConnectionSocketFactory(sslContext());
 	}
@@ -81,6 +89,17 @@ public class HttpClientConfig {
 		HttpClientBuilder clientBuilder = HttpClientBuilder.create()//
 				.setSSLSocketFactory(sslConnectionSocketFactory())//
 				.addInterceptorFirst(new RemoveSoapHeadersInterceptor());
+		if (infoHighwayConfigProperties.getConnectionTimeout() >= 0
+				|| infoHighwayConfigProperties.getSocketTimeout() >= 0) {
+			RequestConfig.Builder requestBuilder = RequestConfig.custom();
+			if (infoHighwayConfigProperties.getConnectionTimeout() >= 0) {
+				requestBuilder.setConnectTimeout(infoHighwayConfigProperties.getConnectionTimeout());
+			}
+			if (infoHighwayConfigProperties.getSocketTimeout() >= 0) {
+				requestBuilder.setConnectionRequestTimeout(infoHighwayConfigProperties.getSocketTimeout());
+			}
+			clientBuilder.setDefaultRequestConfig(requestBuilder.build());
+		}
 		if (credentials.isPresent()) {
 			log.debug("OpenHIM authentication supplied, loading into httpClient for user:"
 					+ credentials.get().getUserName());
