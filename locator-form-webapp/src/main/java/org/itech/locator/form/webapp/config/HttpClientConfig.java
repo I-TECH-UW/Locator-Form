@@ -1,13 +1,21 @@
 package org.itech.locator.form.webapp.config;
 
+import java.util.Optional;
+
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -35,6 +43,12 @@ public class HttpClientConfig {
 	@Value("${server.ssl.key-password}")
 	private char[] keyPassword;
 
+	@Value("${org.openhim.basicauth.username:}")
+	private String openHimUsername;
+
+	@Value("${org.openhim.basicauth.password:}")
+	private String openHimPassword;
+
 	public SSLConnectionSocketFactory sslConnectionSocketFactory() throws Exception {
 		return new SSLConnectionSocketFactory(sslContext());
 	}
@@ -54,13 +68,29 @@ public class HttpClientConfig {
 		return httpClient;
 	}
 
+	@Bean("openHimCredentials")
+	@ConditionalOnProperty(prefix = "org.openhim.basicauth", name = "username")
+	public UsernamePasswordCredentials openHimCredentials() {
+		return new UsernamePasswordCredentials(openHimUsername, openHimPassword);
+	}
+
 	@Bean("soapHttpClient")
-	public HttpClient soapHttpClient() throws Exception {
+	public HttpClient soapHttpClient(@Qualifier("openHimCredentials") Optional<UsernamePasswordCredentials> credentials)
+			throws Exception {
 		log.debug("creating soap httpClient");
-		CloseableHttpClient httpClient = HttpClientBuilder.create()//
+		HttpClientBuilder clientBuilder = HttpClientBuilder.create()//
 				.setSSLSocketFactory(sslConnectionSocketFactory())//
-				.addInterceptorFirst(new RemoveSoapHeadersInterceptor())//
-				.build();
+				.addInterceptorFirst(new RemoveSoapHeadersInterceptor());
+		if (credentials.isPresent()) {
+			log.debug("OpenHIM authentication supplied, loading into httpClient for user:"
+					+ credentials.get().getUserName());
+			CredentialsProvider provider = new BasicCredentialsProvider();
+			provider.setCredentials(AuthScope.ANY, credentials.get());
+			clientBuilder.setDefaultCredentialsProvider(provider);
+		} else {
+			log.debug("No OpenHIM authentication supplied, httpClient will have no authentication");
+		}
+		CloseableHttpClient httpClient = clientBuilder.build();
 		return httpClient;
 	}
 
