@@ -56,7 +56,8 @@ public class InfoHighwayClientConfig {
 		HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
 		httpComponentsMessageSender.setHttpClient(httpClient);
 		if (!StringUtils.isEmpty(openHimUsername) || !StringUtils.isEmpty(openHimPassword)) {
-			log.debug("OpenHIM username and password supplied, loading into WebServiceMessageSender");
+			log.debug("OpenHIM username and password supplied, loading into WebServiceMessageSender for user: "
+					+ openHimUsername);
 			httpComponentsMessageSender.setCredentials(new UsernamePasswordCredentials(openHimUsername, openHimPassword));
 		} else {
 			log.debug("No OpenHIM authentication supplied, WebServiceMessageSender will have no authentication");
