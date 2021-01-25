@@ -1,6 +1,8 @@
 export default {
   travellerType: '',
-  
+
+
+  serviceRequestId: "",
   airlineName: '', flightNumber: '', seatNumber: '',
   title: '',firstName: '', lastName: '', middleInitial: '', 
   acceptedTerms: false,
@@ -46,6 +48,7 @@ export default {
 
   familyTravelCompanions: [
     // {
+    //   serviceRequestId: "",
     //   lastName: "",
     //   firstName: "",
     //   middleInitial: "",
@@ -58,6 +61,7 @@ export default {
   ],
   nonFamilyTravelCompanions: [
     // {
+    //   serviceRequestId: "",
     //   lastName: "",
     //   firstName: "",
     //   middleInitial: "",
