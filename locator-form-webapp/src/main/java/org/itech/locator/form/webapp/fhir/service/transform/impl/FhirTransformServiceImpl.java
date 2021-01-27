@@ -3,8 +3,12 @@ package org.itech.locator.form.webapp.fhir.service.transform.impl;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.Address;
@@ -62,7 +66,6 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		transactionInfo.bundle = transactionBundle;
 
 		Task fhirTask = createFhirTask();
-		fhirTask.setDescription(objectMapper.writeValueAsString(locatorFormDTO));
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
@@ -79,6 +82,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 		}
+
+		// locatorFormDTO added at end so that any updated values (like
+		// serviceRequestId) get persisted
+		fhirTask.setDescription(objectMapper.writeValueAsString(locatorFormDTO));
 
 		return transactionInfo;
 	}
@@ -221,6 +228,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		ServiceRequest serviceRequest = new ServiceRequest();
 		String id = UUID.randomUUID().toString();
 		serviceRequest.setId(id);
+		comp.setServiceRequestId(id);
 
 		// patient is created here and used for SR subjectRef
 		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
@@ -252,15 +260,41 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-	public List<LabelContentPair> createLabelContentPair(TransactionObjects transactionObjects) {
-		List<LabelContentPair> idAndLabels = new ArrayList<>();
+	public Map<String, LabelContentPair> createLabelContentPair(
+			TransactionObjects transactionObjects) {
+		Map<String, LabelContentPair> labels = new HashMap<>();
+//		List<LabelContentPair> idAndLabels = new ArrayList<>();
 		for (ServiceRequestPatientPair sRequestPatientPair : transactionObjects.serviceRequestPatientPairs) {
 			String patientName = sRequestPatientPair.patient.getNameFirstRep().getGivenAsSingleString();
 			String serviceRequestId = sRequestPatientPair.serviceRequest.getIdElement().getIdPart();
-			idAndLabels.add(new LabelContentPair(patientName + "'s Service Identifier",
+			labels.put(serviceRequestId, new LabelContentPair(patientName + "'s Service Identifier",
 					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
 		}
-		return idAndLabels;
+		return labels;
+	}
+
+	@Override
+	public Map<String, LabelContentPair> createLabelContentPair(@Valid LocatorFormDTO locatorFormDTO) {
+		Map<String, LabelContentPair> labels = new HashMap<>();
+//		List<LabelContentPair> idAndLabels = new ArrayList<>();
+		String patientName = locatorFormDTO.getFirstName();
+		String serviceRequestId = locatorFormDTO.getServiceRequestId();
+		labels.put(serviceRequestId, new LabelContentPair(patientName + "'s Service Identifier",
+				StringUtils.substring(serviceRequestId, 0, barcodeLength)));
+		for (Traveller traveller : locatorFormDTO.getFamilyTravelCompanions()) {
+			patientName = traveller.getFirstName();
+			serviceRequestId = traveller.getServiceRequestId();
+			labels.put(serviceRequestId, new LabelContentPair(patientName + "'s Service Identifier",
+					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
+		}
+		for (Traveller traveller : locatorFormDTO.getNonFamilyTravelCompanions()) {
+			patientName = traveller.getFirstName();
+			serviceRequestId = traveller.getServiceRequestId();
+			labels.put(serviceRequestId, new LabelContentPair(
+					patientName + "'s Service Identifier",
+					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
+		}
+		return labels;
 	}
 
 }

@@ -16,6 +16,8 @@ public class Traveller {
 	public enum Sex {
 		MALE, FEMALE, OTHER, UNKNOWN
 	}
+
+	private String serviceRequestId;
 	@NotBlank
 	@Size(max = 50)
     private String lastName;

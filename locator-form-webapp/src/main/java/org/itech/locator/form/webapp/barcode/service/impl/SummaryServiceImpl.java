@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +39,7 @@ import net.sourceforge.barbecue.output.OutputException;
 public class SummaryServiceImpl implements SummaryService {
 
 	private Country[] countries;
+	Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
 	@Override
 	public ByteArrayOutputStream generateBarcodeFile(String barcodeLabel, String barcodeContent)
@@ -60,7 +62,7 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	@Override
-	public ByteArrayOutputStream generateSummaryFile(List<LabelContentPair> barcodeContentToLabel, LocatorFormDTO dto)
+	public ByteArrayOutputStream generateSummaryFile(Map<String, LabelContentPair> idAndLabels, LocatorFormDTO dto)
 			throws OutputException, BarcodeException, DocumentException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		Document document = new Document(new Rectangle(PageSize.LETTER));
@@ -69,326 +71,210 @@ public class SummaryServiceImpl implements SummaryService {
 		document.open();
 		PdfPTable table = new PdfPTable(4);
 		table.setWidthPercentage(100);
-		Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-		PdfPCell hcell;
-		hcell = new PdfPCell(new Phrase("Traveller ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
 
-		hcell = new PdfPCell(new Phrase("Passenger Type: " + Objects.toString(dto.getTravellerType(), "")));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Flight Information ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Airline: " + Objects.toString(dto.getAirlineName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Flight: " + Objects.toString(dto.getFlightNumber(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Seat: " + Objects.toString(dto.getSeatNumber(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Date Of Arrival: " + Objects.toString(dto.getArrivalDate(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Personal Information ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Title: " + Objects.toString(dto.getTitle(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Last (Family) Name: " + Objects.toString(dto.getLastName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("First (Given) Name: " + Objects.toString(dto.getFirstName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Middle Initial: " + Objects.toString(dto.getMiddleInitial(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Sex: " + Objects.toString(dto.getSex(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Date Of Birth: " + Objects.toString(dto.getDateOfBirth(), "")));
-		hcell.setColspan(3);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Health Information ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		List<String> countriesVisitedByName = new ArrayList<>();
-		for (String countryVisited : dto.getCountriesVisited()) {
-			countriesVisitedByName.add(getCountryLabelForValue(countryVisited));
-		}
-
-		hcell = new PdfPCell(new Phrase(
-				"Countries visited during last 6 months: " + StringUtils.join(countriesVisitedByName, ", ")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), "")));
-		hcell.setColspan(2);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Are you suffering from? ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Fever: " + Objects.toString(dto.getFever(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Sore Throat: " + Objects.toString(dto.getSoreThroat(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Joint Pain: " + Objects.toString(dto.getJointPain(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Cough: " + Objects.toString(dto.getCough(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("Breathing Difficulties: " + Objects.toString(dto.getBreathingDifficulties(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Rash: " + Objects.toString(dto.getRash(), "")));
-		hcell.setColspan(3);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Contact Info ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Fixed Phone" + Objects.toString(dto.getFixedPhone(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Email Address: " + Objects.toString(dto.getEmail(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("Nationality: " + Objects.toString(getCountryLabelForValue(dto.getNationality()), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Passport Number: " + Objects.toString(dto.getPassportNumber(), "")));
-		hcell.setColspan(3);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Permanent Address ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Number and Street: " + Objects.toString(dto.getPermanentAddress().getNumberAndStreet(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Apartment Number: " + Objects.toString(dto.getPermanentAddress().getApartmentNumber(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("City: " + Objects.toString(dto.getPermanentAddress().getCity(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("State/Province: " + Objects.toString(dto.getPermanentAddress().getStateProvince(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Country: " + Objects.toString(getCountryLabelForValue(dto.getPermanentAddress().getCountry()), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("Zip/Postal Code: " + Objects.toString(dto.getPermanentAddress().getZipPostalCode(), "")));
-		hcell.setColspan(3);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Temporary Address ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("Hotel Name: " + Objects.toString(dto.getTemporaryAddress().getHotelName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Number and Street: " + Objects.toString(dto.getTemporaryAddress().getNumberAndStreet(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Apartment Number: " + Objects.toString(dto.getTemporaryAddress().getApartmentNumber(), "")));
-		hcell.setColspan(2);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Emergency Contact ", headFont));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("Last (Family) Name: " + Objects.toString(dto.getEmergencyContact().getLastName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("First (Given) Name: " + Objects.toString(dto.getEmergencyContact().getFirstName(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase("Address: " + Objects.toString(dto.getEmergencyContact().getAddress(), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(new Phrase(
-				"Country: " + Objects.toString(getCountryLabelForValue(dto.getEmergencyContact().getCountry()), "")));
-		hcell.setColspan(1);
-		table.addCell(hcell);
-
-		hcell = new PdfPCell(
-				new Phrase("Mobile Phone: " + Objects.toString(dto.getEmergencyContact().getMobilePhone(), "")));
-		hcell.setColspan(4);
-		table.addCell(hcell);
-
-		if (dto.getFamilyTravelCompanions().length != 0) {
-			hcell = new PdfPCell(new Phrase("Travel Companions Family ", headFont));
-			hcell.setColspan(4);
-			table.addCell(hcell);
-		}
+		addHeaderCellToTable("Traveller ", 4, table);
+		addCellToTable("Passenger Type: " + Objects.toString(dto.getTravellerType(), ""), 4, table);
+		addPersonalInformationToTable(dto, table);
+		addHealthInformationToTable(dto, table);
+		addCommonInformationToTable(dto, dto, table);
+		addBarcodeLabelToTable(idAndLabels.get(dto.getServiceRequestId()), 4, table, writer);
+		document.add(table);
+		document.newPage();
 
 		for (Traveller companion : dto.getFamilyTravelCompanions()) {
+			table = new PdfPTable(4);
+			table.setWidthPercentage(100);
 
-			hcell = new PdfPCell(new Phrase("Last (Family) Name: " + Objects.toString(companion.getLastName(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("First (Given) Name: " + Objects.toString(companion.getFirstName(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Sex: " + Objects.toString(companion.getSex(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Seat: " + Objects.toString(companion.getSeatNumber(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase(
-					"Nationality: " + Objects.toString(getCountryLabelForValue(companion.getNationality()), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Passport Number: " + Objects.toString(companion.getPassportNumber(), "")));
-			hcell.setColspan(2);
-			table.addCell(hcell);
-		}
-
-		if (dto.getNonFamilyTravelCompanions().length != 0) {
-			hcell = new PdfPCell(new Phrase("Travel Companions Non-Family ", headFont));
-			hcell.setColspan(4);
-			table.addCell(hcell);
+			addPersonalInformationToTable(companion, table);
+			addCommonInformationToTable(dto, companion, table);
+			addBarcodeLabelToTable(idAndLabels.get(companion.getServiceRequestId()), 4, table, writer);
+			document.add(table);
+			document.newPage();
 		}
 
 		for (Traveller companion : dto.getNonFamilyTravelCompanions()) {
-
-			hcell = new PdfPCell(new Phrase("Last (Family) Name: " + Objects.toString(companion.getLastName(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("First (Given) Name: " + Objects.toString(companion.getFirstName(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Sex: " + Objects.toString(companion.getSex(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Seat: " + Objects.toString(companion.getSeatNumber(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase(
-					"Nationality: " + Objects.toString(getCountryLabelForValue(companion.getNationality()), "")));
-			hcell.setColspan(1);
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Passport Number: " + Objects.toString(companion.getPassportNumber(), "")));
-			hcell.setColspan(2);
-			table.addCell(hcell);
-		}
-
-		for (LabelContentPair pair : barcodeContentToLabel) {
-			PdfPCell cell = new PdfPCell();
-			cell.setColspan(4);
-			Chunk chunk = new Chunk(pair.getLabel(), headFont);
-			cell.addElement(chunk);
-			cell.setBorder(Rectangle.NO_BORDER);
-			table.addCell(cell);
-
-			cell = new PdfPCell();
-			cell.setColspan(4);
-			Barcode128 code128 = new Barcode128();
-			code128.setGenerateChecksum(true);
-			code128.setCode(pair.getBarcodeContent());
-			cell.addElement(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
-			cell.setBorder(Rectangle.NO_BORDER);
-			table.addCell(cell);
-			document.add(table);
 			table = new PdfPTable(4);
 			table.setWidthPercentage(100);
+
+			addPersonalInformationToTable(companion, table);
+			addCommonInformationToTable(dto, companion, table);
+			addBarcodeLabelToTable(idAndLabels.get(companion.getServiceRequestId()), 4, table, writer);
+			document.add(table);
 			document.newPage();
 		}
+
+//		table = new PdfPTable(4);
+//		table.setWidthPercentage(100);
+
 		document.close();
 		writer.close();
 
 		return stream;
+	}
+
+	private void addHeaderCellToTable(String label, int columns, PdfPTable table) {
+		PdfPCell hcell = new PdfPCell(new Phrase(label, headFont));
+		hcell.setColspan(columns);
+		table.addCell(hcell);
+	}
+
+	private void addCellToTable(String label, int columns, PdfPTable table) {
+		PdfPCell hcell = new PdfPCell(new Phrase(label));
+		hcell.setColspan(columns);
+		table.addCell(hcell);
+	}
+
+	private void addBarcodeLabelToTable(LabelContentPair pair, int columns, PdfPTable table, PdfWriter writer) {
+		PdfPCell cell = new PdfPCell();
+		cell.setColspan(4);
+		Chunk chunk = new Chunk(pair.getLabel(), headFont);
+		cell.addElement(chunk);
+		cell.setBorder(Rectangle.NO_BORDER);
+		table.addCell(cell);
+
+		cell = new PdfPCell();
+		cell.setColspan(4);
+		Barcode128 code128 = new Barcode128();
+		code128.setGenerateChecksum(true);
+		code128.setCode(pair.getBarcodeContent());
+		cell.addElement(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+		cell.setBorder(Rectangle.NO_BORDER);
+		table.addCell(cell);
+	}
+
+	private void addPersonalInformationToTable(Traveller traveller, PdfPTable table) {
+		addHeaderCellToTable("Personal Information ", 4, table);
+		if (traveller instanceof LocatorFormDTO) {
+			addCellToTable("Title: " + Objects.toString(((LocatorFormDTO) traveller).getTitle(), ""), 1, table);
+		} else {
+			addCellToTable("", 1, table);
+		}
+		addCellToTable("Last (Family) Name: " + Objects.toString(traveller.getLastName(), ""), 1, table);
+		addCellToTable("First (Given) Name: " + Objects.toString(traveller.getFirstName(), ""), 1, table);
+		addCellToTable("Middle Initial: " + Objects.toString(traveller.getMiddleInitial(), ""), 1, table);
+		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
+		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
+		addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(traveller.getNationality()), ""), 1,
+				table);
+		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 1, table);
+	}
+
+	private void addHealthInformationToTable(LocatorFormDTO dto, PdfPTable table) {
+		addHeaderCellToTable("Health Information ", 4, table);
+		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), ""), 1,
+				table);
+		addCellToTable("Countries visited during last 6 months: "
+				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 1, table);
+		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 2, table);
+
+		addHeaderCellToTable("Are you suffering from? ", 4, table);
+		addCellToTable("Fever: " + Objects.toString(dto.getFever(), ""), 1, table);
+		addCellToTable("Sore Throat: " + Objects.toString(dto.getSoreThroat(), ""), 1, table);
+		addCellToTable("Joint Pain: " + Objects.toString(dto.getJointPain(), ""), 1, table);
+		addCellToTable("Cough: " + Objects.toString(dto.getCough(), ""), 1, table);
+		addCellToTable("Breathing Difficulties: " + Objects.toString(dto.getBreathingDifficulties(), ""), 1, table);
+		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 3, table);
+	}
+
+	private void addCommonInformationToTable(LocatorFormDTO dto, Traveller traveller, PdfPTable table) {
+		addHeaderCellToTable("Flight Information ", 4, table);
+		addCellToTable("Airline: " + Objects.toString(dto.getAirlineName(), ""), 1, table);
+		addCellToTable("Flight: " + Objects.toString(dto.getFlightNumber(), ""), 1, table);
+		addCellToTable("Seat: " + Objects.toString(traveller.getSeatNumber(), ""), 1, table);
+		addCellToTable("Date Of Arrival: " + Objects.toString(dto.getArrivalDate(), ""), 1, table);
+
+		addHeaderCellToTable("Contact Info ", 4, table);
+		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 1, table);
+		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 1, table);
+		addCellToTable("Fixed Phone" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
+		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 1, table);
+
+		addHeaderCellToTable("Permanent Address ", 4, table);
+		addCellToTable("Number and Street: " + Objects.toString(dto.getPermanentAddress().getNumberAndStreet(), ""), 1,
+				table);
+		addCellToTable("Apartment Number: " + Objects.toString(dto.getPermanentAddress().getApartmentNumber(), ""), 1,
+				table);
+		addCellToTable("City: " + Objects.toString(dto.getPermanentAddress().getCity(), ""), 1, table);
+		addCellToTable("State/Province: " + Objects.toString(dto.getPermanentAddress().getStateProvince(), ""), 1,
+				table);
+		addCellToTable(
+				"Country: " + Objects.toString(getCountryLabelForValue(dto.getPermanentAddress().getCountry()), ""), 1,
+				table);
+		addCellToTable("Zip/Postal Code: " + Objects.toString(dto.getPermanentAddress().getZipPostalCode(), ""), 3,
+				table);
+
+		addHeaderCellToTable("Temporary Address ", 4, table);
+		addCellToTable("Hotel Name: " + Objects.toString(dto.getTemporaryAddress().getHotelName(), ""), 1, table);
+		addCellToTable("Number and Street: " + Objects.toString(dto.getTemporaryAddress().getNumberAndStreet(), ""), 1,
+				table);
+		addCellToTable("Apartment Number: " + Objects.toString(dto.getTemporaryAddress().getApartmentNumber(), ""), 2,
+				table);
+
+		addHeaderCellToTable("Emergency Contact ", 4, table);
+		addCellToTable("Last (Family) Name: " + Objects.toString(dto.getEmergencyContact().getLastName(), ""), 1,
+				table);
+		addCellToTable("First (Given) Name: " + Objects.toString(dto.getEmergencyContact().getFirstName(), ""), 1,
+				table);
+		addCellToTable("Address: " + Objects.toString(dto.getEmergencyContact().getAddress(), ""), 1, table);
+		addCellToTable(
+				"Country: " + Objects.toString(getCountryLabelForValue(dto.getEmergencyContact().getCountry()), ""), 1,
+				table);
+		addCellToTable("Mobile Phone: " + Objects.toString(dto.getEmergencyContact().getMobilePhone(), ""), 4, table);
+
+		if (dto != traveller) {
+			addHeaderCellToTable("Primary Travel Companion ", 4, table);
+			addCellToTable("Last (Family) Name: " + Objects.toString(traveller.getLastName(), ""), 1, table);
+			addCellToTable("First (Given) Name: " + Objects.toString(traveller.getFirstName(), ""), 1, table);
+			addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
+			addCellToTable("Seat: " + Objects.toString(traveller.getSeatNumber(), ""), 1, table);
+			addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
+			addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(traveller.getNationality()), ""),
+					1, table);
+			addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 2, table);
+		}
+
+		if (dto.getFamilyTravelCompanions().length != 0) {
+			addHeaderCellToTable("Travel Companions Family ", 4, table);
+		}
+		for (Traveller companion : dto.getFamilyTravelCompanions()) {
+			if (companion != traveller) {
+				addCellToTable("Last (Family) Name: " + Objects.toString(companion.getLastName(), ""), 1, table);
+				addCellToTable("First (Given) Name: " + Objects.toString(companion.getFirstName(), ""), 1, table);
+				addCellToTable("Sex: " + Objects.toString(companion.getSex(), ""), 1, table);
+				addCellToTable("Seat: " + Objects.toString(companion.getSeatNumber(), ""), 1, table);
+				addCellToTable("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), ""), 1, table);
+				addCellToTable(
+						"Nationality: " + Objects.toString(getCountryLabelForValue(companion.getNationality()), ""), 1,
+						table);
+				addCellToTable("Passport Number: " + Objects.toString(companion.getPassportNumber(), ""), 2, table);
+			}
+		}
+
+		if (dto.getNonFamilyTravelCompanions().length != 0) {
+			addHeaderCellToTable("Travel Companions Non-Family ", 4, table);
+		}
+		for (Traveller companion : dto.getNonFamilyTravelCompanions()) {
+			if (companion != traveller) {
+				addCellToTable("Last (Family) Name: " + Objects.toString(companion.getLastName(), ""), 1, table);
+				addCellToTable("First (Given) Name: " + Objects.toString(companion.getFirstName(), ""), 1, table);
+				addCellToTable("Sex: " + Objects.toString(companion.getSex(), ""), 1, table);
+				addCellToTable("Seat: " + Objects.toString(companion.getSeatNumber(), ""), 1, table);
+				addCellToTable("Date Of Birth: " + Objects.toString(companion.getDateOfBirth(), ""), 1, table);
+				addCellToTable(
+						"Nationality: " + Objects.toString(getCountryLabelForValue(companion.getNationality()), ""), 1,
+						table);
+				addCellToTable("Passport Number: " + Objects.toString(companion.getPassportNumber(), ""), 2, table);
+			}
+		}
+
+	}
+
+	private List<String> getCountriesVisitedByName(String[] countriesVisited) {
+		List<String> countriesVisitedByName = new ArrayList<>();
+		for (String countryVisited : countriesVisited) {
+			countriesVisitedByName.add(getCountryLabelForValue(countryVisited));
+		}
+		return countriesVisitedByName;
 	}
 
 	private Country[] getCountries() {

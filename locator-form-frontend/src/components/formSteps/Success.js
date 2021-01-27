@@ -7,9 +7,28 @@ import Barcode from 'react-barcode'
 
 class Success extends React.Component {
 
+	constructor(props) {
+		super(props);
+		let [serviceRequestId] = Object.keys(props.labelContentPairs);
+		this.state = {serviceRequestId: serviceRequestId}
+	}
+
 
 	printSummaryPDF = () => {
-		window.print()
+		window.open(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form/summary/${this.state.serviceRequestId}`, "_blank");
+		// fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form/summary/${this.state.serviceRequestId}`, {
+		// 	method: 'GET',
+		// 	headers: {
+		// 	},
+		// }).then(async response => {
+		// 		var file = window.URL.createObjectURL(await response.blob());
+		// 		window.open(file, "_blank");
+		// }).catch(err => {
+		// 	console.log(err)
+		// });
+		
+		// window.print()
+
 		// var json = JSON.stringify(values)
 		// fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/summaryDownload`, {
 		//   method: 'POST',
@@ -55,7 +74,6 @@ class Success extends React.Component {
 	}
 
 	render() {
-
 		return (<div>
 			{/* <iframe id="ifmcontentstoprint" style={{height: '0px', width: '0px', position: 'absolute'}}></iframe> */}
 			<div className="row no-print">
@@ -69,8 +87,8 @@ class Success extends React.Component {
 				</div>
 			</div>
 			<div id="full-summary">
-				<Summary formikProps={this.props.formikProps} />
-				{this.props.labelContentPairs.map(function (labelContentPair) {
+				<Summary formikProps={this.props.formikProps}/>
+				{Object.entries(this.props.labelContentPairs).map(([serviceRequestId, labelContentPair]) => {
 					return (
 						<div className="row print-page-break-after">
 							<div className="col-lg-12 print-no-break">
@@ -79,7 +97,7 @@ class Success extends React.Component {
 									<Barcode value={labelContentPair.barcodeContent} />
 								</div>
 							</div>
-						</div>)
+						</div>);
 				})}
 			</div>
 		</div>

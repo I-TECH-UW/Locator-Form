@@ -2,6 +2,9 @@ package org.itech.locator.form.webapp.fhir.service.transform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
@@ -35,7 +38,9 @@ public interface FhirTransformService {
 		}
 	}
 
-	List<LabelContentPair> createLabelContentPair(TransactionObjects transactionObjects);
+	Map<String, LabelContentPair> createLabelContentPair(TransactionObjects transactionObjects);
+
+	Map<String, LabelContentPair> createLabelContentPair(@Valid LocatorFormDTO locatorFormDTO);
 
 	Patient createFhirPatient(LocatorFormDTO lfdto, Traveller comp);
 
