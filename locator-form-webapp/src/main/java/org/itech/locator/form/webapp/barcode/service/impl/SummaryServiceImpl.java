@@ -210,6 +210,10 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Cough: " + Objects.toString(dto.getCough(), ""), 1, table);
 		addCellToTable("Breathing Difficulties: " + Objects.toString(dto.getBreathingDifficulties(), ""), 1, table);
 		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 3, table);
+
+		addHeaderCellToTable("Other Health Questions:  ", 4, table);
+		addCellToTable("Have you tested positive for Covid-19 before? " + Objects.toString(dto.getHadCovidBefore(), ""),
+				1, table);
 	}
 
 	private void addCommonInformationToTable(LocatorFormDTO dto, Traveller traveller, PdfPTable table) {
