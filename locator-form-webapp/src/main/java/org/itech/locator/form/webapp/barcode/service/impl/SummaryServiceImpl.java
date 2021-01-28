@@ -11,21 +11,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.barcode.LabelContentPair;
+import org.itech.locator.form.webapp.barcode.config.SummaryConfig;
 import org.itech.locator.form.webapp.barcode.service.SummaryService;
 import org.itech.locator.form.webapp.country.Country;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.Barcode128;
+import com.itextpdf.text.pdf.BarcodeQRCode;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -37,6 +41,12 @@ import net.sourceforge.barbecue.output.OutputException;
 @Service
 @Slf4j
 public class SummaryServiceImpl implements SummaryService {
+
+	private SummaryConfig summaryConfig;
+
+	public SummaryServiceImpl(SummaryConfig summaryConfig) {
+		this.summaryConfig = summaryConfig;
+	}
 
 	private Country[] countries;
 	Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
@@ -51,10 +61,21 @@ public class SummaryServiceImpl implements SummaryService {
 		Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
 		Chunk chunk = new Chunk(barcodeLabel, font);
 		document.add(chunk);
-		Barcode128 code128 = new Barcode128();
-		code128.setGenerateChecksum(true);
-		code128.setCode(barcodeContent);
-		document.add(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+		switch (summaryConfig.getBarcodeType()) {
+		case QR:
+			BarcodeQRCode barcodeQRCode = new BarcodeQRCode(barcodeContent, 1000, 1000, null);
+			Image codeQrImage = barcodeQRCode.getImage();
+			codeQrImage.scaleAbsolute(100, 100);
+			document.add(codeQrImage);
+			break;
+		case BAR_128:
+			Barcode128 code128 = new Barcode128();
+			code128.setGenerateChecksum(true);
+			code128.setCode(barcodeContent);
+			document.add(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+			break;
+		default:
+		}
 		document.close();
 		writer.close();
 
@@ -124,7 +145,8 @@ public class SummaryServiceImpl implements SummaryService {
 		table.addCell(hcell);
 	}
 
-	private void addBarcodeLabelToTable(LabelContentPair pair, int columns, PdfPTable table, PdfWriter writer) {
+	private void addBarcodeLabelToTable(LabelContentPair pair, int columns, PdfPTable table, PdfWriter writer)
+			throws BadElementException {
 		PdfPCell cell = new PdfPCell();
 		cell.setColspan(4);
 		Chunk chunk = new Chunk(pair.getLabel(), headFont);
@@ -134,10 +156,24 @@ public class SummaryServiceImpl implements SummaryService {
 
 		cell = new PdfPCell();
 		cell.setColspan(4);
-		Barcode128 code128 = new Barcode128();
-		code128.setGenerateChecksum(true);
-		code128.setCode(pair.getBarcodeContent());
-		cell.addElement(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+
+		switch (summaryConfig.getBarcodeType()) {
+		case QR:
+			BarcodeQRCode barcodeQRCode = new BarcodeQRCode(pair.getBarcodeContent(), 1000, 1000, null);
+			Image codeQrImage = barcodeQRCode.getImage();
+			codeQrImage.scaleAbsolute(100, 100);
+			cell.addElement(codeQrImage);
+			cell.addElement(new Phrase(pair.getBarcodeContent()));
+			break;
+		case BAR_128:
+			Barcode128 code128 = new Barcode128();
+			code128.setGenerateChecksum(true);
+			code128.setCode(pair.getBarcodeContent());
+			cell.addElement(code128.createImageWithBarcode(writer.getDirectContent(), null, null));
+			break;
+		default:
+		}
+
 		cell.setBorder(Rectangle.NO_BORDER);
 		table.addCell(cell);
 	}
