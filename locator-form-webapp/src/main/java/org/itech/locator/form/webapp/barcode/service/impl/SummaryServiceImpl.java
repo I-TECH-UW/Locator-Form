@@ -213,7 +213,7 @@ public class SummaryServiceImpl implements SummaryService {
 
 		addHeaderCellToTable("Other Health Questions:  ", 4, table);
 		addCellToTable("Have you tested positive for Covid-19 before? " + Objects.toString(dto.getHadCovidBefore(), ""),
-				1, table);
+				4, table);
 	}
 
 	private void addCommonInformationToTable(LocatorFormDTO dto, Traveller traveller, PdfPTable table) {
