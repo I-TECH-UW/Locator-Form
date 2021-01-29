@@ -2,7 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import Summary from './Summary'
 import { CircularProgress } from '@material-ui/core'
-import {isMobile} from 'react-device-detect';
+import {isMobile, isIE} from 'react-device-detect';
 // import Barcode from 'react-barcode'
 // import { jsPDF } from 'jspdf'
 // import html2canvas from 'html2canvas'
@@ -31,6 +31,17 @@ class Success extends React.Component {
 		}, 100);
 	}
 
+	downloadFileIE = async () => {
+		var blob = await this.fetchPDFAsPromise();
+		this.setState({ printing: false });
+		// IE
+		if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+			window.navigator.msSaveOrOpenBlob(blob, `locator-form-summary-${+new Date()}.pdf`);
+			return;
+		}
+
+	}
+
 	openFileInNewTab = () => {
 		var myWindow = window.open("", "_blank")
 		this.writeFileIntoWindow(this.fetchPDFAsPromise(), myWindow)
@@ -38,11 +49,6 @@ class Success extends React.Component {
 
 	writeFileIntoWindow = async (blobPromise, myWindow) => {
 		var blob = await blobPromise;
-		// IE
-		if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-			window.navigator.msSaveOrOpenBlob(blob, `locator-form-summary-${+new Date()}.pdf`);
-			return;
-		}
 		var file = window.URL.createObjectURL(blob);
 		myWindow.location.href = file;
 		this.setState({ printing: false });
@@ -71,6 +77,8 @@ class Success extends React.Component {
 		this.setState({ printing: true })
 		if (isMobile) {
 			this.downloadFile();
+		} else if (isIE) {
+			this.downloadFileIE();
 		} else {
 			this.openFileInNewTab();
 		}
