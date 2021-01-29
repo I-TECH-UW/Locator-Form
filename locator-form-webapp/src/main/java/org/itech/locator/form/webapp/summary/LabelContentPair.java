@@ -1,4 +1,4 @@
-package org.itech.locator.form.webapp.barcode;
+package org.itech.locator.form.webapp.summary;
 
 import lombok.Data;
 

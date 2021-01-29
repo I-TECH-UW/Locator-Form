@@ -7,11 +7,11 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
-import org.itech.locator.form.webapp.barcode.LabelContentPair;
-import org.itech.locator.form.webapp.barcode.service.SummaryService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
+import org.itech.locator.form.webapp.summary.LabelContentPair;
 import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
+import org.itech.locator.form.webapp.summary.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package org.itech.locator.form.webapp.barcode.service.impl;
+package org.itech.locator.form.webapp.summary.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -10,10 +10,10 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
-import org.itech.locator.form.webapp.barcode.LabelContentPair;
-import org.itech.locator.form.webapp.barcode.config.SummaryConfig;
-import org.itech.locator.form.webapp.barcode.service.SummaryService;
 import org.itech.locator.form.webapp.country.Country;
+import org.itech.locator.form.webapp.summary.LabelContentPair;
+import org.itech.locator.form.webapp.summary.config.SummaryConfig;
+import org.itech.locator.form.webapp.summary.service.SummaryService;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -262,14 +262,14 @@ public class SummaryServiceImpl implements SummaryService {
 
 		if (dto != traveller) {
 			addHeaderCellToTable("Primary Travel Companion ", 4, table);
-			addCellToTable("Last (Family) Name: " + Objects.toString(traveller.getLastName(), ""), 1, table);
-			addCellToTable("First (Given) Name: " + Objects.toString(traveller.getFirstName(), ""), 1, table);
-			addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
-			addCellToTable("Seat: " + Objects.toString(traveller.getSeatNumber(), ""), 1, table);
-			addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
-			addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(traveller.getNationality()), ""),
+			addCellToTable("Last (Family) Name: " + Objects.toString(dto.getLastName(), ""), 1, table);
+			addCellToTable("First (Given) Name: " + Objects.toString(dto.getFirstName(), ""), 1, table);
+			addCellToTable("Sex: " + Objects.toString(dto.getSex(), ""), 1, table);
+			addCellToTable("Seat: " + Objects.toString(dto.getSeatNumber(), ""), 1, table);
+			addCellToTable("Date Of Birth: " + Objects.toString(dto.getDateOfBirth(), ""), 1, table);
+			addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(dto.getNationality()), ""),
 					1, table);
-			addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 2, table);
+			addCellToTable("Passport Number: " + Objects.toString(dto.getPassportNumber(), ""), 2, table);
 		}
 
 		if (dto.getFamilyTravelCompanions().length != 0) {

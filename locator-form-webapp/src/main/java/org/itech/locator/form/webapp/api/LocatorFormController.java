@@ -12,13 +12,13 @@ import javax.validation.Valid;
 
 import org.hl7.fhir.r4.model.Bundle;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
-import org.itech.locator.form.webapp.barcode.LabelContentPair;
-import org.itech.locator.form.webapp.barcode.service.SummaryService;
 import org.itech.locator.form.webapp.email.service.EmailService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService.TransactionObjects;
+import org.itech.locator.form.webapp.summary.LabelContentPair;
 import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
+import org.itech.locator.form.webapp.summary.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -69,7 +69,7 @@ public class LocatorFormController {
 				+ fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(transactionResponseBundle));
 
 		// no further changes to locator form should happen at this point, or the
-		// summary accerss token will become invalid
+		// summary access token will become invalid
 		Map<SummaryAccessInfo, LabelContentPair> idAndLabels = fhirTransformService
 				.createLabelContentPair(locatorFormDTO);
 		Map<String, ByteArrayOutputStream> attachments = new HashMap<>();
