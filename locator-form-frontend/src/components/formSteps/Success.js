@@ -2,6 +2,7 @@ import React from "react"
 import { FormattedMessage } from 'react-intl'
 import Summary from './Summary'
 import { CircularProgress } from '@material-ui/core'
+import {isMobile} from 'react-device-detect';
 // import Barcode from 'react-barcode'
 // import { jsPDF } from 'jspdf'
 // import html2canvas from 'html2canvas'
@@ -9,8 +10,8 @@ import { CircularProgress } from '@material-ui/core'
 class Success extends React.Component {
 
 	constructor(props) {
-		super(props);
-		let [accessInfo] = props.summaryAccessInfo;
+		super(props)
+		let [accessInfo] = props.summaryAccessInfo
 		this.state = {
 			printing: false,
 			accessId: accessInfo.id,
@@ -18,30 +19,63 @@ class Success extends React.Component {
 		}
 	}
 
+	downloadFile = async () => {
+		const link = document.createElement('a');
+		var file = window.URL.createObjectURL(await this.fetchPDFAsPromise());
+		link.href = file;
+		link.download = `locator-form-summary-${+new Date()}.pdf`;
+  		link.click();
+		this.setState({ printing: false });
+		setTimeout(function () {
+			window.URL.revokeObjectURL(file);
+		}, 100);
+	}
 
-	printSummaryPDF = () => {
-		// window.open(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, "_blank");
-		this.setState({printing: true});
-		var myWindow = window.open(window.location.href, "_blank");
-		fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, {
+	openFileInNewTab = () => {
+		var myWindow = window.open("", "_blank")
+		this.writeFileIntoWindow(this.fetchPDFAsPromise(), myWindow)
+	}
+
+	writeFileIntoWindow = async (blobPromise, myWindow) => {
+		var blob = await blobPromise;
+		// IE
+		if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+			window.navigator.msSaveOrOpenBlob(blob, `locator-form-summary-${+new Date()}.pdf`);
+			return;
+		}
+		var file = window.URL.createObjectURL(blob);
+		myWindow.location.href = file;
+		this.setState({ printing: false });
+		setTimeout(function () {
+			window.URL.revokeObjectURL(file);
+		}, 100);
+	}
+
+	fetchPDFAsPromise = async () => {
+		return fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, {
 			method: 'GET',
 			cache: 'no-cache',
 			headers: {
 				Authorization: this.state.accessPass
 			},
 		}).then(async response => {
-				var file = window.URL.createObjectURL(await response.blob());
-				myWindow.location.href=file;
-				// window.open(file, "_blank");
-				this.setState({printing: false});
-				setTimeout(function(){
-					window.URL.revokeObjectURL(file);
-				}, 100);
+			return await response.blob();
 		}).catch(err => {
-			console.log(err)
-			this.setState({printing: false});
-		});
-		
+			console.log(err);
+			this.setState({ printing: false });
+		})
+	}
+
+	printSummaryPDF = () => {
+		// window.open(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, "_blank");
+		this.setState({ printing: true })
+		if (isMobile) {
+			this.downloadFile();
+		} else {
+			this.openFileInNewTab();
+		}
+
+
 		// window.print()
 
 		// var json = JSON.stringify(values)
@@ -101,13 +135,13 @@ class Success extends React.Component {
 					<button type="button" className="confirm-button" onClick={this.printSummaryPDF}><FormattedMessage id="summary.print.button" defaultMessage="Print Summary" /></button>
 					{this.state.printing && (
 						<CircularProgress
-						size={24}
+							size={24}
 						/>
 					)}
 				</div>
 			</div>
 			<div id="full-summary">
-				<Summary formikProps={this.props.formikProps}/>
+				<Summary formikProps={this.props.formikProps} />
 				{/* {Object.entries(this.props.labelContentPairs).map(([accessInfo, labelContentPair]) => {
 					return (
 						<div className="row print-page-break-after">
