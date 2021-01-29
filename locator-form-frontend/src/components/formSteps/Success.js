@@ -22,6 +22,7 @@ class Success extends React.Component {
 	printSummaryPDF = () => {
 		// window.open(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, "_blank");
 		this.setState({printing: true});
+		var myWindow = window.open(window.location.href, "_blank");
 		fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, {
 			method: 'GET',
 			cache: 'no-cache',
@@ -30,7 +31,8 @@ class Success extends React.Component {
 			},
 		}).then(async response => {
 				var file = window.URL.createObjectURL(await response.blob());
-				window.open(file, "_blank");
+				myWindow.location.href=file;
+				// window.open(file, "_blank");
 				this.setState({printing: false});
 				setTimeout(function(){
 					window.URL.revokeObjectURL(file);
