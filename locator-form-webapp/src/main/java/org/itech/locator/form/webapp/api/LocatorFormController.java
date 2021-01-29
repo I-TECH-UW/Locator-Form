@@ -1,8 +1,11 @@
 package org.itech.locator.form.webapp.api;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -15,20 +18,16 @@ import org.itech.locator.form.webapp.email.service.EmailService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService.TransactionObjects;
+import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.DocumentException;
 
 import ca.uhn.fhir.context.FhirContext;
@@ -50,12 +49,10 @@ public class LocatorFormController {
 	@Autowired
 	private EmailService emailService;
 	@Autowired
-	private ObjectMapper objectMapper;
-	@Autowired
 	private FhirContext fhirContext;
 
-	@PostMapping()
-	public ResponseEntity<Map<String, LabelContentPair>> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO,
+	@PostMapping
+	public ResponseEntity<List<SummaryAccessInfo>> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO,
 			BindingResult result)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		if (result.hasErrors()) {
@@ -71,46 +68,19 @@ public class LocatorFormController {
 		log.trace("fhirTransactionResponse: "
 				+ fhirContext.newJsonParser().setPrettyPrint(true).encodeResourceToString(transactionResponseBundle));
 
-		Map<String, LabelContentPair> idAndLabels = fhirTransformService.createLabelContentPair(transactionObjects);
+		// no further changes to locator form should happen at this point, or the
+		// summary accerss token will become invalid
+		Map<SummaryAccessInfo, LabelContentPair> idAndLabels = fhirTransformService
+				.createLabelContentPair(locatorFormDTO);
 		Map<String, ByteArrayOutputStream> attachments = new HashMap<>();
 		attachments.put("locatorFormBarcodes" + transactionObjects.task.getIdElement().getIdPart() + ".pdf",
-				barcodeService.generateSummaryFile(idAndLabels, locatorFormDTO));
+				barcodeService.generateSummaryFile(idAndLabels.entrySet().stream()
+						.collect(Collectors.toMap(e -> e.getKey().getId(), e -> e.getValue())), locatorFormDTO));
 		emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
 				+ locatorFormDTO.getFirstName() + ",\n\n"
 				+ "Please bring a printed copy of the attached file to the Airport of Mauritius as you will need them when you land in Mauritius",
 				attachments);
-		return ResponseEntity.ok(idAndLabels);
-	}
-
-	@PostMapping("/summarize")
-	public ResponseEntity<byte[]> getSummaryPDF(@RequestBody @Valid LocatorFormDTO locatorFormDTO)
-			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
-		if (!locatorFormDTO.getAcceptedTerms()) {
-			return ResponseEntity.badRequest().build();
-		}
-
-		log.trace("Received: " + locatorFormDTO.toString());
-		Map<String, LabelContentPair> idAndLabels = fhirTransformService.createLabelContentPair(locatorFormDTO);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_PDF);
-		return ResponseEntity.ok() //
-				.headers(headers) //
-				.body(barcodeService.generateSummaryFile(idAndLabels, locatorFormDTO).toByteArray());
-	}
-
-	@GetMapping("/summary/{serviceRequestId}")
-	public ResponseEntity<byte[]> getSummaryPDFByIds(@PathVariable("serviceRequestId") String serviceRequestId)
-			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
-		log.trace("Received: " + serviceRequestId);
-		LocatorFormDTO locatorFormDTO = objectMapper.readValue(
-				fhirPersistingService.getTaskFromServiceRequest(serviceRequestId).orElseThrow().getDescription(),
-				LocatorFormDTO.class);
-		Map<String, LabelContentPair> idAndLabels = fhirTransformService.createLabelContentPair(locatorFormDTO);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_PDF);
-		return ResponseEntity.ok() //
-				.headers(headers) //
-				.body(barcodeService.generateSummaryFile(idAndLabels, locatorFormDTO).toByteArray());
+		return ResponseEntity.ok(new ArrayList<>(idAndLabels.keySet()));
 	}
 
 }

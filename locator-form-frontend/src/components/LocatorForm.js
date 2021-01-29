@@ -77,7 +77,7 @@ class LocatorForm extends React.Component {
       submitErrorKey: '',
       isSubmitting: false,
       submitSuccess: false,
-      labelContentPairs: {},
+      summaryAccessInfo: {},
     }
   }
 
@@ -104,7 +104,7 @@ class LocatorForm extends React.Component {
       case 9:
         return <Confirmation formikProps={formikProps} intl={this.props.intl} />
       case 10:
-        return <Success formikProps={formikProps} intl={this.props.intl} labelContentPairs={this.state.labelContentPairs} />
+        return <Success formikProps={formikProps} intl={this.props.intl} summaryAccessInfo={this.state.summaryAccessInfo} />
       default:
         return <div>Not Found</div>
     }
@@ -122,9 +122,9 @@ class LocatorForm extends React.Component {
       body: json
     }).then(async response => {
       this.setState({ submitting: false })
-      const labelContentPairs = await response.json()
+      const summaryAccessInfo = await response.json()
       if (response.ok) {
-        this.onSuccess(labelContentPairs)
+        this.onSuccess(summaryAccessInfo)
         this.setState({ activeStep: this.state.activeStep + 1 })
       } else {
         throw new Error("didn't receive ok")
@@ -173,14 +173,14 @@ class LocatorForm extends React.Component {
     // window.scrollTo(0, 0)
   }
 
-  onSuccess = (labelContentPairs) => {
-    this.setState({ 'submitSuccess': true, 'labelContentPairs': labelContentPairs })
+  onSuccess = (summaryAccessInfo) => {
+    this.setState({ 'submitSuccess': true, 'summaryAccessInfo': summaryAccessInfo })
     this.scrollToTopOfPage();
   }
 
   render() {
     const currentValidationShema = validationSchema[this.state.activeStep];
-    // const  currentValidationShema = this.state.activeStep === 10 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+    // const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>

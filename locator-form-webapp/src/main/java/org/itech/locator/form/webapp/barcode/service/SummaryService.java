@@ -16,7 +16,7 @@ public interface SummaryService {
 	ByteArrayOutputStream generateBarcodeFile(String barcodeLabel, String barcodeContent)
 			throws OutputException, BarcodeException, DocumentException;
 
-	ByteArrayOutputStream generateSummaryFile(Map<String, LabelContentPair> idAndLabels,
-			LocatorFormDTO locatorFormDto) throws OutputException, BarcodeException, DocumentException;
+	ByteArrayOutputStream generateSummaryFile(Map<String, LabelContentPair> idAndLabels, LocatorFormDTO locatorFormDto)
+			throws OutputException, BarcodeException, DocumentException;
 
 }

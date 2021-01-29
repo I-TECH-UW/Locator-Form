@@ -1,7 +1,8 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import Summary from './Summary'
-import Barcode from 'react-barcode'
+import { CircularProgress } from '@material-ui/core'
+// import Barcode from 'react-barcode'
 // import { jsPDF } from 'jspdf'
 // import html2canvas from 'html2canvas'
 
@@ -9,23 +10,35 @@ class Success extends React.Component {
 
 	constructor(props) {
 		super(props);
-		let [serviceRequestId] = Object.keys(props.labelContentPairs);
-		this.state = {serviceRequestId: serviceRequestId}
+		let [accessInfo] = props.summaryAccessInfo;
+		this.state = {
+			printing: false,
+			accessId: accessInfo.id,
+			accessPass: accessInfo.pass
+		}
 	}
 
 
 	printSummaryPDF = () => {
-		window.open(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form/summary/${this.state.serviceRequestId}`, "_blank");
-		// fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form/summary/${this.state.serviceRequestId}`, {
-		// 	method: 'GET',
-		// 	headers: {
-		// 	},
-		// }).then(async response => {
-		// 		var file = window.URL.createObjectURL(await response.blob());
-		// 		window.open(file, "_blank");
-		// }).catch(err => {
-		// 	console.log(err)
-		// });
+		// window.open(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, "_blank");
+		this.setState({printing: true});
+		fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/summary/${this.state.accessId}`, {
+			method: 'GET',
+			cache: 'no-cache',
+			headers: {
+				Authorization: this.state.accessPass
+			},
+		}).then(async response => {
+				var file = window.URL.createObjectURL(await response.blob());
+				window.open(file, "_blank");
+				this.setState({printing: false});
+				setTimeout(function(){
+					window.URL.revokeObjectURL(file);
+				}, 100);
+		}).catch(err => {
+			console.log(err)
+			this.setState({printing: false});
+		});
 		
 		// window.print()
 
@@ -84,11 +97,16 @@ class Success extends React.Component {
 			<div className="row no-print">
 				<div className="col-lg-12 success-large text-center">
 					<button type="button" className="confirm-button" onClick={this.printSummaryPDF}><FormattedMessage id="summary.print.button" defaultMessage="Print Summary" /></button>
+					{this.state.printing && (
+						<CircularProgress
+						size={24}
+						/>
+					)}
 				</div>
 			</div>
 			<div id="full-summary">
 				<Summary formikProps={this.props.formikProps}/>
-				{Object.entries(this.props.labelContentPairs).map(([serviceRequestId, labelContentPair]) => {
+				{/* {Object.entries(this.props.labelContentPairs).map(([accessInfo, labelContentPair]) => {
 					return (
 						<div className="row print-page-break-after">
 							<div className="col-lg-12 print-no-break">
@@ -98,7 +116,7 @@ class Success extends React.Component {
 								</div>
 							</div>
 						</div>);
-				})}
+				})} */}
 			</div>
 		</div>
 		)

@@ -13,6 +13,7 @@ import org.hl7.fhir.r4.model.Task;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.barcode.LabelContentPair;
+import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -38,9 +39,7 @@ public interface FhirTransformService {
 		}
 	}
 
-	Map<String, LabelContentPair> createLabelContentPair(TransactionObjects transactionObjects);
-
-	Map<String, LabelContentPair> createLabelContentPair(@Valid LocatorFormDTO locatorFormDTO);
+	Map<SummaryAccessInfo, LabelContentPair> createLabelContentPair(@Valid LocatorFormDTO locatorFormDTO);
 
 	Patient createFhirPatient(LocatorFormDTO lfdto, Traveller comp);
 

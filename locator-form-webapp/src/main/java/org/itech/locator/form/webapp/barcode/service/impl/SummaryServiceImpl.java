@@ -50,6 +50,7 @@ public class SummaryServiceImpl implements SummaryService {
 
 	private Country[] countries;
 	Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+	Font font = FontFactory.getFont(FontFactory.HELVETICA, 11.5f, BaseColor.BLACK);
 
 	@Override
 	public ByteArrayOutputStream generateBarcodeFile(String barcodeLabel, String barcodeContent)
@@ -58,7 +59,6 @@ public class SummaryServiceImpl implements SummaryService {
 		Document document = new Document(new Rectangle(PageSize.LETTER));
 		PdfWriter writer = PdfWriter.getInstance(document, stream);
 		document.open();
-		Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
 		Chunk chunk = new Chunk(barcodeLabel, font);
 		document.add(chunk);
 		switch (summaryConfig.getBarcodeType()) {
@@ -140,7 +140,7 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	private void addCellToTable(String label, int columns, PdfPTable table) {
-		PdfPCell hcell = new PdfPCell(new Phrase(label));
+		PdfPCell hcell = new PdfPCell(new Phrase(label, font));
 		hcell.setColspan(columns);
 		table.addCell(hcell);
 	}
@@ -149,7 +149,7 @@ public class SummaryServiceImpl implements SummaryService {
 			throws BadElementException {
 		PdfPCell cell = new PdfPCell();
 		cell.setColspan(4);
-		Chunk chunk = new Chunk(pair.getLabel(), headFont);
+		Chunk chunk = new Chunk(pair.getLabel() + ": " + pair.getBarcodeContent(), headFont);
 		cell.addElement(chunk);
 		cell.setBorder(Rectangle.NO_BORDER);
 		table.addCell(cell);
@@ -163,7 +163,6 @@ public class SummaryServiceImpl implements SummaryService {
 			Image codeQrImage = barcodeQRCode.getImage();
 			codeQrImage.scaleAbsolute(100, 100);
 			cell.addElement(codeQrImage);
-			cell.addElement(new Phrase(pair.getBarcodeContent()));
 			break;
 		case BAR_128:
 			Barcode128 code128 = new Barcode128();

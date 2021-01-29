@@ -1,5 +1,6 @@
 package org.itech.locator.form.webapp.fhir.service.transform.impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,8 @@ import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.barcode.LabelContentPair;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
+import org.itech.locator.form.webapp.security.SecurityUtil;
+import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -260,37 +263,33 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-	public Map<String, LabelContentPair> createLabelContentPair(
-			TransactionObjects transactionObjects) {
-		Map<String, LabelContentPair> labels = new HashMap<>();
-//		List<LabelContentPair> idAndLabels = new ArrayList<>();
-		for (ServiceRequestPatientPair sRequestPatientPair : transactionObjects.serviceRequestPatientPairs) {
-			String patientName = sRequestPatientPair.patient.getNameFirstRep().getGivenAsSingleString();
-			String serviceRequestId = sRequestPatientPair.serviceRequest.getIdElement().getIdPart();
-			labels.put(serviceRequestId, new LabelContentPair(patientName + "'s Service Identifier",
-					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
+	public Map<SummaryAccessInfo, LabelContentPair> createLabelContentPair(@Valid LocatorFormDTO locatorFormDTO) {
+		String hash;
+		try {
+			hash = SecurityUtil.getSHA256Hash(objectMapper.writeValueAsString(locatorFormDTO));
+		} catch (NoSuchAlgorithmException | JsonProcessingException e) {
+			log.error("could not create access token for summary for ServiceRequest: "
+					+ locatorFormDTO.getServiceRequestId());
+			hash = "";
 		}
-		return labels;
-	}
-
-	@Override
-	public Map<String, LabelContentPair> createLabelContentPair(@Valid LocatorFormDTO locatorFormDTO) {
-		Map<String, LabelContentPair> labels = new HashMap<>();
+		Map<SummaryAccessInfo, LabelContentPair> labels = new HashMap<>();
 //		List<LabelContentPair> idAndLabels = new ArrayList<>();
 		String patientName = locatorFormDTO.getFirstName();
 		String serviceRequestId = locatorFormDTO.getServiceRequestId();
-		labels.put(serviceRequestId, new LabelContentPair(patientName + "'s Service Identifier",
+		labels.put(new SummaryAccessInfo(serviceRequestId, hash),
+				new LabelContentPair(patientName + "'s Service Identifier",
 				StringUtils.substring(serviceRequestId, 0, barcodeLength)));
 		for (Traveller traveller : locatorFormDTO.getFamilyTravelCompanions()) {
 			patientName = traveller.getFirstName();
 			serviceRequestId = traveller.getServiceRequestId();
-			labels.put(serviceRequestId, new LabelContentPair(patientName + "'s Service Identifier",
+			labels.put(new SummaryAccessInfo(serviceRequestId, hash),
+					new LabelContentPair(patientName + "'s Service Identifier",
 					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
 		}
 		for (Traveller traveller : locatorFormDTO.getNonFamilyTravelCompanions()) {
 			patientName = traveller.getFirstName();
 			serviceRequestId = traveller.getServiceRequestId();
-			labels.put(serviceRequestId, new LabelContentPair(
+			labels.put(new SummaryAccessInfo(serviceRequestId, hash), new LabelContentPair(
 					patientName + "'s Service Identifier",
 					StringUtils.substring(serviceRequestId, 0, barcodeLength)));
 		}
