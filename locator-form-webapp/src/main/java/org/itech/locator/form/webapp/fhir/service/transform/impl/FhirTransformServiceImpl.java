@@ -55,6 +55,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Value("${org.itech.locator.form.loinccodes}")
 	private String[] loincCodes;
 
+	@Value("${org.itech.locator.form.requester.id}")
+	private String requesterId;
+
 	@Value("${org.itech.locator.form.barcodelength:36}")
 	private Integer barcodeLength;
 
@@ -221,6 +224,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		identifierList.add(identifier);
 
 		fhirTask.setIdentifier(identifierList);
+		fhirTask.setFor(new Reference(requesterId));
 
 		return fhirTask;
 	}
