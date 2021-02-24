@@ -27,26 +27,38 @@ services:
       secrets:
          -  source: client_facing_keystore
          -  source: truststore
-      
-   fhir.openelis.org:
-      build:
-         context: ./hapi-fhir-jpaserver-starter
-         dockerfile: Dockerfile.prod
+         
+   hapi-fhir-jpaserver:
+      container_name: lf-hapi-fhir-jpaserver
+      image: hapiproject/hapi:latest
       restart: always
-      environment:
-         - JAVA_OPTS= -Dhapi.properties=/run/secrets/hapi.properties
       ports:
-         - 8448:8443
+        - 8448:8443
       volumes:
-         - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
+        - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
+      environment: 
+        SPRING_CONFIG_LOCATION: file:///run/secrets/application.yaml
       secrets:
-         -  source: hapi.properties
+         -  source: application.yaml
          -  source: keystore
          -  source: truststore
+       
+   locator-form-data:
+      image: postgres:12-alpine
+      env_file:
+         - ./prod/database/database.env # configure postgres
+      ports:
+         - 25432:5432
+      volumes:
+         - locator-form-data:/var/lib/postgresql/data
+         - ./prod/database:/docker-entrypoint-initdb.d
          
+volumes:
+ locator-form-data:
+      
 secrets:
-   hapi.properties:
-      file: ./prod/properties/hapi.properties
+   application.yaml:
+      file: ./prod/properties/application.yaml
    truststore:
       file: ./prod/ssl/openelis.org.truststore
    keystore:
