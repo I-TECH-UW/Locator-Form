@@ -103,8 +103,8 @@ hapi:
     tester:
 
         home:
-          name: Consolidated-Server
-          server_address: 'https://host.openelis.org:8444/fhir'
+          name: Locator-Form Store
+          server_address: 'https://host.openelis.org:8448/fhir'
           refuse_to_fetch_third_party_urls: false
           fhir_version: R4
 
