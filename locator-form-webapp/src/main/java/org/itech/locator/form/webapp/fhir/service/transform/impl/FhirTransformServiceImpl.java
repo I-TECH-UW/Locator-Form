@@ -224,7 +224,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		identifierList.add(identifier);
 
 		fhirTask.setIdentifier(identifierList);
-		fhirTask.setFor(new Reference(requesterId));
+		fhirTask.setOwner(new Reference(requesterId));
 
 		return fhirTask;
 	}
