@@ -36,13 +36,13 @@ public class HttpClientConfig {
 	@Value("${server.ssl.trust-store-password}")
 	private char[] trustStorePassword;
 
-	@Value("${server.ssl.key-store}")
+	@Value("${server.ssl.backend.key-store}")
 	private Resource keyStore;
 
-	@Value("${server.ssl.key-store-password}")
+	@Value("${server.ssl.backend.key-store-password}")
 	private char[] keyStorePassword;
 
-	@Value("${server.ssl.key-password}")
+	@Value("${server.ssl.backend.key-password}")
 	private char[] keyPassword;
 
 	@Value("${org.openhim.basicauth.username:}")
