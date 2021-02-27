@@ -9,10 +9,11 @@ services:
          - locator-form.openelis.org
       restart: always
       ports:
+         - 80:80
          - 443:443
       secrets:
-         -  source: cert
-         -  source: key
+         -  source: client_facing_cert
+         -  source: client_facing_key
       
    locator-form.openelis.org:
       image: locator-form-webapp
@@ -26,6 +27,7 @@ services:
          - ./prod/properties/locatorform-app.properties:/var/lib/locatorform/app.properties
       secrets:
          -  source: client_facing_keystore
+         -  source: keystore
          -  source: truststore
          
    hapi-fhir-jpaserver:
@@ -59,16 +61,24 @@ volumes:
 secrets:
    application.yaml:
       file: ./prod/properties/application.yaml
+   client_facing_keystore:
+      file: ./prod/ssl/client_facing_openelis.org.keystore
+   client_facing_cert:
+      file: ./prod/ssl/client_facing_openelis.org.crt
+   client_facing_key:
+      file: ./prod/ssl/client_facing_openelis.org.key
+   client_facing_key_pass:
+      file: ./prod/ssl/client_facing_openelis.org.key_pass
    truststore:
       file: ./prod/ssl/openelis.org.truststore
    keystore:
-      file: ./prod/ssl/openelis.org.keystore
-   client_facing_keystore:
       file: ./prod/ssl/openelis.org.keystore
    cert:
       file: ./prod/ssl/openelis.org.crt
    key:
       file: ./prod/ssl/openelis.org.key
+   key_pass:
+      file: ./prod/ssl/openelis.org.key_pass
    db_user:
       file: ./prod/database/user
    db_password:
