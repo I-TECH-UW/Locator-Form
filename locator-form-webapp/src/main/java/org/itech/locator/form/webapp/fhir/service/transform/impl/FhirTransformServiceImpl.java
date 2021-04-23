@@ -133,7 +133,6 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		Patient fhirPatient = new Patient();
 		String patientId = UUID.randomUUID().toString();
 		fhirPatient.setId(patientId);
-		fhirPatient.addIdentifier(new Identifier().setSystem(oeFhirSystem + "/pat_guid").setValue(patientId));
 
 		HumanName humanName = new HumanName();
 		List<HumanName> humanNameList = new ArrayList<>();
@@ -142,25 +141,16 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		humanNameList.add(humanName);
 		fhirPatient.setName(humanNameList);
 
-		List<Identifier> identifierList = new ArrayList<>();
-
-		Identifier identifier = new Identifier();
-		identifier.setId(patientId);
-		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-		identifierList.add(identifier);
-
-		identifier = new Identifier();
-		identifier.setId(comp.getPassportNumber());
-		identifier.setSystem("passport"); // fix hardcode
-		identifierList.add(identifier);
+		fhirPatient.addIdentifier(new Identifier().setSystem(oeFhirSystem + "/pat_guid").setValue(patientId));
+		fhirPatient.addIdentifier(
+				new Identifier().setSystem("https://host.openelis.org/locator-form").setValue(patientId));
+		fhirPatient.addIdentifier((Identifier) new Identifier().setSystem("passport").setValue(comp.getPassportNumber())
+				.setId(comp.getPassportNumber()));
 
 		if (!StringUtils.isAllBlank(locatorFormDTO.getNationalID()) && comp == locatorFormDTO) {
-			identifier = new Identifier();
-			identifier.setId(locatorFormDTO.getNationalID());
-			identifier.setSystem("http://govmu.org"); // fix hardcode
-			identifierList.add(identifier);
+			fhirPatient.addIdentifier((Identifier) new Identifier().setSystem("http://govmu.org")
+					.setValue(locatorFormDTO.getNationalID()).setId(locatorFormDTO.getNationalID()));
 		}
-		fhirPatient.setIdentifier(identifierList);
 
 		fhirPatient.setBirthDate(Date.from(comp.getDateOfBirth().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		switch (comp.getSex()) {
