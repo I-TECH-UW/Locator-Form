@@ -61,6 +61,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Value("${org.itech.locator.form.barcodelength:36}")
 	private Integer barcodeLength;
 
+	@Value("${org.openelisglobal.oe.fhir.system:http://openelis-global.org}")
+	private String oeFhirSystem;
+
 	@Autowired
 	private ObjectMapper objectMapper;
 
@@ -130,6 +133,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		Patient fhirPatient = new Patient();
 		String patientId = UUID.randomUUID().toString();
 		fhirPatient.setId(patientId);
+		fhirPatient.addIdentifier(new Identifier().setSystem(oeFhirSystem + "/pat_guid").setValue(patientId));
 
 		HumanName humanName = new HumanName();
 		List<HumanName> humanNameList = new ArrayList<>();
