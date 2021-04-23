@@ -143,7 +143,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		fhirPatient.addIdentifier(new Identifier().setSystem(oeFhirSystem + "/pat_guid").setValue(patientId));
 		fhirPatient.addIdentifier(
-				new Identifier().setSystem("https://host.openelis.org/locator-form").setValue(patientId));
+				(Identifier) new Identifier().setSystem("https://host.openelis.org/locator-form").setValue(patientId)
+						.setId(patientId));
 		fhirPatient.addIdentifier((Identifier) new Identifier().setSystem("passport").setValue(comp.getPassportNumber())
 				.setId(comp.getPassportNumber()));
 
