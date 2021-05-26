@@ -62,7 +62,7 @@ class Step8 extends React.Component {
 										onChange={value => this.handleChange(value)}
 										options={countriesList} 
 										isSearchable={true}
-										requireField={true}
+										requireField={false}
 									/>
 								}
 							</Field>

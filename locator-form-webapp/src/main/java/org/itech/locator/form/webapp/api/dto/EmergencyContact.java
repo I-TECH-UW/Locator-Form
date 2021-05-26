@@ -16,7 +16,7 @@ public class EmergencyContact {
 	@NotBlank
 	@Size(max = 50)
     private String address;
-	@NotBlank
+//	@NotBlank
 	@Size(max = 50)
     private String country;
 	@NotBlank
