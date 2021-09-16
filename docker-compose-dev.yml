@@ -74,27 +74,7 @@ services:
       - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
       
       
-  auth.openelis.org:
-    image:
-      quay.io/keycloak/keycloak:10.0.2
-    restart: always
-    environment:
-      - DB_VENDOR=postgres
-      - DB_ADDR=locator-form-data
-      - DB_PORT=5432
-      - DB_DATABASE=consolidated-server
-      - DB_SCHEMA=keycloak
-      - DB_USER=lf_user
-      - DB_PASSWORD=lf_password
-    ports:
-      - 8083:8080
-      - 8446:8443
-    networks:
-      - frontend
-      - server-1
-    volumes:
-      - ./dev/ssl/openelis.org.crt:/etc/x509/https/tls.crt
-      - ./dev/ssl/openelis.org.key:/etc/x509/https/tls.key
+
  
 networks:
   frontend:
