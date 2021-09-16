@@ -14,6 +14,8 @@ services:
    volumes:
      - './locator-form-frontend:/app'
      - '/app/node_modules'
+     - ./dev/ssl/lf.crt:/etc/x509/https/tls.crt
+     - ./dev/ssl/lf.key:/etc/x509/https/tls.key
    environment:
      - CHOKIDAR_USEPOLLING=true
    tty: true
@@ -74,7 +76,29 @@ services:
       - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
       
       
-
+  auth.openelis.org:
+    image:
+      quay.io/keycloak/keycloak:15.0.2
+    restart: always
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=postgres
+      - DB_ADDR=locator-form-data
+      - DB_PORT=5432
+      - DB_DATABASE=locator-form
+      - DB_SCHEMA=keycloak
+      - DB_USER=lf_user
+      - DB_PASSWORD=lf_password
+    ports:
+      - 8083:8080
+      - 8446:8443
+    networks:
+      - frontend
+      - server-1
+    volumes:
+      - ./dev/ssl/lf.crt:/etc/x509/https/tls.crt
+      - ./dev/ssl/lf.key:/etc/x509/https/tls.key
  
 networks:
   frontend:

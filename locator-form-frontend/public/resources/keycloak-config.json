@@ -1,10 +1,8 @@
 {
-   "realm": "Consolidated-Server",
-   "auth-server-url": "http://auth.openelis.org:8080/auth",
-   "ssl-required": "none",
-   "clientId": "server-management",
-   "public-client": true,
-   "verify-token-audience": true,
-   "use-resource-role-mappings": true,
-   "confidential-port": 0
-  }
+  "realm": "Airport",
+  "auth-server-url": "https://host.openelis.org:8446/auth/",
+  "ssl-required": "external",
+  "resource": "locator-form",
+  "public-client": true,
+  "confidential-port": 0
+}

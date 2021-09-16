@@ -22,7 +22,7 @@
     "http-proxy-middleware": "^1.0.4",
     "jquery": "^3.5.1",
     "jspdf": "^2.1.1",
-    "keycloak-js": "^10.0.2",
+    "keycloak-js": "^15.0.2",
     "multiselect-react-dropdown": "^1.5.7",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
@@ -42,7 +42,7 @@
     "yup": "^0.29.2"
   },
   "scripts": {
-    "start": "HTTPS=false SSL_CRT_FILE=/run/secrets/cert SSL_KEY_FILE=/run/secrets/key react-scripts start",
+    "start": "HTTPS=true SSL_CRT_FILE=/etc/x509/https/tls.crt SSL_KEY_FILE=/etc/x509/https/tls.key react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from './components/layout/Layout';
 import { LocatorForm } from "./components";
+import { HealthDesk } from "./components";
 import { IntlProvider } from 'react-intl';
 
 import messages_en from './i18n/en.json';
@@ -55,7 +56,8 @@ class App extends React.Component {
           <Router>
             <Layout onChangeLanguage={this.onChangeLanguage}>
                 <Switch>
-                  <Route path="/" exact component={LocatorForm} />
+                <Route path="/" exact component={LocatorForm} />
+                <Route path="/health-desk" exact component={HealthDesk} />
                 </Switch>
             </Layout>
             {/* <Footer /> */}
