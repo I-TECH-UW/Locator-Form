@@ -55,25 +55,25 @@ services:
       - ./dev/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
       - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
 
-  locator-form.openelis.org:
-    image: locator-form-webapp
-    build:
-      context: ./locator-form-webapp
-      dockerfile: docker/docker-build/Dockerfile
-    ports:
-      - 8449:8449
-    networks:
-      - server-1
-    extra_hosts:
-#    this should be the loopback to the docker host. 
-#    run 
-#    /sbin/ip route|awk '/default/ { print $3 }' 
-#    inside the container to make sure the ip address is correct
-#    make sure connections to 8449 are allowed by your firewall
-      - host.openelis.org:172.20.0.1
-    volumes:
-      - ./dev/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
-      - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
+#  locator-form.openelis.org:
+#    image: locator-form-webapp
+#    build:
+#      context: ./locator-form-webapp
+#      dockerfile: docker/docker-build/Dockerfile
+#    ports:
+#      - 8449:8449
+#    networks:
+#      - server-1
+#    extra_hosts:
+##    this should be the loopback to the docker host. 
+##    run 
+##    /sbin/ip route|awk '/default/ { print $3 }' 
+##    inside the container to make sure the ip address is correct
+##    make sure connections to 8449 are allowed by your firewall
+#      - host.openelis.org:172.20.0.1
+#    volumes:
+#      - ./dev/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
+#      - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
       
       
   auth.openelis.org:
@@ -81,15 +81,16 @@ services:
       quay.io/keycloak/keycloak:15.0.2
     restart: always
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - DB_VENDOR=postgres
-      - DB_ADDR=locator-form-data
-      - DB_PORT=5432
-      - DB_DATABASE=locator-form
-      - DB_SCHEMA=keycloak
-      - DB_USER=lf_user
-      - DB_PASSWORD=lf_password
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: postgres
+      DB_ADDR: locator-form-data
+      DB_PORT: 5432
+      DB_DATABASE: locator-form
+      DB_SCHEMA: keycloak
+      DB_USER: lf_user
+      DB_PASSWORD: lf_password
     ports:
       - 8083:8080
       - 8446:8443
@@ -99,6 +100,7 @@ services:
     volumes:
       - ./dev/ssl/lf.crt:/etc/x509/https/tls.crt
       - ./dev/ssl/lf.key:/etc/x509/https/tls.key
+      - ./dev/keycloak:/opt/jboss/keycloak/imports
  
 networks:
   frontend:
