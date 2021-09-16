@@ -2,8 +2,8 @@ spring:
   datasource:
     url: 'jdbc:postgresql://locator-form-data:5432/locator-form?currentSchema=hapi_fhir'
     #url: jdbc:h2:mem:test_mem
-    username: cs_user
-    password: cs_password
+    username: lf_user
+    password: lf_password
     driverClassName: org.postgresql.Driver
     max-active: 15
   jpa:
