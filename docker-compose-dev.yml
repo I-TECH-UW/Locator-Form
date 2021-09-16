@@ -14,9 +14,6 @@ services:
    volumes:
      - './locator-form-frontend:/app'
      - '/app/node_modules'
-   secrets:
-     - source: cert
-     - source: key
    environment:
      - CHOKIDAR_USEPOLLING=true
    tty: true
@@ -34,10 +31,10 @@ services:
       - server-1
     
   fhir.openelis.org:
-    build: ./hapi-fhir-jpaserver-starter
+    image: hapiproject/hapi:v5.4.1
     restart: always
-    environment:
-      - JAVA_OPTS= -Dhapi.properties=/run/secrets/hapi.properties
+    environment: 
+      SPRING_CONFIG_LOCATION: file:///data/hapi/application.yaml
     ports:
       - 8448:8443
     networks:
@@ -51,11 +48,10 @@ services:
 #    make sure connections to 8446 are allowed by your firewall
       - host.openelis.org:172.20.0.1
     volumes:
+      - ./dev/properties/application.yaml:/data/hapi/application.yaml
       - ./dev/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
-    secrets:
-      - source: hapi.properties
-      - source: keystore
-      - source: truststore
+      - ./dev/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
+      - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
 
   locator-form.openelis.org:
     image: locator-form-webapp
@@ -63,7 +59,7 @@ services:
       context: ./locator-form-webapp
       dockerfile: docker/docker-build/Dockerfile
     ports:
-      - 8449:8444
+      - 8449:8449
     networks:
       - server-1
     extra_hosts:
@@ -71,11 +67,11 @@ services:
 #    run 
 #    /sbin/ip route|awk '/default/ { print $3 }' 
 #    inside the container to make sure the ip address is correct
-#    make sure connections to 8446 are allowed by your firewall
+#    make sure connections to 8449 are allowed by your firewall
       - host.openelis.org:172.20.0.1
-    secrets:
-      - source: keystore
-      - source: truststore
+    volumes:
+      - ./dev/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
+      - ./dev/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
  
 networks:
   frontend:
@@ -84,15 +80,3 @@ networks:
 volumes:
   locator-form-data:
   
-secrets:
-  hapi.properties:
-    file: ./dev/properties/hapi.properties
-  keystore:
-    file: ./dev/ssl/oe_selfsigned.keystore
-  truststore:
-    file: ./dev/ssl/oe_selfsigned.truststore
-  cert:
-    file: ./dev/ssl/oe_selfsigned.crt
-  key:
-    file: ./dev/ssl/oe_selfsigned.key
-
