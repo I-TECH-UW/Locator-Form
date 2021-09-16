@@ -1,3 +1,9 @@
+Bag Attributes
+    localKeyID: E2 49 BD 7B 87 7E 5F 47 BA EB 5C 67 7E 16 FD 07 85 A9 22 02 
+subject=C = US, ST = Washington, L = Seattle, O = UW, OU = ITECH, CN = dev.openelis.org
+
+issuer=C = US, ST = Washington, O = UW TEST, OU = ITECH TEST, CN = int.TESTUS.itech.org, emailAddress = info@go2itech.org
+
 -----BEGIN CERTIFICATE-----
 MIIGKzCCBBOgAwIBAgIUAzevcMbzfKRs04t6d2lhA3WFxTEwDQYJKoZIhvcNAQEL
 BQAwgYoxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApXYXNoaW5ndG9uMRAwDgYDVQQK
@@ -33,6 +39,11 @@ UnSU5dB7CxDLc9p3BP5zPC4byToeJQNRBKOqX3gJlKsDTapNYY0Q1QqLqL/jaIlL
 GdBBBoRcXTpHnwL4BqNwd8r4apaJa60vvXyPNiQlAPREdENIgHHEGBZP+80JZIaK
 AWOWzLwfMAF8ATfEpr9vJq2QJ0mEx988jOvxlCxKWtjsESPrQuk41jpsLPn50fQ=
 -----END CERTIFICATE-----
+Bag Attributes: <No Attributes>
+subject=C = US, ST = Washington, O = UW TEST, OU = ITECH TEST, CN = int.TESTUS.itech.org, emailAddress = info@go2itech.org
+
+issuer=C = US, ST = Washington, L = Seattle, O = UW TEST, OU = ITECH TEST, CN = TESTROOT.itech.org, emailAddress = info@go2itech.org
+
 -----BEGIN CERTIFICATE-----
 MIIGGjCCBAKgAwIBAgIULTLvDdWci40ej+WbNm6Ta2DbjiEwDQYJKoZIhvcNAQEL
 BQAwgZoxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApXYXNoaW5ndG9uMRAwDgYDVQQH
@@ -68,6 +79,11 @@ gt47Tfq8okpglNxi6GfkvJOfERVSK92p6yHLry1f3k8lN5V/lmOq38sOTxNyiyk/
 5KQrBsml01GJ2b8kF/4gL0DIWuM7M4XWT5tNfGE3ujqQpKPhw2Qxslxf3DdLAtr9
 cgdYk6/P08gvUGeAJFtbhts8DS9SD4Vy9ERpvOCa
 -----END CERTIFICATE-----
+Bag Attributes: <No Attributes>
+subject=C = US, ST = Washington, L = Seattle, O = UW TEST, OU = ITECH TEST, CN = TESTROOT.itech.org, emailAddress = info@go2itech.org
+
+issuer=C = US, ST = Washington, L = Seattle, O = UW TEST, OU = ITECH TEST, CN = TESTROOT.itech.org, emailAddress = info@go2itech.org
+
 -----BEGIN CERTIFICATE-----
 MIIGFDCCA/ygAwIBAgIBADANBgkqhkiG9w0BAQsFADCBmjELMAkGA1UEBhMCVVMx
 EzARBgNVBAgMCldhc2hpbmd0b24xEDAOBgNVBAcMB1NlYXR0bGUxEDAOBgNVBAoM
