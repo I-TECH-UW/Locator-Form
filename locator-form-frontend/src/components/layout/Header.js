@@ -43,7 +43,7 @@ class Header extends React.Component {
               <button type="button" className="btn language-select-button" data-toggle="dropdown">
                 <FontAwesomeIcon id="language-icon" icon={faLanguage} size="2x" />
               </button>
-              <div class="dropdown-menu">
+              <div className="dropdown-menu">
                 <button className="dropdown-item language-button"
                   lang="en"
                   onClick={(e) => {

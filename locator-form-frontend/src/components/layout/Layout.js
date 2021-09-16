@@ -6,7 +6,7 @@ export default function Layout(props) {
   const { children } = props
   return (
     <>
-      <div class="d-flex flex-column min-vh-100">
+      <div className="d-flex flex-column min-vh-100">
       <Header onChangeLanguage={props.onChangeLanguage} />
       {children}
       <Footer/>

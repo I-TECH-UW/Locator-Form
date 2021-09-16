@@ -10,6 +10,7 @@ import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Task;
+import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.summary.LabelContentPair;
@@ -19,9 +20,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface FhirTransformService {
 
-	TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO) throws JsonProcessingException;
+	TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, TaskStatus status)
+			throws JsonProcessingException;
 
-	Task createFhirTask();
+	Task createFhirTask(TaskStatus status);
 
 	public class TransactionObjects {
 		public Bundle bundle;

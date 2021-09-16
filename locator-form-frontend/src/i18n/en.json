@@ -13,6 +13,7 @@
 	"nav.item.step.emergencyContact": "Emergency Contact",
 	"nav.item.step.travelCompanion": "Travel Companions",
 	"nav.item.step.confirmation": "Confirmation",
+	"nav.item.form.search.placeholder": "Scan QR code",
 
 	"nav.item.title.option.mr": "Mr",
 	"nav.item.title.option.mrs": "Mrs",
@@ -49,6 +50,8 @@
 	"error.submit": "An error occured",
 	"error.search.infohighway.error": "An error occurred while searching",
 	"error.search.infohighway.notfound": "No resident was found with that National ID",
+	"error.search.form.error": "An error occurred while searching",
+	"error.search.form.notfound": "No form could be found with that search value",
 	"error.date.invalidformat":"Date must match yyyy-mm-dd",
 	"date.format": "yyyy-mm-dd",
 	"submit.success.msg": "Thank you for filling out the online locator form. Please check your email for any further instructions.\nYou are also requested to bring a printed copy of the Summary PDF with the barcode at the Airport.\nNote: Click on \"Print Summary\" button to get a copy of the Summary PDF"

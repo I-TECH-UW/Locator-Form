@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.Data;
 
@@ -14,7 +15,13 @@ import lombok.Data;
 public class Traveller {
 
 	public enum Sex {
-		MALE, FEMALE, OTHER, UNKNOWN
+		MALE, FEMALE, OTHER, UNKNOWN;
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.name().toLowerCase();
+		}
 	}
 
 	private String serviceRequestId;

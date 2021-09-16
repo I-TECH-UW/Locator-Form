@@ -68,13 +68,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	private ObjectMapper objectMapper;
 
 	@Override
-	public TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO) throws JsonProcessingException {
+	public TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, TaskStatus status)
+			throws JsonProcessingException {
 		TransactionObjects transactionInfo = new TransactionObjects();
 		Bundle transactionBundle = new Bundle();
 		transactionBundle.setType(BundleType.TRANSACTION);
 		transactionInfo.bundle = transactionBundle;
 
-		Task fhirTask = createFhirTask();
+		Task fhirTask = createFhirTask(status);
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
@@ -206,7 +207,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-	public Task createFhirTask() {
+	public Task createFhirTask(TaskStatus status) {
 		Task fhirTask = new Task();
 		String taskId = UUID.randomUUID().toString();
 		fhirTask.setId(taskId);
@@ -214,7 +215,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		Identifier identifier = new Identifier();
 		identifier.setId(taskId);
 		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-		fhirTask.setStatus(TaskStatus.REQUESTED);
+		fhirTask.setStatus(status);
 		List<Identifier> identifierList = new ArrayList<>();
 		identifierList.add(identifier);
 

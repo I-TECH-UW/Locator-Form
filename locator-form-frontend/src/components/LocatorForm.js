@@ -2,7 +2,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
-import validationSchema from './formModel/validationSchema'
+import { validationSchemaSteps } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
 import {
   createMuiTheme,
@@ -179,8 +179,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-    const currentValidationShema = validationSchema[this.state.activeStep];
-    // const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+     const currentValidationShema = validationSchemaSteps[this.state.activeStep];
+//    const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>
@@ -189,7 +189,7 @@ class LocatorForm extends React.Component {
               <div className="col-lg-12 ">
                 <div className="container pt-3">
                   {this.state.activeStep !== 10 && 
-                	<div class="container">  
+                	<div className="container">  
                   		<h3 className="question-header">
                   		<FormattedMessage id="nav.item.header" defaultMessage="Public Health Passenger Locator Form" /></h3>
                   		<p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health. " /></p> 

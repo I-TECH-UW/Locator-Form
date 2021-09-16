@@ -12,7 +12,7 @@ export default {
   email: '', confirmEmail: '',
   sex: '', dateOfBirth: '', nationalId: '',
   passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
-  hadCovidBefore: '', fever: '', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
+  hadCovidBefore: '', fever: 'true', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
 
   permanentAddress:
   {
