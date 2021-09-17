@@ -75,7 +75,6 @@ services:
       DB_USER_FILE: /var/lib/keycloak/db/username
       DB_PASSWORD_FILE: /var/lib/keycloak/db/password
     ports:
-      - 8083:8080
       - 8446:8443
     networks:
       - frontend-network
