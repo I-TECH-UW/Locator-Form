@@ -646,17 +646,17 @@
     {
       "id": "591b3ccd-bf8f-43ae-b17a-5f2cda55d515",
       "clientId": "locator-form",
-      "rootUrl": "https://host.openelis.org:3000",
-      "adminUrl": "https://host.openelis.org:3000",
+      "rootUrl": "https://host.openelis.org",
+      "adminUrl": "https://host.openelis.org",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "https://host.openelis.org:3000/*"
+        "https://host.openelis.org/*"
       ],
       "webOrigins": [
-        "https://host.openelis.org:3000"
+        "https://host.openelis.org"
       ],
       "notBefore": 0,
       "bearerOnly": false,

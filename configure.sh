@@ -21,6 +21,7 @@ read -sp "keycloak admin password: " KEYCLOAK_PASS
 echo
 
 find ./prod/ \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/host\.openelis\.org/$SERVER/g"
+find ./locator-form-frontend/ \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/host\.openelis\.org/$SERVER/g"
 find ./prod/ \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/databaseAdminPassword/$DB_ADMIN_PASSWORD/g"
 find ./prod/ \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/databasePassword/$DB_PASSWORD/g"
 find ./prod/ \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i "s/passwordForKeystore/$KEY_PASS/g"

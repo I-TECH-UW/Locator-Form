@@ -7,7 +7,7 @@ services:
     env_file:
       - ./prod/database/postgres/database.env # configure postgres
     volumes:
-      - /var/lib/consolidated-server/postgresdata:/var/lib/postgresql/data
+      - /var/lib/locator-form/postgresdata:/var/lib/postgresql/data
       - ./prod/database/postgres/init/:/docker-entrypoint-initdb.d/
     networks:
       - backend-network
@@ -35,7 +35,7 @@ services:
        dockerfile: docker/docker-build/Dockerfile
     restart: always
     ports:
-      - 8443:8443
+      - 8449:8443
     extra_hosts:
       - infohighway.govmu.org:192.168.6.91
     volumes:
@@ -78,6 +78,7 @@ services:
       - 8446:8443
     networks:
       - frontend-network
+      - backend-network
     volumes:
       - ./prod/ssl/lf.crt:/etc/x509/https/tls.crt
       - ./prod/ssl/lf.key:/etc/x509/https/tls.key
