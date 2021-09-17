@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
+import { Step1, Step2, Step3, Step4, Step5, Step11, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
 import { validationSchemaSteps } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
 import {
@@ -60,6 +60,7 @@ const steps = [
   'nav.item.step.personalInfo',
   'nav.item.step.recentTravel',
   'nav.item.step.health',
+  'nav.item.step.vaccine',
   'nav.item.step.contactInfo',
   'nav.item.step.addresses',
   'nav.item.step.emergencyContact',
@@ -94,7 +95,9 @@ class LocatorForm extends React.Component {
       case 4:
         return <Step5 formikProps={formikProps} intl={this.props.intl} />
       case 5:
-        return <Step6 formikProps={formikProps} intl={this.props.intl} />
+        return <Step11 formikProps={formikProps} intl={this.props.intl} />
+      case 11:
+          return <Step6 formikProps={formikProps} intl={this.props.intl} />
       case 6:
         return <Step7 formikProps={formikProps} intl={this.props.intl} />
       case 7:

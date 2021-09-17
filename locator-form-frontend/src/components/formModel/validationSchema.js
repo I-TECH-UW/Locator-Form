@@ -137,6 +137,10 @@ export const step5Validation = {
 		// .required('error.required'),
 };
 
+export const step11Validation = {
+
+};
+
 export const step6Validation = {
 		mobilePhone: Yup.string()
 		.test('is-phone',
@@ -337,6 +341,8 @@ export const validationSchemaSteps = [
 	Yup.object().shape(step4Validation),
 	//step 5
 	Yup.object().shape(step5Validation),
+	//step 11
+	Yup.object().shape(step11Validation),
 	//step 6
 	Yup.object().shape(step6Validation),
 	//step 7
@@ -350,4 +356,4 @@ export const validationSchemaSteps = [
 
 ]
 
-export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...testKit});
+export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step11Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...testKit});
