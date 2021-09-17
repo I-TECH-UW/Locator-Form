@@ -32,5 +32,4 @@ build/
 .vscode/
 
 ### Production ###
-/prod/
 /node_modules/

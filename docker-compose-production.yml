@@ -1,71 +1,106 @@
 version: '3.3'
 services:
-   locator-form-frontend:
-      image: locator-form
-      build:
-         context: ./locator-form-frontend
-         dockerfile: ./Dockerfile.prod
-      depends_on:
-         - locator-form.openelis.org
-      restart: always
-      ports:
-         - 80:80
-         - 443:443
-      secrets:
-         -  source: client_facing_cert
-         -  source: client_facing_key
-         -  source: client_facing_key_pass
+  locator-form-data:
+    container_name: lf-postgres
+    image: postgres:12-alpine
+    restart: always
+    env_file:
+      - ./prod/database/postgres/database.env # configure postgres
+    volumes:
+      - /var/lib/consolidated-server/postgresdata:/var/lib/postgresql/data
+      - ./prod/database/postgres/init/:/docker-entrypoint-initdb.d/
+    networks:
+      - backend-network
+
+  fhir.openelis.org:
+    container_name: lf-hapi-fhir-jpaserver
+    image: hapiproject/hapi:latest
+    restart: always
+    ports:
+      - 8444:8443
+    volumes:
+      - ./prod/properties/application.yaml:/data/hapi/application.yaml
+      - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
+      - ./prod/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
+      - ./prod/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
+    environment: 
+      SPRING_CONFIG_LOCATION: file:///data/hapi/application.yaml
+    networks:
+      - backend-network
       
-   locator-form.openelis.org:
-      image: locator-form-webapp
-      build:
-         context: ./locator-form-webapp
-         dockerfile: docker/docker-build/Dockerfile
-      restart: always
-      ports:
-         - 8449:8443
-      extra_hosts:
-         - infohighway.govmu.org:192.168.6.91
-      volumes:
-         - ./prod/properties/locatorform-app.properties:/var/lib/locatorform/app.properties
-      secrets:
-         -  source: client_facing_keystore
-         -  source: keystore
-         -  source: truststore
-         
-   hapi-fhir-jpaserver:
-      container_name: lf-hapi-fhir-jpaserver
-      image: hapiproject/hapi:latest
-      restart: always
-      ports:
-         - 8448:8443
-      volumes:
-         - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
-      environment: 
-        SPRING_CONFIG_LOCATION: file:///run/secrets/application.yaml
-      secrets:
-         -  source: application.yaml
-         -  source: keystore
-         -  source: truststore
-       
-secrets:
-   application.yaml:
-      file: ./prod/properties/application.yaml
-   client_facing_keystore:
-      file: ./prod/ssl/client_facing_openelis.org.keystore
-   client_facing_cert:
-      file: ./prod/ssl/client_facing_openelis.org.crt
-   client_facing_key:
-      file: ./prod/ssl/client_facing_openelis.org.key
-   client_facing_key_pass:
-      file: ./prod/ssl/client_facing_openelis.org.key_pass
-   truststore:
-      file: ./prod/ssl/openelis.org.truststore
-   keystore:
-      file: ./prod/ssl/openelis.org.keystore
-   cert:
-      file: ./prod/ssl/openelis.org.crt
-   key:
-      file: ./prod/ssl/openelis.org.key
-   key_pass:
-      file: ./prod/ssl/openelis.org.key_pass
+  locator-form.openelis.org:
+    image: locator-form-webapp
+    build:
+       context: ./locator-form-webapp
+       dockerfile: docker/docker-build/Dockerfile
+    restart: always
+    ports:
+      - 8443:8443
+    extra_hosts:
+      - infohighway.govmu.org:192.168.6.91
+    volumes:
+      - ./prod/properties/locatorform-app.properties:/var/lib/locatorform/app.properties
+      - ./prod/ssl/server.keystore:/usr/local/tomcat/certs/server.keystore
+      - ./prod/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
+      - ./prod/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
+    networks:
+      - frontend-network
+      - backend-network
+    
+  locator-form-frontend:
+    image: locator-form
+    build:
+      context: ./locator-form-frontend
+      dockerfile: ./Dockerfile.prod
+    depends_on:
+      - locator-form.openelis.org
+      - nginx
+    restart: always
+    networks:
+      - frontend-network
+      
+  auth.openelis.org:
+    image:
+      quay.io/keycloak/keycloak:15.0.2
+    restart: always
+    environment:
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
+      KEYCLOAK_USER_FILE: /var/lib/keycloak/admin/username
+      KEYCLOAK_PASSWORD_FILE: /var/lib/keycloak/admin/password
+      DB_VENDOR: postgres
+      DB_ADDR: locator-form-data
+      DB_PORT: 5432
+      DB_DATABASE: locator-form
+      DB_SCHEMA: keycloak
+      DB_USER_FILE: /var/lib/keycloak/db/username
+      DB_PASSWORD_FILE: /var/lib/keycloak/db/password
+    ports:
+      - 8083:8080
+      - 8446:8443
+    networks:
+      - frontend-network
+    volumes:
+      - ./prod/ssl/lf.crt:/etc/x509/https/tls.crt
+      - ./prod/ssl/lf.key:/etc/x509/https/tls.key
+      - ./prod/keycloak/imports:/opt/jboss/keycloak/imports
+      - ./prod/keycloak/admin:/var/lib/keycloak/admin
+      - ./prod/keycloak/db:/var/lib/keycloak/db
+    
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./prod/conf/nginx_main.conf:/etc/nginx/conf.d/default.conf
+      - ./prod/ssl/lf_frontend.crt:/etc/nginx/serverCerts/lf.crt
+      - ./prod/ssl/lf_frontend.key:/etc/nginx/serverCerts/lf.key
+      - ./prod/ssl/key_pass_frontend:/etc/nginx/private/key_pass
+    networks:
+      - frontend-network
+    
+networks:
+  frontend-network: 
+  backend-network: 
