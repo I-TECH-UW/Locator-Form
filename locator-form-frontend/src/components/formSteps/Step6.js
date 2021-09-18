@@ -1,102 +1,85 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
+import { MyRadioInputGroup } from '../inputs/MyInputs'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
-import { countriesList } from '../data/countries.js'
+import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
+import { vaccines } from '../data/vaccines'
 
 class Step6 extends React.Component {
 
-	state = {
-			value: { label: this.props.val, value: this.props.val },
-	}
-	
-	handleChange(value) {
-		this.setState({ value: value });
-	}
-	getDefaultCountryCode = () => {
-		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
-	}
-
 	render() {
 		return <div>
-			<div className="step" id="step6">
-				<div id="contactInformation" className="section">
-					<div className="row">
-						<div className="col-lg-12 ">
-							<h5> <FormattedMessage id="nav.item.phoneNumbers" defaultMessage="Phone Number(s) Where you can be reached if needed? Include country code and city code." /> </h5>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-lg-4 form-group ">
-							<Field name="mobilePhone">
-								{({ field, form, meta }) =>
-									<MyPhoneInput
-										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
-										defaultCountryCode={this.getDefaultCountryCode()} form={form} name="mobilePhone"
-									/>
-								}
-							</Field>
-						</div>
-						<div className="col-lg-4 form-group ">
-							<Field name="fixedPhone">
-								{({ field, form, meta }) =>
-									<MyPhoneInput
-										label={<FormattedMessage id="nav.item.fixedPhone" defaultMessage="Fixed Phone" />}
-										defaultCountryCode={this.getDefaultCountryCode()}
-										form={form} name="fixedPhone"
-									/>
-								}
-							</Field>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-lg-3 form-group ">
 
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
-								requireField={true}
-								name="email"
-								type="email"
+			<div className="step" id="step6">
+				<div id="vaccine" className="section">
+					<div className="row align-items-end">
+						<div className="col-xl-2 col-lg-4 form-group ">
+								<MyRadioInputGroup
+								label={<FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status?" />}
+								name="vaccinationStatus"
+								options={[
+									{ key: 'nav.item.status.option.eligible', value: 'Eligible' },
+									{ key: 'nav.item.status.option.notEligible', value: 'Not Eligible'}
+								]}
 							/>
+							</div>
 						</div>
-						<div className="col-lg-3 form-group ">
-							<MyTextInput
-								requireField={true}
-								label={<FormattedMessage id="nav.item.confirmEmailAddress" defaultMessage="Confirm Email Address" />}
-								name="confirmEmail"
-								type="email"
-							/>
-						</div>
-						<div className="col-lg-3 form-group ">
-						<Field className="form-control"
-							name={`nationality`}
-						>
+						<div className="row">
+						  <div className="col-lg-4 form-group">
+								<Field name="firstVaccineName">
+								{({ field, form, meta }) =>
+									<MySelect label={<FormattedMessage id="nav.item.firstVaccine" defaultMessage="Name of First Vaccine" />}
+										name={field.name} 
+										form={form}
+										requireField={true} 
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										options={vaccines}
+									/>
+								}
+							  </Field>
+						  </div>
 						
-                        {({ field, form, meta }) =>
-                                <MySelect form={form}
-                                        name={field.name}
-                                        requireField={true}
-                                        onChange={value => this.handleChange(value)}
-                                        options={countriesList}
-                                        isSearchable={true}
-                                        placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-                                        label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
-                                />}
-                        </Field>
-                                        
+						  <div className="col-lg-4 form-group">
+									<MyTextInput
+									label={<FormattedMessage id="nav.item.dateOfFirstDose" defaultMessage="Date Of First Dose" />}
+									name="dateOfFirstDose"
+									requireField={true}
+									type="date"
+									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
+									max={dateInputToday()}
+								/>
+						  </div>
 						</div>
-						<div className="col-lg-3 form-group ">
-							<MyTextInput
-								requireField={true}
-								label={<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />}
-								name="passportNumber"
-								type="text"
-							/>
+						<div className="row">
+						  <div className="col-lg-4 form-group">
+								<Field name="secondVaccineName">
+								{({ field, form, meta }) =>
+									<MySelect label={<FormattedMessage id="nav.item.second.vaccine" defaultMessage="Name of Second Vaccine" />}
+										name={field.name} 
+										form={form}
+										requireField={true} 
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										options={vaccines}
+									/>
+								}
+							  </Field>
+						  </div>
+						  <div className="col-lg-4 form-group">
+									<MyTextInput
+									label={<FormattedMessage id="nav.item.dateOfSecondDose" defaultMessage="Date Of Second Dose" />}
+									name="dateOfSecondDose"
+									requireField={true}
+									type="date"
+									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
+									max={dateInputToday()}
+								/>
+						  </div>
 						</div>
 					</div>
-				</div >
+				</div>
 			</div>
-		</div>
 	}
 
 }

@@ -227,7 +227,15 @@ class Step3 extends React.Component {
 								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
+						<div className="col-lg-4 form-group">
+						<MyTextInput
+							label={<FormattedMessage id="nav.item.profession" defaultMessage="Profession" />}
+							name="profession"
+							type="text"
+							// disabled={this.state.searching || this.state.confirming} 
+						/>
 					</div>
+				  </div>
 				</div>
 			</div>
 		</div>
