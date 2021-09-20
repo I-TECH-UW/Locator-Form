@@ -2,7 +2,7 @@ import React from "react"
 import 'bootstrap/dist/css/bootstrap.css'
 import './styles.css'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { faLanguage } from "@fortawesome/free-solid-svg-icons"
+import { faLanguage, faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { withRouter } from "react-router-dom"
 
@@ -39,6 +39,12 @@ class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav ml-auto navbar-right">
+          {this.props.isLoggedIn() && <li className="nav-item">
+        	<button type="button" className="btn language-select-button" onClick={this.props.logout}>
+        		<FontAwesomeIcon id="sign-out" icon={faSignOutAlt} size="1x" />
+      		</button>
+          </li>
+          }
             <li className="nav-item dropdown hover-dropdown languagepicker">
               <button type="button" className="btn language-select-button" data-toggle="dropdown">
                 <FontAwesomeIcon id="language-icon" icon={faLanguage} size="2x" />

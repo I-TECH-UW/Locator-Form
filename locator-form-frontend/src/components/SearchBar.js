@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { MyTextInput } from './inputs/MyInputs'
 import { CircularProgress } from '@material-ui/core'
 
-
-
 class SearchBar extends React.Component {
 
 	  constructor(props) {
@@ -61,10 +59,9 @@ class SearchBar extends React.Component {
 						failureReason: '' 
 					})
 					const locatorForm = await response.json();
-				    this.props.onSearchSuccess(locatorForm);
+				    this.props.onSearchSuccess(locatorForm, searchValue);
 				} else if (status === 404) {
-					this.onNotFound();
-//					this.searchForPassenger(searchValue);
+					this.searchForPassenger(searchValue);
 				} else { 
 					throw new Error("didn't receive form due to error")
 				}
@@ -132,8 +129,16 @@ class SearchBar extends React.Component {
 		type="text"
 		placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder' })}
 		icon={<FontAwesomeIcon icon={faSearch}/>}
+		onKeyPress={e => {
+			if (e.charCode === 13) {  
+		    	e.preventDefault();
+				this.setState({'travellers': []});
+				this.search(formikProps.values.searchValue);
+			}
+		}}
 		iconClickable={true}
 		iconOnClick={e => {
+			this.setState({'travellers': []});
 			this.search(formikProps.values.searchValue);
 		}}
 		additionalErrorMessage={this.errorMessage()}
@@ -144,21 +149,37 @@ class SearchBar extends React.Component {
 		size={24}
 		/>
 	)} 
-		{this.state.travellers.map(traveller => (
-				<React.Fragment key={traveller.serviceRequestId}> 
-	            <label htmlFor={traveller.firstName}>
-	            <input type="radio" 
-	              // className="radio-button"\
-	              name="pasenger"
-	              id={traveller.serviceRequestId}
-	              value={traveller.serviceRequestId}
-//	              onChange={inputChange}
-//	              checked={field.value === option.value}
-	            />
-	            {traveller.passportNumber},{traveller.firstName},{traveller.lastName}
-	          </label>
-	          </React.Fragment>
-		))}
+		{this.state.travellers.length > 0 && ( 
+			<table>
+				  <tr>
+				    <td></td>
+				    <td><FormattedMessage id="nav.item.form.search.passport" defaultMessage="Passport Number" /></td>
+				    <td><FormattedMessage id="nav.item.form.search.given" defaultMessage="Given Name" /></td>
+				    <td><FormattedMessage id="nav.item.form.search.family" defaultMessage="Family Name" /></td>
+				  </tr>
+
+					{this.state.travellers.map(traveller => (
+							<React.Fragment key={traveller.serviceRequestId}> 
+				            
+							  <tr>
+						    	<td><input type="radio" 
+						              // className="radio-button"\
+						              name="pasenger"
+						              id={traveller.serviceRequestId}
+						              value={traveller.serviceRequestId}
+						              onChange={e => {
+						            	  this.search(traveller.serviceRequestId)}
+						              }
+					//	              checked={field.value === option.value}
+						            /></td>
+						    	<td>{traveller.passportNumber}</td>
+							    <td>{traveller.firstName}</td>
+							    <td>{traveller.lastName}</td>
+							  </tr>
+				          </React.Fragment>
+						))}
+				</table>
+		)}
 		
 		</Form >
       )}

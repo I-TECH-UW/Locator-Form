@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from './components/layout/Layout';
 import { LocatorForm } from "./components";
 import { HealthDesk } from "./components";
+import { SecureRoute } from "./components/security";
 import { IntlProvider } from 'react-intl';
+import Keycloak from 'keycloak-js';
 
 import messages_en from './i18n/en.json';
 import messages_fr from './i18n/fr.json';
@@ -19,12 +21,32 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = { 
+    	      authenticated: false,
+    	      keycloak: Keycloak('/resources/keycloak-config.json')}
     i18nConfig.locale = localStorage.getItem('locale') || navigator.language.split(/[-_]/)[0];
     switch (i18nConfig.locale) {
       case 'en': i18nConfig.messages = messages_en; break;
       case 'fr': i18nConfig.messages = messages_fr; break;
       default: i18nConfig.messages = messages_en; break;
     }
+  }
+  
+  onAuth = () => {
+	  this.setState({authenticated: true});
+  }
+  
+  logout = () => {
+	  this.state.keycloak.logout({redirectUri: window.location.href}).then((success) => {
+          console.log("--> log: logout success ", success );
+    	  this.setState({authenticated: false});
+  }).catch((error) => {
+          console.log("--> log: logout error ", error );
+  });
+  }
+  
+  isLoggedIn = () => {
+	  return this.state.authenticated;
   }
 
   changeLanguage = (lang) => {
@@ -54,10 +76,10 @@ class App extends React.Component {
       >
         <>
           <Router>
-            <Layout onChangeLanguage={this.onChangeLanguage}>
+            <Layout onChangeLanguage={this.onChangeLanguage} logout={this.logout} isLoggedIn={this.isLoggedIn}>
                 <Switch>
                 <Route path="/" exact component={LocatorForm} />
-                <Route path="/health-desk" exact component={HealthDesk} />
+                <SecureRoute path="/health-desk" exact component={() => <HealthDesk keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} isLoggedIn={this.isLoggedIn}/>
                 </Switch>
             </Layout>
             {/* <Footer /> */}
@@ -65,7 +87,7 @@ class App extends React.Component {
           </>
       </IntlProvider>
     );
-  }
+          }
 }
 
 export default App;

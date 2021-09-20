@@ -12,107 +12,20 @@ import {
   CircularProgress, 
   MuiThemeProvider
 } from '@material-ui/core'
-import Keycloak from 'keycloak-js';
-
-// const muiTheme = createMuiTheme({
-//     overrides: {
-//         MuiStepIcon: {
-//             root: {
-//                 color: '#000000', // or 'rgba(0, 0, 0, 1)'
-//                 '&$active': {
-//                     color: '#00aded',
-//                 },
-//                 '&$completed': {
-//                     color: '#00aded',
-//                 },
-//             },
-//         },
-//     }
-// });
-
-const muiMobileTheme = createMuiTheme({
-  overrides: {
-    // MuiMobileStepper: {
-    //   root :{
-    //     '@media (prefers-color-scheme: dark)': {
-    //     'background-color': '#1e1e1e'
-    //     },
-    //   }
-    // },
-    MuiLinearProgress: {
-      root: {
-        maxWidth: "100%",
-        flexGrow: 1
-      },
-      progress: {
-        width: "75%"
-      },
-      colorPrimary: {
-        'background-color': '#00800050',
-      },
-      barColorPrimary: {
-        'background-color': '#008000',
-      },
-    },
-  }
-})
-
-const steps = [
-  'nav.item.step.passengerType',
-  'nav.item.step.flight',
-  'nav.item.step.personalInfo',
-  'nav.item.step.recentTravel',
-  'nav.item.step.health',
-  'nav.item.step.contactInfo',
-  'nav.item.step.addresses',
-  'nav.item.step.emergencyContact',
-  'nav.item.step.travelCompanion',
-  'nav.item.step.confirmation',
-]
 
 class HealthDesk extends React.Component {
 
   constructor(props) {
     super(props)
-    this.topOfQuestionsRef = React.createRef();
+    this.formRef = React.createRef();
     this.state = {
       submitErrorKey: '',
       isSubmitting: false,
       submitSuccess: false,
       summaryAccessInfo: {},
-      keycloak:null,
-      authenticated: false,
       passengerSelected: false,
+      formKey: '1',
     }
-  }
-  
-  componentDidMount() {
-	//Get the keycloak configuration
-	const keycloak = Keycloak('/resources/keycloak-config.json');
-	keycloak.init({onLoad: 'login-required'}).success((authenticated) => {
-	    this.setState({ keycloak: keycloak, authenticated: authenticated });
-        if (!authenticated) {
-		    window.location.reload();
-	    } else {
-		    console.info("Authenticated");
-	        localStorage.setItem("react-token", keycloak.token);
-	        localStorage.setItem("react-refresh-token", keycloak.refreshToken);
-	        setTimeout(() => {
-	            keycloak.updateToken(70).success((refreshed) => {
-	              if (refreshed) {
-	                console.debug('Token refreshed' + refreshed);
-	              } else {
-	                console.warn('Token not refreshed, valid for '
-	                  + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-	              }
-	            }).error(() => {
-	              console.error('Failed to refresh token');
-	            });
-	        }, 60000);
-		}
-	}).error(() => {
-		  console.error("Authenticated Failed");
-    });
   }
 
   submitForm = (values) => {
@@ -149,44 +62,41 @@ class HealthDesk extends React.Component {
     window.scrollTo(0, 0)
   }
 
-  scrollToTopOfQuestionsRef = () => {
-    // not working for some reason on step 4,6,8,9
-  //   const inputElements = document.getElementsByTagName('input')
-  // if (inputElements.length > 0) {
-  //   inputElements.item(0).focus();
-  // }
-    console.log('scrollto: ' + this.topOfQuestionsRef.current.offsetTop - 125)
-    window.scrollTo(0, this.topOfQuestionsRef.current.offsetTop - 125)
-    // window.scrollTo(0, 0)
-  }
-
   onSuccess = (summaryAccessInfo) => {
     this.setState({ 'submitSuccess': true, 'summaryAccessInfo': summaryAccessInfo })
     this.scrollToTopOfPage();
   }
   
-  searchSuccess = (locatorForm) => {
-	  this.setState({'passengerSelected': true, 'formValues': locatorForm});
+  searchSuccess = (locatorForm, key) => {
+	  this.setState({'passengerSelected': true, 'formValues': locatorForm, 'formKey': key});
   }
 
   render() {
-	  if (this.state.keycloak) {
-	      if (this.state.authenticated) {
 		    const  currentValidationShema = healthDeskValidationSchema;
 		    return (
 		      <>
 		        <div className="container-fluid d-flex min-vh-100 flex-column content">
 		          <div className="row dark-row">
-		              <div className="col-lg-12 ">
+	              <div className="col-lg-11 ">
+	              </div>
+	              <div className="col-lg-1 ">
+	              	<button style={{display:'none'}} id="logout-button" type="button" onClick={this.logout}>
+	              		<FormattedMessage id="nav.item.logout" defaultMessage="logout" />
+	              	</button>
+	              </div>
+	              </div>
+		          <div className="row dark-row">
+	              <div className="col-lg-12 ">
 		                <div className="container pt-3">
 		                	<div className="container">  
 		                  		<h3 className="question-header">
-		                  		<FormattedMessage id="nav.item.header.healthdesk" defaultMessage="Health Desk" /></h3>
+		                  		<FormattedMessage id="nav.item.header.healthdesk" defaultMessage="Health Desk" />
+		                  		</h3>
 		                    </div>
 		                </div>
 		              </div>
 		          </div>
-		          <div className="row light-row flex-grow-1" ref={this.topOfQuestionsRef}>
+		          <div className="row light-row flex-grow-1">
 		              <div className="col-lg-12 ">
 		              	<div className="container pt-3">
 		              			<Search onSearchSuccess={this.searchSuccess} intl={this.props.intl}/>
@@ -194,10 +104,11 @@ class HealthDesk extends React.Component {
 		              	
 		        <Formik
 		          initialValues={this.state.formValues}
-		          enableReinitialize={true}
+		          enableReinitialize
 		          validationSchema={currentValidationShema}
 		          onSubmit={this.handleSubmit}
 		          validateOnMount={true}
+		          key={this.state.formKey}
 		        >{formikProps => (
 		          <Form>
 		            <div className="questions" id="questions">
@@ -251,12 +162,7 @@ class HealthDesk extends React.Component {
 		      </div>
 		      </>
 		    );
-	      } else {
-			  return (<div>Unable to authenticate!</div>);
-		  }
-	  } 
-	  return (<div>Initializing Keycloak...</div>);
-  }
+		        }
 }
 
 export default injectIntl(HealthDesk)
