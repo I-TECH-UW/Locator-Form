@@ -80,8 +80,8 @@ services:
       - frontend-network
       - backend-network
     volumes:
-      - ./prod/ssl/lf.crt:/etc/x509/https/tls.crt
-      - ./prod/ssl/lf.key:/etc/x509/https/tls.key
+      - ./prod/ssl/lf_frontend.crt:/etc/x509/https/tls.crt
+      - ./prod/ssl/lf_frontend.key:/etc/x509/https/tls.key
       - ./prod/keycloak/imports:/opt/jboss/keycloak/imports
       - ./prod/keycloak/admin:/var/lib/keycloak/admin
       - ./prod/keycloak/db:/var/lib/keycloak/db
