@@ -49,6 +49,7 @@ class SearchBar extends React.Component {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
+			        'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
 				},
 			}).then(async response => {
 				const status = response.status;
@@ -82,6 +83,7 @@ class SearchBar extends React.Component {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
+			        'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
 				},
 			}).then(async response => {
 				const status = response.status;
