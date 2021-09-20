@@ -1,6 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Keycloak from 'keycloak-js';
+import { Route } from "react-router-dom";
 
 class SecureRoute extends React.Component {
 	
@@ -17,7 +16,6 @@ class SecureRoute extends React.Component {
 		        if (authenticated) {
 				    console.info("Authenticated");
 				    this.setState({ authenticated: true });
-			        this.props.onAuth();
 			        localStorage.setItem("react-token", keycloak.token);
 			        localStorage.setItem("react-refresh-token", keycloak.refreshToken);
 			        setTimeout(() => {

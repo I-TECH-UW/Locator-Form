@@ -7,7 +7,7 @@ export default function Layout(props) {
   return (
     <>
       <div className="d-flex flex-column min-vh-100">
-      <Header onChangeLanguage={props.onChangeLanguage} logout={props.logout} isLoggedIn={props.isLoggedIn} />
+      <Header onChangeLanguage={props.onChangeLanguage} logout={props.logout} keycloak={props.keycloak} />
       {children}
       <Footer/>
       </div>
