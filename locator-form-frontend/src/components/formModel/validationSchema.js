@@ -137,11 +137,34 @@ export const step5Validation = {
 		// .required('error.required'),
 };
 
-export const step11Validation = {
+export const step6Validation = {
+		vaccinationStatus: Yup.string()
+		.oneOf(
+			['Eligible', 'Not Eligible'],
+			'error.invalid.selection')
+		.required('error.required'),
+		
+		firstVaccineName: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),
+	
+		dateOfFirstDose: Yup.date().transform(parseDateString)
+		.typeError("error.date.invalidformat")
+		.max(today, "error.date.future")
+		.required('error.required'),
+		
+		secondVaccineName: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),
+	
+		dateOfSecondDose: Yup.date().transform(parseDateString)
+		.typeError("error.date.invalidformat")
+		.max(today, "error.date.future")
+		.required('error.required'),
 
 };
 
-export const step6Validation = {
+export const step7Validation = {
 		mobilePhone: Yup.string()
 		.test('is-phone',
 			'error.phone.invalid',
@@ -169,7 +192,7 @@ export const step6Validation = {
 //		.required('error.required'),
 };
 
-export const step7Validation = {
+export const step8Validation = {
 		permanentAddress: Yup.object().shape({
 			travellerType: Yup.string()
 			.oneOf(
@@ -236,7 +259,7 @@ export const step7Validation = {
 		}),
 	};
 
-export const step8Validation = {
+export const step9Validation = {
 		emergencyContact: Yup.object().shape({
 			lastName: Yup.string()
 				.max(50, 'error.char.max.exceeded')
@@ -258,7 +281,7 @@ export const step8Validation = {
 		}),
 	};
 
-export const step9Validation = {
+export const step10Validation = {
 		familyTravelCompanions: Yup.array()
 		.of(
 			Yup.object().shape({
@@ -316,7 +339,7 @@ export const step9Validation = {
 		),
 };
 
-export const step10Validation = {
+export const step11Validation = {
 		acceptedTerms: Yup.boolean()
 		.required('error.required')
 		.oneOf([true], 'error.terms.unaccepted'),
@@ -342,18 +365,18 @@ export const validationSchemaSteps = [
 	//step 5
 	Yup.object().shape(step5Validation),
 	//step 11
-	Yup.object().shape(step11Validation),
-	//step 6
 	Yup.object().shape(step6Validation),
-	//step 7
+	//step 6
 	Yup.object().shape(step7Validation),
-	//step 8
+	//step 7
 	Yup.object().shape(step8Validation),
-	//step 9
+	//step 8
 	Yup.object().shape(step9Validation),
-	//step 10
+	//step 9
 	Yup.object().shape(step10Validation),
+	//step 10
+	Yup.object().shape(step11Validation),
 
 ]
 
-export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step11Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...testKit});
+export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation, ...testKit});

@@ -13,10 +13,11 @@ class Step6 extends React.Component {
 			<div className="step" id="step6">
 				<div id="vaccine" className="section">
 					<div className="row align-items-end">
-						<div className="col-xl-2 col-lg-4 form-group ">
+					<div className="col-lg-10 form-group">
 								<MyRadioInputGroup
 								label={<FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status?" />}
 								name="vaccinationStatus"
+								requireField={true}
 								options={[
 									{ key: 'nav.item.status.option.eligible', value: 'Eligible' },
 									{ key: 'nav.item.status.option.notEligible', value: 'Not Eligible'}
