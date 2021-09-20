@@ -65,11 +65,11 @@ services:
 #    networks:
 #      - server-1
 #    extra_hosts:
-##    this should be the loopback to the docker host. 
-##    run 
-##    /sbin/ip route|awk '/default/ { print $3 }' 
-##    inside the container to make sure the ip address is correct
-##    make sure connections to 8449 are allowed by your firewall
+#    this should be the loopback to the docker host. 
+#    run 
+#    /sbin/ip route|awk '/default/ { print $3 }' 
+#    inside the container to make sure the ip address is correct
+#    make sure connections to 8449 are allowed by your firewall
 #      - host.openelis.org:172.20.0.1
 #    volumes:
 #      - ./dev/ssl/lf.keystore:/usr/local/tomcat/certs/keystore

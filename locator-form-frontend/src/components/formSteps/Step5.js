@@ -80,16 +80,36 @@ class Step5 extends React.Component {
 						</div>
 					</div>
 					<div className="row align-items-end">
-						<div className="col-lg-12 form-group ">
-							<MyRadioInputGroup
-								label={<FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past?" />}
-								name="hadCovidBefore"
-								options={[
-									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
-									{ key: 'nav.item.symptoms.option.no', value: 'false'}
-								]}
-							/>
-						</div>
+								<div className="col-xl-2 col-lg-4 form-group ">
+								<MyRadioInputGroup
+									label={<FormattedMessage id="nav.item.smellOrTaste" defaultMessage="Loss of sense of smell or taste" />}
+									name="smellOrTaste"
+									options={[
+										{ key: 'nav.item.symptoms.option.yes', value: 'true' },
+										{ key: 'nav.item.symptoms.option.no', value: 'false'}
+									]}
+								/>
+							</div>
+									<div className="col-xl-2 col-lg-4 form-group ">
+									<MyRadioInputGroup
+										label={<FormattedMessage id="nav.item.contact" defaultMessage="Possible contact with COVID 19" />}
+										name="contact"
+										options={[
+											{ key: 'nav.item.symptoms.option.yes', value: 'true' },
+											{ key: 'nav.item.symptoms.option.no', value: 'false'}
+										]}
+									/>
+								</div>
+								<div className="col-lg-12 form-group ">
+								<MyRadioInputGroup
+									label={<FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past?" />}
+									name="hadCovidBefore"
+									options={[
+										{ key: 'nav.item.symptoms.option.yes', value: 'true' },
+										{ key: 'nav.item.symptoms.option.no', value: 'false'}
+									]}
+								/>
+							</div>
 					</div>
 				</div>
 			</div>

@@ -9,8 +9,11 @@ class Summary extends React.Component {
 	render() {
 
 		const { travellerType, airlineName, flightNumber, seatNumber, arrivalDate, title, firstName, lastName, middleInitial,
-			sex,dateOfBirth, lengthOfStay,countriesVisited, portOfEmbarkation, hadCovidBefore, fever, soreThroat, jointPain, cough, breathingDifficulties, rash, visitPurpose,
-			mobilePhone, fixedPhone, email, passportNumber, nationality, permanentAddress, temporaryAddress, emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
+			sex,dateOfBirth, profession, lengthOfStay,countriesVisited, portOfEmbarkation, hadCovidBefore, fever, soreThroat, jointPain,
+			cough, breathingDifficulties, rash, smellOrTaste, contact, visitPurpose, 
+			vaccinationStatus, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
+			mobilePhone, fixedPhone, email, passportNumber, nationality, permanentAddress, temporaryAddress, 
+			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
 		} = this.props.formikProps.values;
 
 		return <div>
@@ -76,6 +79,9 @@ class Summary extends React.Component {
 					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Date Of Birth" />: </span><span className="confirm-value">{dateOfBirth}</span>
 					</div>
+					<div className="col-lg-3 form-group">
+						<span className="confirm-field"><FormattedMessage id="nav.item.profession" defaultMessage="Profession" />: </span><span className="confirm-value">{profession}</span>
+				   </div>
 				</div>
 			</div>
 			<div id="healthInformation" className="section">
@@ -132,6 +138,12 @@ class Summary extends React.Component {
 					<div className="col-xl-2 col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.rash" defaultMessage="Rash" />: </span><span className="confirm-value">{rash}</span>
 					</div>
+					<div className="col-xl-2 col-lg-4 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.smellOrTaste" defaultMessage="Loss of sense of smell or taste" />: </span><span className="confirm-value">{smellOrTaste}</span>
+					</div>
+					<div className="col-xl-2 col-lg-4 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.contact" defaultMessage="Possible contact with COVID 19" />: </span><span className="confirm-value">{contact}</span>
+					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-12 form-group ">
@@ -139,6 +151,41 @@ class Summary extends React.Component {
 					</div>
 				</div>
 			</div>
+			
+			
+			<div id="vaccine" className="section">
+			<div className="row">
+				<div className="col-lg-12 ">
+					<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status" /></h5>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-lg-12 form-group">
+					<span className="confirm-field"><FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status" />: </span><span className="confirm-value">{vaccinationStatus}</span>
+				</div>
+			</div>
+			
+			<div className="row">
+			<div className="col-lg-12 ">
+				<span className="confirm-field"><FormattedMessage id="nav.item.firstVaccineName" defaultMessage="Name of First Vaccine" />: </span><span className="confirm-value">{firstVaccineName}</span>
+			</div>
+			<div className="col-lg-12 ">
+				<span className="confirm-field"><FormattedMessage id="nav.item.dateOfFirstDose" defaultMessage="Date of First Dose" />: </span><span className="confirm-value">{dateOfFirstDose}</span>
+			</div>
+		</div>
+		
+		<div className="row">
+		<div className="col-lg-12 ">
+			<span className="confirm-field"><FormattedMessage id="nav.item.secondVaccineName" defaultMessage="Name of Second Vaccine" />: </span><span className="confirm-value">{secondVaccineName}</span>
+		</div>
+		<div className="col-lg-12 ">
+			<span className="confirm-field"><FormattedMessage id="nav.item.dateOfSecondDose" defaultMessage="Date of Second Dose" />: </span><span className="confirm-value">{dateOfSecondDose}</span>
+		</div>
+	</div>
+			
+		</div>
+			
+			
 			<div id="contactInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">

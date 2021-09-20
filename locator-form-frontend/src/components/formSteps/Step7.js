@@ -1,159 +1,147 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, MyHiddenInput } from '../inputs/MyInputs'
+import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 
 class Step7 extends React.Component {
 
+	state = {
+			value: { label: this.props.val, value: this.props.val },
+	}
 	
+	handleChange(value) {
+		this.setState({ value: value });
+	}
+	getDefaultCountryCode = () => {
+		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
+	}
 
 	render() {
-    	console.log("errors: " + JSON.stringify(this.props.formikProps.errors))
 		return <div>
-
 			<div className="step" id="step7">
-				<div id="permanentAddressInformation" className="section">
+				<div id="contactInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">
-							<h5> <FormattedMessage id="nav.item.permanent Address" defaultMessage="Permanent Address" /></h5>
+							<h5> <FormattedMessage id="nav.item.phoneNumbers" defaultMessage="Phone Number(s) Where you can be reached if needed? Include country code and city code." /> </h5>
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-lg-4 form-group">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />}
-								name="permanentAddress.numberAndStreet"
-								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
-								type="text"
-							/>
+						<div className="col-lg-4 form-group ">
+							<Field name="mobilePhone">
+								{({ field, form, meta }) =>
+									<MyPhoneInput
+										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
+										defaultCountryCode={this.getDefaultCountryCode()} form={form} name="mobilePhone"
+									/>
+								}
+							</Field>
 						</div>
-						<div className="col-lg-4 form-group">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />}
-								name="permanentAddress.apartmentNumber"
-								type="text"
-							/>
+						<div className="col-lg-4 form-group ">
+							<Field name="fixedPhone">
+								{({ field, form, meta }) =>
+									<MyPhoneInput
+										label={<FormattedMessage id="nav.item.fixedPhone" defaultMessage="Fixed Phone" />}
+										defaultCountryCode={this.getDefaultCountryCode()}
+										form={form} name="fixedPhone"
+									/>
+								}
+							</Field>
 						</div>
-						<div className="col-lg-4 form-group">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.city" defaultMessage="City" />}
-								name="permanentAddress.city"
-								requireField={false}
-								type="text"
-							/>
-						</div>
+						<div className="col-lg-4 form-group ">
+						<Field name="businessPhone">
+							{({ field, form, meta }) =>
+								<MyPhoneInput
+									label={<FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone" />}
+									defaultCountryCode={this.getDefaultCountryCode()}
+									form={form} name="businessPhone"
+								/>
+							}
+						</Field>
 					</div>
-					{this.props.formikProps.values.travellerType !== 'resident' &&
-						<div className="row">
-							<div className="col-lg-4 form-group ">
-								<MyTextInput
-									label={<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />}
-									name="permanentAddress.stateProvince"
-									type="text"
-								/>
-							</div>
-							<div className="col-lg-4 form-group ">
-								<Field name="permanentAddress.country">
-									{({ field, form, meta }) =>
-										<MySelect label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
-											name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-											options={countriesList} isSearchable={true}
-									requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
-										/>
-									}
-								</Field>
-							</div>
-							<div className="col-lg-4 form-group ">
-								<MyTextInput
-									label={<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />}
-									name="permanentAddress.zipPostalCode"
-									requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
-									type="text"
-								/>
-							</div>
-						</div>
-					}
-				</div>
+					</div>
+					<div className="row">
+						<div className="col-lg-3 form-group ">
 
-				<div id="temporaryAddressInformation" className="section">
-					<div className="row">
-						<div className="col-lg-12 ">
-							<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address (Quarantine site or hotel address)" /></h5>
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
+								requireField={true}
+								name="email"
+								type="email"
+							/>
 						</div>
+						<div className="col-lg-3 form-group ">
+							<MyTextInput
+								requireField={true}
+								label={<FormattedMessage id="nav.item.confirmEmailAddress" defaultMessage="Confirm Email Address" />}
+								name="confirmEmail"
+								type="email"
+							/>
+						</div>
+								
 					</div>
-					{/* <div className="row">
-						<div className="col-lg-5 form-group ">
-							<MyCheckbox name="tempAddrCheckbox" onClick={e => this.toggleTempAddress(this.props.formikProps)}>
-								<FormattedMessage id="nav.item.tempAddrCheckbox" defaultMessage="Temporary Address Same as Permanent Address" />
-							</MyCheckbox>
+					<div className="row">
+								
+					<div className="col-lg-3 form-group ">
+					<Field className="form-control"
+						name={`countryOfBirth`}
+					>
+					
+                    {({ field, form, meta }) =>
+                            <MySelect form={form}
+                                    name={field.name}
+                                    requireField={true}
+                                    onChange={value => this.handleChange(value)}
+                                    options={countriesList}
+                                    isSearchable={true}
+                                    placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+                                    label={<FormattedMessage id="nav.item.countryOfBirth" defaultMessage="Country of Birth" />}
+                            />}
+                    </Field>
+                                    
+					</div>			
+					
+						<div className="col-lg-3 form-group ">
+						<Field className="form-control"
+							name={`nationality`}
+						>
+						
+                        {({ field, form, meta }) =>
+                                <MySelect form={form}
+                                        name={field.name}
+                                        requireField={true}
+                                        onChange={value => this.handleChange(value)}
+                                        options={countriesList}
+                                        isSearchable={true}
+                                        placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+                                        label={<FormattedMessage id="nav.item.nationality" defaultMessage="Passport Country of Issue" />}
+                                />}
+                        </Field>
+                                        
 						</div>
-					</div> */}
-					{this.props.formikProps.values.travellerType !== 'resident' &&
-						<div className="row">
-							<div className="col-lg-4 form-group ">
-								<MyTextInput
-									label={<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)" />}
-									name="lengthOfStay"
-									keyboardType="numeric"
-									type="text"
+						<div className="col-lg-3 form-group ">
+							<MyTextInput
+								requireField={true}
+								label={<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />}
+								name="passportNumber"
+								type="text"
+							/>
+						</div>
+								
+								 <div className="col-lg-3 form-group">
+									<MyTextInput
+									label={<FormattedMessage id="nav.item.dateOfExpiry" defaultMessage="Date Of Expiry" />}
+									name="expiryDate"
 									requireField={true}
+									type="date"
+									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 								/>
-							</div>
-						</div>
-					}
-					<div className="row">
-						<div className="col-lg-5 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
-								name="temporaryAddress.hotelName"
-								type="text"
-								requireField={true}
-							/>
-						</div>
-						<div className="col-lg-5 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />}
-								name="temporaryAddress.numberAndStreet"
-								type="text"
-								requireField={true}
-							/>
-						</div>
-						<div className="col-lg-2 form-group ">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />}
-								name="temporaryAddress.apartmentNumber"
-								type="text"
-							/>
-						</div>
+						  </div>		
+								
 					</div>
-					<div className="row">
-						<div className="col-lg-6 form-group ">
-							<MyHiddenInput
-								name="temporaryAddress.country"
-								type="hidden"
-							/>
-						</div>
-						{/* <div className="col-lg-4 form-group ">
-				<MySelect
-					label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
-					name="temporaryAddress.country"
-				>
-					<option value=""></option>
-					<MyCountryOptions/>
-				</MySelect>
-				</div> */}
-						{/* <div className="col-lg-4 form-group ">
-				<MyTextInput
-					label={<FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />}
-					name="temporaryAddress.zipPostalCode"
-					type="text"
-				/>
-				</div> */}
-					</div>
-				</div>
+				</div >
 			</div>
-		</div >
+		</div>
 	}
 
 }

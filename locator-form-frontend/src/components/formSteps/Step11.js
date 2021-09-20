@@ -5,19 +5,18 @@ import { Field } from 'formik'
 import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
 import { vaccines } from '../data/vaccines'
 
-class Step6 extends React.Component {
+class Step11 extends React.Component {
 
 	render() {
 		return <div>
 
-			<div className="step" id="step6">
+			<div className="step" id="step11">
 				<div id="vaccine" className="section">
 					<div className="row align-items-end">
-					<div className="col-lg-10 form-group">
+						<div className="col-xl-2 col-lg-4 form-group ">
 								<MyRadioInputGroup
 								label={<FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status?" />}
 								name="vaccinationStatus"
-								requireField={true}
 								options={[
 									{ key: 'nav.item.status.option.eligible', value: 'Eligible' },
 									{ key: 'nav.item.status.option.notEligible', value: 'Not Eligible'}
@@ -27,9 +26,9 @@ class Step6 extends React.Component {
 						</div>
 						<div className="row">
 						  <div className="col-lg-4 form-group">
-								<Field name="firstVaccineName">
+								<Field name="vaccineName">
 								{({ field, form, meta }) =>
-									<MySelect label={<FormattedMessage id="nav.item.firstVaccine" defaultMessage="Name of First Vaccine" />}
+									<MySelect label={<FormattedMessage id="nav.item.vaccine" defaultMessage="Name of First Vaccine" />}
 										name={field.name} 
 										form={form}
 										requireField={true} 
@@ -44,7 +43,7 @@ class Step6 extends React.Component {
 						  <div className="col-lg-4 form-group">
 									<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfFirstDose" defaultMessage="Date Of First Dose" />}
-									name="dateOfFirstDose"
+									name="firstDoseDate"
 									requireField={true}
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
@@ -70,7 +69,7 @@ class Step6 extends React.Component {
 						  <div className="col-lg-4 form-group">
 									<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfSecondDose" defaultMessage="Date Of Second Dose" />}
-									name="dateOfSecondDose"
+									name="secondDoseDate"
 									requireField={true}
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
@@ -84,4 +83,4 @@ class Step6 extends React.Component {
 	}
 
 }
-export default Step6
+export default Step11
