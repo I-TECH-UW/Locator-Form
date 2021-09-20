@@ -21,9 +21,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
-    	      authenticated: false,
-    	      keycloak: Keycloak('/resources/keycloak-config.json')}
+    this.state = { keycloak: Keycloak('/resources/keycloak-config.json')}
     i18nConfig.locale = localStorage.getItem('locale') || navigator.language.split(/[-_]/)[0];
     switch (i18nConfig.locale) {
       case 'en': i18nConfig.messages = messages_en; break;
@@ -32,23 +30,14 @@ class App extends React.Component {
     }
   }
   
-  onAuth = () => {
-	  this.setState({authenticated: true});
-  }
-  
   logout = () => {
 	  this.state.keycloak.logout({redirectUri: window.location.href}).then((success) => {
           console.log("--> log: logout success ", success );
-    	  this.setState({authenticated: false});
   }).catch((error) => {
           console.log("--> log: logout error ", error );
   });
   }
   
-  isLoggedIn = () => {
-	  return this.state.authenticated;
-  }
-
   changeLanguage = (lang) => {
     switch (lang) {
       case 'en': i18nConfig.messages = messages_en; break;
@@ -76,7 +65,7 @@ class App extends React.Component {
       >
         <>
           <Router>
-            <Layout onChangeLanguage={this.onChangeLanguage} logout={this.logout} isLoggedIn={this.isLoggedIn}>
+            <Layout onChangeLanguage={this.onChangeLanguage} logout={this.logout} keycloak={this.state.keycloak}>
                 <Switch>
                 <Route path="/" exact component={LocatorForm} />
                 <SecureRoute path="/health-desk" exact component={() => <HealthDesk keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} isLoggedIn={this.isLoggedIn}/>
