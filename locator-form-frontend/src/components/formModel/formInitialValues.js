@@ -10,9 +10,10 @@ export default {
   visitPurpose: '', arrivalDate: '',
   mobilePhone: '', fixedPhone: '',
   email: '', confirmEmail: '',
-  sex: '', dateOfBirth: '', nationalId: '',
+  sex: '', dateOfBirth: '', nationalId: '', profession: '',
   passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
   hadCovidBefore: '', fever: 'true', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
+  firstVaccineName: '', dateOfFirstDose: '', secondVaccineName: '', dateOfSecondDose: '',
 
   permanentAddress:
   {
