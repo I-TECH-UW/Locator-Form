@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { withRouter } from "react-router-dom"
 
 class Header extends React.Component {
+	
+	constructor(props) {
+	    super(props);
+	    this.state = { keycloak: props.keycloak};
+	  }
 
   logo = () => {
     return (<>
@@ -17,7 +22,7 @@ class Header extends React.Component {
     </>
     )
   }
-
+  
   render() {
     return (
       <>
@@ -39,7 +44,7 @@ class Header extends React.Component {
             </div>
           </div>
           <ul className="navbar-nav ml-auto navbar-right">
-          {this.props.keycloak.authenticated && <li className="nav-item">
+          {this.props.isLoggedIn() && <li className="nav-item">
         	<button type="button" className="btn language-select-button" onClick={this.props.logout}>
         		<FontAwesomeIcon id="sign-out" icon={faSignOutAlt} size="1x" />
       		</button>

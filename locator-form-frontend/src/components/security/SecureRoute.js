@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class SecureRoute extends React.Component {
 	
@@ -16,6 +16,7 @@ class SecureRoute extends React.Component {
 		        if (authenticated) {
 				    console.info("Authenticated");
 				    this.setState({ authenticated: true });
+			        this.props.onAuth();
 			        localStorage.setItem("react-token", keycloak.token);
 			        localStorage.setItem("react-refresh-token", keycloak.refreshToken);
 			        setTimeout(() => {
@@ -38,7 +39,6 @@ class SecureRoute extends React.Component {
 	  }
 	  
 	  render() {
-		  if (this.props.keycloak) {
 		      if (this.state.authenticated) {
 				  return (
 						<Route {...this.props}/>
@@ -46,8 +46,6 @@ class SecureRoute extends React.Component {
     	      } else {
     			  return (<div>Not authenticated</div>);
     		  }
-    	  } 
-    	  return (<div>Initializing Keycloak...</div>);
 	  }
 }
 
