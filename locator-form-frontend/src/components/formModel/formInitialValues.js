@@ -1,8 +1,7 @@
 export default {
   travellerType: '',
 
-
-  serviceRequestId: "",
+  patientId: '', serviceRequestId: '', taskId: '', testKitId: '',
   airlineName: '', flightNumber: '', seatNumber: '',
   title: '',firstName: '', lastName: '', middleInitial: '', 
   acceptedTerms: false,
@@ -50,6 +49,7 @@ export default {
   familyTravelCompanions: [
     // {
     //   serviceRequestId: "",
+    //   patientId: "",
     //   lastName: "",
     //   firstName: "",
     //   middleInitial: "",
@@ -63,6 +63,7 @@ export default {
   nonFamilyTravelCompanions: [
     // {
     //   serviceRequestId: "",
+    //   patientId: "",
     //   lastName: "",
     //   firstName: "",
     //   middleInitial: "",

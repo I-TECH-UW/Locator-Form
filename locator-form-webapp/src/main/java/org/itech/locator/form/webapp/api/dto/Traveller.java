@@ -25,6 +25,7 @@ public class Traveller {
 	}
 
 	private String serviceRequestId;
+	private String patientId;
 	@NotBlank
 	@Size(max = 50)
     private String lastName;

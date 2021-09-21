@@ -51,6 +51,8 @@ public class LocatorFormDTO extends Traveller {
 		}
 	}
 
+	public String taskId;
+
 	@NotNull
 	private TravellerType travellerType;
 

@@ -10,6 +10,7 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Task;
+import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.FormPersonSearchDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
@@ -47,7 +48,7 @@ public class FormSearchController {
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		log.trace("Received: " + serviceRequestId);
 		Optional<Task> task = fhirPersistingService.getTaskFromServiceRequest(serviceRequestId);
-		if (task.isPresent()) {
+		if (task.isPresent() && TaskStatus.DRAFT.equals(task.get().getStatus())) {
 			LocatorFormDTO locatorFormDTO = objectMapper.readValue(task.get().getDescription(), LocatorFormDTO.class);
 			return ResponseEntity.ok(locatorFormDTO);
 		} else {
