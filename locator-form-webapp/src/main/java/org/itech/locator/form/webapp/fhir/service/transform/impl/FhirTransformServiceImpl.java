@@ -31,7 +31,10 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.ServiceRequest;
+import org.hl7.fhir.r4.model.Specimen;
+import org.hl7.fhir.r4.model.Specimen.SpecimenStatus;
 import org.hl7.fhir.r4.model.Task;
+import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
@@ -55,8 +58,17 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Value("${org.itech.locator.form.loinccodes}")
 	private String[] loincCodes;
 
-	@Value("${org.itech.locator.form.requester.id}")
-	private String requesterId;
+	@Value("${org.itech.locator.form.filler.id}")
+	private String fillerId; // the Organization that Tasks are being referred to
+
+	@Value("${org.itech.locator.form.orderer.id}")
+	private String ordererId; // the Organization that Tasks are being sent from
+
+	@Value("${org.itech.locator.form.requester.person.id}")
+	private String requesterId; // the Practitioner that Tasks are requested by
+
+	@Value("${org.itech.locator.form.location.id}")
+	private String locationId; // the Location that ServiceRequests are coming from
 
 	@Value("${org.itech.locator.form.barcodelength:36}")
 	private Integer barcodeLength;
@@ -87,7 +99,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		locatorFormDTO.setServiceRequestId(UUID.randomUUID().toString());
 		locatorFormDTO.setPatientId(UUID.randomUUID().toString());
-		ServiceRequestPatientPair fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO,
+		ServiceRequestObjects fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO,
 				locatorFormDTO);
 		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
@@ -124,7 +136,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
-		ServiceRequestPatientPair fhirServiceRequestPatient = createFhirServiceRequestPatient(healthDeskDTO,
+		ServiceRequestObjects fhirServiceRequestPatient = createFhirServiceRequestPatient(healthDeskDTO,
 				healthDeskDTO);
 		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
@@ -145,7 +157,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return transactionInfo;
 	}
 
-	private void addServiceRequestPatientPairToTransaction(ServiceRequestPatientPair fhirServiceRequestPatient,
+	private void addServiceRequestPatientPairToTransaction(ServiceRequestObjects fhirServiceRequestPatient,
 			TransactionObjects transactionInfo) {
 		transactionInfo.bundle.addEntry(createTransactionBundleComponent(fhirServiceRequestPatient.serviceRequest));
 		transactionInfo.bundle.addEntry(createTransactionBundleComponent(fhirServiceRequestPatient.patient));
@@ -172,6 +184,80 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		transactionComponent.getRequest().setUrl(resourceType + "/" + sourceResourceId);
 
 		return transactionComponent;
+	}
+
+	@Override
+	public Task createFhirTask(LocatorFormDTO locatorFormDTO, TaskStatus status) {
+		Task fhirTask = new Task();
+		String taskId = locatorFormDTO.getTaskId();
+		if (StringUtils.isEmpty(taskId)) {
+			taskId = UUID.randomUUID().toString();
+		}
+		fhirTask.setId(taskId);
+		locatorFormDTO.setTaskId(taskId);
+
+		Identifier identifier = new Identifier();
+		identifier.setId(taskId);
+		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
+		fhirTask.setStatus(status);
+		List<Identifier> identifierList = new ArrayList<>();
+		identifierList.add(identifier);
+
+		fhirTask.setIdentifier(identifierList);
+		fhirTask.setOwner(new Reference(fillerId));
+		fhirTask.setRestriction(new TaskRestrictionComponent().addRecipient(new Reference(ordererId)));
+
+		return fhirTask;
+	}
+
+	@Override
+	public ServiceRequestObjects createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
+		// patient is created here and used for SR subjectRef
+		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
+		// patient is created here and used for SR subjectRef
+		Specimen specimen = createSpecimen(locatorFormDTO, comp);
+		// patient is created here and used for SR subjectRef
+
+		ServiceRequest serviceRequest = new ServiceRequest();
+		String serviceRequestId = comp.getServiceRequestId();
+		if (StringUtils.isEmpty(serviceRequestId)) {
+			serviceRequestId = UUID.randomUUID().toString();
+		}
+		serviceRequest.setId(serviceRequestId);
+		comp.setServiceRequestId(serviceRequestId);
+		CodeableConcept codeableConcept = new CodeableConcept();
+		for (String loincCode : loincCodes) {
+			codeableConcept.addCoding(new Coding().setCode(loincCode).setSystem("http://loinc.org"));
+		}
+		serviceRequest.setCode(codeableConcept);
+
+		serviceRequest.setSubject(new Reference(ResourceType.Patient + "/" + fhirPatient.getIdElement().getIdPart()));
+		serviceRequest.addSpecimen(new Reference(ResourceType.Specimen + "/" + specimen.getIdElement().getIdPart()));
+		serviceRequest
+				.setRequester(new Reference(requesterId));
+		serviceRequest.addLocationReference(new Reference(locationId));
+
+		specimen.addRequest(
+				new Reference(ResourceType.ServiceRequest + "/" + serviceRequest.getIdElement().getIdPart()));
+
+		return new ServiceRequestObjects(serviceRequest, fhirPatient, specimen, null, null);
+
+	}
+
+	private Specimen createSpecimen(LocatorFormDTO locatorFormDTO, Traveller comp) {
+		Specimen specimen = new Specimen();
+		String specimenId = comp.getSpecimenId();
+		if (StringUtils.isEmpty(specimenId)) {
+			specimenId = UUID.randomUUID().toString();
+		}
+		specimen.setId(specimenId);
+		comp.setSpecimenId(specimenId);
+
+		specimen.setReceivedTime(new Date());
+		specimen.setType(new CodeableConcept());
+		specimen.setStatus(SpecimenStatus.AVAILABLE);
+
+		return specimen;
 	}
 
 	@Override
@@ -252,69 +338,6 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				.setType(AddressType.PHYSICAL);
 
 		return fhirPatient;
-	}
-
-	@Override
-	public Task createFhirTask(LocatorFormDTO locatorFormDTO, TaskStatus status) {
-		Task fhirTask = new Task();
-		String taskId = locatorFormDTO.getTaskId();
-		if (StringUtils.isEmpty(taskId)) {
-			taskId = UUID.randomUUID().toString();
-		}
-		fhirTask.setId(taskId);
-		locatorFormDTO.setTaskId(taskId);
-
-		Identifier identifier = new Identifier();
-		identifier.setId(taskId);
-		identifier.setSystem("https://host.openelis.org/locator-form"); // fix hardcode
-		fhirTask.setStatus(status);
-		List<Identifier> identifierList = new ArrayList<>();
-		identifierList.add(identifier);
-
-		fhirTask.setIdentifier(identifierList);
-		fhirTask.setOwner(new Reference(requesterId));
-
-		return fhirTask;
-	}
-
-	@Override
-	public ServiceRequestPatientPair createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
-
-		ServiceRequest serviceRequest = new ServiceRequest();
-		String serviceRequestId = comp.getServiceRequestId();
-		if (StringUtils.isEmpty(serviceRequestId)) {
-			serviceRequestId = UUID.randomUUID().toString();
-		}
-		serviceRequest.setId(serviceRequestId);
-		comp.setServiceRequestId(serviceRequestId);
-
-		// patient is created here and used for SR subjectRef
-		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
-
-		Reference subjectRef = new Reference();
-		subjectRef.setReference(ResourceType.Patient + "/" + fhirPatient.getIdElement().getIdPart());
-
-		CodeableConcept codeableConcept = new CodeableConcept();
-		List<Coding> codingList = new ArrayList<>();
-		for (String loincCode : loincCodes) {
-			Coding coding0 = new Coding();
-			coding0.setCode(loincCode);
-			coding0.setSystem("http://loinc.org");
-			codingList.add(coding0);
-
-			coding0 = null;
-		}
-
-		Coding coding1 = new Coding();
-		coding1.setCode("TBD");
-		coding1.setSystem("OpenELIS-Global/Lab No");
-		codingList.add(coding1);
-		codeableConcept.setCoding(codingList);
-
-		serviceRequest.setCode(codeableConcept);
-		serviceRequest.setSubject(subjectRef);
-		return new ServiceRequestPatientPair(serviceRequest, fhirPatient);
-
 	}
 
 	@Override
