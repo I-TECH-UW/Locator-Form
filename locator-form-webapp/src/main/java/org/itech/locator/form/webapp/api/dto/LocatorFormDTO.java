@@ -60,6 +60,7 @@ public class LocatorFormDTO extends Traveller {
 			return this.name().toLowerCase();
 		}
 	}
+	public String taskId;
 	
 	@JsonSerialize(using = StringBooleanSerializer.class)
     private Boolean vaccinated;
