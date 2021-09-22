@@ -146,30 +146,30 @@ export const step5Validation = {
 };
 
 export const step6Validation = {
-		vaccinationStatus: Yup.string()
+		vaccinated: Yup.string()
 		.oneOf(
-			['Eligible', 'Not Eligible'],
-			'error.invalid.selection')
-		.required('error.required'),
+				['true', 'false'],
+			'error.invalid.selection'),
+//		.required('error.required'),
 		
 		firstVaccineName: Yup.string()
-		.max(50, 'error.char.max.exceeded')
-		.required('error.required'),
+		.max(50, 'error.char.max.exceeded'),
+//		.required('error.required'),
 	
 		dateOfFirstDose: Yup.date().transform(parseDateString)
 		.typeError("error.date.invalidformat")
-		.max(today, "error.date.future")
-		.required('error.required'),
+		.max(today, "error.date.future"),
+//		.required('error.required'),
 		
 		secondVaccineName: Yup.string()
-		.max(50, 'error.char.max.exceeded')
-		.required('error.required'),
-	
-		dateOfSecondDose: Yup.date().transform(parseDateString)
-		.typeError("error.date.invalidformat")
-		.max(today, "error.date.future")
-		.required('error.required'),
-
+		.max(50, 'error.char.max.exceeded'),
+//		.required('error.required'),
+            		
+     	dateOfSecondDose: Yup.date().transform(parseDateString)
+   		.typeError("error.date.invalidformat")
+   		.max(today, "error.date.future")
+        .when("dateOfFirstDose",
+               (dateOfFirstDose, Yup) => dateOfFirstDose && Yup.min(dateOfFirstDose , "Date of second dose cannot be before date of first dose")),
 };
 
 export const step7Validation = {
@@ -179,6 +179,11 @@ export const step7Validation = {
 			value => isBlankOrValidPhoneNumber(value)
 		),
 	fixedPhone: Yup.string()
+		.test('is-phone',
+			'error.phone.invalid',
+			value => isBlankOrValidPhoneNumber(value)
+		),
+		businessPhone: Yup.string()
 		.test('is-phone',
 			'error.phone.invalid',
 			value => isBlankOrValidPhoneNumber(value)
@@ -195,7 +200,9 @@ export const step7Validation = {
 	passportNumber: Yup.string()
 		.max(20, 'error.char.max.exceeded')
 		.required('error.required'),
-	nationality: Yup.string()
+	countryOfBirth: Yup.string()
+		.max(50, 'error.char.max.exceeded'),
+	countryOfPassportIssue: Yup.string()
 		.max(50, 'error.char.max.exceeded'),
 //		.required('error.required'),
 };

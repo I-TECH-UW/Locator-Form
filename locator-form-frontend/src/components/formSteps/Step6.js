@@ -15,12 +15,12 @@ class Step6 extends React.Component {
 					<div className="row align-items-end">
 					<div className="col-lg-10 form-group">
 								<MyRadioInputGroup
-								label={<FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status?" />}
-								name="vaccinationStatus"
-								requireField={true}
+								label={<FormattedMessage id="nav.item.vaccinated" defaultMessage="Vaccinated?" />}
+								name="vaccinated"
+								requireField={false}
 								options={[
-									{ key: 'nav.item.status.option.eligible', value: 'Eligible' },
-									{ key: 'nav.item.status.option.notEligible', value: 'Not Eligible'}
+									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
+									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
 							/>
 							</div>
@@ -32,7 +32,7 @@ class Step6 extends React.Component {
 									<MySelect label={<FormattedMessage id="nav.item.firstVaccine" defaultMessage="Name of First Vaccine" />}
 										name={field.name} 
 										form={form}
-										requireField={true} 
+										requireField={false} 
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={vaccines}
@@ -45,7 +45,7 @@ class Step6 extends React.Component {
 									<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfFirstDose" defaultMessage="Date Of First Dose" />}
 									name="dateOfFirstDose"
-									requireField={true}
+									requireField={false}
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 									max={dateInputToday()}
@@ -56,10 +56,10 @@ class Step6 extends React.Component {
 						  <div className="col-lg-4 form-group">
 								<Field name="secondVaccineName">
 								{({ field, form, meta }) =>
-									<MySelect label={<FormattedMessage id="nav.item.second.vaccine" defaultMessage="Name of Second Vaccine" />}
+									<MySelect label={<FormattedMessage id="nav.item.secondVaccine" defaultMessage="Name of Second Vaccine" />}
 										name={field.name} 
 										form={form}
-										requireField={true} 
+										requireField={false} 
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={vaccines}
@@ -71,7 +71,7 @@ class Step6 extends React.Component {
 									<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfSecondDose" defaultMessage="Date Of Second Dose" />}
 									name="dateOfSecondDose"
-									requireField={true}
+									requireField={false}
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 									max={dateInputToday()}

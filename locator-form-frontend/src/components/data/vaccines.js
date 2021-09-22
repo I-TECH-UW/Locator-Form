@@ -1,6 +1,14 @@
 export const vaccines = [
-  {
-    "value": "Pfizer-BioNTech",
+ {
+    "value": "None",
+    "label": "None"
+ },
+ {
+	 "value": "NA",
+	 "label": "N/A"
+ },
+ {
+    "value": "PfizerBioNTech",
     "label": "Pfizer-BioNTech"
   },
   {
@@ -8,12 +16,12 @@ export const vaccines = [
     "label": "Moderna"
   },
   {
-	  "value": "Oxford-AstraZeneca",
+	  "value": "OxfordAstraZeneca",
 	  "label": "Oxford-AstraZeneca"
   },
   
   {
-	  "value": "Sputnik V (Gamaleya Research Institute)",
+	  "value": "SputnikVGamaleyaResearchInstitute)",
 	  "label": "Sputnik V (Gamaleya Research Institute)"
   },
   
@@ -30,7 +38,7 @@ export const vaccines = [
 	  "label": "Sinovac"
   },
   {
-	  "value": "Janssen/Johnson&Johnson",
+	  "value": "JanssenJohnsonJohnson",
 	  "label": "Janssen/Johnson&Johnson"
   },
 ]

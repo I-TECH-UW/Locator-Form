@@ -91,6 +91,21 @@
 	"nav.item.addTravelCompanionNonFamily": "Ajouter compagnon non-familial",
 	"nav.item.group": "Groupe (voyage organisé, équipe, entreprise, autre)",
 	"nav.item.submit": "Soumettre",
+	
+	"nav.item.profession": "Métier",
+	"nav.item.breathingDifficulties": "Difficultés respiratoires",
+	"nav.item.smellOrTaste": "Perte de l'odorat ou du goût",
+	"nav.item.contact": "Contact possible avec COVID 19",
+	"nav.item.vaccinated": "Vacciné",
+	"nav.item.firstVaccine": "Nom du premier vaccin",
+	"nav.item.dateOfFirstDose": "Date de la première dose",
+	"nav.item.secondVaccine": "Nom du deuxième vaccin",
+	"nav.item.dateOfSecondDose": "Date de la deuxième dose",
+	"nav.item.businessPhone": "Numéro de téléphone au bureau",
+	"nav.item.countryOfBirth": "Pays de naissance",
+	"nav.item.countryOfPassportIssue": "Pays de délivrance du passeport",
+	"nav.item.dateOfExpiry" : "Date d'expiration",
+	
 	"nav.item.declareInformation": "Je déclare qu’ à ma connaissances que toutes les informations fournies sont exactes et complètes. Je suis consients que le fait de ne pas remplie cette forme ou toute fausse declaration de ma part pourra.",
 	"submit.success.msg": "Merci de remplir notre formulaire en ligne.\nVeuillez surveiller votre courrier électronique pour obtenir des instructions supplémentaires.",
 	"summary.print.button": "Imprimer la Page",
@@ -110,6 +125,6 @@
 	"error.search.infohighway.error": "Une erreur est survenue",
 	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable",
 	"error.date.invalidformat":"La date doit correspondre à aaaa-mm-jj",
-	"date.format":"aaaa-mm-jj"
+	"date.format":"aaaa-jj-mm"
 }
 

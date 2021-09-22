@@ -41,6 +41,16 @@ public class LocatorFormDTO extends Traveller {
 		}
 	}
 
+	public enum Vaccine {
+	    NONE, NA, PFIZERBIONTECH, MODERNA, OXFORDASTRAZENECA, SPUTNIKVGAMALEYARESEARCHINSTITUTE, NOVAVAX, SINOPHARM, SINOVAC, JANSSENJOHNSONJOHNSON;
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return this.name().toLowerCase();
+        }
+    }
+	
 	public enum TravellerType {
 		RESIDENT, NONRESIDENT;
 
@@ -50,12 +60,20 @@ public class LocatorFormDTO extends Traveller {
 			return this.name().toLowerCase();
 		}
 	}
-
 	public String taskId;
-
+	
+	@JsonSerialize(using = StringBooleanSerializer.class)
+    private Boolean vaccinated;
 	@NotNull
-	private TravellerType travellerType;
-
+    private Vaccine firstVaccineName;
+	@NotNull
+	private Vaccine secondVaccineName;
+	private LocalDate dateOfFirstDose;
+	private LocalDate dateOfSecondDose;
+	
+    @NotNull
+    private TravellerType travellerType;
+    
 	@NotBlank
 	@Size(max = 50)
     private String airlineName;
@@ -75,6 +93,8 @@ public class LocatorFormDTO extends Traveller {
 	private String[] countriesVisited;
 	@Size(max = 50)
     private String portOfEmbarkation;
+	@Size(max = 50)
+    private String profession;
 
 	@JsonSerialize(using = StringBooleanSerializer.class)
 	private Boolean hadCovidBefore;
@@ -90,6 +110,11 @@ public class LocatorFormDTO extends Traveller {
 	private Boolean breathingDifficulties;
 	@JsonSerialize(using = StringBooleanSerializer.class)
 	private Boolean rash;
+	
+	@JsonSerialize(using = StringBooleanSerializer.class)
+	private Boolean smellOrTaste;
+	@JsonSerialize(using = StringBooleanSerializer.class)
+	private Boolean contact;
 
 	@NotNull
 	private VisitPurpose visitPurpose;
@@ -97,6 +122,8 @@ public class LocatorFormDTO extends Traveller {
 	private String mobilePhone;
 	@Size(max = 15)
 	private String fixedPhone;
+	@Size(max = 15)
+    private String businessPhone;
 
 	@NotBlank
 	@Size(max = 50)
@@ -110,6 +137,15 @@ public class LocatorFormDTO extends Traveller {
 
 	@Size(max = 50)
 	private String nationalID;
+	
+	@Size(max = 50)
+    private String countryOfBirth;
+	@Size(max = 50)
+    private String countryOfPassportIssue;
+	@Size(max = 50)
+    private String passportNumber;
+	@Size(max = 50)
+    private LocalDate passportExpiryDate;
 
 	@Valid
     private Address permanentAddress;

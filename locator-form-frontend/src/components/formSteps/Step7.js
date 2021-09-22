@@ -103,7 +103,7 @@ class Step7 extends React.Component {
 					
 						<div className="col-lg-3 form-group ">
 						<Field className="form-control"
-							name={`nationality`}
+							name={`countryOfPassportIssue`}
 						>
 						
                         {({ field, form, meta }) =>
@@ -114,7 +114,7 @@ class Step7 extends React.Component {
                                         options={countriesList}
                                         isSearchable={true}
                                         placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-                                        label={<FormattedMessage id="nav.item.nationality" defaultMessage="Passport Country of Issue" />}
+                                        label={<FormattedMessage id="nav.item.countryOfPassportIssue" defaultMessage="Passport Country of Issue" />}
                                 />}
                         </Field>
                                         
@@ -131,7 +131,7 @@ class Step7 extends React.Component {
 								 <div className="col-lg-3 form-group">
 									<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfExpiry" defaultMessage="Date Of Expiry" />}
-									name="expiryDate"
+									name="passportExpiryDate"
 									requireField={true}
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
