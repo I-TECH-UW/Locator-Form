@@ -49,6 +49,7 @@ class SearchBar extends React.Component {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
+			        'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
 				},
 			}).then(async response => {
 				const status = response.status;
@@ -59,6 +60,8 @@ class SearchBar extends React.Component {
 						failureReason: '' 
 					})
 					const locatorForm = await response.json();
+					//this is done to make conditional validation work in a sub-object
+					locatorForm.permanentAddress.travellerType = locatorForm.travellerType;
 				    this.props.onSearchSuccess(locatorForm, searchValue);
 				} else if (status === 404) {
 					this.searchForPassenger(searchValue);
@@ -82,6 +85,7 @@ class SearchBar extends React.Component {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
+			        'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
 				},
 			}).then(async response => {
 				const status = response.status;

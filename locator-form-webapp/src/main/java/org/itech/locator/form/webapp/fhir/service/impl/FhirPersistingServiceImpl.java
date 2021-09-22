@@ -41,6 +41,21 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 	}
 
 	@Override
+	public Optional<Task> getTaskById(String taskId) {
+//		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
+//		return fhirClient.read().resource(Task.class).withId(taskId).execute();
+		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
+		Bundle searchBundle = fhirClient.search().forResource(Task.class).where(Task.RES_ID.exactly().code(taskId))
+				.returnBundle(Bundle.class).execute();
+		for (BundleEntryComponent entry : searchBundle.getEntry()) {
+			if (entry.hasResource() && ResourceType.Task.equals(entry.getResource().getResourceType())) {
+				return Optional.of((Task) entry.getResource());
+			}
+		}
+		return Optional.empty();
+	}
+
+	@Override
 	public Optional<Task> getTaskFromServiceRequest(String serviceRequestId) {
 		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
 		Bundle searchBundle = fhirClient.search().forResource(Task.class)

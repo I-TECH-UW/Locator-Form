@@ -8,5 +8,5 @@ import lombok.Data;
 public class HealthDeskDTO extends LocatorFormDTO {
 
 	@NotBlank
-	public String testkitId;
+	public String testKitId;
 }

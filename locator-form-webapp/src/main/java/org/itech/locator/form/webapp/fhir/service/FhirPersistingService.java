@@ -20,4 +20,6 @@ public interface FhirPersistingService {
 
 	List<ServiceRequest> getServiceRequestsForPatients(List<Patient> patients);
 
+	Optional<Task> getTaskById(String taskId);
+
 }

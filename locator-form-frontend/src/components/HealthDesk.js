@@ -1,8 +1,8 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
+import { Field, Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
-import { MyTextInput } from './inputs/MyInputs'
+import { MyTextInput, MyHiddenInput } from './inputs/MyInputs'
 import Search from './SearchBar';
 import { healthDeskValidationSchema } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
@@ -40,7 +40,7 @@ class HealthDesk extends React.Component {
       },
       body: json
     }).then(async response => {
-      this.setState({ submitting: false })
+      this.setState({ isSubmitting: false })
       const summaryAccessInfo = await response.json()
       if (response.ok) {
         this.onSuccess(summaryAccessInfo)
@@ -63,7 +63,7 @@ class HealthDesk extends React.Component {
   }
 
   onSuccess = (summaryAccessInfo) => {
-    this.setState({ 'submitSuccess': true, 'summaryAccessInfo': summaryAccessInfo })
+    this.setState({ submitErrorKey: '', 'submitSuccess': true })
     this.scrollToTopOfPage();
   }
   
@@ -123,6 +123,70 @@ class HealthDesk extends React.Component {
 		            	<Step9 formikProps={formikProps} intl={this.props.intl} />
 						<div className="row">
 						<div className="col-lg-4 form-group">
+							<MyHiddenInput
+								name="taskId"
+								type="hidden"
+							/>
+							<MyHiddenInput
+								name="serviceRequestId"
+								type="hidden"
+							/>
+							<MyHiddenInput
+								name="patientId"
+								type="hidden"
+							/>
+							{formikProps.values.familyTravelCompanions.length > 0 &&
+									formikProps.values.familyTravelCompanions.map((comp, index) => (
+										<React.Fragment key={index}>
+										<Field  className="form-control"
+														name={`familyTravelCompanions.${index}.serviceRequestId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
+										<Field key={index} className="form-control"
+														name={`familyTravelCompanions.${index}.patientId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
+										</React.Fragment>
+										
+							))}
+							{formikProps.values.nonFamilyTravelCompanions.length > 0 &&
+									formikProps.values.nonFamilyTravelCompanions.map((comp, index) => (
+										<React.Fragment key={index}>
+										<Field  className="form-control"
+														name={`nonFamilyTravelCompanions.${index}.serviceRequestId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
+										<Field key={index} className="form-control"
+														name={`nonFamilyTravelCompanions.${index}.patientId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
+										</React.Fragment>
+										
+							))}
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.testKitId" defaultMessage="Test Kit ID" />}
 								name="testKitId"
