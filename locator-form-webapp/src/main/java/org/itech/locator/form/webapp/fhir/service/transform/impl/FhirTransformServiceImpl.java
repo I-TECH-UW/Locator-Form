@@ -204,6 +204,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		identifierList.add(identifier);
 
 		fhirTask.setIdentifier(identifierList);
+		fhirTask.setAuthoredOn(new Date());
+		fhirTask.setRequester(new Reference(requesterId));
 		fhirTask.setOwner(new Reference(fillerId));
 		fhirTask.setRestriction(new TaskRestrictionComponent().addRecipient(new Reference(ordererId)));
 
