@@ -11,8 +11,9 @@ class Summary extends React.Component {
 		const { travellerType, airlineName, flightNumber, seatNumber, arrivalDate, title, firstName, lastName, middleInitial,
 			sex,dateOfBirth, profession, lengthOfStay,countriesVisited, portOfEmbarkation, hadCovidBefore, fever, soreThroat, jointPain,
 			cough, breathingDifficulties, rash, smellOrTaste, contact, visitPurpose, 
-			vaccinationStatus, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
-			mobilePhone, fixedPhone, email, passportNumber, nationality, permanentAddress, temporaryAddress, 
+			vaccinated, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
+			mobilePhone, fixedPhone, businessPhone, email, passportNumber, passportExpiryDate, 
+			nationality, countryOfBirth, countryOfPassportIssue,  permanentAddress, temporaryAddress, 
 			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
 		} = this.props.formikProps.values;
 
@@ -122,7 +123,6 @@ class Summary extends React.Component {
 					<div className="col-xl-2 col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.fever" defaultMessage="Fever" />: </span><span className="confirm-value">{fever}</span>
 					</div>
-
 					<div className="col-xl-2 col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat" />: </span><span className="confirm-value">{soreThroat}</span>
 					</div>
@@ -152,16 +152,15 @@ class Summary extends React.Component {
 				</div>
 			</div>
 			
-			
 			<div id="vaccine" className="section">
 			<div className="row">
 				<div className="col-lg-12 ">
-					<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status" /></h5>
+					<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.vaccinated" defaultMessage="Vaccinated" /></h5>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-lg-12 form-group">
-					<span className="confirm-field"><FormattedMessage id="nav.item.vaccinationStatus" defaultMessage="Vaccination Status" />: </span><span className="confirm-value">{vaccinationStatus}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.vaccinated" defaultMessage="Vaccinated" />: </span><span className="confirm-value">{vaccinated}</span>
 				</div>
 			</div>
 			
@@ -193,29 +192,42 @@ class Summary extends React.Component {
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-lg-4 form-group ">
+					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{visitPurpose}</span>
 					</div>
-					<div className="col-lg-4 form-group ">
+					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: </span><span className="confirm-value">{mobilePhone}</span>
 					</div>
-					<div className="col-lg-4 form-group ">
+					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.fixedPhone" defaultMessage="Fixed Phone" />: </span><span className="confirm-value">{fixedPhone}</span>
+					</div>
+					<div className="col-lg-3 form-group ">
+					<span className="confirm-field"><FormattedMessage id="nav.item.businessPhone" defaultMessage="Business Phone" />: </span><span className="confirm-value">{businessPhone}</span>
+				</div>
+				</div>
+				<div className="row">
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{email}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-3 form-group ">
-
-						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{email}</span>
-					</div>
-					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.countryOfBirth" defaultMessage="Country of Birth" />: </span>
 						<span className="confirm-value">
-							{getCountryFromCode(nationality)}
+							{getCountryFromCode(countryOfBirth)}
 						</span>
 					</div>
+					<div className="col-lg-4 form-group ">
+					<span className="confirm-field"><FormattedMessage id="nav.item.countryOfPassportIssue" defaultMessage="Country of Passport Issue" />: </span>
+					<span className="confirm-value">
+						{getCountryFromCode(countryOfPassportIssue)}
+					</span>
+				</div>
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />: </span><span className="confirm-value">{passportNumber}</span>
+					</div>
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.passportExpiryDate" defaultMessage="Date Of Expiry" />: </span><span className="confirm-value">{passportExpiryDate}</span>
 					</div>
 				</div>
 			</div >
@@ -258,10 +270,10 @@ class Summary extends React.Component {
 					</div>
 				</div>
 				<div className="row">
-					<div className="col-lg-5 form-group ">
+					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />: </span><span className="confirm-value">{temporaryAddress.hotelName}</span>
 					</div>
-					<div className="col-lg-5 form-group ">
+					<div className="col-lg-4 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />: </span><span className="confirm-value">{temporaryAddress.numberAndStreet}</span>
 					</div>
 					<div className="col-lg-2 form-group ">

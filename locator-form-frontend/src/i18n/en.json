@@ -54,7 +54,7 @@
 	"error.search.form.error": "An error occurred while searching",
 	"error.search.form.notfound": "No form could be found with that search value",
 	"error.date.invalidformat":"Date must match yyyy-mm-dd",
-	"date.format": "yyyy-mm-dd",
+	"date.format": "yyyy-dd-mm",
 	"submit.success.msg": "Thank you for filling out the online locator form. Please check your email for any further instructions.\nYou are also requested to bring a printed copy of the Summary PDF with the barcode at the Airport.\nNote: Click on \"Print Summary\" button to get a copy of the Summary PDF"
 	
 }

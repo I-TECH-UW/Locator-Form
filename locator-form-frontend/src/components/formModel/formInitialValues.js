@@ -8,10 +8,10 @@ export default {
   acceptedTerms: false,
   tempAddrCheckbox:false,
   visitPurpose: '', arrivalDate: '',
-  mobilePhone: '', fixedPhone: '',
+  mobilePhone: '', fixedPhone: '', businessPhone: '',
   email: '', confirmEmail: '',
   sex: '', dateOfBirth: '', nationalId: '', profession: '',
-  passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
+  passportNumber: '', countryOfPassportIssue: '', countryOfBirth: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
   hadCovidBefore: '', fever: 'true', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
   firstVaccineName: '', dateOfFirstDose: '', secondVaccineName: '', dateOfSecondDose: '',
 
