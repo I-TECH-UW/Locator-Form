@@ -10,13 +10,8 @@ export default {
   mobilePhone: '', fixedPhone: '', businessPhone: '',
   email: '', confirmEmail: '',
   sex: '', dateOfBirth: '', nationalId: '', profession: '',
-<<<<<<< HEAD
   passportNumber: '', countryOfPassportIssue: '', countryOfBirth: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
   hadCovidBefore: '', fever: 'true', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
-=======
-  passportNumber: '', nationality: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
-  hadCovidBefore: '', fever: '', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
->>>>>>> branch 'develop' of git@github.com:I-TECH-UW/Locator-Form.git
   firstVaccineName: '', dateOfFirstDose: '', secondVaccineName: '', dateOfSecondDose: '',
 
   permanentAddress:
