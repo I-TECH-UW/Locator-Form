@@ -82,6 +82,7 @@ export const step3Validation =  {
 					.max(today, "error.date.future")
 					.required('error.required'),
 	nationalID: Yup.string()
+			.nullable(true)
 			.when('travellerType', {
 				is: 'resident',
 				then: Yup.string().required('error.required')
@@ -96,44 +97,51 @@ export const step4Validation = {
 export const step5Validation = {
 		hadCovidBefore: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
-		),
+		)
+		.nullable(true),
 	fever: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
-		),
+		)
+		.nullable(true),
 		// .required('error.required'),
 	soreThroat: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
-		),
+		)
+		.nullable(true),
 		// .required('error.required'),
 	jointPain: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
-		),
+		)
+		.nullable(true),
 		// .required('error.required'),
 	cough: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
-		),
+		)
+		.nullable(true),
 		// .required('error.required'),
 	breathingDifficulties: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
-		),
+		)
+		.nullable(true),
 		// .required('error.required'),
 	rash: Yup.string()
 		.oneOf(
-			['true', 'false'],
+			['true', 'false', null],
 			'error.invalid.selection'
 		)
+		.nullable(true)
 		// .required('error.required'),
 };
 
