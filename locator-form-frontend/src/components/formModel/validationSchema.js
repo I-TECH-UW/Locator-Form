@@ -197,14 +197,23 @@ export const step7Validation = {
 			.oneOf([Yup.ref('email')], "error.email.doesnotmatch")
 			.required('error.required')
 	}),
+
+	countryOfBirth: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),
+		
+	countryOfPassportIssue: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),
+		
 	passportNumber: Yup.string()
 		.max(20, 'error.char.max.exceeded')
 		.required('error.required'),
-	countryOfBirth: Yup.string()
-		.max(50, 'error.char.max.exceeded'),
-	countryOfPassportIssue: Yup.string()
-		.max(50, 'error.char.max.exceeded'),
-//		.required('error.required'),
+		
+	passportExpiryDate: Yup.date().transform(parseDateString)
+		.typeError("error.date.invalidformat")
+		.required('error.required'),	
+		
 };
 
 export const step8Validation = {
