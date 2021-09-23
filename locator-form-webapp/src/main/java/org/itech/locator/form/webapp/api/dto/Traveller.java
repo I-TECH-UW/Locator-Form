@@ -42,7 +42,6 @@ public class Traveller {
 	private LocalDate dateOfBirth;
 	@NotNull
 	private Sex sex;
-	@NotBlank
 	@Size(max = 50)
     private String nationality;
 	@Size(max = 50)

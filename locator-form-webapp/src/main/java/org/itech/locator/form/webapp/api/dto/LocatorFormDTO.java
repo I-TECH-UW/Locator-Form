@@ -10,16 +10,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.Data;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LocatorFormDTO extends Traveller {
 	public enum Title {
 		MR, MRS, MS, MISS, DR, OTHER;
@@ -50,7 +56,7 @@ public class LocatorFormDTO extends Traveller {
             return this.name().toLowerCase();
         }
     }
-	
+
 	public enum TravellerType {
 		RESIDENT, NONRESIDENT;
 
@@ -61,19 +67,21 @@ public class LocatorFormDTO extends Traveller {
 		}
 	}
 	public String taskId;
-	
+
 	@JsonSerialize(using = StringBooleanSerializer.class)
     private Boolean vaccinated;
-	@NotNull
-    private Vaccine firstVaccineName;
-	@NotNull
+	@JsonDeserialize(using = VaccineDeserializer.class)
+	private Vaccine firstVaccineName;
+	@JsonDeserialize(using = VaccineDeserializer.class)
 	private Vaccine secondVaccineName;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfFirstDose;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfSecondDose;
-	
+
     @NotNull
     private TravellerType travellerType;
-    
+
 	@NotBlank
 	@Size(max = 50)
     private String airlineName;
@@ -110,7 +118,7 @@ public class LocatorFormDTO extends Traveller {
 	private Boolean breathingDifficulties;
 	@JsonSerialize(using = StringBooleanSerializer.class)
 	private Boolean rash;
-	
+
 	@JsonSerialize(using = StringBooleanSerializer.class)
 	private Boolean smellOrTaste;
 	@JsonSerialize(using = StringBooleanSerializer.class)
@@ -137,14 +145,14 @@ public class LocatorFormDTO extends Traveller {
 
 	@Size(max = 50)
 	private String nationalID;
-	
+
 	@Size(max = 50)
     private String countryOfBirth;
 	@Size(max = 50)
     private String countryOfPassportIssue;
 	@Size(max = 50)
     private String passportNumber;
-	@Size(max = 50)
+	@JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate passportExpiryDate;
 
 	@Valid
@@ -169,6 +177,21 @@ public class LocatorFormDTO extends Traveller {
 		public void serialize(Boolean bool, JsonGenerator generator, SerializerProvider provider)
 				throws IOException, JsonProcessingException {
 			generator.writeString(bool == null ? "false" : bool.toString());
+		}
+	}
+
+	public static class VaccineDeserializer extends JsonDeserializer<Vaccine> {
+
+		@Override
+		public Vaccine deserialize(JsonParser p, DeserializationContext ctxt)
+				throws IOException, JsonProcessingException {
+			String value = p.getText();
+			for (final Vaccine vaccine : Vaccine.values()) {
+				if (vaccine.name().equalsIgnoreCase(value)) {
+					return vaccine;
+				}
+			}
+			return null;
 		}
 	}
 
