@@ -17,7 +17,7 @@ services:
     image: hapiproject/hapi:latest
     restart: always
     ports:
-      - 8444:8443
+      - 8448:8443
     volumes:
       - ./prod/properties/application.yaml:/data/hapi/application.yaml
       - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
@@ -40,7 +40,7 @@ services:
       - infohighway.govmu.org:192.168.6.91
     volumes:
       - ./prod/properties/locatorform-app.properties:/var/lib/locatorform/app.properties
-      - ./prod/ssl/server.keystore:/usr/local/tomcat/certs/server.keystore
+      - ./prod/ssl/lf_frontend.keystore:/usr/local/tomcat/certs/server.keystore
       - ./prod/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
       - ./prod/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
     networks:
