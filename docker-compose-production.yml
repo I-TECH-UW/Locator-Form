@@ -14,7 +14,7 @@ services:
 
   fhir.openelis.org:
     container_name: lf-hapi-fhir-jpaserver
-    image: hapiproject/hapi:latest
+    image: hapiproject/hapi:v5.4.1
     restart: always
     ports:
       - 8448:8443
