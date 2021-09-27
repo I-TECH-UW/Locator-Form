@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
-import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
+import org.itech.locator.form.webapp.api.dto.PIODTO;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService.TransactionObjects;
@@ -45,7 +45,7 @@ public class PIOController {
 	private FhirContext fhirContext;
 
 	@PostMapping
-	public ResponseEntity<List<SummaryAccessInfo>> submitForm(@RequestBody @Valid LocatorFormDTO pioDTO,
+	public ResponseEntity<List<SummaryAccessInfo>> submitForm(@RequestBody @Valid PIODTO pioDTO,
 			BindingResult result)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		if (result.hasErrors()) {

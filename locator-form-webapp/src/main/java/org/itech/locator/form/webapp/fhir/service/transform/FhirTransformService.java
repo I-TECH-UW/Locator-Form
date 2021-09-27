@@ -16,6 +16,7 @@ import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
+import org.itech.locator.form.webapp.api.dto.PIODTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.summary.LabelContentPair;
 import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
@@ -26,6 +27,8 @@ public interface FhirTransformService {
 
 	TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, TaskStatus status)
 			throws JsonProcessingException;
+
+	TransactionObjects createTransactionObjects(PIODTO pioDTO, TaskStatus status) throws JsonProcessingException;
 
 	TransactionObjects createTransactionObjects(HealthDeskDTO locatorFormDTO, TaskStatus status)
 			throws JsonProcessingException;

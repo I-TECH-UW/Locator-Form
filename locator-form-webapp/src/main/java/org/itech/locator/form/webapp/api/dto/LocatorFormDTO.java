@@ -2,6 +2,7 @@ package org.itech.locator.form.webapp.api.dto;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -9,17 +10,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.itech.locator.form.webapp.validation.annotation.OneOf;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.Data;
@@ -47,16 +46,6 @@ public class LocatorFormDTO extends Traveller {
 		}
 	}
 
-	public enum Vaccine {
-	    NONE, NA, PFIZERBIONTECH, MODERNA, OXFORDASTRAZENECA, SPUTNIKVGAMALEYARESEARCHINSTITUTE, NOVAVAX, SINOPHARM, SINOVAC, JANSSENJOHNSONJOHNSON;
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return this.name().toLowerCase();
-        }
-    }
-
 	public enum TravellerType {
 		RESIDENT, NONRESIDENT;
 
@@ -70,10 +59,10 @@ public class LocatorFormDTO extends Traveller {
 
 	@JsonSerialize(using = StringBooleanSerializer.class)
     private Boolean vaccinated;
-	@JsonDeserialize(using = VaccineDeserializer.class)
-	private Vaccine firstVaccineName;
-	@JsonDeserialize(using = VaccineDeserializer.class)
-	private Vaccine secondVaccineName;
+	@OneOf(resourcePath = "vaccines.js")
+	private String firstVaccineName;
+	@OneOf(resourcePath = "vaccines.js")
+	private String secondVaccineName;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfFirstDose;
 	@JsonFormat(pattern = "yyyy-MM-dd")
@@ -96,11 +85,10 @@ public class LocatorFormDTO extends Traveller {
 	private Title title;
 
 	private Integer lengthOfStay;
-
+	@Valid
+	private List<@OneOf(resourcePath = "countries.js") String> countriesVisited;
 	@Size(max = 50)
-	private String[] countriesVisited;
-	@Size(max = 50)
-    private String portOfEmbarkation;
+	private String portOfEmbarkation;
 	@Size(max = 50)
     private String profession;
 
@@ -146,9 +134,9 @@ public class LocatorFormDTO extends Traveller {
 	@Size(max = 50)
 	private String nationalID;
 
-	@Size(max = 50)
+	@OneOf(resourcePath = "countries.js")
     private String countryOfBirth;
-	@Size(max = 50)
+	@OneOf(resourcePath = "countries.js")
     private String countryOfPassportIssue;
 	@Size(max = 50)
     private String passportNumber;
@@ -179,20 +167,4 @@ public class LocatorFormDTO extends Traveller {
 			generator.writeString(bool == null ? "false" : bool.toString());
 		}
 	}
-
-	public static class VaccineDeserializer extends JsonDeserializer<Vaccine> {
-
-		@Override
-		public Vaccine deserialize(JsonParser p, DeserializationContext ctxt)
-				throws IOException, JsonProcessingException {
-			String value = p.getText();
-			for (final Vaccine vaccine : Vaccine.values()) {
-				if (vaccine.name().equalsIgnoreCase(value)) {
-					return vaccine;
-				}
-			}
-			return null;
-		}
-	}
-
 }

@@ -38,6 +38,7 @@ import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
+import org.itech.locator.form.webapp.api.dto.PIODTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.security.SecurityUtil;
@@ -120,6 +121,38 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		// locatorFormDTO added at end so that any updated values (like
 		// serviceRequestId) get added to the
 		fhirTask.setDescription(objectMapper.writeValueAsString(locatorFormDTO));
+
+		return transactionInfo;
+	}
+
+	@Override
+	public TransactionObjects createTransactionObjects(PIODTO pioDTO, TaskStatus status)
+			throws JsonProcessingException {
+		TransactionObjects transactionInfo = new TransactionObjects();
+		Bundle transactionBundle = new Bundle();
+		transactionBundle.setType(BundleType.TRANSACTION);
+		transactionInfo.bundle = transactionBundle;
+
+		Task fhirTask = createFhirTask(pioDTO, status);
+		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
+		transactionInfo.task = fhirTask;
+
+		ServiceRequestObjects fhirServiceRequestPatient = createFhirServiceRequestPatient(pioDTO, pioDTO);
+		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
+
+		for (Traveller comp : pioDTO.getFamilyTravelCompanions()) {
+			fhirServiceRequestPatient = createFhirServiceRequestPatient(pioDTO, comp);
+			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
+		}
+
+		for (Traveller comp : pioDTO.getNonFamilyTravelCompanions()) {
+			fhirServiceRequestPatient = createFhirServiceRequestPatient(pioDTO, comp);
+			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
+		}
+
+		// locatorFormDTO added at end so that any updated values (like
+		// serviceRequestId) get persisted
+		fhirTask.setDescription(objectMapper.writeValueAsString(pioDTO));
 
 		return transactionInfo;
 	}
