@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
 import { MyTextInput, MyHiddenInput } from './inputs/MyInputs'
 import Search from './SearchBar';
-import { healthDeskValidationSchema } from './formModel/validationSchema'
+import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
 import {
   createMuiTheme,
@@ -32,7 +32,8 @@ class HealthDesk extends React.Component {
     this.setState({ isSubmitting: true })
     var json = JSON.stringify(values)
     console.log(json)
-    fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/health-desk`, {
+	const url = this.props.keycloak.hasRealmRole('health-desk-user') ? `${process.env.REACT_APP_DATA_IMPORT_API}/health-desk` : `${process.env.REACT_APP_DATA_IMPORT_API}/pio`;
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ class HealthDesk extends React.Component {
   }
 
   render() {
-		    const  currentValidationShema = healthDeskValidationSchema;
+		    const  currentValidationShema = this.props.keycloak.hasRealmRole('health-desk-user') ? healthDeskValidationSchema : pioValidationSchema;
 		    return (
 		      <>
 		        <div className="container-fluid d-flex min-vh-100 flex-column content">
@@ -187,13 +188,14 @@ class HealthDesk extends React.Component {
 										</React.Fragment>
 										
 							))}
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.testKitId" defaultMessage="Test Kit ID" />}
-								name="testKitId"
-								requireField={true}
-								type="text"
-								// disabled={this.state.searching || this.state.confirming} 
-							/>
+							{this.props.keycloak.hasRealmRole('health-desk-user') && 
+								<MyTextInput
+									label={<FormattedMessage id="nav.item.testKitId" defaultMessage="Test Kit ID" />}
+									name="testKitId"
+									requireField={true}
+									type="text"
+									// disabled={this.state.searching || this.state.confirming} 
+								/>}
 						</div>
 								</div>
 								</div>
