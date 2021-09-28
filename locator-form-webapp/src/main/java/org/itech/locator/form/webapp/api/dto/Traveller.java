@@ -6,6 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.itech.locator.form.webapp.validation.annotation.OneOf;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -44,6 +46,12 @@ public class Traveller {
 	private Sex sex;
 	@Size(max = 50)
     private String nationality;
+    @OneOf(resourcePath = "countries.js")
+    private String countryOfBirth;
+    @OneOf(resourcePath = "countries.js")
+    private String countryOfPassportIssue;
 	@Size(max = 50)
     private String passportNumber;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate passportExpiryDate;
 }

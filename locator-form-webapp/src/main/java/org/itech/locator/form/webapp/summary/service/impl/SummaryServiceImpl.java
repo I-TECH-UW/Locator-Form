@@ -188,33 +188,45 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Last (Family) Name: " + Objects.toString(traveller.getLastName(), ""), 1, table);
 		addCellToTable("First (Given) Name: " + Objects.toString(traveller.getFirstName(), ""), 1, table);
 		addCellToTable("Middle Initial: " + Objects.toString(traveller.getMiddleInitial(), ""), 1, table);
+		
 		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
 		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
-		addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(traveller.getNationality()), ""), 1,
-				table);
-		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 1, table);
+		addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfBirth()), ""), 2, table);
+		
+		addCellToTable("Passport Issue Country: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfPassportIssue()), ""), 1, table);
+		addCellToTable("Passport Expiry Date: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
+		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 2, table);
 	}
 
 	private void addHealthInformationToTable(LocatorFormDTO dto, PdfPTable table) {
-		addHeaderCellToTable("Health Information ", 4, table);
+	//	addHeaderCellToTable("Health Information ", 4, table);
 		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), ""), 1,
 				table);
 		addCellToTable("Countries visited during last 6 months: "
-				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 1,
+				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 2,
 				table);
-		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 2, table);
+		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 1, table);
 
-		addHeaderCellToTable("Are you suffering from? ", 4, table);
+		addHeaderCellToTable("Have you experienced any of the following within the past 14 days? ", 4, table);
 		addCellToTable("Fever: " + Objects.toString(dto.getFever(), ""), 1, table);
 		addCellToTable("Sore Throat: " + Objects.toString(dto.getSoreThroat(), ""), 1, table);
 		addCellToTable("Joint Pain: " + Objects.toString(dto.getJointPain(), ""), 1, table);
 		addCellToTable("Cough: " + Objects.toString(dto.getCough(), ""), 1, table);
 		addCellToTable("Breathing Difficulties: " + Objects.toString(dto.getBreathingDifficulties(), ""), 1, table);
-		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 3, table);
-
-		addHeaderCellToTable("Other Health Questions:  ", 4, table);
-		addCellToTable("Have you tested positive for Covid-19 before? " + Objects.toString(dto.getHadCovidBefore(), ""),
+		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 1, table);
+		addCellToTable("Loss of Sense of Smell or Taste: " + Objects.toString(dto.getSmellOrTaste(), ""), 2, table);
+		
+//		addHeaderCellToTable("Other Health Questions:  ", 4, table);
+		addCellToTable("Possible contact with COVID 19: " + Objects.toString(dto.getContact(), ""), 4, table);
+		addCellToTable("Have you tested positive for Covid-19 in the past 7 days? " + Objects.toString(dto.getHadCovidBefore(), ""),
 				4, table);
+		
+		addHeaderCellToTable("Vaccine ", 4, table);
+        addCellToTable("Vaccinated: " + Objects.toString(dto.getVaccinated(), ""), 4, table);
+        addCellToTable("First Vaccine: " + Objects.toString(dto.getFirstVaccineName(), ""), 1, table);
+        addCellToTable("First Vaccine Date: " + Objects.toString(dto.getDateOfFirstDose(), ""), 1, table);
+        addCellToTable("Second Vaccine: " + Objects.toString(dto.getSecondVaccineName(), ""), 1, table);
+        addCellToTable("Second Vaccine Date: " + Objects.toString(dto.getDateOfSecondDose(), ""), 1, table);
 	}
 
 	private void addCommonInformationToTable(LocatorFormDTO dto, Traveller traveller, PdfPTable table) {
@@ -223,12 +235,14 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Flight: " + Objects.toString(dto.getFlightNumber(), ""), 1, table);
 		addCellToTable("Seat: " + Objects.toString(traveller.getSeatNumber(), ""), 1, table);
 		addCellToTable("Date Of Arrival: " + Objects.toString(dto.getArrivalDate(), ""), 1, table);
-
+		
 		addHeaderCellToTable("Contact Info ", 4, table);
-		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 1, table);
-		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 1, table);
-		addCellToTable("Fixed Phone" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
-		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 1, table);
+		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 2, table);
+		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 2, table);
+		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 2, table);
+		addCellToTable("Fixed Phone:" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
+		addCellToTable("Business Phone:" + Objects.toString(dto.getBusinessPhone(), ""), 1, table);
+		
 
 		addHeaderCellToTable("Permanent Address ", 4, table);
 		addCellToTable("Number and Street: " + Objects.toString(dto.getPermanentAddress().getNumberAndStreet(), ""), 1,
@@ -269,8 +283,8 @@ public class SummaryServiceImpl implements SummaryService {
 			addCellToTable("Sex: " + Objects.toString(dto.getSex(), ""), 1, table);
 			addCellToTable("Seat: " + Objects.toString(dto.getSeatNumber(), ""), 1, table);
 			addCellToTable("Date Of Birth: " + Objects.toString(dto.getDateOfBirth(), ""), 1, table);
-			addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(dto.getNationality()), ""),
-					1, table);
+			addCellToTable("Profession: " + Objects.toString(dto.getProfession(), ""), 1, table);
+			addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(dto.getCountryOfBirth()), ""),1, table);
 			addCellToTable("Passport Number: " + Objects.toString(dto.getPassportNumber(), ""), 2, table);
 		}
 
