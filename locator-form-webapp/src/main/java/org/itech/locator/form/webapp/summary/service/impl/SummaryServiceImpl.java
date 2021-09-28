@@ -190,8 +190,10 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Middle Initial: " + Objects.toString(traveller.getMiddleInitial(), ""), 1, table);
 		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
 		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
-		addCellToTable("Nationality: " + Objects.toString(getCountryLabelForValue(traveller.getNationality()), ""), 1,
-				table);
+		
+		addCellToTable("Country Of Birth: " + Objects.toString(traveller.getCountryOfBirth(), ""), 1, table);
+		addCellToTable("Passport Country Of Issue: " + Objects.toString(traveller.getCountryOfPassportIssue(), ""), 1, table);
+		addCellToTable("Passport Date Of Expiry: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
 		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 1, table);
 	}
 
@@ -200,9 +202,9 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), ""), 1,
 				table);
 		addCellToTable("Countries visited during last 6 months: "
-				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 1,
+				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 2,
 				table);
-		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 2, table);
+		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 1, table);
 
 		addHeaderCellToTable("Have you experienced any of the following within the past 14 days? ", 4, table);
 		addCellToTable("Fever: " + Objects.toString(dto.getFever(), ""), 1, table);
@@ -213,17 +215,17 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 1, table);
 		addCellToTable("Loss of Sense of Smell or Taste: " + Objects.toString(dto.getSmellOrTaste(), ""), 2, table);
 		
-		addHeaderCellToTable("Other Health Questions:  ", 4, table);
+//		addHeaderCellToTable("Other Health Questions:  ", 4, table);
 		addCellToTable("Possible contact with COVID 19: " + Objects.toString(dto.getContact(), ""), 4, table);
 		addCellToTable("Have you tested positive for Covid-19 in the past 7 days? " + Objects.toString(dto.getHadCovidBefore(), ""),
 				4, table);
 		
 		addHeaderCellToTable("Vaccine ", 4, table);
         addCellToTable("Vaccinated: " + Objects.toString(dto.getVaccinated(), ""), 4, table);
-        addCellToTable("Name of First Vaccine: " + Objects.toString(dto.getFirstVaccineName(), ""), 1, table);
-        addCellToTable("Date of First Vaccine: " + Objects.toString(dto.getDateOfFirstDose(), ""), 3, table);
-        addCellToTable("Name of Second Vaccine: " + Objects.toString(dto.getSecondVaccineName(), ""), 1, table);
-        addCellToTable("Date of Second Vaccine: " + Objects.toString(dto.getDateOfSecondDose(), ""), 3, table);
+        addCellToTable("First Vaccine: " + Objects.toString(dto.getFirstVaccineName(), ""), 1, table);
+        addCellToTable("First Vaccine Date: " + Objects.toString(dto.getDateOfFirstDose(), ""), 1, table);
+        addCellToTable("Second Vaccine: " + Objects.toString(dto.getSecondVaccineName(), ""), 1, table);
+        addCellToTable("Second Vaccine Date: " + Objects.toString(dto.getDateOfSecondDose(), ""), 1, table);
 	}
 
 	private void addCommonInformationToTable(LocatorFormDTO dto, Traveller traveller, PdfPTable table) {
@@ -234,11 +236,11 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Date Of Arrival: " + Objects.toString(dto.getArrivalDate(), ""), 1, table);
 		
 		addHeaderCellToTable("Contact Info ", 4, table);
-		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 1, table);
-		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 3, table);
-		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 1, table);
-		addCellToTable("Fixed Phone" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
-		addCellToTable("Business Phone" + Objects.toString(dto.getBusinessPhone(), ""), 2, table);
+		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 2, table);
+		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 2, table);
+		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 2, table);
+		addCellToTable("Fixed Phone:" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
+		addCellToTable("Business Phone:" + Objects.toString(dto.getBusinessPhone(), ""), 1, table);
 		
 
 		addHeaderCellToTable("Permanent Address ", 4, table);
@@ -282,9 +284,6 @@ public class SummaryServiceImpl implements SummaryService {
 			addCellToTable("Date Of Birth: " + Objects.toString(dto.getDateOfBirth(), ""), 1, table);
 			addCellToTable("Profession: " + Objects.toString(dto.getProfession(), ""), 1, table);
 			addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(dto.getCountryOfBirth()), ""),1, table);
-			addCellToTable("Passport Country Of Issue: " + Objects.toString(getCountryLabelForValue(dto.getCountryOfPassportIssue()), ""),1, table);
-			addCellToTable("Passport Date Of Expiry: " + Objects.toString(dto.getPassportExpiryDate(), ""), 1, table);
-			
 			addCellToTable("Passport Number: " + Objects.toString(dto.getPassportNumber(), ""), 2, table);
 		}
 
