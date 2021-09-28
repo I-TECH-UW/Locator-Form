@@ -486,6 +486,12 @@ body {
   color: #00aded;
 }
 
+.success-message {
+  color: #008000E0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .notation {
   color: #e5354bE0;
 }

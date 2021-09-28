@@ -4,6 +4,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step11, Step6, Step7, Step8, Step9, Step10,Confirmation, Success } from './formSteps'
 import { validationSchemaSteps } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
+import Layout from './layout/Layout';
 import {
   createMuiTheme,
   MobileStepper,
@@ -182,8 +183,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-     const currentValidationShema = validationSchemaSteps[this.state.activeStep];
-//    const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchema[this.state.activeStep] : validationSchema[20];
+//     const currentValidationShema = validationSchemaSteps[this.state.activeStep];
+    const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchemaSteps[this.state.activeStep] : validationSchemaSteps[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>
