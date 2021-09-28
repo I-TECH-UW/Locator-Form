@@ -191,9 +191,9 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
 		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
 		
-		addCellToTable("Country Of Birth: " + Objects.toString(traveller.getCountryOfBirth(), ""), 1, table);
-		addCellToTable("Passport Country Of Issue: " + Objects.toString(traveller.getCountryOfPassportIssue(), ""), 1, table);
-		addCellToTable("Passport Date Of Expiry: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
+		addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfBirth()), ""), 1, table);
+		addCellToTable("Passport Issue Country: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfPassportIssue()), ""), 1, table);
+		addCellToTable("Passport Expiry Date: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
 		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 1, table);
 	}
 
