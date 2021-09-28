@@ -116,7 +116,7 @@ class Summary extends React.Component {
 			<div id="sufferingInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
-						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Are you suffering from?" /></h5>
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.areYouSufferingFrom" defaultMessage="Have you experienced any of the following within the past 14 days?" /></h5>
 					</div>
 				</div>
 				<div className="row">
@@ -147,7 +147,7 @@ class Summary extends React.Component {
 				</div>
 				<div className="row">
 					<div className="col-lg-12 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past?" />: </span><span className="confirm-value">{hadCovidBefore}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past 7 days?" />: </span><span className="confirm-value">{hadCovidBefore}</span>
 					</div>
 				</div>
 			</div>
