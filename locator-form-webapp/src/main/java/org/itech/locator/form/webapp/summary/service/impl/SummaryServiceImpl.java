@@ -198,7 +198,7 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	private void addHealthInformationToTable(LocatorFormDTO dto, PdfPTable table) {
-		addHeaderCellToTable("Health Information ", 4, table);
+	//	addHeaderCellToTable("Health Information ", 4, table);
 		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), ""), 1,
 				table);
 		addCellToTable("Countries visited during last 6 months: "
