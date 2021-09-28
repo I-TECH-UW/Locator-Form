@@ -210,20 +210,20 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Joint Pain: " + Objects.toString(dto.getJointPain(), ""), 1, table);
 		addCellToTable("Cough: " + Objects.toString(dto.getCough(), ""), 1, table);
 		addCellToTable("Breathing Difficulties: " + Objects.toString(dto.getBreathingDifficulties(), ""), 1, table);
-		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 3, table);
-		addCellToTable("Loss of Sense of Smell or Taste: " + Objects.toString(dto.getSmellOrTaste(), ""), 1, table);
-		addCellToTable("Possible contact with COVID 19: " + Objects.toString(dto.getContact(), ""), 1, table);
-
+		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 1, table);
+		addCellToTable("Loss of Sense of Smell or Taste: " + Objects.toString(dto.getSmellOrTaste(), ""), 2, table);
+		
 		addHeaderCellToTable("Other Health Questions:  ", 4, table);
+		addCellToTable("Possible contact with COVID 19: " + Objects.toString(dto.getContact(), ""), 4, table);
 		addCellToTable("Have you tested positive for Covid-19 in the past 7 days? " + Objects.toString(dto.getHadCovidBefore(), ""),
 				4, table);
 		
 		addHeaderCellToTable("Vaccine ", 4, table);
-        addCellToTable("Vaccinated: " + Objects.toString(dto.getVaccinated(), ""), 1, table);
+        addCellToTable("Vaccinated: " + Objects.toString(dto.getVaccinated(), ""), 4, table);
         addCellToTable("Name of First Vaccine: " + Objects.toString(dto.getFirstVaccineName(), ""), 1, table);
-        addCellToTable("Date of First Vaccine: " + Objects.toString(dto.getDateOfFirstDose(), ""), 1, table);
+        addCellToTable("Date of First Vaccine: " + Objects.toString(dto.getDateOfFirstDose(), ""), 3, table);
         addCellToTable("Name of Second Vaccine: " + Objects.toString(dto.getSecondVaccineName(), ""), 1, table);
-        addCellToTable("Date of Second Vaccine: " + Objects.toString(dto.getDateOfSecondDose(), ""), 1, table);
+        addCellToTable("Date of Second Vaccine: " + Objects.toString(dto.getDateOfSecondDose(), ""), 3, table);
 	}
 
 	private void addCommonInformationToTable(LocatorFormDTO dto, Traveller traveller, PdfPTable table) {
@@ -235,10 +235,11 @@ public class SummaryServiceImpl implements SummaryService {
 		
 		addHeaderCellToTable("Contact Info ", 4, table);
 		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 1, table);
+		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 3, table);
 		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 1, table);
 		addCellToTable("Fixed Phone" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
-		addCellToTable("Business Phone" + Objects.toString(dto.getBusinessPhone(), ""), 1, table);
-		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 1, table);
+		addCellToTable("Business Phone" + Objects.toString(dto.getBusinessPhone(), ""), 2, table);
+		
 
 		addHeaderCellToTable("Permanent Address ", 4, table);
 		addCellToTable("Number and Street: " + Objects.toString(dto.getPermanentAddress().getNumberAndStreet(), ""), 1,
