@@ -24,7 +24,8 @@ class HealthDesk extends React.Component {
       submitSuccess: false,
       summaryAccessInfo: {},
       passengerSelected: false,
-      formKey: '1',
+      formValues: {},
+	  formKey: '1',
     }
   }
 
@@ -64,12 +65,12 @@ class HealthDesk extends React.Component {
   }
 
   onSuccess = (summaryAccessInfo) => {
-    this.setState({ submitErrorKey: '', 'submitSuccess': true })
+    this.setState({ submitErrorKey: '', submitSuccess: true, passengerSelected: false, formValues: {}, formKey: "1"  })
     this.scrollToTopOfPage();
   }
   
   searchSuccess = (locatorForm, key) => {
-	  this.setState({'passengerSelected': true, 'formValues': locatorForm, 'formKey': key});
+	  this.setState({passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key});
   }
 
   render() {
@@ -90,7 +91,7 @@ class HealthDesk extends React.Component {
 	              <div className="col-lg-12 ">
 		                <div className="container pt-3">
 		                	<div className="container">  
-		                  		<h3 className="question-header">
+		                  		<h3 className="question-header"> 
 		                  		<FormattedMessage id="nav.item.header.healthdesk" defaultMessage="Health Desk" />
 		                  		</h3>
 		                    </div>
@@ -100,6 +101,11 @@ class HealthDesk extends React.Component {
 		          <div className="row light-row flex-grow-1">
 		              <div className="col-lg-12 ">
 		              	<div className="container pt-3">
+							{this.state.submitSuccess && 
+								<div className="success-message">
+								<FormattedMessage id="nav.item.success" defaultMessage="Save Successful"/>
+								</div>
+							}
 		              			<Search onSearchSuccess={this.searchSuccess} intl={this.props.intl}/>
 		              		{this.state.passengerSelected && 
 		              	
