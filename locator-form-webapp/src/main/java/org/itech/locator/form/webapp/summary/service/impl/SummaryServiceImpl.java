@@ -3,6 +3,7 @@ package org.itech.locator.form.webapp.summary.service.impl;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -199,7 +200,8 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), ""), 1,
 				table);
 		addCellToTable("Countries visited during last 6 months: "
-				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 1, table);
+				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 1,
+				table);
 		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 2, table);
 
 		addHeaderCellToTable("Have you experienced any of the following within the past 14 days? ", 4, table);
@@ -319,6 +321,14 @@ public class SummaryServiceImpl implements SummaryService {
 			}
 		}
 
+	}
+
+	private List<String> getCountriesVisitedByName(Collection<String> countriesVisited) {
+		List<String> countriesVisitedByName = new ArrayList<>();
+		for (String countryVisited : countriesVisited) {
+			countriesVisitedByName.add(getCountryLabelForValue(countryVisited));
+		}
+		return countriesVisitedByName;
 	}
 
 	private List<String> getCountriesVisitedByName(String[] countriesVisited) {
