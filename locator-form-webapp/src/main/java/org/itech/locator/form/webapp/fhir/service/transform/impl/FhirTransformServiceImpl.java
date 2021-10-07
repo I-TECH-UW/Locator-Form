@@ -36,9 +36,7 @@ import org.hl7.fhir.r4.model.Specimen.SpecimenStatus;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
-import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
-import org.itech.locator.form.webapp.api.dto.PIODTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.security.SecurityUtil;
@@ -84,122 +82,79 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-	public TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, TaskStatus status)
-			throws JsonProcessingException {
+	public TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, boolean assignIds,
+			TaskStatus status) throws JsonProcessingException {
 		TransactionObjects transactionInfo = new TransactionObjects();
 		Bundle transactionBundle = new Bundle();
 		transactionBundle.setType(BundleType.TRANSACTION);
 		transactionInfo.bundle = transactionBundle;
 
-		locatorFormDTO.setTaskId(UUID.randomUUID().toString());
-		Task fhirTask = createFhirTask(locatorFormDTO, status);
+		if (assignIds) {
+			locatorFormDTO.setTaskId(UUID.randomUUID().toString());
+			locatorFormDTO.setSubTaskId(UUID.randomUUID().toString());
+			locatorFormDTO.setServiceRequestId(UUID.randomUUID().toString());
+			locatorFormDTO.setPatientId(UUID.randomUUID().toString());
+			locatorFormDTO.setSpecimenId(UUID.randomUUID().toString());
+		}
 
-		locatorFormDTO.setTaskId(fhirTask.getIdElement().getIdPart());
+		Task fhirTask = createFhirTask(locatorFormDTO, status);
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
-		locatorFormDTO.setServiceRequestId(UUID.randomUUID().toString());
-		locatorFormDTO.setPatientId(UUID.randomUUID().toString());
 		ServiceRequestObjects fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO,
-				locatorFormDTO);
+				locatorFormDTO, status);
 		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
 		for (Traveller comp : locatorFormDTO.getFamilyTravelCompanions()) {
-			comp.setServiceRequestId(UUID.randomUUID().toString());
-			comp.setPatientId(UUID.randomUUID().toString());
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp);
+			if (assignIds) {
+				comp.setServiceRequestId(UUID.randomUUID().toString());
+				comp.setPatientId(UUID.randomUUID().toString());
+				comp.setSubTaskId(UUID.randomUUID().toString());
+				comp.setSpecimenId(UUID.randomUUID().toString());
+			}
+			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 		}
 
 		for (Traveller comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
-			comp.setServiceRequestId(UUID.randomUUID().toString());
-			comp.setPatientId(UUID.randomUUID().toString());
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp);
+			if (assignIds) {
+				comp.setServiceRequestId(UUID.randomUUID().toString());
+				comp.setPatientId(UUID.randomUUID().toString());
+				comp.setSubTaskId(UUID.randomUUID().toString());
+				comp.setSpecimenId(UUID.randomUUID().toString());
+			}
+			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 		}
 
 		// locatorFormDTO added at end so that any updated values (like
 		// serviceRequestId) get added to the
-		fhirTask.setDescription(objectMapper.writeValueAsString(locatorFormDTO));
+		for (ServiceRequestObjects curServiceRequestObjects : transactionInfo.serviceRequestPatientPairs) {
+			curServiceRequestObjects.task.setDescription(objectMapper.writeValueAsString(locatorFormDTO));
+		}
 
 		return transactionInfo;
 	}
 
-	@Override
-	public TransactionObjects createTransactionObjects(PIODTO pioDTO, TaskStatus status)
-			throws JsonProcessingException {
-		TransactionObjects transactionInfo = new TransactionObjects();
-		Bundle transactionBundle = new Bundle();
-		transactionBundle.setType(BundleType.TRANSACTION);
-		transactionInfo.bundle = transactionBundle;
+	private Task createFhirTask(LocatorFormDTO locatorFormDTO, TaskStatus status) {
+		Task fhirTask = new Task();
+		String taskId = locatorFormDTO.getTaskId();
+		fhirTask.setId(taskId);
 
-		Task fhirTask = createFhirTask(pioDTO, status);
-		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
-		transactionInfo.task = fhirTask;
+		fhirTask.setRequester(new Reference(requesterId));
 
-		ServiceRequestObjects fhirServiceRequestPatient = createFhirServiceRequestPatient(pioDTO, pioDTO);
-		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-
-		for (Traveller comp : pioDTO.getFamilyTravelCompanions()) {
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(pioDTO, comp);
-			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-		}
-
-		for (Traveller comp : pioDTO.getNonFamilyTravelCompanions()) {
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(pioDTO, comp);
-			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-		}
-
-		// locatorFormDTO added at end so that any updated values (like
-		// serviceRequestId) get persisted
-		fhirTask.setDescription(objectMapper.writeValueAsString(pioDTO));
-
-		return transactionInfo;
-	}
-
-	@Override
-	public TransactionObjects createTransactionObjects(HealthDeskDTO healthDeskDTO, TaskStatus status)
-			throws JsonProcessingException {
-		TransactionObjects transactionInfo = new TransactionObjects();
-		Bundle transactionBundle = new Bundle();
-		transactionBundle.setType(BundleType.TRANSACTION);
-		transactionInfo.bundle = transactionBundle;
-
-		Task fhirTask = createFhirTask(healthDeskDTO, status);
-		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
-		transactionInfo.task = fhirTask;
-
-		ServiceRequestObjects fhirServiceRequestPatient = createFhirServiceRequestPatient(healthDeskDTO,
-				healthDeskDTO);
-		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-
-		for (Traveller comp : healthDeskDTO.getFamilyTravelCompanions()) {
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(healthDeskDTO, comp);
-			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-		}
-
-		for (Traveller comp : healthDeskDTO.getNonFamilyTravelCompanions()) {
-			fhirServiceRequestPatient = createFhirServiceRequestPatient(healthDeskDTO, comp);
-			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-		}
-
-		// locatorFormDTO added at end so that any updated values (like
-		// serviceRequestId) get persisted
-		fhirTask.setDescription(objectMapper.writeValueAsString(healthDeskDTO));
-
-		return transactionInfo;
+		return fhirTask;
 	}
 
 	private void addServiceRequestPatientPairToTransaction(ServiceRequestObjects fhirServiceRequestPatient,
 			TransactionObjects transactionInfo) {
 		transactionInfo.bundle.addEntry(createTransactionBundleComponent(fhirServiceRequestPatient.serviceRequest));
+		transactionInfo.bundle.addEntry(createTransactionBundleComponent(fhirServiceRequestPatient.task));
 		transactionInfo.bundle.addEntry(createTransactionBundleComponent(fhirServiceRequestPatient.patient));
+		transactionInfo.bundle.addEntry(createTransactionBundleComponent(fhirServiceRequestPatient.specimen));
 
-		Reference basedOnRef = new Reference();
-		basedOnRef.setReference(ResourceType.ServiceRequest.toString() + "/"
-				+ fhirServiceRequestPatient.serviceRequest.getIdElement().getIdPart());
-		basedOnRef.setType(ResourceType.ServiceRequest.toString());
-		transactionInfo.task.addBasedOn(basedOnRef);
+		fhirServiceRequestPatient.task
+				.addPartOf(new Reference(ResourceType.Task + "/" + transactionInfo.task.getIdElement().getIdPart()));
 		transactionInfo.serviceRequestPatientPairs.add(fhirServiceRequestPatient);
 	}
 
@@ -219,15 +174,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return transactionComponent;
 	}
 
-	@Override
-	public Task createFhirTask(LocatorFormDTO locatorFormDTO, TaskStatus status) {
+	private Task createSubFhirTask(LocatorFormDTO locatorFormDTO, Traveller comp,
+			TaskStatus status) {
 		Task fhirTask = new Task();
-		String taskId = locatorFormDTO.getTaskId();
-		if (StringUtils.isEmpty(taskId)) {
-			taskId = UUID.randomUUID().toString();
-		}
+		String taskId = comp.getSubTaskId();
 		fhirTask.setId(taskId);
-		locatorFormDTO.setTaskId(taskId);
 
 		Identifier identifier = new Identifier();
 		identifier.setId(taskId);
@@ -245,21 +196,18 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return fhirTask;
 	}
 
-	@Override
-	public ServiceRequestObjects createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
+	private ServiceRequestObjects createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp,
+			TaskStatus status) {
 		// patient is created here and used for SR subjectRef
 		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
 		// patient is created here and used for SR subjectRef
 		Specimen specimen = createSpecimen(locatorFormDTO, comp);
 		// patient is created here and used for SR subjectRef
+		Task task = createSubFhirTask(locatorFormDTO, comp, status);
 
 		ServiceRequest serviceRequest = new ServiceRequest();
 		String serviceRequestId = comp.getServiceRequestId();
-		if (StringUtils.isEmpty(serviceRequestId)) {
-			serviceRequestId = UUID.randomUUID().toString();
-		}
 		serviceRequest.setId(serviceRequestId);
-		comp.setServiceRequestId(serviceRequestId);
 		CodeableConcept codeableConcept = new CodeableConcept();
 		for (String loincCode : loincCodes) {
 			codeableConcept.addCoding(new Coding().setCode(loincCode).setSystem("http://loinc.org"));
@@ -268,25 +216,21 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		serviceRequest.setSubject(new Reference(ResourceType.Patient + "/" + fhirPatient.getIdElement().getIdPart()));
 		serviceRequest.addSpecimen(new Reference(ResourceType.Specimen + "/" + specimen.getIdElement().getIdPart()));
-		serviceRequest
-				.setRequester(new Reference(requesterId));
+		serviceRequest.setRequester(new Reference(requesterId));
 		serviceRequest.addLocationReference(new Reference(locationId));
 
 		specimen.addRequest(
 				new Reference(ResourceType.ServiceRequest + "/" + serviceRequest.getIdElement().getIdPart()));
 
-		return new ServiceRequestObjects(serviceRequest, fhirPatient, specimen, null, null);
+		task.addBasedOn(new Reference(ResourceType.ServiceRequest + "/" + serviceRequest.getIdElement().getIdPart()));
+		return new ServiceRequestObjects(task, serviceRequest, fhirPatient, specimen);
 
 	}
 
 	private Specimen createSpecimen(LocatorFormDTO locatorFormDTO, Traveller comp) {
 		Specimen specimen = new Specimen();
 		String specimenId = comp.getSpecimenId();
-		if (StringUtils.isEmpty(specimenId)) {
-			specimenId = UUID.randomUUID().toString();
-		}
 		specimen.setId(specimenId);
-		comp.setSpecimenId(specimenId);
 
 		specimen.setReceivedTime(new Date());
 		specimen.setType(new CodeableConcept());
@@ -295,15 +239,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return specimen;
 	}
 
-	@Override
-	public Patient createFhirPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
+	private Patient createFhirPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
 		Patient fhirPatient = new Patient();
 		String patientId = comp.getPatientId();
-		if (StringUtils.isEmpty(patientId)) {
-			patientId = UUID.randomUUID().toString();
-		}
 		fhirPatient.setId(patientId);
-		comp.setPatientId(patientId);
 
 		HumanName humanName = new HumanName();
 		List<HumanName> humanNameList = new ArrayList<>();

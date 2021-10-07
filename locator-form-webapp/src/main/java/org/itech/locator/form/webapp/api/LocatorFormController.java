@@ -64,7 +64,7 @@ public class LocatorFormController {
 		}
 
 		log.trace("Received: " + locatorFormDTO.toString());
-		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(locatorFormDTO,
+		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(locatorFormDTO, true,
 				TaskStatus.DRAFT);
 		Bundle transactionResponseBundle = fhirPersistingService.executeTransaction(transactionObjects.bundle);
 		log.trace("fhirTransactionResponse: "

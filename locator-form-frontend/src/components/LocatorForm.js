@@ -103,7 +103,7 @@ class LocatorForm extends React.Component {
         return <Step8 formikProps={formikProps} intl={this.props.intl} />
       case 8:
         return <Step9 formikProps={formikProps} intl={this.props.intl} />
-       case 9:
+      case 9:
         return <Step10 formikProps={formikProps} intl={this.props.intl} />
       case 10:
         return <Confirmation formikProps={formikProps} intl={this.props.intl} />
@@ -183,8 +183,8 @@ class LocatorForm extends React.Component {
   }
 
   render() {
-     const currentValidationShema = validationSchemaSteps[this.state.activeStep];
-//    const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchemaSteps[this.state.activeStep] : validationSchemaSteps[20];
+    const currentValidationShema = validationSchemaSteps[this.state.activeStep];
+    // const  currentValidationShema = this.state.activeStep === 11 - 1 ? validationSchemaSteps[this.state.activeStep] : validationSchemaSteps[20];
     console.log('step: ' + this.state.activeStep)
     return (
       <>

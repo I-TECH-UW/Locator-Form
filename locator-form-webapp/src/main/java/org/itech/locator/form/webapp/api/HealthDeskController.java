@@ -53,7 +53,7 @@ public class HealthDeskController {
 		}
 
 		log.trace("Received: " + healthDeskDTO.toString());
-		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(healthDeskDTO,
+		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(healthDeskDTO, false,
 				TaskStatus.REQUESTED);
 		Bundle transactionResponseBundle = fhirPersistingService.executeTransaction(transactionObjects.bundle);
 		log.trace("fhirTransactionResponse: "

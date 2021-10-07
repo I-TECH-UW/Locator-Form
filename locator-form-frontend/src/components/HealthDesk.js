@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Confirmation, Success } from './formSteps'
+import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
 import { MyTextInput, MyHiddenInput } from './inputs/MyInputs'
 import Search from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
@@ -128,10 +128,15 @@ class HealthDesk extends React.Component {
 		            	<Step7 formikProps={formikProps} intl={this.props.intl} />
 		            	<Step8 formikProps={formikProps} intl={this.props.intl} />
 		            	<Step9 formikProps={formikProps} intl={this.props.intl} />
+		            	<Step10 formikProps={formikProps} intl={this.props.intl} />
 						<div className="row">
 						<div className="col-lg-4 form-group">
 							<MyHiddenInput
 								name="taskId"
+								type="hidden"
+							/>
+							<MyHiddenInput
+								name="subTaskId"
 								type="hidden"
 							/>
 							<MyHiddenInput
@@ -142,9 +147,23 @@ class HealthDesk extends React.Component {
 								name="patientId"
 								type="hidden"
 							/>
+							<MyHiddenInput
+								name="specimenId"
+								type="hidden"
+							/>
 							{formikProps.values.familyTravelCompanions.length > 0 &&
 									formikProps.values.familyTravelCompanions.map((comp, index) => (
 										<React.Fragment key={index}>
+										<Field className="form-control"
+														name={`familyTravelCompanions.${index}.subTaskId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
 										<Field  className="form-control"
 														name={`familyTravelCompanions.${index}.serviceRequestId`}>
 														{({ field, form, meta }) =>
@@ -155,8 +174,18 @@ class HealthDesk extends React.Component {
 														/>
 														}
 										</Field>
-										<Field key={index} className="form-control"
+										<Field className="form-control"
 														name={`familyTravelCompanions.${index}.patientId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
+										<Field className="form-control"
+														name={`familyTravelCompanions.${index}.specimenId`}>
 														{({ field, form, meta }) =>
 															<MyHiddenInput
 															name={field.name}
@@ -171,6 +200,16 @@ class HealthDesk extends React.Component {
 							{formikProps.values.nonFamilyTravelCompanions.length > 0 &&
 									formikProps.values.nonFamilyTravelCompanions.map((comp, index) => (
 										<React.Fragment key={index}>
+										<Field className="form-control"
+														name={`nonFamilyTravelCompanions.${index}.subTaskId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
 										<Field  className="form-control"
 														name={`nonFamilyTravelCompanions.${index}.serviceRequestId`}>
 														{({ field, form, meta }) =>
@@ -181,8 +220,18 @@ class HealthDesk extends React.Component {
 														/>
 														}
 										</Field>
-										<Field key={index} className="form-control"
+										<Field className="form-control"
 														name={`nonFamilyTravelCompanions.${index}.patientId`}>
+														{({ field, form, meta }) =>
+															<MyHiddenInput
+															name={field.name}
+															type="hidden"
+															
+														/>
+														}
+										</Field>
+										<Field className="form-control"
+														name={`nonFamilyTravelCompanions.${index}.specimenId`}>
 														{({ field, form, meta }) =>
 															<MyHiddenInput
 															name={field.name}

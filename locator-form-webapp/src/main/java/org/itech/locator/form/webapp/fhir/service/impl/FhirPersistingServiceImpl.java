@@ -37,7 +37,7 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 	public Bundle executeTransaction(Bundle transactionBundle) {
 		log.trace("executing transaction...");
 		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-		return fhirClient.transaction().withBundle(transactionBundle).encodedJson().execute();
+		return fhirClient.transaction().withBundle(transactionBundle).execute();
 	}
 
 	@Override

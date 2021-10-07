@@ -53,7 +53,7 @@ public class PIOController {
 		}
 
 		log.trace("Received: " + pioDTO.toString());
-		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(pioDTO,
+		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(pioDTO, false,
 				TaskStatus.DRAFT);
 		Bundle transactionResponseBundle = fhirPersistingService.executeTransaction(transactionObjects.bundle);
 		log.trace("fhirTransactionResponse: "

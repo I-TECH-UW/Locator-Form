@@ -26,6 +26,7 @@ public class Traveller {
 		}
 	}
 
+	private String subTaskId;
 	private String serviceRequestId;
 	private String patientId;
 	private String specimenId;

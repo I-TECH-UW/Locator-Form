@@ -1,7 +1,7 @@
 export default {
   travellerType: '',
 
-  patientId: '', serviceRequestId: '', taskId: '', testKitId: '',
+  patientId: '', serviceRequestId: '', taskId: '', subTaskId: '', specimenId: '', testKitId: '',
   airlineName: '', flightNumber: '', seatNumber: '',
   title: '',firstName: '', lastName: '', middleInitial: '', 
   acceptedTerms: false,
