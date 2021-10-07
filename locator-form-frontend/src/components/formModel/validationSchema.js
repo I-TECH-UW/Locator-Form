@@ -397,7 +397,7 @@ export const validationSchemaSteps = [
 	//step 8
 	Yup.object().shape(step9Validation),
 	//step 9
-	Yup.object().shape(step10Validation),
+	// Yup.object().shape(step10Validation),
 	//step 10
 	Yup.object().shape(step11Validation),
 

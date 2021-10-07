@@ -128,7 +128,7 @@ class HealthDesk extends React.Component {
 		            	<Step7 formikProps={formikProps} intl={this.props.intl} />
 		            	<Step8 formikProps={formikProps} intl={this.props.intl} />
 		            	<Step9 formikProps={formikProps} intl={this.props.intl} />
-		            	<Step10 formikProps={formikProps} intl={this.props.intl} />
+		            	{/* <Step10 formikProps={formikProps} intl={this.props.intl} /> */}
 						<div className="row">
 						<div className="col-lg-4 form-group">
 							<MyHiddenInput

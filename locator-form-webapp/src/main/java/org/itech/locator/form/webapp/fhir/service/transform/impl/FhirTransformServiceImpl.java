@@ -97,7 +97,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			locatorFormDTO.setSpecimenId(UUID.randomUUID().toString());
 		}
 
-		Task fhirTask = createFhirTask(locatorFormDTO, status);
+		Task fhirTask = createFhirTask(locatorFormDTO,  status);
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
@@ -127,6 +127,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 		}
 
+//		if (transactionInfo.serviceRequestPatientPairs.size() == 1) {
+//			transactionInfo.task = transactionInfo.serviceRequestPatientPairs.get(0).task;
+//			transactionInfo.task.setPartOf(null);
+//		}
+
 		// locatorFormDTO added at end so that any updated values (like
 		// serviceRequestId) get added to the
 		for (ServiceRequestObjects curServiceRequestObjects : transactionInfo.serviceRequestPatientPairs) {
@@ -139,7 +144,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	private Task createFhirTask(LocatorFormDTO locatorFormDTO, TaskStatus status) {
 		Task fhirTask = new Task();
 		String taskId = locatorFormDTO.getTaskId();
+		if (StringUtils.isBlank(taskId)) {
+			taskId = UUID.randomUUID().toString();
+		}
 		fhirTask.setId(taskId);
+		locatorFormDTO.setTaskId(taskId);
 
 		fhirTask.setRequester(new Reference(requesterId));
 
@@ -178,7 +187,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			TaskStatus status) {
 		Task fhirTask = new Task();
 		String taskId = comp.getSubTaskId();
+		if (StringUtils.isBlank(taskId)) {
+			taskId = UUID.randomUUID().toString();
+		}
 		fhirTask.setId(taskId);
+		comp.setSubTaskId(taskId);
 
 		Identifier identifier = new Identifier();
 		identifier.setId(taskId);
@@ -197,17 +210,21 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	private ServiceRequestObjects createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp,
-			TaskStatus status) {
+			 TaskStatus status) {
 		// patient is created here and used for SR subjectRef
-		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
+		Patient fhirPatient = createFhirPatient(locatorFormDTO,  comp);
 		// patient is created here and used for SR subjectRef
-		Specimen specimen = createSpecimen(locatorFormDTO, comp);
+		Specimen specimen = createSpecimen(locatorFormDTO,  comp);
 		// patient is created here and used for SR subjectRef
-		Task task = createSubFhirTask(locatorFormDTO, comp, status);
+		Task task = createSubFhirTask(locatorFormDTO, comp,  status);
 
 		ServiceRequest serviceRequest = new ServiceRequest();
 		String serviceRequestId = comp.getServiceRequestId();
+		if (StringUtils.isBlank(serviceRequestId)) {
+			serviceRequestId = UUID.randomUUID().toString();
+		}
 		serviceRequest.setId(serviceRequestId);
+		comp.setServiceRequestId(serviceRequestId);
 		CodeableConcept codeableConcept = new CodeableConcept();
 		for (String loincCode : loincCodes) {
 			codeableConcept.addCoding(new Coding().setCode(loincCode).setSystem("http://loinc.org"));
@@ -230,7 +247,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	private Specimen createSpecimen(LocatorFormDTO locatorFormDTO, Traveller comp) {
 		Specimen specimen = new Specimen();
 		String specimenId = comp.getSpecimenId();
+		if (StringUtils.isBlank(specimenId)) {
+			specimenId = UUID.randomUUID().toString();
+		}
 		specimen.setId(specimenId);
+		comp.setSpecimenId(specimenId);
 
 		specimen.setReceivedTime(new Date());
 		specimen.setType(new CodeableConcept());
@@ -242,7 +263,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	private Patient createFhirPatient(LocatorFormDTO locatorFormDTO, Traveller comp) {
 		Patient fhirPatient = new Patient();
 		String patientId = comp.getPatientId();
+		if (StringUtils.isBlank(patientId)) {
+			patientId = UUID.randomUUID().toString();
+		}
 		fhirPatient.setId(patientId);
+		comp.setPatientId(patientId);
 
 		HumanName humanName = new HumanName();
 		List<HumanName> humanNameList = new ArrayList<>();

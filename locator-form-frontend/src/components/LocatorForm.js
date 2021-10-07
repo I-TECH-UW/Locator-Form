@@ -65,7 +65,7 @@ const steps = [
   'nav.item.step.contactInfo',
   'nav.item.step.addresses',
   'nav.item.step.emergencyContact',
-  'nav.item.step.travelCompanion',
+  // 'nav.item.step.travelCompanion',
   'nav.item.step.confirmation',
 ]
 
@@ -103,11 +103,11 @@ class LocatorForm extends React.Component {
         return <Step8 formikProps={formikProps} intl={this.props.intl} />
       case 8:
         return <Step9 formikProps={formikProps} intl={this.props.intl} />
+      // case 9:
+        // return <Step10 formikProps={formikProps} intl={this.props.intl} />
       case 9:
-        return <Step10 formikProps={formikProps} intl={this.props.intl} />
-      case 10:
         return <Confirmation formikProps={formikProps} intl={this.props.intl} />
-      case 11:
+      case 10:
         return <Success formikProps={formikProps} intl={this.props.intl} summaryAccessInfo={this.state.summaryAccessInfo} />
       default:
         return <div>Not Found</div>
