@@ -247,7 +247,7 @@ class HealthDesk extends React.Component {
 								<MyTextInput
 									label={<FormattedMessage id="nav.item.testKitId" defaultMessage="Test Kit ID" />}
 									name="testKitId"
-									requireField={true}
+									requireField={false}
 									type="text"
 									// disabled={this.state.searching || this.state.confirming} 
 								/>}

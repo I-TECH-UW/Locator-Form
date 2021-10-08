@@ -108,7 +108,7 @@ class Step8 extends React.Component {
 								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
 								name="temporaryAddress.hotelName"
 								type="text"
-								requireField={true}
+								requireField={false}
 							/>
 						</div>
 						<div className="col-lg-5 form-group ">
@@ -116,7 +116,7 @@ class Step8 extends React.Component {
 								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />}
 								name="temporaryAddress.numberAndStreet"
 								type="text"
-								requireField={true}
+								requireField={false}
 							/>
 						</div>
 						<div className="col-lg-2 form-group ">
