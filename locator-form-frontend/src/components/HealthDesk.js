@@ -257,7 +257,7 @@ class HealthDesk extends React.Component {
 								<div className="row">
 								<div className="col-lg-4 form-group">
 		                  <button
-		                    disabled={this.state.isSubmitting || !formikProps.isValid || !formikProps.dirty }
+		                    disabled={this.state.isSubmitting || !formikProps.isValid}
 		                    type="submit"
 		                    className={'confirm-button'}
 		                  >
