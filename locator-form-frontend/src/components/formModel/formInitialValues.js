@@ -10,7 +10,7 @@ export default {
   mobilePhone: '', fixedPhone: '', businessPhone: '',
   email: '', confirmEmail: '',
   sex: '', dateOfBirth: '', nationalId: '', profession: '',
-  passportNumber: '', countryOfPassportIssue: '', countryOfBirth: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
+  passportNumber: '', countryOfPassportIssue: '',passengerNationality: '', countryOfBirth: '', portOfEmbarkation: '', lengthOfStay: '', countriesVisited: [],
   hadCovidBefore: '', fever: '', soreThroat: '', jointPain: '', cough: '', breathingDifficulties: '', rash: '',
   firstVaccineName: '', dateOfFirstDose: '', secondVaccineName: '', dateOfSecondDose: '',
 

@@ -61,7 +61,7 @@ class Step7 extends React.Component {
 					</div>
 					</div>
 					<div className="row">
-						<div className="col-lg-3 form-group ">
+						<div className="col-lg-4 form-group ">
 
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
@@ -70,7 +70,7 @@ class Step7 extends React.Component {
 								type="email"
 							/>
 						</div>
-						<div className="col-lg-3 form-group ">
+						<div className="col-lg-4 form-group ">
 							<MyTextInput
 								requireField={true}
 								label={<FormattedMessage id="nav.item.confirmEmailAddress" defaultMessage="Confirm Email Address" />}
@@ -79,6 +79,23 @@ class Step7 extends React.Component {
 							/>
 						</div>
 								
+						<div className="col-lg-4 form-group ">
+							<Field className="form-control"
+								name={`passengerNationality`}
+							>
+								{({ field, form, meta }) =>
+									<MySelect form={form}
+										name={field.name}
+										requireField={true}
+										onChange={value => this.handleChange(value)}
+										options={countriesList}
+										isMulti={true}
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
+									/>}
+							</Field>
+						</div>
 					</div>
 					<div className="row">
 								

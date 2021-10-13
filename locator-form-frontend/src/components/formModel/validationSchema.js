@@ -201,6 +201,10 @@ export const step7Validation = {
 	countryOfBirth: Yup.string()
 		.max(50, 'error.char.max.exceeded')
 		.required('error.required'),
+   
+	passengerNationality: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),
 		
 	countryOfPassportIssue: Yup.string()
 		.max(50, 'error.char.max.exceeded')

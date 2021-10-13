@@ -192,6 +192,9 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
 		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
 		addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfBirth()), ""), 2, table);
+		addCellToTable("Nationalities: "
+				+ StringUtils.join(getPassengerNationalities(((LocatorFormDTO)traveller).getPassengerNationality()), ", "), 2,
+				table);
 		
 		addCellToTable("Passport Issue Country: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfPassportIssue()), ""), 1, table);
 		addCellToTable("Passport Expiry Date: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
@@ -330,6 +333,14 @@ public class SummaryServiceImpl implements SummaryService {
 			countriesVisitedByName.add(getCountryLabelForValue(countryVisited));
 		}
 		return countriesVisitedByName;
+	}
+
+	private List<String> getPassengerNationalities(Collection<String> nationalities) {
+		List<String> nationalitiesByName = new ArrayList<>();
+		for (String nationality : nationalities) {
+			nationalitiesByName.add(getCountryLabelForValue(nationality));
+		}
+		return nationalitiesByName;
 	}
 
 	private List<String> getCountriesVisitedByName(String[] countriesVisited) {
