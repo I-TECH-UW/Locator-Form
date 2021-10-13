@@ -245,8 +245,8 @@ public class SummaryServiceImpl implements SummaryService {
 		addHeaderCellToTable("Contact Info ", 4, table);
 		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 2, table);
 		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 2, table);
-		addCellToTable("Fixed Phone:" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
-		addCellToTable("Business Phone:" + Objects.toString(dto.getBusinessPhone(), ""), 1, table);
+		addCellToTable("Fixed Phone:" + Objects.toString(dto.getFixedPhone(), ""), 2, table);
+		addCellToTable("Business Phone:" + Objects.toString(dto.getBusinessPhone(), ""), 2, table);
 		
 		addHeaderCellToTable("Permanent Address ", 4, table);
 		addCellToTable("Number and Street: " + Objects.toString(dto.getPermanentAddress().getNumberAndStreet(), ""), 1,
