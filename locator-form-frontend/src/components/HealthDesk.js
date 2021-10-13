@@ -247,7 +247,7 @@ class HealthDesk extends React.Component {
 								<MyTextInput
 									label={<FormattedMessage id="nav.item.testKitId" defaultMessage="Test Kit ID" />}
 									name="testKitId"
-									requireField={true}
+									requireField={false}
 									type="text"
 									// disabled={this.state.searching || this.state.confirming} 
 								/>}
@@ -257,7 +257,7 @@ class HealthDesk extends React.Component {
 								<div className="row">
 								<div className="col-lg-4 form-group">
 		                  <button
-		                    disabled={this.state.isSubmitting || !formikProps.isValid || !formikProps.dirty }
+		                    disabled={this.state.isSubmitting || !formikProps.isValid}
 		                    type="submit"
 		                    className={'confirm-button'}
 		                  >

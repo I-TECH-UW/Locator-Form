@@ -33,7 +33,10 @@
 
 	"nav.item.purposeOfVisit.option.business": "Business",
 	"nav.item.purposeOfVisit.option.pleasure": "Vacation",
+	"nav.item.purposeOfVisit.option.crew" : "Crew",
 	"nav.item.purposeOfVisit.option.other": "Other",
+
+	"nav.item.nationality": "Nationality",
 
 	"nav.item.select.placeholder": "Select",
 	"nav.item.select.Mauritius": "Mauritius",

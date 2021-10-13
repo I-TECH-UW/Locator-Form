@@ -14,7 +14,7 @@ class Summary extends React.Component {
 			vaccinated, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
 			mobilePhone, fixedPhone, businessPhone, email, passportNumber, passportExpiryDate, 
 			nationality, countryOfBirth, countryOfPassportIssue,  permanentAddress, temporaryAddress, 
-			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,
+			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,passengerNationality
 		} = this.props.formikProps.values;
 
 		return <div>
@@ -50,6 +50,9 @@ class Summary extends React.Component {
 					</div>
 					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival" />: </span><span className="confirm-value">{arrivalDate}</span>
+					</div>
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{visitPurpose}</span>
 					</div>
 				</div>
 			</div>
@@ -193,9 +196,6 @@ class Summary extends React.Component {
 				</div>
 				<div className="row">
 					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{visitPurpose}</span>
-					</div>
-					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: </span><span className="confirm-value">{mobilePhone}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
@@ -209,8 +209,21 @@ class Summary extends React.Component {
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{email}</span>
 					</div>
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span>
+						<span className="confirm-value">
+							{passengerNationality.map((option, index) => {
+								return  (
+								<React.Fragment key={option}>
+									{index !== 0 && ', '}
+									{getCountryFromCode(option)}
+								</React.Fragment>
+								)
+							})}
+						</span>
+					</div>
 				</div>
-				<div className="row">
+				  <div className="row">
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.countryOfBirth" defaultMessage="Country of Birth" />: </span>
 						<span className="confirm-value">

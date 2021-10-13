@@ -45,7 +45,7 @@ export const step2Validation = {
 		.required('error.required'),
 	visitPurpose: Yup.string()
 		.oneOf(
-			['business', 'pleasure', 'other'],
+			['business','pleasure','crew','other'],
 			'error.invalid.selection'
 		)
 		.required('error.required'),
@@ -201,6 +201,10 @@ export const step7Validation = {
 	countryOfBirth: Yup.string()
 		.max(50, 'error.char.max.exceeded')
 		.required('error.required'),
+   
+	passengerNationality: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),
 		
 	countryOfPassportIssue: Yup.string()
 		.max(50, 'error.char.max.exceeded')
@@ -267,8 +271,8 @@ export const step8Validation = {
 			hotelName: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
 			numberAndStreet: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
+				.max(50, 'error.char.max.exceeded'),
+			   // .required('error.required'),
 			apartmentNumber: Yup.string()
 				.max(20, 'error.char.max.exceeded'),
 			city: Yup.string()
@@ -372,9 +376,9 @@ export const step11Validation = {
 export const testKit = {
 		testKitId: Yup.string()
 			.max(25, 'error.char.max.exceeded')
-			.required('error.required')
 			.matches("^[A-Za-z0-9]+$", "error.alphanum")
-}
+			//.required('error.required')
+};
 
 
 export const validationSchemaSteps = [

@@ -191,22 +191,25 @@ public class SummaryServiceImpl implements SummaryService {
 		
 		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
 		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
-		addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfBirth()), ""), 2, table);
-		
+		addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfBirth()), ""), 1, table);
 		addCellToTable("Passport Issue Country: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfPassportIssue()), ""), 1, table);
+		
 		addCellToTable("Passport Expiry Date: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
-		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 2, table);
+		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 1, table);
+		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(((LocatorFormDTO)traveller).getLengthOfStay(), ""), 1,
+				table);
+		addCellToTable("Port Of Embarkation: " + Objects.toString(((LocatorFormDTO)traveller).getPortOfEmbarkation(), ""), 1, table);
+		addCellToTable("Nationalities: "
+				+ StringUtils.join(getPassengerNationalities(((LocatorFormDTO)traveller).getPassengerNationality()), ", "), 2,
+				table);
+		addCellToTable("Countries visited during last 6 months: "
+				+ StringUtils.join(getCountriesVisitedByName(((LocatorFormDTO)traveller).getCountriesVisited()), ", "), 2,
+				table);
+		
 	}
 
 	private void addHealthInformationToTable(LocatorFormDTO dto, PdfPTable table) {
 	//	addHeaderCellToTable("Health Information ", 4, table);
-		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(dto.getLengthOfStay(), ""), 1,
-				table);
-		addCellToTable("Countries visited during last 6 months: "
-				+ StringUtils.join(getCountriesVisitedByName(dto.getCountriesVisited()), ", "), 2,
-				table);
-		addCellToTable("Port Of Embarkation: " + Objects.toString(dto.getPortOfEmbarkation(), ""), 1, table);
-
 		addHeaderCellToTable("Have you experienced any of the following within the past 14 days? ", 4, table);
 		addCellToTable("Fever: " + Objects.toString(dto.getFever(), ""), 1, table);
 		addCellToTable("Sore Throat: " + Objects.toString(dto.getSoreThroat(), ""), 1, table);
@@ -235,15 +238,16 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Flight: " + Objects.toString(dto.getFlightNumber(), ""), 1, table);
 		addCellToTable("Seat: " + Objects.toString(traveller.getSeatNumber(), ""), 1, table);
 		addCellToTable("Date Of Arrival: " + Objects.toString(dto.getArrivalDate(), ""), 1, table);
+		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 2, table);
+		//just added to properly format table
+		addCellToTable("", 2, table);
 		
 		addHeaderCellToTable("Contact Info ", 4, table);
-		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 2, table);
 		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 2, table);
 		addCellToTable("Mobile Phone: " + Objects.toString(dto.getMobilePhone(), ""), 2, table);
-		addCellToTable("Fixed Phone:" + Objects.toString(dto.getFixedPhone(), ""), 1, table);
-		addCellToTable("Business Phone:" + Objects.toString(dto.getBusinessPhone(), ""), 1, table);
+		addCellToTable("Fixed Phone:" + Objects.toString(dto.getFixedPhone(), ""), 2, table);
+		addCellToTable("Business Phone:" + Objects.toString(dto.getBusinessPhone(), ""), 2, table);
 		
-
 		addHeaderCellToTable("Permanent Address ", 4, table);
 		addCellToTable("Number and Street: " + Objects.toString(dto.getPermanentAddress().getNumberAndStreet(), ""), 1,
 				table);
@@ -330,6 +334,14 @@ public class SummaryServiceImpl implements SummaryService {
 			countriesVisitedByName.add(getCountryLabelForValue(countryVisited));
 		}
 		return countriesVisitedByName;
+	}
+
+	private List<String> getPassengerNationalities(Collection<String> nationalities) {
+		List<String> nationalitiesByName = new ArrayList<>();
+		for (String nationality : nationalities) {
+			nationalitiesByName.add(getCountryLabelForValue(nationality));
+		}
+		return nationalitiesByName;
 	}
 
 	private List<String> getCountriesVisitedByName(String[] countriesVisited) {
