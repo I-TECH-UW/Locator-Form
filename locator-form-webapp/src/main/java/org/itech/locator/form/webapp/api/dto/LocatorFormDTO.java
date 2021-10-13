@@ -37,7 +37,7 @@ public class LocatorFormDTO extends Traveller {
 	}
 
 	public enum VisitPurpose {
-		BUSINESS, PLEASURE, OTHER;
+		BUSINESS, PLEASURE, CREW ,OTHER;
 
 		@Override
 		@JsonValue

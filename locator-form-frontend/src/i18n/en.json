@@ -33,6 +33,7 @@
 
 	"nav.item.purposeOfVisit.option.business": "Business",
 	"nav.item.purposeOfVisit.option.pleasure": "Vacation",
+	"nav.item.purposeOfVisit.option.crew" : "Crew",
 	"nav.item.purposeOfVisit.option.other": "Other",
 
 	"nav.item.select.placeholder": "Select",
