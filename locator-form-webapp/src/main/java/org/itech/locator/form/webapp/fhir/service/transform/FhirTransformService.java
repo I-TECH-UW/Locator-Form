@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Specimen;
 import org.hl7.fhir.r4.model.Task;
@@ -24,6 +25,7 @@ public interface FhirTransformService {
 		public Bundle bundle;
 		public Task task;
 		public List<ServiceRequestObjects> serviceRequestPatientPairs = new ArrayList<>();
+		public QuestionnaireResponse questionnaireResponse;
 	}
 
 	public class ServiceRequestObjects {
