@@ -124,7 +124,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				locatorFormDTO, status);
 		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
-		QuestionnaireResponse questionnaireResponse = createQuestionareResponse(locatorFormDTO);
+		QuestionnaireResponse questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
 		transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		transactionInfo.questionnaireResponse = questionnaireResponse ;
 
@@ -138,7 +138,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
             
-			questionnaireResponse = createQuestionareResponse(locatorFormDTO);
+			questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
 		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
 
@@ -152,7 +152,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
-			questionnaireResponse = createQuestionareResponse(locatorFormDTO);
+			questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
 		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
 
@@ -399,7 +399,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return labels;
 	}
 
-	private QuestionnaireResponse createQuestionareResponse(@Valid LocatorFormDTO locatorFormDTO) {
+	private QuestionnaireResponse createQuestionareResponse(@Valid LocatorFormDTO locatorFormDTO ,TaskStatus taskStatus) {
 		QuestionnaireResponse questionnaireResponse = new QuestionnaireResponse();
 		String questionnaireResponseId = locatorFormDTO.getQuestionnaireResponseId();
 		if (StringUtils.isBlank(questionnaireResponseId)) {
@@ -407,7 +407,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 		locatorFormDTO.setQuestionnaireResponseId(questionnaireResponseId);
 		questionnaireResponse.setId(questionnaireResponseId);
-		questionnaireResponse.setStatus(QuestionnaireResponseStatus.COMPLETED);
+		if (taskStatus == TaskStatus.DRAFT) {
+			questionnaireResponse.setStatus(QuestionnaireResponseStatus.INPROGRESS);
+		} else if (taskStatus == TaskStatus.REQUESTED) {
+			questionnaireResponse.setStatus(QuestionnaireResponseStatus.COMPLETED);
+		}
 		questionnaireResponse
 				.addBasedOn(new Reference(ResourceType.ServiceRequest + "/" + locatorFormDTO.getServiceRequestId()));
 		questionnaireResponse.setSubject(new Reference(ResourceType.Patient + "/" + locatorFormDTO.getPatientId()));
