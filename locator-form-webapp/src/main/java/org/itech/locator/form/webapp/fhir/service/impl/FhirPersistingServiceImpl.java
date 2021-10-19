@@ -6,8 +6,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.hl7.fhir.r4.model.Bundle;
+import ca.uhn.fhir.rest.api.MethodOutcome;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Task;
@@ -38,6 +40,12 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 		log.trace("executing transaction...");
 		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
 		return fhirClient.transaction().withBundle(transactionBundle).execute();
+	}
+
+	@Override
+	public MethodOutcome executeTransaction(Resource resource) {
+		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
+		return fhirClient.update().resource(resource).withId(resource.getIdElement().getIdPart()).encodedJson().execute();
 	}
 
 	@Override
@@ -121,5 +129,4 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 		}
 		return serviceRequests;
 	}
-
 }

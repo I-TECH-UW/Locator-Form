@@ -46,7 +46,7 @@ import org.hl7.fhir.r4.model.Specimen.SpecimenStatus;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
-import org.hl7.fhir.r4.model.codesystems.PublicationStatus;
+import org.itech.locator.form.webapp.api.LocatorFormUtil;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.FhirConstants;
@@ -113,6 +113,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			locatorFormDTO.setServiceRequestId(UUID.randomUUID().toString());
 			locatorFormDTO.setPatientId(UUID.randomUUID().toString());
 			locatorFormDTO.setSpecimenId(UUID.randomUUID().toString());
+			locatorFormDTO.setQuestionnaireResponseId(UUID.randomUUID().toString());
 		}
 
 		Task fhirTask = createFhirTask(locatorFormDTO,  status);
@@ -136,6 +137,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			}
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
+            
+			questionnaireResponse = createQuestionareResponse(locatorFormDTO);
+		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
 
 		for (Traveller comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
@@ -147,6 +151,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			}
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
+
+			questionnaireResponse = createQuestionareResponse(locatorFormDTO);
+		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
 
 //		if (transactionInfo.serviceRequestPatientPairs.size() == 1) {
@@ -394,46 +401,55 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 	private QuestionnaireResponse createQuestionareResponse(@Valid LocatorFormDTO locatorFormDTO) {
 		QuestionnaireResponse questionnaireResponse = new QuestionnaireResponse();
-		String id = UUID.randomUUID().toString();
-		questionnaireResponse.setId(id);
+		String questionnaireResponseId = locatorFormDTO.getQuestionnaireResponseId();
+		if (StringUtils.isBlank(questionnaireResponseId)) {
+			questionnaireResponseId = UUID.randomUUID().toString();
+		}
+		locatorFormDTO.setQuestionnaireResponseId(questionnaireResponseId);
+		questionnaireResponse.setId(questionnaireResponseId);
 		questionnaireResponse.setStatus(QuestionnaireResponseStatus.COMPLETED);
-		questionnaireResponse.addBasedOn(new Reference(ResourceType.ServiceRequest + "/" + locatorFormDTO.getServiceRequestId()));
+		questionnaireResponse
+				.addBasedOn(new Reference(ResourceType.ServiceRequest + "/" + locatorFormDTO.getServiceRequestId()));
 		questionnaireResponse.setSubject(new Reference(ResourceType.Patient + "/" + locatorFormDTO.getPatientId()));
-		questionnaireResponse.setIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(id));
+		questionnaireResponse
+				.setIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(questionnaireResponseId));
 		questionnaireResponse.setAuthored(new Date());
 		questionnaireResponse.setQuestionnaire(ResourceType.Questionnaire + "/" + questionnaireId);
 
 		QuestionnaireResponseItemComponent seatItem = questionnaireResponse.addItem();
 		seatItem.setLinkId(FhirConstants.SEAT_LINK_ID).setText("Seat");
 		QuestionnaireResponseItemAnswerComponent seatAnswer = seatItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getSeatNumber())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getSeatNumber())) {
 			seatAnswer.setValue(new StringType(locatorFormDTO.getSeatNumber()));
 		}
 
 		QuestionnaireResponseItemComponent nationalityItem = questionnaireResponse.addItem();
 		nationalityItem.setLinkId(FhirConstants.NATIONALITY_LINK_ID).setText("Nationality");
-		for (String nationality : locatorFormDTO.getPassengerNationality()) {
+		for (String countryCode : locatorFormDTO.getPassengerNationality()) {
+			String country = LocatorFormUtil.getCountryLabelForValue(countryCode);
 			QuestionnaireResponseItemAnswerComponent nationalityAnswer = nationalityItem.addAnswer();
-			nationalityAnswer.setValue(new StringType(nationality));
+			nationalityAnswer.setValue(new StringType(country));
 		}
 
 		QuestionnaireResponseItemComponent airLineItem = questionnaireResponse.addItem();
 		airLineItem.setLinkId(FhirConstants.AIRLINE_LINK_ID).setText("Airline");
 		QuestionnaireResponseItemAnswerComponent airLineAnswer = airLineItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getAirlineName())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getAirlineName())) {
 			airLineAnswer.setValue(new StringType(locatorFormDTO.getAirlineName()));
 		}
 
 		QuestionnaireResponseItemComponent flightItem = questionnaireResponse.addItem();
 		flightItem.setLinkId(FhirConstants.FLIGHT_LINK_ID).setText("Flight");
 		QuestionnaireResponseItemAnswerComponent flightAnswer = flightItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getFlightNumber())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getFlightNumber())) {
 			flightAnswer.setValue(new StringType(locatorFormDTO.getFlightNumber()));
 		}
 
 		QuestionnaireResponseItemComponent countriesVistedItem = questionnaireResponse.addItem();
-		countriesVistedItem.setLinkId(FhirConstants.COUNTRIES_VISTED_LINK_ID).setText("Countries Vistied within 6 Months");
-		for (String country : locatorFormDTO.getCountriesVisited()) {
+		countriesVistedItem.setLinkId(FhirConstants.COUNTRIES_VISTED_LINK_ID)
+				.setText("Countries Vistied within 6 Months");
+		for (String countryCode : locatorFormDTO.getCountriesVisited()) {
+			String country = LocatorFormUtil.getCountryLabelForValue(countryCode);
 			QuestionnaireResponseItemAnswerComponent countriesVistedAnswer = countriesVistedItem.addAnswer();
 			countriesVistedAnswer.setValue(new StringType(country));
 		}
@@ -487,179 +503,151 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		senseOfSmellAnswer.setValue(new BooleanType(senseOfSmell));
 
 		QuestionnaireResponseItemComponent contactWithInfectedItem = questionnaireResponse.addItem();
-		contactWithInfectedItem.setLinkId(FhirConstants.CONTACT_WITH_NFECTED_LINK_ID).setText("Contact with Infected Individual");
+		contactWithInfectedItem.setLinkId(FhirConstants.CONTACT_WITH_NFECTED_LINK_ID)
+				.setText("Contact with Infected Individual");
 		QuestionnaireResponseItemAnswerComponent contactWithInfectedAnswer = contactWithInfectedItem.addAnswer();
 		Boolean contactWithInfected = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getContact()));
 		contactWithInfectedAnswer.setValue(new BooleanType(contactWithInfected));
-       
+
 		QuestionnaireResponseItemComponent mobilePhoneItem = questionnaireResponse.addItem();
 		mobilePhoneItem.setLinkId(FhirConstants.MOBILE_PHONE_LINK_ID).setText("Mobile Phone");
 		QuestionnaireResponseItemAnswerComponent mobilePhoneAnswer = mobilePhoneItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getMobilePhone())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getMobilePhone())) {
 			mobilePhoneAnswer.setValue(new StringType(locatorFormDTO.getMobilePhone()));
 		}
 
 		QuestionnaireResponseItemComponent fixedPhoneItem = questionnaireResponse.addItem();
 		fixedPhoneItem.setLinkId(FhirConstants.FIXED_PHONE_LINK_ID).setText("Fixed Phone");
 		QuestionnaireResponseItemAnswerComponent fixedPhoneAnswer = fixedPhoneItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getFixedPhone())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getFixedPhone())) {
 			fixedPhoneAnswer.setValue(new StringType(locatorFormDTO.getFixedPhone()));
 		}
 
 		QuestionnaireResponseItemComponent workPhoneItem = questionnaireResponse.addItem();
 		workPhoneItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Work Phone");
 		QuestionnaireResponseItemAnswerComponent workPhoneAnswer = workPhoneItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getBusinessPhone())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getBusinessPhone())) {
 			workPhoneAnswer.setValue(new StringType(locatorFormDTO.getBusinessPhone()));
 		}
 
 		QuestionnaireResponseItemComponent emailItem = questionnaireResponse.addItem();
 		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email");
 		QuestionnaireResponseItemAnswerComponent emailAnswer = emailItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getEmail())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getEmail())) {
 			emailAnswer.setValue(new StringType(locatorFormDTO.getEmail()));
 		}
 
 		QuestionnaireResponseItemComponent nationalIdItem = questionnaireResponse.addItem();
 		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID");
 		QuestionnaireResponseItemAnswerComponent nationalIdAnswer = nationalIdItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getNationalID())) {
+		if (StringUtils.isNotBlank(locatorFormDTO.getNationalID())) {
 			nationalIdAnswer.setValue(new StringType(locatorFormDTO.getNationalID()));
 		}
 
 		QuestionnaireResponseItemComponent passportCountryItem = questionnaireResponse.addItem();
 		passportCountryItem.setLinkId(FhirConstants.PASSPORT_COUNTRY_LINK_ID).setText("Passport Country of Issue");
-		QuestionnaireResponseItemAnswerComponent  passportCountryAnswer =  passportCountryItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getCountryOfPassportIssue())) {
-			passportCountryAnswer.setValue(new StringType(locatorFormDTO.getCountryOfPassportIssue()));
+		QuestionnaireResponseItemAnswerComponent passportCountryAnswer = passportCountryItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getCountryOfPassportIssue())) {
+			String country = LocatorFormUtil.getCountryLabelForValue(locatorFormDTO.getCountryOfPassportIssue());
+			passportCountryAnswer.setValue(new StringType(country));
 		}
 
 		QuestionnaireResponseItemComponent passportNumberItem = questionnaireResponse.addItem();
 		passportNumberItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID).setText("Passport Number");
-		QuestionnaireResponseItemAnswerComponent  passportNumberAnswer =  passportNumberItem.addAnswer();
-		if (!StringUtils.isNotBlank(locatorFormDTO.getPassportNumber())) {
+		QuestionnaireResponseItemAnswerComponent passportNumberAnswer = passportNumberItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPassportNumber())) {
 			passportNumberAnswer.setValue(new StringType(locatorFormDTO.getPassportNumber()));
 		}
 		return questionnaireResponse;
 	}
 
-	public Questionnaire createQuestionnaire(){
+	@Override
+	public Questionnaire createQuestionnaire() {
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.setId(questionnaireId);
-		//questionnaire.setStatus(PublicationStatus.DRAFT);
+		// questionnaire.setStatus(PublicationStatus.DRAFT);
 		questionnaire.addIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(questionnaireId));
 		questionnaire.setTitle("Locator Form Questionnaire");
 		questionnaire.setDate(new Date());
 		questionnaire.setPublisher(locatorFormFhirSystem);
 
 		QuestionnaireItemComponent seatItem = questionnaire.addItem();
-		seatItem.setLinkId(FhirConstants.SEAT_LINK_ID)
-		.setText("Seat")
-		.setType(QuestionnaireItemType.TEXT);
+		seatItem.setLinkId(FhirConstants.SEAT_LINK_ID).setText("Seat").setType(QuestionnaireItemType.TEXT);
 
-		QuestionnaireItemComponent nationalityItem =questionnaire.addItem();
-		nationalityItem.setLinkId(FhirConstants.NATIONALITY_LINK_ID)
-		.setText("Nationality")
-		.setType(QuestionnaireItemType.TEXT);
-	
+		QuestionnaireItemComponent nationalityItem = questionnaire.addItem();
+		nationalityItem.setLinkId(FhirConstants.NATIONALITY_LINK_ID).setText("Nationality")
+				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent airLineItem = questionnaire.addItem();
-		airLineItem.setLinkId(FhirConstants.AIRLINE_LINK_ID)
-		.setText("Airline")
-		.setType(QuestionnaireItemType.TEXT);
+		airLineItem.setLinkId(FhirConstants.AIRLINE_LINK_ID).setText("Airline").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent flightItem = questionnaire.addItem();
-		flightItem.setLinkId(FhirConstants.FLIGHT_LINK_ID)
-		.setText("Flight")
-		.setType(QuestionnaireItemType.TEXT);
+		flightItem.setLinkId(FhirConstants.FLIGHT_LINK_ID).setText("Flight").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent countriesVistedItem = questionnaire.addItem();
 		countriesVistedItem.setLinkId(FhirConstants.COUNTRIES_VISTED_LINK_ID)
-		.setText("Countries Vistied within 6 Months")
-		.setType(QuestionnaireItemType.TEXT);
-	
-		QuestionnaireItemComponent infectionItem =questionnaire.addItem();
-		infectionItem.setLinkId(FhirConstants.PREVIOUS_INFECTION_LINK_ID)
-		.setText("Previous Infection")
-		.setType(QuestionnaireItemType.BOOLEAN);
+				.setText("Countries Vistied within 6 Months").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent infectionItem = questionnaire.addItem();
+		infectionItem.setLinkId(FhirConstants.PREVIOUS_INFECTION_LINK_ID).setText("Previous Infection")
+				.setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent feverItem = questionnaire.addItem();
-		feverItem.setLinkId(FhirConstants.FEVER_LINK_ID)
-		.setText("Fever")
-		.setType(QuestionnaireItemType.BOOLEAN);
+		feverItem.setLinkId(FhirConstants.FEVER_LINK_ID).setText("Fever").setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent soreThroatItem = questionnaire.addItem();
-		soreThroatItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID)
-		.setText("Sore Throat")
-		.setType(QuestionnaireItemType.BOOLEAN);
-
+		soreThroatItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID).setText("Sore Throat")
+				.setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent jointPainItem = questionnaire.addItem();
-		jointPainItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID)
-		.setText("Joint Pain")
-		.setType(QuestionnaireItemType.BOOLEAN);
+		jointPainItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID).setText("Joint Pain")
+				.setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent coughItem = questionnaire.addItem();
-		coughItem.setLinkId(FhirConstants.COUGH_LINK_ID)
-		.setText("Cough")
-		.setType(QuestionnaireItemType.BOOLEAN);
-		
+		coughItem.setLinkId(FhirConstants.COUGH_LINK_ID).setText("Cough").setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent breathingDifficultyItem = questionnaire.addItem();
-		breathingDifficultyItem.setLinkId(FhirConstants.BREATHING_LINK_ID)
-		.setText("Breathing Difficulty")
-		.setType(QuestionnaireItemType.BOOLEAN);
+		breathingDifficultyItem.setLinkId(FhirConstants.BREATHING_LINK_ID).setText("Breathing Difficulty")
+				.setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent rashItem = questionnaire.addItem();
-		rashItem.setLinkId(FhirConstants.RASH_LINK_ID)
-		.setText("Rash")
-		.setType(QuestionnaireItemType.BOOLEAN);
+		rashItem.setLinkId(FhirConstants.RASH_LINK_ID).setText("Rash").setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent senseOfSmellItem = questionnaire.addItem();
-		senseOfSmellItem.setLinkId(FhirConstants.SENSE_OF_SMELL_LINK_ID)
-		.setText("Sense of Smell or Taste")
-		.setType(QuestionnaireItemType.BOOLEAN);
+		senseOfSmellItem.setLinkId(FhirConstants.SENSE_OF_SMELL_LINK_ID).setText("Sense of Smell or Taste")
+				.setType(QuestionnaireItemType.BOOLEAN);
 
 		QuestionnaireItemComponent contactWithInfectedItem = questionnaire.addItem();
 		contactWithInfectedItem.setLinkId(FhirConstants.CONTACT_WITH_NFECTED_LINK_ID)
-		.setText("Contact with Infected Individual")
-		.setType(QuestionnaireItemType.BOOLEAN);
-       
+				.setText("Contact with Infected Individual").setType(QuestionnaireItemType.BOOLEAN);
+
 		QuestionnaireItemComponent mobilePhoneItem = questionnaire.addItem();
-		mobilePhoneItem.setLinkId(FhirConstants.MOBILE_PHONE_LINK_ID)
-		.setText("Mobile Phone")
-		.setType(QuestionnaireItemType.TEXT);
+		mobilePhoneItem.setLinkId(FhirConstants.MOBILE_PHONE_LINK_ID).setText("Mobile Phone")
+				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent fixedPhoneItem = questionnaire.addItem();
-		fixedPhoneItem.setLinkId(FhirConstants.FIXED_PHONE_LINK_ID)
-		.setText("Fixed Phone")
-		.setType(QuestionnaireItemType.TEXT);
+		fixedPhoneItem.setLinkId(FhirConstants.FIXED_PHONE_LINK_ID).setText("Fixed Phone")
+				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent workPhoneItem = questionnaire.addItem();
-		workPhoneItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID)
-		.setText("Work Phone")
-		.setType(QuestionnaireItemType.TEXT);
+		workPhoneItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Work Phone")
+				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent emailItem = questionnaire.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID)
-		.setText("Email")
-		.setType(QuestionnaireItemType.TEXT);
+		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent nationalIdItem = questionnaire.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID)
-		.setText("National ID")
-		.setType(QuestionnaireItemType.TEXT);
+		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID")
+				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent passportCountryItem = questionnaire.addItem();
-		passportCountryItem.setLinkId(FhirConstants.PASSPORT_COUNTRY_LINK_ID)
-		.setText("Passport Country of Issue")
-		.setType(QuestionnaireItemType.TEXT);
+		passportCountryItem.setLinkId(FhirConstants.PASSPORT_COUNTRY_LINK_ID).setText("Passport Country of Issue")
+				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent passportNumberItem = questionnaire.addItem();
-		passportNumberItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID)
-		.setText("Passport Number")
-		.setType(QuestionnaireItemType.TEXT);
-		
+		passportNumberItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID).setText("Passport Number")
+				.setType(QuestionnaireItemType.TEXT);
+
 		return questionnaire;
 	}
 }

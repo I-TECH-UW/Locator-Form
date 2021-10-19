@@ -30,6 +30,7 @@ public class Traveller {
 	private String serviceRequestId;
 	private String patientId;
 	private String specimenId;
+	private String questionnaireResponseId;
 	@NotBlank
 	@Size(max = 50)
     private String lastName;
