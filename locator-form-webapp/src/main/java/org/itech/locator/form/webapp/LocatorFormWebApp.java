@@ -6,8 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 @ComponentScan("org.itech")
 @PropertySources({ @PropertySource("classpath:application.properties"),
 		@PropertySource(value = "file:/var/lib/locatorform/app.properties", ignoreResourceNotFound = true) })
