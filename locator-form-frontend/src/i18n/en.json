@@ -3,6 +3,8 @@
 	"nav.item.home": "Home",
 	"nav.item.about": "About",
 
+	"nav.item.header.swabscreen" : "Swab Screen" ,
+
 	"nav.item.step.passengerType": "Passenger Type",
 	"nav.item.step.flight": "Flight",
 	"nav.item.step.personalInfo": "Personal Info",
@@ -15,6 +17,7 @@
 	"nav.item.step.travelCompanion": "Travel Companions",
 	"nav.item.step.confirmation": "Confirmation",
 	"nav.item.form.search.placeholder": "Scan QR code, or enter name or Passport Number",
+	"nav.item.form.search.placeholder.testkit": "Scan Bar code on test Kit",
 
 	"nav.item.title.option.mr": "Mr",
 	"nav.item.title.option.mrs": "Mrs",

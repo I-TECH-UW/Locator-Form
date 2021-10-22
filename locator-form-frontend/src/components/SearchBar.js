@@ -127,27 +127,52 @@ class SearchBar extends React.Component {
         onSubmit={this.search}
       >{formikProps => (
         <Form>
+	   {this.props.search ==undefined && (		
+			<MyTextInput
+			label={<FormattedMessage id="nav.item.form.search.label" defaultMessage="Search" />}
+			name="searchValue"
+			type="text"
+
+			placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder'})}
+			icon={<FontAwesomeIcon icon={faSearch}/>}
+			onKeyPress={e => {
+				if (e.charCode === 13) {  
+					e.preventDefault();
+					this.setState({'travellers': []});
+					this.search(formikProps.values.searchValue);
+				}
+			}}
+			iconClickable={true}
+			iconOnClick={e => {
+				this.setState({'travellers': []});
+				this.search(formikProps.values.searchValue);
+			}}
+			additionalErrorMessage={this.errorMessage()}
+			// disabled={this.state.searching || this.state.confirming} 
+		/>
+	  )} 
+
+	  {this.props.search =='testkit' && (
 		<MyTextInput
 		label={<FormattedMessage id="nav.item.form.search.label" defaultMessage="Search" />}
 		name="searchValue"
 		type="text"
-		placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder' })}
+		placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder.testkit'})}
 		icon={<FontAwesomeIcon icon={faSearch}/>}
 		onKeyPress={e => {
 			if (e.charCode === 13) {  
-		    	e.preventDefault();
-				this.setState({'travellers': []});
+				e.preventDefault();
 				this.search(formikProps.values.searchValue);
 			}
 		}}
 		iconClickable={true}
 		iconOnClick={e => {
-			this.setState({'travellers': []});
 			this.search(formikProps.values.searchValue);
 		}}
 		additionalErrorMessage={this.errorMessage()}
-		// disabled={this.state.searching || this.state.confirming} 
-	/>
+       />
+	)} 
+	
 	{this.state.isSearching && (
 		<CircularProgress
 		size={24}

@@ -3,6 +3,10 @@
 	"nav.item.selectLanguage": "Choisir la langue",
 	"nav.item.home": "Accueil",
 	"nav.item.healthwebsite": "le ministère de la Santé",
+	
+	"nav.item.header.swabscreen" :"Écran d'écouvillon",
+	"nav.item.form.search.placeholder": "Scannez le code QR, ou entrez le nom ou le numéro de passeport",
+	"nav.item.form.search.placeholder.testkit": "Scannez le code à barres sur le kit de test",
 
 	"nav.item.travellerSection": "Passager",
 	"nav.item.step.passengerType": "Type de Passager",

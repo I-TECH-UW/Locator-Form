@@ -535,14 +535,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 
 		QuestionnaireResponseItemComponent emailItem = questionnaireResponse.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email");
+		emailItem.setLinkId(FhirConstants.EMAIL_LINK_ID).setText("Email");
 		QuestionnaireResponseItemAnswerComponent emailAnswer = emailItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getEmail())) {
 			emailAnswer.setValue(new StringType(locatorFormDTO.getEmail()));
 		}
 
 		QuestionnaireResponseItemComponent nationalIdItem = questionnaireResponse.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID");
+		nationalIdItem.setLinkId(FhirConstants.NATIONALITY_LINK_ID).setText("National ID");
 		QuestionnaireResponseItemAnswerComponent nationalIdAnswer = nationalIdItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getNationalID())) {
 			nationalIdAnswer.setValue(new StringType(locatorFormDTO.getNationalID()));
@@ -638,10 +638,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent emailItem = questionnaire.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
+		emailItem.setLinkId(FhirConstants.EMAIL_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent nationalIdItem = questionnaire.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID")
+		nationalIdItem.setLinkId(FhirConstants.NATIONAL_ID_LINK_ID).setText("National ID")
 				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent passportCountryItem = questionnaire.addItem();
@@ -651,7 +651,6 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent passportNumberItem = questionnaire.addItem();
 		passportNumberItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID).setText("Passport Number")
 				.setType(QuestionnaireItemType.TEXT);
-
 		return questionnaire;
 	}
 }
