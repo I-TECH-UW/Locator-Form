@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { MyTextInput } from './inputs/MyInputs'
 import { CircularProgress } from '@material-ui/core'
 
-class SearchBar extends React.Component {
+export class Search extends React.Component {
 
 	  constructor(props) {
 	    super(props)
@@ -127,52 +127,27 @@ class SearchBar extends React.Component {
         onSubmit={this.search}
       >{formikProps => (
         <Form>
-	   {this.props.search ==undefined && (		
-			<MyTextInput
-			label={<FormattedMessage id="nav.item.form.search.label" defaultMessage="Search" />}
-			name="searchValue"
-			type="text"
-
-			placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder'})}
-			icon={<FontAwesomeIcon icon={faSearch}/>}
-			onKeyPress={e => {
-				if (e.charCode === 13) {  
-					e.preventDefault();
-					this.setState({'travellers': []});
-					this.search(formikProps.values.searchValue);
-				}
-			}}
-			iconClickable={true}
-			iconOnClick={e => {
-				this.setState({'travellers': []});
-				this.search(formikProps.values.searchValue);
-			}}
-			additionalErrorMessage={this.errorMessage()}
-			// disabled={this.state.searching || this.state.confirming} 
-		/>
-	  )} 
-
-	  {this.props.search =='testkit' && (
 		<MyTextInput
 		label={<FormattedMessage id="nav.item.form.search.label" defaultMessage="Search" />}
 		name="searchValue"
 		type="text"
-		placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder.testkit'})}
+		placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder' })}
 		icon={<FontAwesomeIcon icon={faSearch}/>}
 		onKeyPress={e => {
 			if (e.charCode === 13) {  
-				e.preventDefault();
+		    	e.preventDefault();
+				this.setState({'travellers': []});
 				this.search(formikProps.values.searchValue);
 			}
 		}}
 		iconClickable={true}
 		iconOnClick={e => {
+			this.setState({'travellers': []});
 			this.search(formikProps.values.searchValue);
 		}}
 		additionalErrorMessage={this.errorMessage()}
-       />
-	)} 
-	
+		// disabled={this.state.searching || this.state.confirming} 
+	/>
 	{this.state.isSearching && (
 		<CircularProgress
 		size={24}
@@ -218,4 +193,121 @@ class SearchBar extends React.Component {
     </>)
 	}
 }
-export default SearchBar;
+
+export class SwabSearchBar extends React.Component {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			searchValue: '',
+			searchFailed: false,
+			failureReason: '',
+			isSearching: false
+		}
+	}
+
+	errorMessage = () => {
+		return (this.state.searchFailed ?
+			<FormattedMessage id={this.state.failureReason} defaultMessage="Error" />
+			:
+			<></>
+		);
+	}
+
+	onNotFound = () => {
+		console.log("not found")
+		this.setState({
+			isSearching: false,
+			searchFailed: true,
+			failureReason: 'error.search.patient.notfound'
+		});
+	}
+
+	search = (searchValue) => {
+		this.setState({
+			isSearching: true,
+			searchFailed: false,
+			failureReason: ''
+		})
+		fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/swab/servicerequest/${searchValue}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
+			},
+		}).then(async response => {
+			const status = response.status;
+			if (response.ok) {
+				this.setState({
+					isSearching: false,
+					searchFailed: false,
+					failureReason: ''
+				})
+				const swabResponse = await response.json();
+				this.props.onSearchSuccess(swabResponse, searchValue);
+			}
+			else if (status === 404) {
+				this.props.onSearchFail();
+				return this.onNotFound();
+			}
+			else {
+				this.props.onSearchFail();
+				throw new Error("didn't receive form due to error")
+			}
+		}).catch(err => {
+			console.log(err)
+			this.setState({
+				isSearching: false,
+				searchFailed: true,
+				failureReason: 'error.search.form.error'
+			})
+			this.props.onSearchFail();
+		})
+	}
+
+	handleChange = (event) => {
+		this.setState({ searchValue: event.target.value });
+	}
+
+	render() {
+		return (<>
+			<div className="row">
+				<div className="col-lg-6 form-group">
+					<Formik
+						initialValues={{ searchValue: '' }}
+						onSubmit={this.search}
+					>{formikProps => (
+						<Form>
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.form.search.label" defaultMessage="Search" />}
+								name="searchValue"
+								type="text"
+								placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder.testkit' })}
+								icon={<FontAwesomeIcon icon={faSearch} />}
+								onKeyPress={e => {
+									if (e.charCode === 13) {
+										e.preventDefault();
+										this.search(formikProps.values.searchValue);
+										formikProps.resetForm();
+									}
+								}}
+								iconClickable={true}
+								iconOnClick={e => {
+									this.search(formikProps.values.searchValue);
+									formikProps.resetForm();
+								}}
+								additionalErrorMessage={this.errorMessage()}
+							/>
+							{this.state.isSearching && (
+								<CircularProgress
+									size={24}
+								/>
+							)}
+						</Form >
+					)}
+					</Formik>
+				</div>
+			</div>
+		</>)
+	}
+}

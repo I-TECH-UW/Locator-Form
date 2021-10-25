@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import Search from './SearchBar';
+import { SwabSearchBar } from './SearchBar';
 
 class SwabScreen extends React.Component {
 
@@ -18,6 +18,10 @@ class SwabScreen extends React.Component {
 
 	searchSuccess = (locatorForm, key) => {
 		this.setState({ displayPassengerDetails: true, formValues: locatorForm, formKey: key });
+	}
+
+	searchFail = () => {
+		this.setState({ displayPassengerDetails: false, formValues: {}});
 	}
 
 	render() {
@@ -48,15 +52,31 @@ class SwabScreen extends React.Component {
 						<div className="col-lg-12 ">
 							<div className="container pt-3">
 								{this.props.keycloak.hasRealmRole('swab-screen-user') &&
-									<Search search='testkit' onSearchSuccess={this.searchSuccess} intl={this.props.intl} />
+									<SwabSearchBar onSearchSuccess={this.searchSuccess} onSearchFail={this.searchFail} intl={this.props.intl} />
 								}
-								{this.state.displayPassengerDetails &&
-									(<h1>
-										{this.state.formValues.lastName}
-									</h1>)}
 							</div>
 						</div>
 					</div>
+
+					{this.state.displayPassengerDetails && (
+						<div className="row light-row flex-grow-1">
+							<div className="col-lg-12">
+								<div className="container mt-0">
+									<div className="row">
+										<div className="col-lg-6 form-group">
+											<div class="card">
+												<div class="card-header"><span className="confirm-field"><FormattedMessage id="nav.item.testkit.number" defaultMessage="Test Kit Number" />: </span><span className="confirm-value">{this.state.formValues.testKidNumber}</span></div>
+												<div class="card-header"><span className="confirm-field"><FormattedMessage id="nav.item.passengername" defaultMessage="Passenger Name" />: </span><span className="confirm-value">{this.state.formValues.passengerName}</span></div>
+												<div class="card-header"><span className="confirm-field"><FormattedMessage id="nav.item.dateOfBirth" defaultMessage="Passenger Date Of Birth" />: </span><span className="confirm-value"> {this.state.formValues.passengerDob}</span></div>
+											</div>																
+										</div>
+									</div>
+								</div>
+							</div>
+												
+						</div>
+					)}
+					
 				</div>
 			</>
 		);

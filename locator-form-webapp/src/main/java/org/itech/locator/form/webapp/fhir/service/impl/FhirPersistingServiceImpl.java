@@ -30,6 +30,9 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 	@Value("${org.itech.locator.form.fhirstore.uri}")
 	private String localFhirStorePath;
 
+	@Value("${org.itech.locator.form.fhir.system:https://host.openelis.org/locator-form}")
+	private String locatorFormFhirSystem;
+	
 	@Autowired
 	private FhirContext fhirContext;
 	@Autowired
@@ -38,23 +41,21 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 	@Override
 	public Bundle executeTransaction(Bundle transactionBundle) {
 		log.trace("executing transaction...");
-		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-		return fhirClient.transaction().withBundle(transactionBundle).execute();
+		return getFhirClient().transaction().withBundle(transactionBundle).execute();
 	}
-
+	
 	@Override
 	public MethodOutcome executeTransaction(Resource resource) {
-		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-		return fhirClient.update().resource(resource).withId(resource.getIdElement().getIdPart()).encodedJson().execute();
+		return getFhirClient().update().resource(resource).withId(resource.getIdElement().getIdPart()).encodedJson()
+		        .execute();
 	}
-
+	
 	@Override
 	public Optional<Task> getTaskById(String taskId) {
-//		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-//		return fhirClient.read().resource(Task.class).withId(taskId).execute();
-		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-		Bundle searchBundle = fhirClient.search().forResource(Task.class).where(Task.RES_ID.exactly().code(taskId))
-				.returnBundle(Bundle.class).execute();
+		//		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
+		//		return fhirClient.read().resource(Task.class).withId(taskId).execute();
+		Bundle searchBundle = getFhirClient().search().forResource(Task.class).where(Task.RES_ID.exactly().code(taskId))
+		        .returnBundle(Bundle.class).execute();
 		for (BundleEntryComponent entry : searchBundle.getEntry()) {
 			if (entry.hasResource() && ResourceType.Task.equals(entry.getResource().getResourceType())) {
 				return Optional.of((Task) entry.getResource());
@@ -65,9 +66,8 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 
 	@Override
 	public Optional<Task> getTaskFromServiceRequest(String serviceRequestId) {
-		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-		Bundle searchBundle = fhirClient.search().forResource(Task.class)
-				.where(Task.BASED_ON.hasAnyOfIds(serviceRequestId)).returnBundle(Bundle.class).execute();
+		Bundle searchBundle = getFhirClient().search().forResource(Task.class)
+		        .where(Task.BASED_ON.hasAnyOfIds(serviceRequestId)).returnBundle(Bundle.class).execute();
 		for (BundleEntryComponent entry : searchBundle.getEntry()) {
 			if (entry.hasResource() && ResourceType.Task.equals(entry.getResource().getResourceType())) {
 				return Optional.of((Task) entry.getResource());
@@ -79,16 +79,16 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 	@Override
 	public List<Patient> searchPatientByValue(String searchValue) {
 		List<Patient> patients = new ArrayList<>();
-		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
+		IGenericClient fhirClient = getFhirClient();
 		Bundle searchBundle = fhirClient.search().forResource(Patient.class)
-				.where(Patient.IDENTIFIER.exactly().code(searchValue)).returnBundle(Bundle.class).execute();
+		        .where(Patient.IDENTIFIER.exactly().code(searchValue)).returnBundle(Bundle.class).execute();
 		for (BundleEntryComponent entry : searchBundle.getEntry()) {
 			if (entry.hasResource() && ResourceType.Patient.equals(entry.getResource().getResourceType())) {
 				patients.add((Patient) entry.getResource());
 			}
 		}
 		searchBundle = fhirClient.search().forResource(Patient.class).where(Patient.NAME.contains().value(searchValue))
-				.returnBundle(Bundle.class).execute();
+		        .returnBundle(Bundle.class).execute();
 		for (BundleEntryComponent entry : searchBundle.getEntry()) {
 			if (entry.hasResource() && ResourceType.Patient.equals(entry.getResource().getResourceType())) {
 				patients.add((Patient) entry.getResource());
@@ -99,10 +99,9 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 
 	@Override
 	public Optional<ServiceRequest> getServiceRequestForPatient(Patient patient) {
-		IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-		Bundle searchBundle = fhirClient.search().forResource(ServiceRequest.class)
-				.where(ServiceRequest.PATIENT.hasId(patient.getIdElement().getIdPart())).returnBundle(Bundle.class)
-				.execute();
+		Bundle searchBundle = getFhirClient().search().forResource(ServiceRequest.class)
+		        .where(ServiceRequest.PATIENT.hasId(patient.getIdElement().getIdPart())).returnBundle(Bundle.class)
+		        .execute();
 		for (BundleEntryComponent entry : searchBundle.getEntry()) {
 			if (entry.hasResource() && ResourceType.ServiceRequest.equals(entry.getResource().getResourceType())) {
 				return Optional.of((ServiceRequest) entry.getResource());
@@ -115,12 +114,10 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 	public List<ServiceRequest> getServiceRequestsForPatients(List<Patient> patients) {
 		List<ServiceRequest> serviceRequests = new ArrayList<>();
 		if (patients.size() > 0) {
-			IGenericClient fhirClient = fhirContext.newRestfulGenericClient(localFhirStorePath);
-			Bundle searchBundle = fhirClient.search().forResource(ServiceRequest.class)
-					.where(ServiceRequest.PATIENT
-							.hasAnyOfIds(patients.stream().map(e -> e.getIdElement().getIdPart())
-									.collect(Collectors.toList())))
-					.returnBundle(Bundle.class).execute();
+			Bundle searchBundle = getFhirClient().search().forResource(ServiceRequest.class)
+			        .where(ServiceRequest.PATIENT.hasAnyOfIds(
+			            patients.stream().map(e -> e.getIdElement().getIdPart()).collect(Collectors.toList())))
+			        .returnBundle(Bundle.class).execute();
 			for (BundleEntryComponent entry : searchBundle.getEntry()) {
 				if (entry.hasResource() && ResourceType.ServiceRequest.equals(entry.getResource().getResourceType())) {
 					serviceRequests.add((ServiceRequest) entry.getResource());
@@ -128,5 +125,21 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 			}
 		}
 		return serviceRequests;
+	}
+	
+	@Override
+	public Optional<Patient> getPatientFromServiceRequest(String testKitId) {
+		Bundle searchBundle = getFhirClient().search().forResource(ServiceRequest.class)
+		        .where(ServiceRequest.IDENTIFIER.exactly().systemAndValues(locatorFormFhirSystem, testKitId)).include(ServiceRequest.INCLUDE_PATIENT).returnBundle(Bundle.class).execute();
+		for (BundleEntryComponent entry : searchBundle.getEntry()) {
+			if (entry.hasResource() && ResourceType.Patient.equals(entry.getResource().getResourceType())) {
+				return Optional.of((Patient) entry.getResource());
+			}
+		}	
+		return Optional.empty();
+	}
+	
+	private IGenericClient getFhirClient() {
+		return fhirContext.newRestfulGenericClient(localFhirStorePath);
 	}
 }

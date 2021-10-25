@@ -47,6 +47,7 @@ import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.LocatorFormUtil;
+import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.FhirConstants;
@@ -254,6 +255,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 		serviceRequest.setId(serviceRequestId);
 		comp.setServiceRequestId(serviceRequestId);
+		if (locatorFormDTO instanceof HealthDeskDTO) {
+			HealthDeskDTO healthDeskDto = (HealthDeskDTO) locatorFormDTO;
+			if (StringUtils.isNotBlank(healthDeskDto.getTestKitId())) {
+				serviceRequest.addIdentifier(
+				    new Identifier().setSystem(locatorFormFhirSystem).setValue(healthDeskDto.getTestKitId()));
+			}
+		}
 		CodeableConcept codeableConcept = new CodeableConcept();
 		for (String loincCode : loincCodes) {
 			codeableConcept.addCoding(new Coding().setCode(loincCode).setSystem("http://loinc.org"));

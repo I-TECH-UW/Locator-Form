@@ -3,7 +3,7 @@ import { Field, Formik, Form } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
 import { MyTextInput, MyHiddenInput } from './inputs/MyInputs'
-import Search from './SearchBar';
+import {Search} from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
 import {

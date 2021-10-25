@@ -18,6 +18,8 @@ public interface FhirPersistingService {
 
 	Optional<Task> getTaskFromServiceRequest(String serviceRequestId);
 
+	Optional<Patient> getPatientFromServiceRequest(String testKitId);
+
 	List<Patient> searchPatientByValue(String searchValue);
 
 	Optional<ServiceRequest> getServiceRequestForPatient(Patient patient);
