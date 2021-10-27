@@ -47,6 +47,7 @@ import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.LocatorFormUtil;
+import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.FhirConstants;
@@ -254,6 +255,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 		serviceRequest.setId(serviceRequestId);
 		comp.setServiceRequestId(serviceRequestId);
+		if (locatorFormDTO instanceof HealthDeskDTO) {
+			HealthDeskDTO healthDeskDto = (HealthDeskDTO) locatorFormDTO;
+			if (StringUtils.isNotBlank(healthDeskDto.getTestKitId())) {
+				serviceRequest.addIdentifier(
+				    new Identifier().setSystem(locatorFormFhirSystem).setValue(healthDeskDto.getTestKitId()));
+			}
+		}
 		CodeableConcept codeableConcept = new CodeableConcept();
 		for (String loincCode : loincCodes) {
 			codeableConcept.addCoding(new Coding().setCode(loincCode).setSystem("http://loinc.org"));
@@ -535,14 +543,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 
 		QuestionnaireResponseItemComponent emailItem = questionnaireResponse.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email");
+		emailItem.setLinkId(FhirConstants.EMAIL_LINK_ID).setText("Email");
 		QuestionnaireResponseItemAnswerComponent emailAnswer = emailItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getEmail())) {
 			emailAnswer.setValue(new StringType(locatorFormDTO.getEmail()));
 		}
 
 		QuestionnaireResponseItemComponent nationalIdItem = questionnaireResponse.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID");
+		nationalIdItem.setLinkId(FhirConstants.NATIONALITY_LINK_ID).setText("National ID");
 		QuestionnaireResponseItemAnswerComponent nationalIdAnswer = nationalIdItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getNationalID())) {
 			nationalIdAnswer.setValue(new StringType(locatorFormDTO.getNationalID()));
@@ -562,6 +570,12 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		if (StringUtils.isNotBlank(locatorFormDTO.getPassportNumber())) {
 			passportNumberAnswer.setValue(new StringType(locatorFormDTO.getPassportNumber()));
 		}
+
+		QuestionnaireResponseItemComponent visitPurposeItem = questionnaireResponse.addItem();
+		visitPurposeItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit");
+		QuestionnaireResponseItemAnswerComponent visitPurposeAnswer = visitPurposeItem.addAnswer();
+		visitPurposeAnswer.setValue(new StringType(locatorFormDTO.getVisitPurpose().toString()));
+
 		return questionnaireResponse;
 	}
 
@@ -569,7 +583,6 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	public Questionnaire createQuestionnaire() {
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.setId(questionnaireId);
-		// questionnaire.setStatus(PublicationStatus.DRAFT);
 		questionnaire.addIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(questionnaireId));
 		questionnaire.setTitle("Locator Form Questionnaire");
 		questionnaire.setDate(new Date());
@@ -638,10 +651,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent emailItem = questionnaire.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
+		emailItem.setLinkId(FhirConstants.EMAIL_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent nationalIdItem = questionnaire.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID")
+		nationalIdItem.setLinkId(FhirConstants.NATIONAL_ID_LINK_ID).setText("National ID")
 				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent passportCountryItem = questionnaire.addItem();
@@ -651,6 +664,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent passportNumberItem = questionnaire.addItem();
 		passportNumberItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID).setText("Passport Number")
 				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent visitPurposeItem = questionnaire.addItem();
+		visitPurposeItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit")
+		        .setType(QuestionnaireItemType.TEXT);
 
 		return questionnaire;
 	}

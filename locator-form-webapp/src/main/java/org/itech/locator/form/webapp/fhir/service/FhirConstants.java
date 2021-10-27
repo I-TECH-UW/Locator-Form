@@ -43,4 +43,6 @@ public class FhirConstants {
     public static final String PASSPORT_COUNTRY_LINK_ID = "be18527f-939d-4547-a157-fb3afcea9de3";
 
     public static final String PASSPORT_NUMBER_LINK_ID = "b8e60de2-1933-468d-89ca-6ae46882d6d0";
+
+    public static final String PURPOSE_OF_VIST_LINK_ID = "455e47e8-16d7-46ff-98fc-f9823d1cbf50";
 }

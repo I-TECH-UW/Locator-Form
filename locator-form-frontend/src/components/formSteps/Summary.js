@@ -17,6 +17,15 @@ class Summary extends React.Component {
 			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,passengerNationality
 		} = this.props.formikProps.values;
 
+		const convertBoolean = (value) => {
+			if (value == 'true') {
+				return "Yes"
+			} else if (value == 'false') {
+				return "No"
+			} else{
+				return value
+			};
+		}
 		return <div>
 
 			<div id="travellerTypeInformation" className="section">
@@ -124,33 +133,33 @@ class Summary extends React.Component {
 				</div>
 				<div className="row">
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.fever" defaultMessage="Fever" />: </span><span className="confirm-value">{fever}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.fever" defaultMessage="Fever" />: </span><span className="confirm-value">{convertBoolean(fever)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat" />: </span><span className="confirm-value">{soreThroat}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.soreThroat" defaultMessage="Sore Throat" />: </span><span className="confirm-value">{convertBoolean(soreThroat)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain" />: </span><span className="confirm-value">{jointPain}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.jointPain" defaultMessage="Joint Pain" />: </span><span className="confirm-value">{convertBoolean(jointPain)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.cough" defaultMessage="Cough" />: </span><span className="confirm-value">{cough}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.cough" defaultMessage="Cough" />: </span><span className="confirm-value">{convertBoolean(cough)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties" />: </span><span className="confirm-value">{breathingDifficulties}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.breathingdifficulties" defaultMessage="Breathing Difficulties" />: </span><span className="confirm-value">{convertBoolean(breathingDifficulties)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.rash" defaultMessage="Rash" />: </span><span className="confirm-value">{rash}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.rash" defaultMessage="Rash" />: </span><span className="confirm-value">{convertBoolean(rash)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.smellOrTaste" defaultMessage="Loss of sense of smell or taste" />: </span><span className="confirm-value">{smellOrTaste}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.smellOrTaste" defaultMessage="Loss of sense of smell or taste" />: </span><span className="confirm-value">{convertBoolean(smellOrTaste)}</span>
 					</div>
 					<div className="col-xl-2 col-lg-4 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.contact" defaultMessage="Possible contact with COVID 19" />: </span><span className="confirm-value">{contact}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.contact" defaultMessage="Possible contact with COVID 19" />: </span><span className="confirm-value">{convertBoolean(contact)}</span>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-12 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past 7 days?" />: </span><span className="confirm-value">{hadCovidBefore}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past 7 days?" />: </span><span className="confirm-value">{convertBoolean(hadCovidBefore)}</span>
 					</div>
 				</div>
 			</div>
@@ -163,7 +172,7 @@ class Summary extends React.Component {
 			</div>
 			<div className="row">
 				<div className="col-lg-12 form-group">
-					<span className="confirm-field"><FormattedMessage id="nav.item.vaccinated" defaultMessage="Vaccinated" />: </span><span className="confirm-value">{vaccinated}</span>
+					<span className="confirm-field"><FormattedMessage id="nav.item.vaccinated" defaultMessage="Vaccinated" />: </span><span className="confirm-value">{convertBoolean(vaccinated)}</span>
 				</div>
 			</div>
 			

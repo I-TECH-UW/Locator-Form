@@ -211,21 +211,21 @@ public class SummaryServiceImpl implements SummaryService {
 	private void addHealthInformationToTable(LocatorFormDTO dto, PdfPTable table) {
 	//	addHeaderCellToTable("Health Information ", 4, table);
 		addHeaderCellToTable("Have you experienced any of the following within the past 14 days? ", 4, table);
-		addCellToTable("Fever: " + Objects.toString(dto.getFever(), ""), 1, table);
-		addCellToTable("Sore Throat: " + Objects.toString(dto.getSoreThroat(), ""), 1, table);
-		addCellToTable("Joint Pain: " + Objects.toString(dto.getJointPain(), ""), 1, table);
-		addCellToTable("Cough: " + Objects.toString(dto.getCough(), ""), 1, table);
-		addCellToTable("Breathing Difficulties: " + Objects.toString(dto.getBreathingDifficulties(), ""), 1, table);
-		addCellToTable("Rash: " + Objects.toString(dto.getRash(), ""), 1, table);
-		addCellToTable("Loss of Sense of Smell or Taste: " + Objects.toString(dto.getSmellOrTaste(), ""), 2, table);
+		addCellToTable("Fever: " + convertBoolean(Objects.toString(dto.getFever(), "")), 1, table);
+		addCellToTable("Sore Throat: " + convertBoolean(Objects.toString(dto.getSoreThroat(), "")), 1, table);
+		addCellToTable("Joint Pain: " + convertBoolean(Objects.toString(dto.getJointPain(), "")), 1, table);
+		addCellToTable("Cough: " + convertBoolean(Objects.toString(dto.getCough(), "")), 1, table);
+		addCellToTable("Breathing Difficulties: " + convertBoolean(Objects.toString(dto.getBreathingDifficulties(), "")), 1, table);
+		addCellToTable("Rash: " + convertBoolean(Objects.toString(dto.getRash(), "")), 1, table);
+		addCellToTable("Loss of Sense of Smell or Taste: " + convertBoolean(Objects.toString(dto.getSmellOrTaste(), "")), 2, table);
 		
 //		addHeaderCellToTable("Other Health Questions:  ", 4, table);
-		addCellToTable("Possible contact with COVID 19: " + Objects.toString(dto.getContact(), ""), 4, table);
-		addCellToTable("Have you tested positive for Covid-19 in the past 7 days? " + Objects.toString(dto.getHadCovidBefore(), ""),
+		addCellToTable("Possible contact with COVID 19: " + convertBoolean(Objects.toString(dto.getContact(), "")), 4, table);
+		addCellToTable("Have you tested positive for Covid-19 in the past 7 days? " + convertBoolean(Objects.toString(dto.getHadCovidBefore(), "")),
 				4, table);
 		
 		addHeaderCellToTable("Vaccine ", 4, table);
-        addCellToTable("Vaccinated: " + Objects.toString(dto.getVaccinated(), ""), 4, table);
+        addCellToTable("Vaccinated: " + convertBoolean(Objects.toString(dto.getVaccinated(), "")), 4, table);
         addCellToTable("First Vaccine: " + Objects.toString(dto.getFirstVaccineName(), ""), 1, table);
         addCellToTable("First Vaccine Date: " + Objects.toString(dto.getDateOfFirstDose(), ""), 1, table);
         addCellToTable("Second Vaccine: " + Objects.toString(dto.getSecondVaccineName(), ""), 1, table);
@@ -378,4 +378,7 @@ public class SummaryServiceImpl implements SummaryService {
 		return value;
 	}
 
+	private String convertBoolean(String bool){
+       return bool=="true" ? "Yes": "No" ;
+	}
 }

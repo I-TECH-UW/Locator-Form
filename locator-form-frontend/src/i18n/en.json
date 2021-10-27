@@ -3,6 +3,8 @@
 	"nav.item.home": "Home",
 	"nav.item.about": "About",
 
+	"nav.item.header.swabscreen" : "Swab Screen" ,
+
 	"nav.item.step.passengerType": "Passenger Type",
 	"nav.item.step.flight": "Flight",
 	"nav.item.step.personalInfo": "Personal Info",
@@ -15,6 +17,7 @@
 	"nav.item.step.travelCompanion": "Travel Companions",
 	"nav.item.step.confirmation": "Confirmation",
 	"nav.item.form.search.placeholder": "Scan QR code, or enter name or Passport Number",
+	"nav.item.form.search.placeholder.testkit": "Scan Bar code on test Kit",
 
 	"nav.item.title.option.mr": "Mr",
 	"nav.item.title.option.mrs": "Mrs",
@@ -38,6 +41,9 @@
 
 	"nav.item.nationality": "Nationality",
 
+	"nav.item.passengername": "Passenger Name",
+	"nav.item.testkit.number": "Test Kit Number",
+
 	"nav.item.select.placeholder": "Select",
 	"nav.item.select.Mauritius": "Mauritius",
 	"error.required": "Required",
@@ -58,6 +64,6 @@
 	"error.search.form.notfound": "No form could be found with that search value",
 	"error.date.invalidformat":"Date must match yyyy-mm-dd",
 	"date.format": "yyyy-dd-mm",
-	"submit.success.msg": "Thank you for filling out the online locator form. Please check your email for any further instructions.\nYou are also requested to bring a printed copy of the Summary PDF with the barcode at the Airport.\nNote: Click on \"Print Summary\" button to get a copy of the Summary PDF"
-	
+	"submit.success.msg": "Thank you for filling out the online locator form. Please check your email for any further instructions.\nYou are also requested to bring a printed copy of the Summary PDF with the barcode at the Airport.\nNote: Click on \"Print Summary\" button to get a copy of the Summary PDF" ,
+	"error.search.patient.notfound" : "No patient Found with this TestKit Id"
 }

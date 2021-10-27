@@ -99,6 +99,14 @@
         "clientRole": false,
         "containerId": "Airport",
         "attributes": {}
+      },
+      {
+        "id": "dcca17d2-32ee-11ec-8d3d-0242ac130003",
+        "name": "swab-screen-user",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "Airport",
+        "attributes": {}
       }
     ],
     "client": {
