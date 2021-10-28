@@ -131,35 +131,35 @@ class HealthDesk extends React.Component {
 		          <Form>
 		            <div className="questions" id="questions">
 						<StyledFieldSet>
-						<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.passenderDetails' })}</StyledLegend>
-						   {this.props.keycloak.hasRealmRole('health-desk-user') && 
-							<Step1 formikProps={formikProps} intl={this.props.intl} />	
-				            }            	
-							<Step3 formikProps={formikProps} intl={this.props.intl} />	
+							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.passenderDetails' })}</StyledLegend>
+							{this.props.keycloak.hasRealmRole('health-desk-user') &&
+								<Step1 formikProps={formikProps} intl={this.props.intl} />
+							}
+							<Step3 formikProps={formikProps} intl={this.props.intl} />
 							<Step7 formikProps={formikProps} intl={this.props.intl} />
 							<Step8 formikProps={formikProps} intl={this.props.intl} />
-							{this.props.keycloak.hasRealmRole('health-desk-user') && 
-							<Step9 formikProps={formikProps} intl={this.props.intl} />
-						    }    
+							{this.props.keycloak.hasRealmRole('health-desk-user') &&
+								<Step9 formikProps={formikProps} intl={this.props.intl} />
+							}
 						</StyledFieldSet>
 						<StyledFieldSet>
-							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.flightDetails' })}</StyledLegend>			            	
+							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.flightDetails' })}</StyledLegend>
 							<Step2 role={role} formikProps={formikProps} intl={this.props.intl} />
-						</StyledFieldSet>	
+						</StyledFieldSet>
 						<StyledFieldSet>
-						    <StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.details' })}</StyledLegend>
+							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.details' })}</StyledLegend>
 							<Step4 formikProps={formikProps} intl={this.props.intl} />
-							{this.props.keycloak.hasRealmRole('health-desk-user') && 
-							<Step5 formikProps={formikProps} intl={this.props.intl} />
-						    }  
+							{this.props.keycloak.hasRealmRole('health-desk-user') &&
+								<Step5 formikProps={formikProps} intl={this.props.intl} />
+							}
 						</StyledFieldSet>
-					
-						{this.props.keycloak.hasRealmRole('health-desk-user') && 
-						<StyledFieldSet>
-						    <StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.vaccine' })}</StyledLegend>
-							<Step6 formikProps={formikProps} intl={this.props.intl} />
-						</StyledFieldSet>
-						  }  
+
+						{this.props.keycloak.hasRealmRole('health-desk-user') &&
+							<StyledFieldSet>
+								<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.vaccine' })}</StyledLegend>
+								<Step6 formikProps={formikProps} intl={this.props.intl} />
+							</StyledFieldSet>
+						}
 					 
 		            	{/* <Step10 formikProps={formikProps} intl={this.props.intl} /> */}
 						<div className="row">
@@ -301,13 +301,13 @@ class HealthDesk extends React.Component {
 		                    {<FormattedMessage id="nav.item.submit" defaultMessage="Submit" /> }
 		                  </button>
 
-						  <button
-		                    disabled={this.state.isSubmitting || !formikProps.isValid}
-		                    type="reset"
-		                    className={'confirm-button'}
-		                  >
-		                    {<FormattedMessage id="nav.item.cancel" defaultMessage="Cancel and Reset Form" /> }
-		                  </button>
+							<button
+								disabled={this.state.isSubmitting || !formikProps.isValid}
+								type="reset"
+								className={'confirm-button'}
+							>
+								{<FormattedMessage id="nav.item.cancel" defaultMessage="Cancel and Reset Form" />}
+							</button>
 
 		                  {this.state.isSubmitting && (
 		                    <CircularProgress
