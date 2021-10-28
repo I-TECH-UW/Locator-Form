@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { Formik, Form } from 'formik'
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { MyTextInput } from './inputs/MyInputs'
+import { MyTextInput,StyledFieldSet ,StyledLegend } from './inputs/MyInputs'
 import { CircularProgress } from '@material-ui/core'
 
 export class Search extends React.Component {
@@ -154,12 +154,14 @@ export class Search extends React.Component {
 		/>
 	)} 
 		{this.state.travellers.length > 0 && ( 
+			<StyledFieldSet>
+			<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.searchResults' })}</StyledLegend>
 			<table>
 				  <tr>
 				    <td></td>
-				    <td><FormattedMessage id="nav.item.form.search.passport" defaultMessage="Passport Number" /></td>
 				    <td><FormattedMessage id="nav.item.form.search.given" defaultMessage="Given Name" /></td>
 				    <td><FormattedMessage id="nav.item.form.search.family" defaultMessage="Family Name" /></td>
+					<td><FormattedMessage id="nav.item.form.search.passport" defaultMessage="Passport Number" /></td>
 				  </tr>
 
 					{this.state.travellers.map(traveller => (
@@ -175,14 +177,15 @@ export class Search extends React.Component {
 						            	  this.search(traveller.serviceRequestId)}
 						              }
 					//	              checked={field.value === option.value}
-						            /></td>
-						    	<td>{traveller.passportNumber}</td>
+						            /></td>    		
 							    <td>{traveller.firstName}</td>
 							    <td>{traveller.lastName}</td>
+								<td>{traveller.passportNumber}</td>
 							  </tr>
 				          </React.Fragment>
 						))}
 				</table>
+				</StyledFieldSet>
 		)}
 		
 		</Form >

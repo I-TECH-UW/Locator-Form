@@ -3,10 +3,19 @@
 	"nav.item.selectLanguage": "Choisir la langue",
 	"nav.item.home": "Accueil",
 	"nav.item.healthwebsite": "le ministère de la Santé",
+
+	"nav.item.header.healthdesk" :"Bureau de santé" ,
+	"nav.item.header.pio" : "Module Bureau des passeports et de l'immigration" ,
 	
 	"nav.item.header.swabscreen" :"Écran d'écouvillon",
 	"nav.item.form.search.placeholder": "Scannez le code QR, ou entrez le nom ou le numéro de passeport",
-	"nav.item.form.search.placeholder.testkit": "Scannez le code à barres sur le kit de test",
+	"nav.item.form.search.placeholder.testkit": "Scanner le code à barres du kit de test",
+
+	"nav.item.form.search.arrivaldate" :"Date d'arrivée" ,
+	"nav.item.form.search.given" : "Prénom" ,
+	"nav.item.form.search.family" : "Nom de famille" ,
+	"nav.item.form.search.nationalid" : "carte d'identité" ,
+	"nav.item.form.search.passport" : "Numéro de passeport" ,
 
 	"nav.item.travellerSection": "Passager",
 	"nav.item.step.passengerType": "Type de Passager",
@@ -96,6 +105,7 @@
 	"nav.item.addTravelCompanionNonFamily": "Ajouter compagnon non-familial",
 	"nav.item.group": "Groupe (voyage organisé, équipe, entreprise, autre)",
 	"nav.item.submit": "Soumettre",
+	"nav.item.cancel" : "Annuler et réinitialiser le formulaire",
 	
 	"nav.item.profession": "Métier",
 	"nav.item.breathingDifficulties": "Difficultés respiratoires",
@@ -133,6 +143,12 @@
 	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable",
 	"error.date.invalidformat":"La date doit correspondre à aaaa-mm-jj",
 	"date.format":"aaaa-jj-mm",
-	"error.search.patient.notfound" : "Aucun patient trouvé avec cet identifiant TestKit"
-}
+	"error.search.patient.notfound" : "Aucun patient trouvé avec cet identifiant TestKit",
 
+	"nav.item.form.label.searchResults": "Résultats de recherche",
+	"nav.item.form.label.passenderDetails": "Détails du passager",
+	"nav.item.form.label.flightDetails": "Détails du vol et du prétest",
+	"nav.item.form.label.details": "Des détails",
+	"nav.item.form.label.vaccine": "Vaccin",
+	"nav.item.form.label.testkit": "Kit de test"
+}

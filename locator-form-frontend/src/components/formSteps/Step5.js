@@ -80,7 +80,7 @@ class Step5 extends React.Component {
 						</div>
 					</div>
 					<div className="row align-items-end">
-								<div className="col-xl-2 col-lg-4 form-group ">
+								<div className="col-xl-3 col-lg-4 form-group ">
 								<MyRadioInputGroup
 									label={<FormattedMessage id="nav.item.smellOrTaste" defaultMessage="Loss of sense of smell or taste" />}
 									name="smellOrTaste"
@@ -89,8 +89,8 @@ class Step5 extends React.Component {
 										{ key: 'nav.item.symptoms.option.no', value: 'false'}
 									]}
 								/>
-							</div>
-									<div className="col-xl-2 col-lg-4 form-group ">
+							   </div>
+									<div className="col-xl-3 col-lg-4 form-group ">
 									<MyRadioInputGroup
 										label={<FormattedMessage id="nav.item.contact" defaultMessage="Possible contact with COVID 19" />}
 										name="contact"
@@ -100,7 +100,7 @@ class Step5 extends React.Component {
 										]}
 									/>
 								</div>
-								<div className="col-lg-12 form-group ">
+								<div className="col-lg-6 form-group ">
 								<MyRadioInputGroup
 									label={<FormattedMessage id="nav.item.hadCovidBefore" defaultMessage="Have you tested positive for Covid-19 in the past 7 days?" />}
 									name="hadCovidBefore"
