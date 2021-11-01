@@ -14,9 +14,9 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.Address;
-import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Address.AddressType;
 import org.hl7.fhir.r4.model.Address.AddressUse;
+import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
@@ -28,11 +28,11 @@ import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.QuestionnaireResponse;
-import org.hl7.fhir.r4.model.Questionnaire;
-import org.hl7.fhir.r4.model.Questionnaire.QuestionnaireItemType;
 import org.hl7.fhir.r4.model.Patient.ContactComponent;
+import org.hl7.fhir.r4.model.Questionnaire;
 import org.hl7.fhir.r4.model.Questionnaire.QuestionnaireItemComponent;
+import org.hl7.fhir.r4.model.Questionnaire.QuestionnaireItemType;
+import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent;
 import org.hl7.fhir.r4.model.QuestionnaireResponse.QuestionnaireResponseItemComponent;
 import org.hl7.fhir.r4.model.QuestionnaireResponse.QuestionnaireResponseStatus;
@@ -41,8 +41,8 @@ import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Specimen;
-import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Specimen.SpecimenStatus;
+import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
@@ -138,7 +138,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			}
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
-            
+
 			questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
 		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
@@ -426,7 +426,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		questionnaireResponse
 				.setIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(questionnaireResponseId));
 		questionnaireResponse.setAuthored(new Date());
-		questionnaireResponse.setQuestionnaire(ResourceType.Questionnaire + "/" + questionnaireId);
+		questionnaireResponse.setQuestionnaire(questionnaireId);
 
 		QuestionnaireResponseItemComponent seatItem = questionnaireResponse.addItem();
 		seatItem.setLinkId(FhirConstants.SEAT_LINK_ID).setText("Seat");
