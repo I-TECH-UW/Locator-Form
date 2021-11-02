@@ -76,6 +76,7 @@ public class FormSearchController {
 							traveller.setPassportNumber(id.getValue());
 						}
 					}
+					traveller.setFormSubmitionDateTime(serviceRequest.get().getAuthoredOn());
 					travellers.add(traveller);
 				}
 			}

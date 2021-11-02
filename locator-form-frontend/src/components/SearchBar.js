@@ -159,6 +159,7 @@ export class Search extends React.Component {
 			<table>
 				  <tr>
 				    <td></td>
+					<td><FormattedMessage id="nav.item.form.search.submitdate" defaultMessage="Submission Time" /></td>
 				    <td><FormattedMessage id="nav.item.form.search.given" defaultMessage="Given Name" /></td>
 				    <td><FormattedMessage id="nav.item.form.search.family" defaultMessage="Family Name" /></td>
 					<td><FormattedMessage id="nav.item.form.search.passport" defaultMessage="Passport Number" /></td>
@@ -177,7 +178,8 @@ export class Search extends React.Component {
 						            	  this.search(traveller.serviceRequestId)}
 						              }
 					//	              checked={field.value === option.value}
-						            /></td>    		
+						            /></td> 
+								<td>{traveller.formSubmitionDateTime}</td>	   		
 							    <td>{traveller.firstName}</td>
 							    <td>{traveller.lastName}</td>
 								<td>{traveller.passportNumber}</td>

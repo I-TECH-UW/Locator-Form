@@ -16,6 +16,7 @@
 	"nav.item.form.search.family" : "Nom de famille" ,
 	"nav.item.form.search.nationalid" : "carte d'identité" ,
 	"nav.item.form.search.passport" : "Numéro de passeport" ,
+	"nav.item.form.search.submitdate" : "Heure de soumission",
 
 	"nav.item.travellerSection": "Passager",
 	"nav.item.step.passengerType": "Type de Passager",
