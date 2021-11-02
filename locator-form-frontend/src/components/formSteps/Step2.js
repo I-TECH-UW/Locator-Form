@@ -34,6 +34,7 @@ class Step2 extends React.Component {
 								type="text"
 							/>
 						</div>
+					  {(this.props.role =='healthDesk'||this.props.role ==undefined)&& (
 						<div className="col-lg-4  form-group">
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
@@ -41,6 +42,7 @@ class Step2 extends React.Component {
 								type="text"
 							/>
 						</div>
+						)}
 					</div>
 					<div className="row">
 						<div className="col-lg-4  form-group">

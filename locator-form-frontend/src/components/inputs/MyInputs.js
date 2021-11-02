@@ -32,6 +32,19 @@ export const StyledErrorMessage = styled.div`
 export const StyledLabel = styled.label`
 	  margin-top: 1rem;	
   `;
+
+export const StyledFieldSet =styled.fieldset`
+   border: 2px solid;
+   padding: 10px;	
+`;
+
+export const StyledLegend =styled.legend`
+  margin: 10px;
+  width: auto;	
+  font-size: 17px; 
+  padding: 5px;
+  color: #3366ff;
+`;
   
 export const dateInputToday = () => {
 		var now = new Date()

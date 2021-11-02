@@ -272,7 +272,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		serviceRequest.addSpecimen(new Reference(ResourceType.Specimen + "/" + specimen.getIdElement().getIdPart()));
 		serviceRequest.setRequester(new Reference(requesterId));
 		serviceRequest.addLocationReference(new Reference(locationId));
-
+		serviceRequest.setAuthoredOn(new Date());
 		specimen.addRequest(
 				new Reference(ResourceType.ServiceRequest + "/" + serviceRequest.getIdElement().getIdPart()));
 
