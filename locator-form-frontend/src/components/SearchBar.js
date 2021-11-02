@@ -157,13 +157,13 @@ export class Search extends React.Component {
 			<StyledFieldSet>
 			<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.searchResults' })}</StyledLegend>
 			<table>
-				  <tr>
-				    <td></td>
+				<tr>
+					<td></td>
 					<td><FormattedMessage id="nav.item.form.search.submitdate" defaultMessage="Submission Time" /></td>
-				    <td><FormattedMessage id="nav.item.form.search.given" defaultMessage="Given Name" /></td>
-				    <td><FormattedMessage id="nav.item.form.search.family" defaultMessage="Family Name" /></td>
+					<td><FormattedMessage id="nav.item.form.search.given" defaultMessage="Given Name" /></td>
+					<td><FormattedMessage id="nav.item.form.search.family" defaultMessage="Family Name" /></td>
 					<td><FormattedMessage id="nav.item.form.search.passport" defaultMessage="Passport Number" /></td>
-				  </tr>
+				</tr>
 
 					{this.state.travellers.map(traveller => (
 							<React.Fragment key={traveller.serviceRequestId}> 
