@@ -269,7 +269,7 @@ export const step8Validation = {
 			}),
 		temporaryAddress: Yup.object().shape({
 			hotelName: Yup.string()
-				.max(50, 'error.char.max.exceeded'),
+				.max(70, 'error.char.max.exceeded'),
 			numberAndStreet: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
 			   // .required('error.required'),
