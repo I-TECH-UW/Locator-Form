@@ -6,7 +6,7 @@ export default {
   title: '',firstName: '', lastName: '', middleInitial: '', 
   acceptedTerms: false,
   tempAddrCheckbox:false,
-  nohotelSearch:false,
+  hotelSearchCheck:false,
   visitPurpose: '', arrivalDate: '',
   mobilePhone: '', fixedPhone: '', businessPhone: '',
   email: '', confirmEmail: '',

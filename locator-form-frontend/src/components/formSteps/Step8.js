@@ -9,10 +9,10 @@ class Step8 extends React.Component {
   
 	render() {
     	console.log("errors: " + JSON.stringify(this.props.formikProps.errors))
-		const nohotelSearch = this.props.formikProps.values.nohotelSearch
+		const hotelSearch = this.props.formikProps.values.hotelSearchCheck
 		const hotel =  this.props.formikProps.values.temporaryAddress.hotelName
 		const address = this.props.formikProps.values.temporaryAddress.numberAndStreet
-	    this.props.formikProps.values.temporaryAddress.numberAndStreet = nohotelSearch ? address : getHotelAddress(hotel)
+	    this.props.formikProps.values.temporaryAddress.numberAndStreet = hotelSearch ? address : getHotelAddress(hotel)
 		return <div>
 
 			<div className="step" id="step8">
@@ -107,7 +107,7 @@ class Step8 extends React.Component {
 					}
 					<div className="row">
 						<div className="col-lg-5 form-group ">
-						{!nohotelSearch  &&
+						{!hotelSearch  &&
 							<Field name="temporaryAddress.hotelName">
 								{({ field, form, meta }) =>
 									<MySelect label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
@@ -121,7 +121,7 @@ class Step8 extends React.Component {
 								}
 							</Field>
                           }
-						  {nohotelSearch &&
+						  {hotelSearch &&
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
 								name="temporaryAddress.hotelName"
@@ -162,8 +162,8 @@ class Step8 extends React.Component {
 					   </div>
 					   <div className="col-lg-12 form-group">
 							<MyCheckbox
-								className="required-field-field" name="nohotelSearch">
-								<FormattedMessage id="nav.item.declareInformation" defaultMessage="I am not staying at a hotel / my hotel isn't listed" 
+								className="required-field-field" name="hotelSearchCheck">
+								<FormattedMessage id="nav.item.noHotel" defaultMessage="I am not staying at a hotel / my hotel isn't listed" 
 								/>						   		
 							</MyCheckbox>
 						</div>
