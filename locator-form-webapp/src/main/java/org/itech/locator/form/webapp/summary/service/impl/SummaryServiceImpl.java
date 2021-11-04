@@ -188,24 +188,18 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Last (Family) Name: " + Objects.toString(traveller.getLastName(), ""), 1, table);
 		addCellToTable("First (Given) Name: " + Objects.toString(traveller.getFirstName(), ""), 1, table);
 		addCellToTable("Middle Initial: " + Objects.toString(traveller.getMiddleInitial(), ""), 1, table);
-		
 		addCellToTable("Sex: " + Objects.toString(traveller.getSex(), ""), 1, table);
 		addCellToTable("Date Of Birth: " + Objects.toString(traveller.getDateOfBirth(), ""), 1, table);
+
 		addCellToTable("Country Of Birth: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfBirth()), ""), 1, table);
 		addCellToTable("Passport Issue Country: " + Objects.toString(getCountryLabelForValue(traveller.getCountryOfPassportIssue()), ""), 1, table);
 		
 		addCellToTable("Passport Expiry Date: " + Objects.toString(traveller.getPassportExpiryDate(), ""), 1, table);
 		addCellToTable("Passport Number: " + Objects.toString(traveller.getPassportNumber(), ""), 1, table);
-		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(((LocatorFormDTO)traveller).getLengthOfStay(), ""), 1,
-				table);
-		addCellToTable("Port Of Embarkation: " + Objects.toString(((LocatorFormDTO)traveller).getPortOfEmbarkation(), ""), 1, table);
-		addCellToTable("Nationalities: "
-				+ StringUtils.join(getPassengerNationalities(((LocatorFormDTO)traveller).getPassengerNationality()), ", "), 2,
-				table);
-		addCellToTable("Countries visited during last 6 months: "
-				+ StringUtils.join(getCountriesVisitedByName(((LocatorFormDTO)traveller).getCountriesVisited()), ", "), 2,
-				table);
-		
+		addCellToTable("Proposed Length of Stay in Mauritius (days): " + Objects.toString(((LocatorFormDTO)traveller).getLengthOfStay(), ""), 1, table);
+	    addCellToTable("Port Of Embarkation: " + Objects.toString(((LocatorFormDTO)traveller).getPortOfEmbarkation(), ""), 1, table);
+	    addCellToTable("Nationalities: " + StringUtils.join(getPassengerNationalities(((LocatorFormDTO)traveller).getPassengerNationality()), ", "), 2, table);
+	    addCellToTable("Countries visited during last 6 months: " + StringUtils.join(getCountriesVisitedByName(((LocatorFormDTO)traveller).getCountriesVisited()), ", "), 2, table);
 	}
 
 	private void addHealthInformationToTable(LocatorFormDTO dto, PdfPTable table) {

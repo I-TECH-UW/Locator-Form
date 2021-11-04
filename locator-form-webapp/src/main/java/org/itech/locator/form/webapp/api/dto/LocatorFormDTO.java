@@ -77,6 +77,7 @@ public class LocatorFormDTO extends Traveller {
 	@NotBlank
 	@Size(max = 15)
     private String flightNumber;
+	
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate arrivalDate;
@@ -114,6 +115,7 @@ public class LocatorFormDTO extends Traveller {
 
 	@NotNull
 	private VisitPurpose visitPurpose;
+	
 	@Size(max = 15)
 	private String mobilePhone;
 	@Size(max = 15)
@@ -133,7 +135,7 @@ public class LocatorFormDTO extends Traveller {
 
 	@Size(max = 50)
 	private String nationalID;
-
+	
 	@Valid
 	private List<@OneOf(resourcePath = "countries.js") String> passengerNationality;
 	@OneOf(resourcePath = "countries.js")
