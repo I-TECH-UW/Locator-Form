@@ -225,7 +225,7 @@ class Summary extends React.Component {
 								return  (
 								<React.Fragment key={option}>
 									{index !== 0 && ', '}
-									{getCountryFromCode(option)}
+									{option}
 								</React.Fragment>
 								)
 							})}

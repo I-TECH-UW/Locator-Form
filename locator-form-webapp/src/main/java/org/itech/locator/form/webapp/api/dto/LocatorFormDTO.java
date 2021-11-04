@@ -135,7 +135,7 @@ public class LocatorFormDTO extends Traveller {
 	private String nationalID;
 
 	@Valid
-	private List<@OneOf(resourcePath = "countries.js") String> passengerNationality;
+	private List<@OneOf(resourcePath = "nationality.js") String> passengerNationality;
 	@OneOf(resourcePath = "countries.js")
     private String countryOfBirth;
 	@OneOf(resourcePath = "countries.js")

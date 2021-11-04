@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
 import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
+import { nationalityList } from '../data/nationality.js'
 
 class Step7 extends React.Component {
 
@@ -88,7 +89,7 @@ class Step7 extends React.Component {
 										name={field.name}
 										requireField={true}
 										onChange={value => this.handleChange(value)}
-										options={countriesList}
+										options={nationalityList}
 										isMulti={true}
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}

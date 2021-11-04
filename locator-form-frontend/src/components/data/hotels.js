@@ -674,8 +674,6 @@ const hotelDetails =[
 ]
 
 
-
-
 export const hotelList = []
 
   for (var hotel in hotelDetails) {
