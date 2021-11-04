@@ -44,10 +44,7 @@ public class FhirConstants {
 
     public static final String PASSPORT_NUMBER_LINK_ID = "b8e60de2-1933-468d-89ca-6ae46882d6d0";
 
-    public static final String PASSENGER_TYPE_LINK_ID = "5f3ee4a3-825e-441e-abb0-2d14955abe9b";
-    
     public static final String DATE_OF_ARRIVAL_LINK_ID = "74eef3fb-f388-4d35-9349-b68aae0eb00b";
 
     public static final String PURPOSE_OF_VIST_LINK_ID = "455e47e8-16d7-46ff-98fc-f9823d1cbf50";
-
 }
