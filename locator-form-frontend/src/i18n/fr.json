@@ -3,6 +3,7 @@
 	"nav.item.selectLanguage": "Choisir la langue",
 	"nav.item.home": "Accueil",
 	"nav.item.healthwebsite": "le ministère de la Santé",
+	"nav.item.travellerTypeQuestion" : "Êtes-vous citoyen ou non-citoyen mauricien ?" ,
 
 	"nav.item.header.healthdesk" :"Bureau de santé" ,
 	"nav.item.header.pio" : "Module Bureau des passeports et de l'immigration" ,
