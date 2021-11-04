@@ -26,6 +26,20 @@ class Summary extends React.Component {
 				return value
 			};
 		}
+
+		const convertResdentToCitzen = (value) => {
+			if (value == 'resident') {
+				return "Citizen"
+			} else if (value == 'nonresident') {
+				return "Non Citizen"
+			} else{
+				return value
+			};
+		}
+
+		const removeUndercore = (value) => {
+			return value.replace(/_/g, ' ');
+		}
 		return <div>
 
 			<div id="travellerTypeInformation" className="section">
@@ -36,7 +50,7 @@ class Summary extends React.Component {
 				</div>
 				<div className="row">
 					<div className="col-lg-12 form-group">
-						<span className="confirm-field"><FormattedMessage id="nav.item.travellerType" defaultMessage="Passenger Type" />: </span><span className="confirm-value">{travellerType}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.travellerType" defaultMessage="Passenger Type" />: </span><span className="confirm-value">{convertResdentToCitzen(travellerType)}</span>
 					</div>
 				</div>
 			</div>
@@ -61,7 +75,7 @@ class Summary extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival" />: </span><span className="confirm-value">{arrivalDate}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{visitPurpose}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{removeUndercore(visitPurpose)}</span>
 					</div>
 				</div>
 			</div>

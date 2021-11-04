@@ -95,7 +95,7 @@ public class SummaryServiceImpl implements SummaryService {
 		table.setWidthPercentage(100);
 
 		addHeaderCellToTable("Traveller ", 4, table);
-		addCellToTable("Passenger Type: " + Objects.toString(dto.getTravellerType(), ""), 4, table);
+		addCellToTable("Passenger Type: " + convertResdentToCitzen(Objects.toString(dto.getTravellerType(), "")), 4, table);
 		addPersonalInformationToTable(dto, table);
 		addHealthInformationToTable(dto, table);
 		addCommonInformationToTable(dto, dto, table);
@@ -379,6 +379,10 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	private String convertBoolean(String bool){
-       return bool=="true" ? "Yes": "No" ;
+       return bool.equals("true") ? "Yes": "No" ;
+	}
+
+	private String convertResdentToCitzen(String residentType){
+		return residentType.equals("resident") ? "Citizen": "Non Citizen" ;
 	}
 }
