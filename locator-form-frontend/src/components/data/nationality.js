@@ -1183,6 +1183,6 @@ export const nationalityList = []
     var nationalityItem = nationalityDetails[nationality];
     nationalityList.push({
       "value": nationalityItem.value ,
-      "label": nationalityItem.label + " , " +  nationalityItem.value
+      "label": nationalityItem.value
     })
   } 

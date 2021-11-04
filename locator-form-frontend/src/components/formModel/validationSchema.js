@@ -45,7 +45,7 @@ export const step2Validation = {
 		.required('error.required'),
 	visitPurpose: Yup.string()
 		.oneOf(
-			['business','pleasure','crew','other'],
+			['citizen','crew_for_resident','work','study','wedding','visit','sport','spouse_of_mauritian'],
 			'error.invalid.selection'
 		)
 		.required('error.required'),

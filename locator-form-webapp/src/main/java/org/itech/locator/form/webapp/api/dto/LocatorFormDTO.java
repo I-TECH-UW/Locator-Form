@@ -37,8 +37,16 @@ public class LocatorFormDTO extends Traveller {
 	}
 
 	public enum VisitPurpose {
-		BUSINESS, PLEASURE, CREW ,OTHER;
-
+		
+		CITIZEN,
+		CREW_FOR_RESIDENT,
+		WORK,
+		STUDY,
+		WEDDING,
+		VISIT,
+		SPORT,
+		SPOUSE_OF_MAURITIAN;
+		
 		@Override
 		@JsonValue
 		public String toString() {
