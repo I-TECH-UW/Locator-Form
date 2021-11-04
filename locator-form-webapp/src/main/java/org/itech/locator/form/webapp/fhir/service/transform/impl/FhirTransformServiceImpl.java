@@ -47,6 +47,7 @@ import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.LocatorFormUtil;
+import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.FhirConstants;
@@ -90,6 +91,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	@Value("${org.itech.locator.form.fhir.system:https://host.openelis.org/locator-form}")
 	private String locatorFormFhirSystem;
 
+	@Value("${org.itech.locator.form.fhir.system.test-kit:https://host.openelis.org/locator-form/test-kit}")
+	private String testKitIdSystem;
+
 	@Value("${org.itech.locator.form.questionnaire.id}")
 	private String questionnaireId;
 
@@ -100,7 +104,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	@Override
-    public TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, boolean assignIds,
+	public TransactionObjects createTransactionObjects(LocatorFormDTO locatorFormDTO, boolean assignIds,
 			TaskStatus status) throws JsonProcessingException {
 		TransactionObjects transactionInfo = new TransactionObjects();
 		Bundle transactionBundle = new Bundle();
@@ -116,7 +120,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			locatorFormDTO.setQuestionnaireResponseId(UUID.randomUUID().toString());
 		}
 
-		Task fhirTask = createFhirTask(locatorFormDTO,  status);
+		Task fhirTask = createFhirTask(locatorFormDTO, status);
 		transactionBundle.addEntry(createTransactionBundleComponent(fhirTask));
 		transactionInfo.task = fhirTask;
 
@@ -124,9 +128,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				locatorFormDTO, status);
 		addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
-		QuestionnaireResponse questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
+		QuestionnaireResponse questionnaireResponse = createQuestionareResponse(locatorFormDTO, status);
 		transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
-		transactionInfo.questionnaireResponse = questionnaireResponse ;
+		transactionInfo.questionnaireResponse = questionnaireResponse;
 
 		for (Traveller comp : locatorFormDTO.getFamilyTravelCompanions()) {
 			if (assignIds) {
@@ -138,8 +142,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
-			questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
-		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
+			questionnaireResponse = createQuestionareResponse(locatorFormDTO, status);
+			transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
 
 		for (Traveller comp : locatorFormDTO.getNonFamilyTravelCompanions()) {
@@ -152,8 +156,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			fhirServiceRequestPatient = createFhirServiceRequestPatient(locatorFormDTO, comp, status);
 			addServiceRequestPatientPairToTransaction(fhirServiceRequestPatient, transactionInfo);
 
-			questionnaireResponse = createQuestionareResponse(locatorFormDTO ,status);
-		    transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
+			questionnaireResponse = createQuestionareResponse(locatorFormDTO, status);
+			transactionBundle.addEntry(createTransactionBundleComponent(questionnaireResponse));
 		}
 
 //		if (transactionInfo.serviceRequestPatientPairs.size() == 1) {
@@ -212,8 +216,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return transactionComponent;
 	}
 
-	private Task createSubFhirTask(LocatorFormDTO locatorFormDTO, Traveller comp,
-			TaskStatus status) {
+	private Task createSubFhirTask(LocatorFormDTO locatorFormDTO, Traveller comp, TaskStatus status) {
 		Task fhirTask = new Task();
 		String taskId = comp.getSubTaskId();
 		if (StringUtils.isBlank(taskId)) {
@@ -239,13 +242,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	}
 
 	private ServiceRequestObjects createFhirServiceRequestPatient(LocatorFormDTO locatorFormDTO, Traveller comp,
-			 TaskStatus status) {
+			TaskStatus status) {
 		// patient is created here and used for SR subjectRef
-		Patient fhirPatient = createFhirPatient(locatorFormDTO,  comp);
+		Patient fhirPatient = createFhirPatient(locatorFormDTO, comp);
 		// patient is created here and used for SR subjectRef
-		Specimen specimen = createSpecimen(locatorFormDTO,  comp);
+		Specimen specimen = createSpecimen(locatorFormDTO, comp);
 		// patient is created here and used for SR subjectRef
-		Task task = createSubFhirTask(locatorFormDTO, comp,  status);
+		Task task = createSubFhirTask(locatorFormDTO, comp, status);
 
 		ServiceRequest serviceRequest = new ServiceRequest();
 		String serviceRequestId = comp.getServiceRequestId();
@@ -253,7 +256,17 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			serviceRequestId = UUID.randomUUID().toString();
 		}
 		serviceRequest.setId(serviceRequestId);
+		serviceRequest.addIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(serviceRequestId));
 		comp.setServiceRequestId(serviceRequestId);
+
+		if (locatorFormDTO instanceof HealthDeskDTO) {
+			HealthDeskDTO healthDeskDto = (HealthDeskDTO) locatorFormDTO;
+			if (StringUtils.isNotBlank(healthDeskDto.getTestKitId())) {
+				serviceRequest.addIdentifier(
+						new Identifier().setSystem(testKitIdSystem).setValue(healthDeskDto.getTestKitId()));
+			}
+		}
+
 		CodeableConcept codeableConcept = new CodeableConcept();
 		for (String loincCode : loincCodes) {
 			codeableConcept.addCoding(new Coding().setCode(loincCode).setSystem("http://loinc.org"));
@@ -306,8 +319,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		fhirPatient.setName(humanNameList);
 
 		fhirPatient.addIdentifier(new Identifier().setSystem(oeFhirSystem + "/pat_guid").setValue(patientId));
-		fhirPatient.addIdentifier((Identifier) new Identifier().setSystem(locatorFormFhirSystem)
-				.setValue(patientId).setId(patientId));
+		fhirPatient.addIdentifier(
+				(Identifier) new Identifier().setSystem(locatorFormFhirSystem).setValue(patientId).setId(patientId));
 		fhirPatient.addIdentifier((Identifier) new Identifier().setSystem("passport").setValue(comp.getPassportNumber())
 				.setId(comp.getPassportNumber()));
 
@@ -399,7 +412,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		return labels;
 	}
 
-	private QuestionnaireResponse createQuestionareResponse(@Valid LocatorFormDTO locatorFormDTO ,TaskStatus taskStatus) {
+	private QuestionnaireResponse createQuestionareResponse(@Valid LocatorFormDTO locatorFormDTO,
+			TaskStatus taskStatus) {
 		QuestionnaireResponse questionnaireResponse = new QuestionnaireResponse();
 		String questionnaireResponseId = locatorFormDTO.getQuestionnaireResponseId();
 		if (StringUtils.isBlank(questionnaireResponseId)) {
@@ -665,6 +679,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		QuestionnaireItemComponent passportNumberItem = questionnaire.addItem();
 		passportNumberItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID).setText("Passport Number")
+				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent visitPurposeItem = questionnaire.addItem();
+		visitPurposeItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit")
 				.setType(QuestionnaireItemType.TEXT);
 
 		return questionnaire;
