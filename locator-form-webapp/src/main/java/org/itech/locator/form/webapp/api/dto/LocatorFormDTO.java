@@ -37,8 +37,16 @@ public class LocatorFormDTO extends Traveller {
 	}
 
 	public enum VisitPurpose {
-		BUSINESS, PLEASURE, CREW ,OTHER;
-
+		
+		CITIZEN,
+		CREW_FOR_RESIDENT,
+		WORK,
+		STUDY,
+		WEDDING,
+		VISIT,
+		SPORT,
+		SPOUSE_OF_MAURITIAN;
+		
 		@Override
 		@JsonValue
 		public String toString() {
@@ -137,7 +145,7 @@ public class LocatorFormDTO extends Traveller {
 	private String nationalID;
 	
 	@Valid
-	private List<@OneOf(resourcePath = "countries.js") String> passengerNationality;
+	private List<@OneOf(resourcePath = "nationality.js") String> passengerNationality;
 	@OneOf(resourcePath = "countries.js")
     private String countryOfBirth;
 	@OneOf(resourcePath = "countries.js")

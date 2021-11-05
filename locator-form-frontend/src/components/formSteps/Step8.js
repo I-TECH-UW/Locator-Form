@@ -1,15 +1,18 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, MyHiddenInput } from '../inputs/MyInputs'
+import { MyTextInput, MySelect, MyHiddenInput , MyCheckbox} from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
+import {getHotelAddress ,hotelList } from '../data/hotels'
 
 class Step8 extends React.Component {
-
-	
-
+  
 	render() {
     	console.log("errors: " + JSON.stringify(this.props.formikProps.errors))
+		const hotelSearch = this.props.formikProps.values.hotelSearchCheck
+		const hotel =  this.props.formikProps.values.temporaryAddress.hotelName
+		const address = this.props.formikProps.values.temporaryAddress.numberAndStreet
+	    this.props.formikProps.values.temporaryAddress.numberAndStreet = hotelSearch ? address : getHotelAddress(hotel)
 		return <div>
 
 			<div className="step" id="step8">
@@ -104,12 +107,28 @@ class Step8 extends React.Component {
 					}
 					<div className="row">
 						<div className="col-lg-5 form-group ">
+						{!hotelSearch  &&
+							<Field name="temporaryAddress.hotelName">
+								{({ field, form, meta }) =>
+									<MySelect label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
+										name={field.name} 
+										form={form}
+										requireField={false} 
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										options={hotelList}
+									/>
+								}
+							</Field>
+                          }
+						  {hotelSearch &&
 							<MyTextInput
 								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
 								name="temporaryAddress.hotelName"
 								type="text"
 								requireField={false}
 							/>
+						  }
 						</div>
 						<div className="col-lg-5 form-group ">
 							<MyTextInput
@@ -133,12 +152,26 @@ class Step8 extends React.Component {
 								name="temporaryAddress.country"
 								type="hidden"
 							/>
+					   </div>
+
+					   <div className="col-lg-6 form-group ">
+							<MyHiddenInput
+								name="temporaryAddress.country"
+								type="hidden"
+							/>
+					   </div>
+					   <div className="col-lg-12 form-group">
+							<MyCheckbox
+								className="required-field-field" name="hotelSearchCheck">
+								<FormattedMessage id="nav.item.noHotel" defaultMessage="I am not staying at a hotel / my hotel isn't listed" 
+								/>						   		
+							</MyCheckbox>
 						</div>
+						
 						{/* <div className="col-lg-4 form-group ">
 				<MySelect
 					label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
 					name="temporaryAddress.country"
-				>
 					<option value=""></option>
 					<MyCountryOptions/>
 				</MySelect>

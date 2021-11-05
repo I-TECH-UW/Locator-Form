@@ -27,7 +27,7 @@ class Step1 extends React.Component {
 					<div className="row">
 						<div className="col-lg-10 form-group">
 							<MyRadioInputGroup
-								label={<FormattedMessage id="nav.item.travellerTypeQuestion" defaultMessage="Are you a Resident, or Non-Resident of Mauritius?" />}
+								label={<FormattedMessage id="nav.item.travellerTypeQuestion" defaultMessage="Are you a Citizen, or Non-Citizen of Mauritius?" />}
 								name="travellerType"
 								onInputChange={e => {
 									onInputChange(e, this.props.formikProps)
