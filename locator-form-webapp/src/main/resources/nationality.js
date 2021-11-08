@@ -255,22 +255,22 @@
         "label": "UNITED KINGDOM",
         "value": "BRITISH - CITIZEN"
     },
-    {
-        "label": "UK - DEPENDANT",
-        "value": "BRITISH - DEPENDANT"
-    },
+//    {
+//        "label": "UK - DEPENDANT",
+//        "value": "BRITISH - DEPENDANT"
+//    },
     {
         "label": "UK - NATIONAL",
         "value": "BRITISH - NATIONAL"
     },
-    {
-        "label": "UK - OVERSEAS CITIZEN",
-        "value": "BRITISH- OVERSEAS CITIZEN"
-    },
-    {
-        "label": "UK -SUBJECT",
-        "value": "BRITISH - SUBJECT"
-    },
+//    {
+//        "label": "UK - OVERSEAS CITIZEN",
+//        "value": "BRITISH- OVERSEAS CITIZEN"
+//    },
+//    {
+//        "label": "UK -SUBJECT",
+//        "value": "BRITISH - SUBJECT"
+//    },
     {
         "label": "UNITED STATES",
         "value": "AMERICAN"
@@ -555,18 +555,18 @@
         "label": "UPPER VOLTA",
         "value": "UPPER VOLTA"
     },
-    {
-        "label": "MAURITIUS (ISLAND)",
-        "value": "MAURITIUS (ISLAND)"
-    },
+//    {
+//        "label": "MAURITIUS (ISLAND)",
+//        "value": "MAURITIUS (ISLAND)"
+//    },
     {
         "label": "DIEGO GARCIA (MTIUS)",
         "value": "DIEGO GARCIA (MTIUS)"
     },
-    {
-        "label": "PEROS BANHOS (MTIUS)",
-        "value": "PEROS BANHOS (MTIUS)"
-    },
+//    {
+//        "label": "PEROS BANHOS (MTIUS)",
+//        "value": "PEROS BANHOS (MTIUS)"
+//    },
     {
         "label": "STATELESS",
         "value": "STATELESS"
@@ -579,10 +579,10 @@
         "label": "CANTON  I",
         "value": "CANTON  I"
     },
-    {
-        "label": "NOT SPECIFIED",
-        "value": "NOT SPECIFIED"
-    },
+//    {
+//        "label": "NOT SPECIFIED",
+//        "value": "NOT SPECIFIED"
+//    },
     {
         "label": "PACIFIC ISLANDS",
         "value": "PACIFIC ISLANDS"
@@ -591,10 +591,10 @@
         "label": "HIGH SEAS",
         "value": "HIGH SEAS"
     },
-    {
-        "label": "RODRIGUES (MTIUS)",
-        "value": "RODRIGUES (MTIUS)"
-    },
+//    {
+//        "label": "RODRIGUES (MTIUS)",
+//        "value": "RODRIGUES (MTIUS)"
+//    },
     {
         "label": "JOHNSTON ISLAND",
         "value": "JOHNSTON ISLAND"
@@ -667,10 +667,10 @@
         "label": "ISLAND OF GUERNSEY",
         "value": "ISLAND OF GUERNSEY"
     },
-    {
-        "label": "MAURITIUS-MIG",
-        "value": "MAURITIAN-MIG"
-    },
+//    {
+//        "label": "MAURITIUS-MIG",
+//        "value": "MAURITIAN-MIG"
+//    },
     {
         "label": "JAMAICA",
         "value": "JAMAICAN"
@@ -939,10 +939,10 @@
         "label": "ECUADOR",
         "value": "ECUDORIAN"
     },
-    {
-        "label": "UK - PROTECTED",
-        "value": "BRITISH - PROTECTED"
-    },
+//    {
+//        "label": "UK - PROTECTED",
+//        "value": "BRITISH - PROTECTED"
+//    },
     {
         "label": "PANAMA",
         "value": "PANAMANIAN"
@@ -1111,10 +1111,10 @@
         "label": "BOUVET ISLAND",
         "value": "BOUVET ISLAND"
     },
-    {
-        "label": "BRITISH INDIAN OCEAN",
-        "value": "BRITISH INDIAN OCEAN"
-    },
+//    {
+//        "label": "BRITISH INDIAN OCEAN",
+//        "value": "BRITISH INDIAN OCEAN"
+//    },
     {
         "label": "BRUNEI DARUSSALAM",
         "value": "BRUNIE DARUSSALAM"

@@ -123,10 +123,10 @@ export const countriesList = [
     "value": "BR",
     "label": "Brazil"
   },
-  {
-    "value": "IO",
-    "label": "British Indian Ocean Territory"
-  },
+//  {
+//    "value": "IO",
+//    "label": "British Indian Ocean Territory"
+//  },
   {
     "value": "BN",
     "label": "Brunei Darussalam"
