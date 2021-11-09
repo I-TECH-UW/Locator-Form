@@ -146,14 +146,6 @@ public class LocatorFormDTO extends Traveller {
 	
 	@Valid
 	private List<@OneOf(resourcePath = "nationality.js") String> passengerNationality;
-	@OneOf(resourcePath = "countries.js")
-    private String countryOfBirth;
-	@OneOf(resourcePath = "countries.js")
-    private String countryOfPassportIssue;
-	@Size(max = 50)
-    private String passportNumber;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate passportExpiryDate;
 
 	@Valid
     private Address permanentAddress;
