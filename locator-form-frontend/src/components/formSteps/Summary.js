@@ -14,7 +14,7 @@ class Summary extends React.Component {
 			vaccinated, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
 			mobilePhone, fixedPhone, businessPhone, email, passportNumber, passportExpiryDate, 
 			nationality, countryOfBirth, countryOfPassportIssue,  permanentAddress, temporaryAddress, 
-			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions,passengerNationality
+			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions, passengerNationality
 		} = this.props.formikProps.values;
 
 		const convertBoolean = (value) => {
@@ -235,7 +235,7 @@ class Summary extends React.Component {
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />: </span>
 						<span className="confirm-value">
-							{passengerNationality.map((option, index) => {
+							{passengerNationality && passengerNationality.map((option, index) => {
 								return  (
 								<React.Fragment key={option}>
 									{index !== 0 && ', '}
