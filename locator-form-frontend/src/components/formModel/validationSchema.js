@@ -31,7 +31,12 @@ export const step1Validation = {
 }
 
 export const step2Validation = {
-		airlineName: Yup.string()
+	travellerType: Yup.string()
+		.oneOf(
+			['resident', 'nonresident'],
+			'error.invalid.selection')
+		.required('error.required'),
+	airlineName: Yup.string()
 		.max(50, 'error.char.max.exceeded')
 		.required('error.required'),
 	flightNumber: Yup.string()
@@ -44,11 +49,24 @@ export const step2Validation = {
 		.min(today, "error.date.past")
 		.required('error.required'),
 	visitPurpose: Yup.string()
-		.oneOf(
-			['business','pleasure','crew','other'],
-			'error.invalid.selection'
-		)
-		.required('error.required'),
+		.required('error.required')
+		.when('travellerType', {
+			is: 'resident',
+			then: Yup.string()
+				.oneOf(
+					['citizen', 'crew_for_resident'],
+					'error.invalid.selection'
+				)
+		})
+		.when('travellerType', {
+			is: 'nonresident',
+			then: Yup.string()
+				.oneOf(
+					['work', 'study', 'wedding', 'visit', 'sport', 'spouse_of_mauritian'],
+					'error.invalid.selection'
+				)
+		}),
+		
 };
 
 export const step3Validation =  {
@@ -269,7 +287,7 @@ export const step8Validation = {
 			}),
 		temporaryAddress: Yup.object().shape({
 			hotelName: Yup.string()
-				.max(50, 'error.char.max.exceeded'),
+				.max(70, 'error.char.max.exceeded'),
 			numberAndStreet: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
 			   // .required('error.required'),

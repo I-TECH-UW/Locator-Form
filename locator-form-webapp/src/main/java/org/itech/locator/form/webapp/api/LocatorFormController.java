@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.hl7.fhir.r4.model.Bundle;
@@ -17,6 +18,7 @@ import org.itech.locator.form.webapp.email.service.EmailService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService.TransactionObjects;
+import org.itech.locator.form.webapp.security.recaptcha.service.RecaptchaService;
 import org.itech.locator.form.webapp.summary.LabelContentPair;
 import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
 import org.itech.locator.form.webapp.summary.service.SummaryService;
@@ -26,6 +28,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,11 +54,18 @@ public class LocatorFormController {
 	private EmailService emailService;
 	@Autowired
 	private FhirContext fhirContext;
+	@Autowired
+	private RecaptchaService recaptchaService;
 
 	@PostMapping
-	public ResponseEntity<List<SummaryAccessInfo>> submitForm(@RequestBody @Valid LocatorFormDTO locatorFormDTO,
-			BindingResult result)
+	public ResponseEntity<List<SummaryAccessInfo>> submitForm(
+			@RequestParam(name = "recaptchaToken") String recaptchaToken,
+			@RequestBody @Valid LocatorFormDTO locatorFormDTO, BindingResult result, HttpServletRequest request)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
+
+		if (!recaptchaService.verifyRecaptcha(request.getRemoteAddr(), recaptchaToken)) {
+			return ResponseEntity.badRequest().build();
+		}
 		if (result.hasErrors()) {
 			return ResponseEntity.badRequest().build();
 		}

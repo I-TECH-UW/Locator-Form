@@ -4,6 +4,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step11, Step6, Step7, Step8, Step9, Step10,Confirmation, Success } from './formSteps'
 import { validationSchemaSteps } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
+import ReCAPTCHA from "react-google-recaptcha";
 import Layout from './layout/Layout';
 import {
   createMuiTheme,
@@ -80,7 +81,13 @@ class LocatorForm extends React.Component {
       isSubmitting: false,
       submitSuccess: false,
       summaryAccessInfo: {},
+      recaptchaVerified: false,
+      recaptchaToken: '',
     }
+  }
+
+  onSubmitStep = () => {
+    return steps.length - 1 === this.state.activeStep;
   }
 
   _renderStepContent(step, formikProps) {
@@ -118,7 +125,7 @@ class LocatorForm extends React.Component {
     this.setState({ isSubmitting: true })
     var json = JSON.stringify(values)
     console.log(json)
-    fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form`, {
+    fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/locator-form?recaptchaToken=${this.state.recaptchaToken}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -141,7 +148,7 @@ class LocatorForm extends React.Component {
   }
 
   handleSubmit = (values, actions) => {
-    if (steps.length - 1 === this.state.activeStep) {
+    if (this.onSubmitStep()) {
       this.submitForm(values);
     } else {
       this.setState({ 
@@ -180,6 +187,14 @@ class LocatorForm extends React.Component {
   onSuccess = (summaryAccessInfo) => {
     this.setState({ 'submitSuccess': true, 'summaryAccessInfo': summaryAccessInfo })
     this.scrollToTopOfPage();
+  }
+
+  onCaptchaChange = (value) => {
+    if (value === null) {
+      this.setState({recaptchaVerified: false, recaptchaToken: ''});
+    } else {
+      this.setState({recaptchaVerified: true, recaptchaToken: value});
+    }
   }
 
   render() {
@@ -239,6 +254,12 @@ class LocatorForm extends React.Component {
               {this._renderStepContent(this.state.activeStep, formikProps)}
               {this.state.activeStep < steps.length &&
                 <div >
+                  {this.onSubmitStep() && 
+                  <ReCAPTCHA
+                      sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                      onChange={this.onCaptchaChange}
+                    />
+                  }
                   <button
                     disabled={this.state.activeStep === 0}
                     type="button"
@@ -247,11 +268,11 @@ class LocatorForm extends React.Component {
                     <FormattedMessage id="nav.item.back" defaultMessage="Back" />
                   </button>
                   <button
-                    disabled={this.state.isSubmitting || !formikProps.isValid || !formikProps.dirty }
+                    disabled={this.state.isSubmitting || !formikProps.isValid || !formikProps.dirty || (this.onSubmitStep() && !this.state.recaptchaVerified) }
                     type="submit"
-                    className={steps.length - 1 === this.state.activeStep ? 'confirm-button' : 'next-button'}
+                    className={this.onSubmitStep() ? 'confirm-button' : 'next-button'}
                   >
-                    {steps.length - 1 === this.state.activeStep ? <FormattedMessage id="nav.item.submit" defaultMessage="Submit" /> : <FormattedMessage id="nav.item.next" defaultMessage="Next" />}
+                    {this.onSubmitStep() ? <FormattedMessage id="nav.item.submit" defaultMessage="Submit" /> : <FormattedMessage id="nav.item.next" defaultMessage="Next" />}
                   </button>
                   {this.state.isSubmitting && (
                     <CircularProgress

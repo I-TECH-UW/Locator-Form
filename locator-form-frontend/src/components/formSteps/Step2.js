@@ -63,14 +63,22 @@ class Step2 extends React.Component {
 										form={form}
 										requireField={true} 
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-										options={
+										options={ this.props.formikProps.values.travellerType === 'resident' ?
 											[
-												{ "value": "business", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.business' }) },
-												{ "value": "pleasure", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.pleasure' }) },
-												{ "value": "crew", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.crew' }) },
-												{ "value": "other", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.other' }) },
-											]}
-									/>
+												{ "value": "citizen", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.citizen' }) },
+												{ "value": "crew_for_resident", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.crew_for_resident' }) },
+											]
+										    :
+											[
+												{ "value": "work", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.work' }) },
+												{ "value": "study", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.study' }) },
+												{ "value": "wedding", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.wedding' }) },
+												{ "value": "visit", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.visit' }) },
+												{ "value": "sport", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.sport' }) },
+												{ "value": "spouse_of_mauritian", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.spouse_of_mauritian' }) },
+											]
+										}
+									/>								 							 			
 								}
 							</Field>
 						</div>

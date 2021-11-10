@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Patient;
@@ -81,6 +82,9 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 
 	@Override
 	public List<Patient> searchPatientByValue(String searchValue) {
+		if (!StringUtils.isBlank(searchValue)) {
+			searchValue = searchValue.toUpperCase();
+		}
 		List<Patient> patients = new ArrayList<>();
 		IGenericClient fhirClient = getFhirClient();
 		Bundle searchBundle = fhirClient.search().forResource(Patient.class)

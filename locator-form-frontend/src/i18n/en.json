@@ -25,8 +25,8 @@
 	"nav.item.title.option.miss": "Miss",
 	"nav.item.title.option.dr": "Dr",
 
-	"nav.item.resident": "Resident",
-	"nav.item.nonresident": "Non-Resident",
+	"nav.item.resident": "Citizen",
+	"nav.item.nonresident": "Non-Citizen",
 
 	"nav.item.sex.option.male": "Male",
 	"nav.item.sex.option.female": "Female",
@@ -34,10 +34,14 @@
 	"nav.item.symptoms.option.yes": "Yes",
 	"nav.item.symptoms.option.no": "No",
 
-	"nav.item.purposeOfVisit.option.business": "Business",
-	"nav.item.purposeOfVisit.option.pleasure": "Vacation",
-	"nav.item.purposeOfVisit.option.crew" : "Crew",
-	"nav.item.purposeOfVisit.option.other": "Other",
+	"nav.item.purposeOfVisit.option.citizen": "Citizen",
+	"nav.item.purposeOfVisit.option.crew_for_resident": "Crew for Resident",
+	"nav.item.purposeOfVisit.option.work" : "Work",
+	"nav.item.purposeOfVisit.option.study": "Study",
+	"nav.item.purposeOfVisit.option.wedding": "Wedding",
+	"nav.item.purposeOfVisit.option.visit": "Visit",
+	"nav.item.purposeOfVisit.option.sport": "Sport",
+	"nav.item.purposeOfVisit.option.spouse_of_mauritian": "Spouse of Mauritian",
 
 	"nav.item.nationality": "Nationality",
 
