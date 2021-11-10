@@ -201,7 +201,7 @@
   },
   {
     "value": "CD",
-    "label": "Congo, The Democratic Republic of The"
+    "label": "Congo- The Democratic Republic of The"
   },
   {
     "value": "CK",
@@ -461,7 +461,7 @@
   },
   {
     "value": "KP",
-    "label": "Korea, Democratic Peoples Republic of"
+    "label": "Korea- Democratic Peoples Republic of"
   },
   {
     "value": "KR",
