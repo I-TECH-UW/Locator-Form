@@ -163,6 +163,8 @@ public class LocatorFormDTO extends Traveller {
 	@JsonSerialize(using = StringBooleanSerializer.class)
 	private Boolean acceptedTerms;
 
+	private Boolean hotelSearchCheck;
+
 	public static class StringBooleanSerializer extends JsonSerializer<Boolean> {
 
 		@Override

@@ -289,7 +289,7 @@ export const step8Validation = {
 			hotelName: Yup.string()
 				.max(70, 'error.char.max.exceeded'),
 			numberAndStreet: Yup.string()
-				.max(50, 'error.char.max.exceeded'),
+				.max(80, 'error.char.max.exceeded'),
 			   // .required('error.required'),
 			apartmentNumber: Yup.string()
 				.max(20, 'error.char.max.exceeded'),
