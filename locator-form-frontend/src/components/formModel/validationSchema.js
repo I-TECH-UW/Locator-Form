@@ -19,6 +19,10 @@ function parseDateString(value, originalValue) {
   return parsedDate;
 }
 
+function parseTimeString(value, originalValue) {
+  return parse(originalValue, "HH:mm", new Date()).getHours() + ":" + parse(originalValue, "HH:mm", new Date()).getMinutes() ;
+}
+
 const today = new Date();
 today.setHours(0,0,0,0);
 
@@ -48,6 +52,8 @@ export const step2Validation = {
 		.typeError("error.date.invalidformat")
 		.min(today, "error.date.past")
 		.required('error.required'),
+    arrivalTime: Yup.string().transform(parseTimeString)
+	.notOneOf(['NaN:NaN']),
 	visitPurpose: Yup.string()
 		.required('error.required')
 		.when('travellerType', {

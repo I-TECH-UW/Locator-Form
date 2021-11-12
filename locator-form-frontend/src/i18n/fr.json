@@ -41,6 +41,7 @@
 	"nav.item.flightInformation": "Information de vol",
 	"nav.item.seat": "No du siège",
 	"nav.item.dateOfArrival": "Date d'arrivée",
+	"nav.item.timeOfArrival": "Heure d'arrivée",
 	"nav.item.about": "Description",
 	"nav.item.personalInformation": "Renseignements du passager",
 	"nav.item.title": "Titre",

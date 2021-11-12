@@ -55,6 +55,14 @@ class Step2 extends React.Component {
 								min={dateInputToday()}
 							/>
 						</div>
+						<div className="col-lg-4  form-group">
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.timeOfArrival" defaultMessage="Time of Arrival" />}
+								name="arrivalTime"
+								requireField={false}
+								type="time"
+							/>
+						</div>
 						<div className="col-lg-4 form-group ">
 							<Field name="visitPurpose">
 								{({ field, form, meta }) =>

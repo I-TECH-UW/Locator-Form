@@ -234,7 +234,7 @@ public class SummaryServiceImpl implements SummaryService {
 		addCellToTable("Date Of Arrival: " + Objects.toString(dto.getArrivalDate(), ""), 1, table);
 		addCellToTable("Purpose of Visit: " + Objects.toString(dto.getVisitPurpose(), ""), 2, table);
 		//just added to properly format table
-		addCellToTable("", 2, table);
+		addCellToTable("Time Of Arrival: " + Objects.toString(dto.getArrivalTime(),"" ), 2, table);
 		
 		addHeaderCellToTable("Contact Info ", 4, table);
 		addCellToTable("Email Address: " + Objects.toString(dto.getEmail(), ""), 2, table);

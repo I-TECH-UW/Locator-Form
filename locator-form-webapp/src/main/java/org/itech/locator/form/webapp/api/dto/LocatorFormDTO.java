@@ -2,6 +2,7 @@ package org.itech.locator.form.webapp.api.dto;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.itech.locator.form.webapp.validation.annotation.OneOf;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -89,6 +89,9 @@ public class LocatorFormDTO extends Traveller {
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate arrivalDate;
+
+	@JsonFormat(pattern = "HH:mm")
+	private LocalTime arrivalTime;
 
 	@NotNull
 	private Title title;
