@@ -78,12 +78,14 @@ class Step2 extends React.Component {
 											]
 										    :
 											[
-												{ "value": "work", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.work' }) },
+												{ "value": "business", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.bussines' }) },
 												{ "value": "study", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.study' }) },
 												{ "value": "wedding", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.wedding' }) },
-												{ "value": "visit", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.visit' }) },
+												{ "value": "visit_holiday", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.visit' }) },
 												{ "value": "sport", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.sport' }) },
 												{ "value": "spouse_of_mauritian", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.spouse_of_mauritian' }) },
+												{ "value": "resident_permit_holder", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.resident_permit_holder' }) },
+												{ "value": "occupation_permit_holder", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.occupation_permit_holder' }) },
 											]
 										}
 									/>								 							 			

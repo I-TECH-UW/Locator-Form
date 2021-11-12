@@ -40,12 +40,14 @@ public class LocatorFormDTO extends Traveller {
 		
 		CITIZEN,
 		CREW_FOR_RESIDENT,
-		WORK,
+		BUSINESS,
 		STUDY,
 		WEDDING,
-		VISIT,
+		VISIT_HOLIDAY,
 		SPORT,
-		SPOUSE_OF_MAURITIAN;
+		SPOUSE_OF_MAURITIAN ,
+		RESIDENT_PERMIT_HOLDER ,
+		OCCUPATION_PERMIT_HOLDER;
 		
 		@Override
 		@JsonValue

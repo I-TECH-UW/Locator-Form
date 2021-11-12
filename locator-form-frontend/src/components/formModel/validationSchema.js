@@ -68,7 +68,7 @@ export const step2Validation = {
 			is: 'nonresident',
 			then: Yup.string()
 				.oneOf(
-					['work', 'study', 'wedding', 'visit', 'sport', 'spouse_of_mauritian'],
+					['business', 'study', 'wedding', 'visit_holiday', 'sport', 'spouse_of_mauritian' ,'resident_permit_holder', 'occupation_permit_holder'],
 					'error.invalid.selection'
 				)
 		}),
