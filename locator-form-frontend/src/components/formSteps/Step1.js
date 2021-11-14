@@ -7,12 +7,18 @@ const onInputChange = (e, form) => {
 	form.handleChange(e)
 	if (e.target.value === 'resident') {
 		form.setFieldValue('countryOfBirth', 'MU')
+		form.setFieldValue('nationality', 'MU')
 		form.setFieldValue('emergencyContact.country', 'MU')
 		form.setFieldValue('permanentAddress.country', 'MU')
+		form.setFieldValue('countryOfPassportIssue', 'MU')
+		form.setFieldValue('passengerNationality', ['MAURITIAN'])
 	} else {
-		// form.setFieldValue('permanentAddress.country', '')
-		// form.setFieldValue('nationality', '')
-		// form.setFieldValue('emergencyContact.country', '')
+		form.setFieldValue('countryOfBirth', '')
+		form.setFieldValue('nationality', '')
+		form.setFieldValue('emergencyContact.country', '')
+		form.setFieldValue('permanentAddress.country', '')
+		form.setFieldValue('countryOfPassportIssue', '')
+		form.setFieldValue('passengerNationality', '')	 
 	}
 	form.setFieldValue('permanentAddress.travellerType', e.target.value)
 	form.setFieldValue('travellerType', e.target.value)
