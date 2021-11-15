@@ -78,7 +78,7 @@ class Step2 extends React.Component {
 											]
 										    :
 											[
-												{ "value": "business", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.bussines' }) },
+												{ "value": "business", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.business' }) },
 												{ "value": "study", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.study' }) },
 												{ "value": "wedding", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.wedding' }) },
 												{ "value": "visit_holiday", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.visit' }) },

@@ -113,7 +113,7 @@ class LocatorForm extends React.Component {
       // case 9:
         // return <Step10 formikProps={formikProps} intl={this.props.intl} />
       case 9:
-        return <Confirmation formikProps={formikProps} intl={this.props.intl} />
+        return <Confirmation formikProps={formikProps} intl={this.props.intl} /> 
       case 10:
         return <Success formikProps={formikProps} intl={this.props.intl} summaryAccessInfo={this.state.summaryAccessInfo} />
       default:
@@ -252,14 +252,19 @@ class LocatorForm extends React.Component {
             </div>
             <div className="questions" id="questions">
               {this._renderStepContent(this.state.activeStep, formikProps)}
-              {this.state.activeStep < steps.length &&
-                <div >
-                  {this.onSubmitStep() && 
-                  <ReCAPTCHA
+              {this.onSubmitStep() && 
+                <div className="row captcha">
+                  <div className="col-lg-12 ">
+                    <ReCAPTCHA
                       sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                       onChange={this.onCaptchaChange}
                     />
-                  }
+                  </div>
+                </div>
+                  
+              }
+              {this.state.activeStep < steps.length &&
+                <div >
                   <button
                     disabled={this.state.activeStep === 0}
                     type="button"

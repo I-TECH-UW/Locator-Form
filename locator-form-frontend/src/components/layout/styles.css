@@ -1073,6 +1073,10 @@ label.checkbox {
   display: none;
 }
 
+.captcha {
+  padding: 1rem 0rem;
+}
+
 @page {
   size: Letter;
 }
