@@ -1,45 +1,47 @@
 export const vaccines = [
- {
+  {
     "value": "None",
     "label": "None"
- },
- {
-	 "value": "NA",
-	 "label": "N/A"
- },
- {
-    "value": "PfizerBioNTech",
-    "label": "Pfizer-BioNTech"
   },
   {
-    "value": "Moderna",
-    "label": "Moderna"
+    "value": "N/A",
+    "label": "N/A"
   },
   {
-	  "value": "OxfordAstraZeneca",
-	  "label": "Oxford-AstraZeneca"
-  },
-  
-  {
-	  "value": "SputnikVGamaleyaResearchInstitute)",
-	  "label": "Sputnik V (Gamaleya Research Institute)"
-  },
-  
-  {
-	  "value": "Novavax",
-	  "label": "Novavax"
+    "value": "Astra-Zeneca : Covishield",
+    "label": "Astra-Zeneca : Covishield"
   },
   {
-	  "value": "Sinopharm",
-	  "label": "Sinopharm"
+    "value": "Astra-Zeneca : Vaxzevria",
+    "label": "Astra-Zeneca : Vaxzevria"
   },
   {
-	  "value": "Sinovac",
-	  "label": "Sinovac"
+    "value": "Covaxin Vaccine",
+    "label": "Covaxin Vaccine"
   },
   {
-	  "value": "JanssenJohnsonJohnson",
-	  "label": "Janssen/Johnson&Johnson"
+    "value": "Johnson & Johnson Vaccine",
+    "label": "Johnson & Johnson Vaccine"
+  },
+  {
+    "value": "Moderna Vaccine",
+    "label": "Moderna Vaccine"
+  },
+  {
+    "value": "Pfizer Vacine",
+    "label": "Pfizer Vaccine"
+  },
+  {
+    "value": "Sinopharm Vaccine",
+    "label": "Sinopharm Vaccine"
+  },
+  {
+    "value": "Sputnik Vaccine",
+    "label": "Sputnik Vaccine"
+  },
+  {
+    "value": "Sinovac Vaccine",
+    "label": "Sinovac Vaccine"
   },
 ]
 
