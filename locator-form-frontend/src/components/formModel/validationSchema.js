@@ -19,6 +19,10 @@ function parseDateString(value, originalValue) {
   return parsedDate;
 }
 
+function parseTimeString(value, originalValue) {
+  return parse(originalValue, "HH:mm", new Date()).getHours() + ":" + parse(originalValue, "HH:mm", new Date()).getMinutes() ;
+}
+
 const today = new Date();
 today.setHours(0,0,0,0);
 
@@ -48,6 +52,8 @@ export const step2Validation = {
 		.typeError("error.date.invalidformat")
 		.min(today, "error.date.past")
 		.required('error.required'),
+    arrivalTime: Yup.string().transform(parseTimeString)
+	.notOneOf(['NaN:NaN']),
 	visitPurpose: Yup.string()
 		.required('error.required')
 		.when('travellerType', {
@@ -62,7 +68,7 @@ export const step2Validation = {
 			is: 'nonresident',
 			then: Yup.string()
 				.oneOf(
-					['work', 'study', 'wedding', 'visit', 'sport', 'spouse_of_mauritian'],
+					['business', 'study', 'wedding', 'visit_holiday', 'sport', 'spouse_of_mauritian' ,'resident_permit_holder', 'occupation_permit_holder'],
 					'error.invalid.selection'
 				)
 		}),
@@ -289,7 +295,7 @@ export const step8Validation = {
 			hotelName: Yup.string()
 				.max(70, 'error.char.max.exceeded'),
 			numberAndStreet: Yup.string()
-				.max(50, 'error.char.max.exceeded'),
+				.max(80, 'error.char.max.exceeded'),
 			   // .required('error.required'),
 			apartmentNumber: Yup.string()
 				.max(20, 'error.char.max.exceeded'),

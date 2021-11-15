@@ -123,10 +123,6 @@
     "value": "BR",
     "label": "Brazil"
   },
-//  {
-//    "value": "IO",
-//    "label": "British Indian Ocean Territory"
-//  },
   {
     "value": "BN",
     "label": "Brunei Darussalam"

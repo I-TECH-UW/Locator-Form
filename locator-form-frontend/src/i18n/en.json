@@ -36,12 +36,14 @@
 
 	"nav.item.purposeOfVisit.option.citizen": "Citizen",
 	"nav.item.purposeOfVisit.option.crew_for_resident": "Crew for Resident",
-	"nav.item.purposeOfVisit.option.work" : "Work",
+	"nav.item.purposeOfVisit.option.bussines" : "Business",
 	"nav.item.purposeOfVisit.option.study": "Study",
 	"nav.item.purposeOfVisit.option.wedding": "Wedding",
-	"nav.item.purposeOfVisit.option.visit": "Visit",
+	"nav.item.purposeOfVisit.option.visit": "Visit / Holiday",
 	"nav.item.purposeOfVisit.option.sport": "Sport",
 	"nav.item.purposeOfVisit.option.spouse_of_mauritian": "Spouse of Mauritian",
+	"nav.item.purposeOfVisit.option.resident_permit_holder": "Resident permit holder",
+	"nav.item.purposeOfVisit.option.occupation_permit_holder": "Occupation permit holder",
 
 	"nav.item.nationality": "Nationality",
 

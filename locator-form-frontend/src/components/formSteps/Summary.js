@@ -8,7 +8,7 @@ class Summary extends React.Component {
 
 	render() {
 
-		const { travellerType, airlineName, flightNumber, seatNumber, arrivalDate, title, firstName, lastName, middleInitial,
+		const { travellerType, airlineName, flightNumber, seatNumber, arrivalDate, arrivalTime ,title, firstName, lastName, middleInitial,
 			sex,dateOfBirth, profession, lengthOfStay,countriesVisited, portOfEmbarkation, hadCovidBefore, fever, soreThroat, jointPain,
 			cough, breathingDifficulties, rash, smellOrTaste, contact, visitPurpose, 
 			vaccinated, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
@@ -73,6 +73,9 @@ class Summary extends React.Component {
 					</div>
 					<div className="col-lg-3 form-group">
 						<span className="confirm-field"><FormattedMessage id="nav.item.dateOfArrival" defaultMessage="Date Of Arrival" />: </span><span className="confirm-value">{arrivalDate}</span>
+					</div>
+					<div className="col-lg-3 form-group">
+						<span className="confirm-field"><FormattedMessage id="nav.item.timeOfArrival" defaultMessage="Time Of Arrival" />: </span><span className="confirm-value">{arrivalTime}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.purposeOfVisit" defaultMessage="Purpose of Visit" />: </span><span className="confirm-value">{removeUndercore(visitPurpose)}</span>

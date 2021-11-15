@@ -54,7 +54,7 @@ class Success extends React.Component {
 		this.setState({ printing: false });
 		setTimeout(function () {
 			window.URL.revokeObjectURL(file);
-		}, 100);
+		}, 1000);
 	}
 
 	fetchPDFAsPromise = async () => {
