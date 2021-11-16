@@ -12,8 +12,8 @@ services:
      - frontend
      - server-1  
    volumes:
-     - './locator-form-frontend:/app'
-     - '/app/node_modules'
+     - './locator-form-frontend/src:/app/src'
+     - './locator-form-frontend/public:/app/public'
      - ./dev/ssl/lf.crt:/etc/x509/https/tls.crt
      - ./dev/ssl/lf.key:/etc/x509/https/tls.key
    environment:

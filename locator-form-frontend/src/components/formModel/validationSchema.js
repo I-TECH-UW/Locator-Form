@@ -240,6 +240,7 @@ export const step7Validation = {
 		
 	passportExpiryDate: Yup.date().transform(parseDateString)
 		.typeError("error.date.invalidformat")
+		.min(today, "error.date.past")
 		.required('error.required'),	
 		
 };

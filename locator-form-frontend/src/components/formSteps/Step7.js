@@ -1,7 +1,7 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, MyPhoneInput } from '../inputs/MyInputs'
+import { MyTextInput, MySelect, MyPhoneInput, dateInputToday } from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 import { nationalityList } from '../data/nationality.js'
 
@@ -147,12 +147,14 @@ class Step7 extends React.Component {
 						</div>
 								
 								 <div className="col-lg-3 form-group">
+									 
 									<MyTextInput
 									label={<FormattedMessage id="nav.item.dateOfExpiry" defaultMessage="Date Of Expiry" />}
 									name="passportExpiryDate"
 									requireField={true}
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
+									min={dateInputToday()}
 								/>
 						  </div>		
 								
