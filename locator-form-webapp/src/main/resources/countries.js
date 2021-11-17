@@ -405,7 +405,7 @@
   },
   {
     "value": "IR",
-    "label": "Iran, Islamic Republic of"
+    "label": "Iran- Islamic Republic of"
   },
   {
     "value": "IQ",
@@ -461,7 +461,7 @@
   },
   {
     "value": "KR",
-    "label": "Korea, Republic of"
+    "label": "Korea- Republic of"
   },
   {
     "value": "KW",
@@ -513,7 +513,7 @@
   },
   {
     "value": "MK",
-    "label": "Macedonia, The Former Yugoslav Republic of"
+    "label": "Macedonia- The Former Yugoslav Republic of"
   },
   {
     "value": "MG",
@@ -565,11 +565,11 @@
   },
   {
     "value": "FM",
-    "label": "Micronesia, Federated States of"
+    "label": "Micronesia- Federated States of"
   },
   {
     "value": "MD",
-    "label": "Moldova, Republic of"
+    "label": "Moldova- Republic of"
   },
   {
     "value": "MC",
@@ -669,7 +669,7 @@
   },
   {
     "value": "PS",
-    "label": "Palestinian Territory, Occupied"
+    "label": "Palestinian Territory- Occupied"
   },
   {
     "value": "PA",
@@ -845,7 +845,7 @@
   },
   {
     "value": "TW",
-    "label": "Taiwan, Province of China"
+    "label": "Taiwan- Province of China"
   },
   {
     "value": "TJ",
@@ -853,7 +853,7 @@
   },
   {
     "value": "TZ",
-    "label": "Tanzania, United Republic of"
+    "label": "Tanzania- United Republic of"
   },
   {
     "value": "TH",
@@ -945,11 +945,11 @@
   },
   {
     "value": "VG",
-    "label": "Virgin Islands, British"
+    "label": "Virgin Islands- British"
   },
   {
     "value": "VI",
-    "label": "Virgin Islands, U.S."
+    "label": "Virgin Islands- U.S."
   },
   {
     "value": "WF",

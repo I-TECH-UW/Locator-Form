@@ -201,7 +201,7 @@ export const countriesList = [
   },
   {
     "value": "CD",
-    "label": "Congo, The Democratic Republic of The"
+    "label": "Congo- The Democratic Republic of The"
   },
   {
     "value": "CK",
@@ -409,7 +409,7 @@ export const countriesList = [
   },
   {
     "value": "IR",
-    "label": "Iran, Islamic Republic of"
+    "label": "Iran- Islamic Republic of"
   },
   {
     "value": "IQ",
@@ -461,11 +461,11 @@ export const countriesList = [
   },
   {
     "value": "KP",
-    "label": "Korea, Democratic Peoples Republic of"
+    "label": "Korea- Democratic Peoples Republic of"
   },
   {
     "value": "KR",
-    "label": "Korea, Republic of"
+    "label": "Korea- Republic of"
   },
   {
     "value": "KW",
@@ -517,7 +517,7 @@ export const countriesList = [
   },
   {
     "value": "MK",
-    "label": "Macedonia, The Former Yugoslav Republic of"
+    "label": "Macedonia- The Former Yugoslav Republic of"
   },
   {
     "value": "MG",
@@ -569,11 +569,11 @@ export const countriesList = [
   },
   {
     "value": "FM",
-    "label": "Micronesia, Federated States of"
+    "label": "Micronesia- Federated States of"
   },
   {
     "value": "MD",
-    "label": "Moldova, Republic of"
+    "label": "Moldova- Republic of"
   },
   {
     "value": "MC",
@@ -673,7 +673,7 @@ export const countriesList = [
   },
   {
     "value": "PS",
-    "label": "Palestinian Territory, Occupied"
+    "label": "Palestinian Territory- Occupied"
   },
   {
     "value": "PA",
@@ -849,7 +849,7 @@ export const countriesList = [
   },
   {
     "value": "TW",
-    "label": "Taiwan, Province of China"
+    "label": "Taiwan- Province of China"
   },
   {
     "value": "TJ",
@@ -857,7 +857,7 @@ export const countriesList = [
   },
   {
     "value": "TZ",
-    "label": "Tanzania, United Republic of"
+    "label": "Tanzania- United Republic of"
   },
   {
     "value": "TH",
@@ -949,11 +949,11 @@ export const countriesList = [
   },
   {
     "value": "VG",
-    "label": "Virgin Islands, British"
+    "label": "Virgin Islands- British"
   },
   {
     "value": "VI",
-    "label": "Virgin Islands, U.S."
+    "label": "Virgin Islands- U.S."
   },
   {
     "value": "WF",
