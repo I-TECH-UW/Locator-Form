@@ -205,7 +205,7 @@ const valuesList = [
   },
   {
     "value": "CD",
-    "label": "Congo, The Democratic Republic of The"
+    "label": "Congo- The Democratic Republic of The"
   },
   {
     "value": "CK",
@@ -413,7 +413,7 @@ const valuesList = [
   },
   {
     "value": "IR",
-    "label": "Iran, Islamic Republic of"
+    "label": "Iran- Islamic Republic of"
   },
   {
     "value": "IQ",
@@ -465,11 +465,11 @@ const valuesList = [
   },
   {
     "value": "KP",
-    "label": "Korea, Democratic Peoples Republic of"
+    "label": "Korea- Democratic Peoples Republic of"
   },
   {
     "value": "KR",
-    "label": "Korea, Republic of"
+    "label": "Korea- Republic of"
   },
   {
     "value": "KW",
@@ -521,7 +521,7 @@ const valuesList = [
   },
   {
     "value": "MK",
-    "label": "Macedonia, The Former Yugoslav Republic of"
+    "label": "Macedonia- The Former Yugoslav Republic of"
   },
   {
     "value": "MG",
@@ -573,11 +573,11 @@ const valuesList = [
   },
   {
     "value": "FM",
-    "label": "Micronesia, Federated States of"
+    "label": "Micronesia- Federated States of"
   },
   {
     "value": "MD",
-    "label": "Moldova, Republic of"
+    "label": "Moldova- Republic of"
   },
   {
     "value": "MC",
@@ -677,7 +677,7 @@ const valuesList = [
   },
   {
     "value": "PS",
-    "label": "Palestinian Territory, Occupied"
+    "label": "Palestinian Territory- Occupied"
   },
   {
     "value": "PA",
@@ -853,7 +853,7 @@ const valuesList = [
   },
   {
     "value": "TW",
-    "label": "Taiwan, Province of China"
+    "label": "Taiwan- Province of China"
   },
   {
     "value": "TJ",
@@ -861,7 +861,7 @@ const valuesList = [
   },
   {
     "value": "TZ",
-    "label": "Tanzania, United Republic of"
+    "label": "Tanzania- United Republic of"
   },
   {
     "value": "TH",
@@ -953,11 +953,11 @@ const valuesList = [
   },
   {
     "value": "VG",
-    "label": "Virgin Islands, British"
+    "label": "Virgin Islands- British"
   },
   {
     "value": "VI",
-    "label": "Virgin Islands, U.S."
+    "label": "Virgin Islands- U.S."
   },
   {
     "value": "WF",
