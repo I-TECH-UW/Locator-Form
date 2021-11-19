@@ -13,7 +13,9 @@ class Step3 extends React.Component {
 		this.state = {
 			confirming: false,
 			searching: false,
+			searchFinalized: false,
 			searchFailed: false,
+			displayFailureReason: false,
 			failureReason: ''
 		}
 	}
@@ -41,6 +43,8 @@ class Step3 extends React.Component {
 			this.setState({ 
 				searching: false ,
 				searchFailed: true,
+				searchFinalized: true,
+				displayFailureReason: false,
 				failureReason: 'error.search.infohighway.error' 
 			})
 
@@ -48,10 +52,12 @@ class Step3 extends React.Component {
 	}
 
 	onNotFound = () => {
-		console.log("not found")
+		console.log("national ID not found")
 		this.setState({
 			searching: false, 
 			searchFailed: true,
+			searchFinalized: false,
+			displayFailureReason: true,
 			failureReason: 'error.search.infohighway.notfound' 
 		});
 	}
@@ -63,7 +69,9 @@ class Step3 extends React.Component {
 		this.props.formikProps.setFieldValue('nationalID', resident.nationalID);
 		this.setState({ 
 			confirming: true, 
+			searchFinalized: true,
 			searching: false,
+			displayFailureReason: false,
 			searchFailed: false,});
 	}
 
@@ -74,14 +82,17 @@ class Step3 extends React.Component {
 	reject = () => {
 		this.props.formikProps.setFieldValue('firstName', '');
 		this.props.formikProps.setFieldValue('lastName', '');
-		this.setState({confirming: false});
+		this.setState({
+			confirming: false,
+			searchFinalized: false,
+		});
 	}
 
 	renderNationalIDField = () => {
 
 		const nationalIDInputConfirm = () => {
 			return (
-				<div className="col-lg-4">
+				<>
 				<button 
 					type="button" 
 					onClick={this.confirm}
@@ -96,15 +107,36 @@ class Step3 extends React.Component {
 				>
 					<FormattedMessage id="nav.item.reject" defaultMessage="Reject"/>
 				</button>
-				</div>
+				</>
 			);
 		};
 
 		const errorMessage = () => {
-			return (this.state.searchFailed ? 
+			return (!this.state.searching && this.state.searchFailed && this.state.displayFailureReason ? 
 				<FormattedMessage id={this.state.failureReason} defaultMessage="Error" /> 
 				:
 				<></>
+			);
+		};
+
+		const getInstructions = () => {
+			return (
+				<div className="col-lg-8">
+				{(!this.state.searchFinalized || this.state.displayFailureReason) && 
+					<div className="instruction">
+					<FormattedMessage id="nationalId.search.instructions.begin" defaultMessage="Please enter your National ID and click the magnifying glass"/> 
+					</div>
+				}
+				{this.state.confirming && 
+					<>{nationalIDInputConfirm()}</>
+				} 
+				{(this.state.searchFinalized && !this.state.displayFailureReason && ! this.state.confirming) && 
+					<div className="instruction">
+						<FormattedMessage id="nationalId.search.instructions.continue" defaultMessage="Thank you, please continue to fill out the form" />
+					</div>
+				} 
+
+				</div>
 			);
 		};
 
@@ -125,15 +157,14 @@ class Step3 extends React.Component {
 						additionalErrorMessage={errorMessage()}
 						// disabled={this.state.searching || this.state.confirming} 
 					/>
+					
 					{this.state.searching && (
 						<CircularProgress
 						size={24}
 						/>
 					)}
 				</div>
-					{this.state.confirming && 
-						nationalIDInputConfirm()
-					}
+					{getInstructions()}
 			</div>
 			);
 		};

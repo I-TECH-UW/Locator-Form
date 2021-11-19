@@ -152,7 +152,7 @@
 	"error.invalid.selection": "Invalide",
 	"error.submit": "Une erreur est survenue",
 	"error.search.infohighway.error": "Une erreur est survenue",
-	"error.search.infohighway.notfound": "Un résident avec cette carte d'identité nationale introuvable",
+	"error.search.infohighway.notfound": "Aucun résident trouvé avec ce numéro d'identification",
 	"error.date.invalidformat":"La date doit correspondre à aaaa-mm-jj",
 	"date.format":"aaaa-jj-mm",
 	"error.search.patient.notfound" : "Aucun patient trouvé avec cet identifiant TestKit",
@@ -162,5 +162,8 @@
 	"nav.item.form.label.flightDetails": "Détails du vol et du prétest",
 	"nav.item.form.label.details": "Des détails",
 	"nav.item.form.label.vaccine": "Vaccin",
-	"nav.item.form.label.testkit": "Kit de test"
+	"nav.item.form.label.testkit": "Kit de test",
+
+	"nationalId.search.instructions.begin": "Veuillez entrer votre numéro d'identification national et cliquez sur la loupe",
+	"nationalId.search.instructions.continue": "Merci, continuez à remplir le formulaire"
 }
