@@ -1174,15 +1174,22 @@ const nationalityDetails = [
  {
    "label": "MONTENEGRO MON",
    "value": "MONTENEGRO MON"
+ },
+ {
+   "label": "BONAIRE",
+   "value": "BONAIREAN"
  }
 ]
 
-export const nationalityList = []
+const valuesList = []
 
   for (var nationality in nationalityDetails) {
     var nationalityItem = nationalityDetails[nationality];
-    nationalityList.push({
+    valuesList.push({
       "value": nationalityItem.value ,
       "label": nationalityItem.value
     })
-  } 
+  }
+  
+
+export const nationalityList =  valuesList.sort((a, b) => a.label.localeCompare(b.label));

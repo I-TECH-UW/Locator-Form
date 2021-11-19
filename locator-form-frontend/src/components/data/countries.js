@@ -1,4 +1,4 @@
-export const countriesList = [
+const valuesList = [
   {
     "value": "AF",
     "label": "Afghanistan"
@@ -106,6 +106,10 @@ export const countriesList = [
   {
     "value": "BO",
     "label": "Bolivia"
+  },
+  {
+    "value": "BQ",
+    "label": "Bonaire"
   },
   {
     "value": "BA",
@@ -976,6 +980,8 @@ export const countriesList = [
     "label": "Zimbabwe"
   }
 ];
+
+export const countriesList = valuesList.sort((a, b) => a.label.localeCompare(b.label));
 
 export const getCountryFromCode = (code) => {	
   console.log("searching for country: " + code)

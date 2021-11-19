@@ -108,6 +108,10 @@
     "label": "Bolivia"
   },
   {
+    "value": "BQ",
+    "label": "Bonaire"
+  },
+  {
     "value": "BA",
     "label": "Bosnia and Herzegovina"
   },
