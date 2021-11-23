@@ -78,5 +78,6 @@
 	"nav.item.form.label.flightDetails": "Flight and Pretest Details",
 	"nav.item.form.label.details": "Details",
 	"nav.item.form.label.vaccine": "Vaccine",
-	"nav.item.form.label.testkit": "Test Kit"
+	"nav.item.form.label.testkit": "Test Kit" ,
+	"nav.item.form.label.healthOffice" :  "Health Office"
 }
