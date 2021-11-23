@@ -592,6 +592,16 @@ public class FhirTransformServiceImpl implements FhirTransformService {
             dateOfArrivalAnswer.setValue(new StringType(locatorFormDTO.getArrivalDate().toString()));
         }
 
+		QuestionnaireResponseItemComponent healthOfficeItem = questionnaireResponse.addItem();
+		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
+		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
+		if (locatorFormDTO instanceof HealthDeskDTO) {
+			HealthDeskDTO healthDeskDto = (HealthDeskDTO) locatorFormDTO;
+			if (StringUtils.isNotBlank(healthDeskDto.getHealthOffice())) {
+				healthOfficeAnswer.setValue(new StringType(healthDeskDto.getHealthOffice()));
+			}
+		}
+
 		return questionnaireResponse;
 	}
 
@@ -685,6 +695,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent visitPurposeItem = questionnaire.addItem();
 		visitPurposeItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit")
 				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent healthOfficeItem = questionnaire.addItem();
+		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office")
+						.setType(QuestionnaireItemType.TEXT);		
 
 		return questionnaire;
 	}

@@ -405,6 +405,11 @@ export const testKit = {
 			//.required('error.required')
 };
 
+export const healthOffice = {
+	healthOffice: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+};
+
 
 export const validationSchemaSteps = [
 	//step 1
@@ -432,6 +437,6 @@ export const validationSchemaSteps = [
 
 ]
 
-export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation, ...testKit});
+export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation, ...testKit, ...healthOffice});
 
 export const pioValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation});
