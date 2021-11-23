@@ -593,7 +593,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
         }
 
 		QuestionnaireResponseItemComponent healthOfficeItem = questionnaireResponse.addItem();
-		healthOfficeItem.setLinkId(FhirConstants.PASSPORT_NUMBER_LINK_ID).setText("Health Office");
+		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
 		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
 		if (locatorFormDTO instanceof HealthDeskDTO) {
 			HealthDeskDTO healthDeskDto = (HealthDeskDTO) locatorFormDTO;
