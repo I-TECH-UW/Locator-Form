@@ -47,4 +47,6 @@ public class FhirConstants {
     public static final String DATE_OF_ARRIVAL_LINK_ID = "74eef3fb-f388-4d35-9349-b68aae0eb00b";
 
     public static final String PURPOSE_OF_VIST_LINK_ID = "455e47e8-16d7-46ff-98fc-f9823d1cbf50";
+
+    public static final String HEALTH_OFFICE_LINK_ID = "be3de5e0-ad7b-4241-b1e9-84d7a17f900a";
 }

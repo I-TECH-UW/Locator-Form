@@ -2,10 +2,11 @@ import React from 'react'
 import { Field, Formik, Form, setNestedObjectValues } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
-import { MyTextInput, MyHiddenInput ,StyledFieldSet ,StyledLegend } from './inputs/MyInputs'
+import { MyTextInput, MyHiddenInput ,StyledFieldSet ,StyledLegend ,MySelect} from './inputs/MyInputs'
 import {Search} from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
 import FormikErrorFocus from 'formik-error-focus'
+import { healthOfficesList } from './data/healthOffices'
 import formInitialValues from './formModel/formInitialValues'
 import {
   createMuiTheme,
@@ -278,6 +279,21 @@ class HealthDesk extends React.Component {
 										
 							))}
 							{this.props.keycloak.hasRealmRole('health-desk-user') && 
+							  <>
+							<StyledFieldSet>
+								 <StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.healthOffice' })}</StyledLegend>			
+								 <Field name="healthOffice">
+								  {({ field, form, meta }) =>
+									<MySelect form={form}
+										name={field.name}
+										options={healthOfficesList}
+										isMulti={false}
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										label={<FormattedMessage id="nav.item.form.label.healthOffice" defaultMessage="Health Office" />}
+									/>}
+							     </Field>
+							 </StyledFieldSet>
 							    <StyledFieldSet>
 									<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.testkit' })}</StyledLegend>			
 									<MyTextInput
@@ -288,7 +304,8 @@ class HealthDesk extends React.Component {
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder.testkit' })}
 										// disabled={this.state.searching || this.state.confirming} 
 									/>
-								</StyledFieldSet>}
+								</StyledFieldSet>
+								</>}
 						</div>
 								</div>
 								</div>
