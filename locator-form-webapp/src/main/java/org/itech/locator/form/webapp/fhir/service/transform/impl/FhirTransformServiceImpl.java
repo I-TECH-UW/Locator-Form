@@ -348,6 +348,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		fhirPatient.addTelecom().setSystem(ContactPointSystem.SMS).setValue(locatorFormDTO.getMobilePhone());
 		fhirPatient.addTelecom().setSystem(ContactPointSystem.PHONE).setValue(locatorFormDTO.getFixedPhone());
+		fhirPatient.addTelecom().setSystem(ContactPointSystem.OTHER).setValue(locatorFormDTO.getBusinessPhone());
 		fhirPatient.addTelecom().setSystem(ContactPointSystem.EMAIL).setValue(locatorFormDTO.getEmail());
 
 		ContactComponent contact = fhirPatient.addContact();//
