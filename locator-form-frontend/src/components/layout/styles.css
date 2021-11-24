@@ -224,6 +224,10 @@ body {
   padding-top: 8rem;
 }
 
+.rc-time-picker-input {
+height: 100% !important;
+}
+
 #mynav-icon {
     width: 26px;
     height: 18px;
@@ -243,6 +247,10 @@ body {
   background: white;
   padding: 1rem;
   margin-bottom: 2rem;
+}
+
+.instruction {
+  margin-bottom:1.5rem; 
 }
 
 #mynav-icon span {
@@ -1123,6 +1131,10 @@ h6 {
 
 .light-row {
   background: White;
+}
+
+.without::-webkit-datetime-edit-ampm-field {
+  display: none;
 }
 
 

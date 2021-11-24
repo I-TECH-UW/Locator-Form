@@ -1,10 +1,11 @@
 import React from 'react'
-import { Field, Formik, Form } from 'formik'
+import { Field, Formik, Form, setNestedObjectValues } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
 import { MyTextInput, MyHiddenInput ,StyledFieldSet ,StyledLegend } from './inputs/MyInputs'
 import {Search} from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
+import FormikErrorFocus from 'formik-error-focus'
 import formInitialValues from './formModel/formInitialValues'
 import {
   createMuiTheme,
@@ -319,6 +320,14 @@ class HealthDesk extends React.Component {
 		                  }
 		                </div>
 		            </div>
+					<FormikErrorFocus
+						// See scroll-to-element for configuration options: https://www.npmjs.com/package/scroll-to-element
+						offset={-175}
+						align={'top'}
+						focusDelay={200}
+						ease={'linear'}
+						duration={100}
+					/>
 		          </Form >
 		        )}
 		        </Formik>
