@@ -40,6 +40,7 @@ services:
       - infohighway.govmu.org:192.168.6.91
     volumes:
       - ./prod/properties/locatorform-app.properties:/var/lib/locatorform/app.properties
+      - ./prod/velocity:/var/lib/locatorform/velocity
       - ./prod/ssl/lf_frontend.keystore:/usr/local/tomcat/certs/server.keystore
       - ./prod/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
       - ./prod/ssl/lf.truststore:/usr/local/tomcat/certs/truststore

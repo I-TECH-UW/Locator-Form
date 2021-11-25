@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
@@ -56,6 +58,8 @@ public class LocatorFormController {
 	private FhirContext fhirContext;
 	@Autowired
 	private RecaptchaService recaptchaService;
+	@Autowired
+	private Optional<VelocityEngine> velocityEngine;
 
 	@PostMapping
 	public ResponseEntity<List<SummaryAccessInfo>> submitForm(
@@ -88,10 +92,18 @@ public class LocatorFormController {
 		attachments.put("locatorFormBarcodes" + transactionObjects.task.getIdElement().getIdPart() + ".pdf",
 				barcodeService.generateSummaryFile(idAndLabels.entrySet().stream()
 						.collect(Collectors.toMap(e -> e.getKey().getId(), e -> e.getValue())), locatorFormDTO));
-		emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
-				+ locatorFormDTO.getFirstName() + ",\n\n"
-				+ "Please bring a printed copy of the attached file to the Airport of Mauritius as you will need them when you land in Mauritius",
-				attachments);
+
+		if (velocityEngine.isEmpty()) {
+			emailService.sendMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode", "Hello "
+					+ locatorFormDTO.getFirstName() + ",\n\n"
+					+ "Please bring a printed copy of the attached file to the Airport of Mauritius as you will need them when you land in Mauritius",
+					attachments);
+		} else {
+			Map<String, Object> templateObjects = new HashMap<>();
+			templateObjects.put("locatorForm", locatorFormDTO);
+			emailService.sendTemplateMessageWithAttachment(locatorFormDTO.getEmail(), "Locator-Form Barcode",
+					"traveller_notification_email.vm", templateObjects, attachments);
+		}
 		return ResponseEntity.ok(new ArrayList<>(idAndLabels.keySet()));
 	}
 

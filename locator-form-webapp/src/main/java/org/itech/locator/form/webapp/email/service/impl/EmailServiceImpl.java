@@ -2,8 +2,10 @@ package org.itech.locator.form.webapp.email.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.StringWriter;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.activation.DataSource;
 import javax.mail.Message;
@@ -12,6 +14,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
 
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.itech.locator.form.webapp.email.service.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -30,9 +34,11 @@ public class EmailServiceImpl implements EmailService {
 	private String bcc;
 
 	private JavaMailSender javaMailSender;
+	private Optional<VelocityEngine> velocityEngine;
 
-	public EmailServiceImpl(JavaMailSender javaMailSender) {
+	public EmailServiceImpl(JavaMailSender javaMailSender, Optional<VelocityEngine> velocityEngine) {
 		this.javaMailSender = javaMailSender;
+		this.velocityEngine = velocityEngine;
 	}
 
 	@Override
@@ -114,6 +120,35 @@ public class EmailServiceImpl implements EmailService {
 		helper.setBcc(bcc);
 		helper.setSubject(subject);
 		helper.setText(text);
+		for (Entry<String, ByteArrayOutputStream> pdfByName : pdfsByName.entrySet()) {
+			DataSource dataSource = new ByteArrayDataSource(pdfByName.getValue().toByteArray(), "application/pdf");
+			helper.addAttachment(pdfByName.getKey(), dataSource);
+		}
+		javaMailSender.send(message);
+	}
+
+	@Override
+	@Async
+	public void sendTemplateMessageWithAttachment(String to, String subject, String templatePath,
+			Map<String, Object> templateObjects,
+			Map<String, ByteArrayOutputStream> pdfsByName) throws MessagingException {
+		MimeMessage message = javaMailSender.createMimeMessage();
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
+		message.addFrom(InternetAddress.parse(from));
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		helper.setFrom(from);
+		helper.setTo(to);
+		helper.setBcc(bcc);
+		helper.setSubject(subject);
+
+		VelocityContext velocityContext = new VelocityContext();
+		for (Entry<String, Object> entry : templateObjects.entrySet()) {
+			velocityContext.put(entry.getKey(), entry.getValue());
+		}
+		StringWriter stringWriter = new StringWriter();
+		velocityEngine.orElseThrow().mergeTemplate(templatePath, "UTF-8", velocityContext, stringWriter);
+		helper.setText(stringWriter.toString());
+
 		for (Entry<String, ByteArrayOutputStream> pdfByName : pdfsByName.entrySet()) {
 			DataSource dataSource = new ByteArrayDataSource(pdfByName.getValue().toByteArray(), "application/pdf");
 			helper.addAttachment(pdfByName.getKey(), dataSource);

@@ -21,4 +21,8 @@ public interface EmailService {
 	void sendMessageWithAttachment(String to, String subject, String text,
 			Map<String, ByteArrayOutputStream> pdfsByName) throws MessagingException;
 
+	void sendTemplateMessageWithAttachment(String to, String subject, String templatePath,
+			Map<String, Object> templateObjects, Map<String, ByteArrayOutputStream> pdfsByName)
+			throws MessagingException;
+
 }
