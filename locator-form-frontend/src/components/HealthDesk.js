@@ -134,7 +134,6 @@ class HealthDesk extends React.Component {
 		              	
 		        <Formik
 		          initialValues={this.state.formValues}
-				  initialTouched={{arrivalDate: true}}
 		          enableReinitialize
 		          validationSchema={currentValidationShema}
 		          onSubmit={this.handleSubmit}
@@ -145,14 +144,13 @@ class HealthDesk extends React.Component {
 					useEffect(() => {
 						const validateFormik = async () => {
 							const formikErrors = await formikProps.validateForm();
-							console.log("errors are: " + Object.keys(formikErrors));
 							if (Object.keys(formikErrors).length > 0) {
-								console.log("errors are: " + Object.keys(formikErrors)[0]);
+								formikProps.setTouched(setNestedObjectValues(formikErrors, true));
 								this.scrollToElement(document.getElementsByName(Object.keys(formikErrors)[0])[0]);
 							}
 						  }
 						validateFormik();
-						}, []);
+						}, [this.state.formKey]);
 						
 					return (
 		          <Form>
