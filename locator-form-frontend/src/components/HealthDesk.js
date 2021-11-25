@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from "react";
 import { Field, Formik, Form, setNestedObjectValues } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
@@ -26,8 +27,9 @@ class HealthDesk extends React.Component {
       submitSuccess: false,
       summaryAccessInfo: {},
       passengerSelected: false,
+	  newSearch:true,
       formValues: {},
-	  formKey: '1',
+	  formKey: '1'
     }
   }
 
@@ -66,13 +68,22 @@ class HealthDesk extends React.Component {
     window.scrollTo(0, 0)
   }
 
+  scrollToElement = (element) => {
+	const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition - 175;
+	window.scrollBy({
+		top: offsetPosition,
+		behavior: "smooth"
+   });
+  }
+
   onSuccess = (summaryAccessInfo) => {
     this.setState({ submitErrorKey: '', submitSuccess: true, passengerSelected: false, formValues: {}, formKey: "1"  })
     this.scrollToTopOfPage();
   }
   
   searchSuccess = (locatorForm, key) => {
-	  this.setState({passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key});
+	  this.setState({newSearch: true, passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key});
   }
 
   handleReset= () => {
@@ -123,14 +134,29 @@ class HealthDesk extends React.Component {
 		              	
 		        <Formik
 		          initialValues={this.state.formValues}
+				  initialTouched={{arrivalDate: true}}
 		          enableReinitialize
 		          validationSchema={currentValidationShema}
 		          onSubmit={this.handleSubmit}
-		          validateOnMount={true}
+		          validateOnMount
 		          key={this.state.formKey}
 				  onReset={this.handleReset}
-		        >{formikProps => (
+		        >{formikProps => {
+					useEffect(() => {
+						const validateFormik = async () => {
+							const formikErrors = await formikProps.validateForm();
+							console.log("errors are: " + Object.keys(formikErrors));
+							if (Object.keys(formikErrors).length > 0) {
+								console.log("errors are: " + Object.keys(formikErrors)[0]);
+								this.scrollToElement(document.getElementsByName(Object.keys(formikErrors)[0])[0]);
+							}
+						  }
+						validateFormik();
+						}, []);
+						
+					return (
 		          <Form>
+				  {console.log(formikProps)}
 		            <div className="questions" id="questions">
 						<StyledFieldSet>
 							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.passenderDetails' })}</StyledLegend>
@@ -346,7 +372,7 @@ class HealthDesk extends React.Component {
 						duration={100}
 					/>
 		          </Form >
-		        )}
+		        )}}
 		        </Formik>
 		        }
 		      </div>
