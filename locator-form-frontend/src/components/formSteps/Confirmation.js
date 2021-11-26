@@ -16,12 +16,13 @@ class Confirmation extends React.Component {
 						<div className="col-lg-12 ">
 							<MyCheckbox
 								className="required-field-field" name="acceptedTerms">
-								<FormattedMessage id="nav.item.declareInformation" defaultMessage="I declare that the information I have given is true and complete. I understand that I shall commit an offence if I fail to fill the form or knowingly submit false information." />
+								<FormattedMessage id="nav.item.declareInformation" defaultMessage="I/Guardian declare that the information I/Guardian have given is true and complete. I/Guardian understand that I/Guardian shall commit an offence if I/Guardian fail to fill the form or knowingly submit false information." />
 							</MyCheckbox>
 						</div>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 	}
 

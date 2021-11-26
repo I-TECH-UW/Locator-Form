@@ -147,7 +147,13 @@ public class EmailServiceImpl implements EmailService {
 		}
 		StringWriter stringWriter = new StringWriter();
 		velocityEngine.orElseThrow().mergeTemplate(templatePath, "UTF-8", velocityContext, stringWriter);
-		helper.setText(stringWriter.toString());
+		String text = stringWriter.toString();
+		helper.setText(text);
+		if (text.startsWith("<html>")) {
+			helper.setText(text, true);
+		} else {
+			helper.setText(text);
+		}
 
 		for (Entry<String, ByteArrayOutputStream> pdfByName : pdfsByName.entrySet()) {
 			DataSource dataSource = new ByteArrayDataSource(pdfByName.getValue().toByteArray(), "application/pdf");
