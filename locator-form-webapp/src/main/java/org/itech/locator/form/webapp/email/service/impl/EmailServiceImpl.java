@@ -149,7 +149,7 @@ public class EmailServiceImpl implements EmailService {
 		velocityEngine.orElseThrow().mergeTemplate(templatePath, "UTF-8", velocityContext, stringWriter);
 		String text = stringWriter.toString();
 		helper.setText(text);
-		if (text.startsWith("<html>")) {
+		if (text.startsWith("<html>") || text.startsWith("<!DOCTYPE html>")) {
 			helper.setText(text, true);
 		} else {
 			helper.setText(text);
