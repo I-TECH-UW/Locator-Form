@@ -79,5 +79,7 @@
 	"nav.item.form.label.details": "Details",
 	"nav.item.form.label.vaccine": "Vaccine",
 	"nav.item.form.label.testkit": "Test Kit" ,
-	"nav.item.form.label.healthOffice" :  "Health Office"
+	"nav.item.form.label.healthOffice" :  "Health Office",
+
+	"nav.item.topOfForm": "<p>To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health.</p><p>Note: The data collected from the Mauritius All-in-One Travel Digital Form, either online or on arrival at the SSR International Airport, Plaisance, is solely used for the purpose of screening infectious diseases, including COVID-19 public health surveillance. The legal basis for using and processing personal information is in accordance with the Data Protection Act 2017. Passengers’ personal data will be retained for a minimum period of 2 years or more depending on the duration of the COVID-19 pandemic and other infectious diseases. One year after this period, the passengers’ personal data will be destroyed.</p><p>It is strongly recommended to fill the locator form prior to your travel date in order to avoid any administrative delays at the Airport.</p><p>For any queries in relation to COVID-19 travel requirements to Mauritius, you may consult the website of the Ministry of Health and Wellness at {mohLink} or contact the Airport Health Office at {mohEmail}</p>"
 }

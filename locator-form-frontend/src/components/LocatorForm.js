@@ -211,9 +211,11 @@ class LocatorForm extends React.Component {
                 	<div className="container">  
                   		<h3 className="question-header">
                   		<FormattedMessage id="nav.item.header" defaultMessage="Mauritius All-in-One Travel Digital Form" /></h3>
-                  		<p> <FormattedMessage id="nav.item.topOfForm" defaultMessage="To protect your health, public health officers need you to complete this form whenever they suspect a communicable disease onboard a flight. Your information will help public health officers to contact you if you were exposed to a communicable disease. It is important to fill out this form completely and accurately. Your information is intended to be held in accordance with applicable laws and used only for public health purposes. ~Thank you for helping us to protect your health. " /></p> 
-                  		<p> <FormattedMessage id="nav.item.topOfFormNote1" defaultMessage="Note: The data collected from the Locator Form, either online or on arrival at the SSR International Airport, Plaisance, is solely used for the purpose of screening infectious diseases, including COVID-19 public health surveillance. The legal basis for using and processing personal information is in accordance with the Data Protection Act 2017. Passengers’ personal data will be retained for a minimum period of 2 years or more depending on the duration of the COVID-19 pandemic and other infectious diseases. One year after this period, the passengers’ personal data will be destroyed. " /></p>
-                  		<p> <FormattedMessage id="nav.item.topOfFormNote2" defaultMessage="It is strongly recommended to fill the locator form prior to your travel date in order to avoid any administrative delays at the Airport." /></p>
+                  		<FormattedMessage id="nav.item.topOfForm" values={{
+                        p: (...chunks) => <p>{chunks}</p>,
+                        mohLink: <a target='_blank' href='https://health.govmu.org/Pages/default.aspx'>https://health.govmu.org/Pages/default.aspx</a>,
+                        mohEmail: <a href = 'mailto: airport-ho@govmu.org'>airport-ho@govmu.org</a>
+                      }}/>
                     </div>
                   }
                 </div>
