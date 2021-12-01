@@ -5,7 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 const accessTokenTimeout = 1000 * 60 * 1; // milliseconds between refreshing access token (disabled once idle)
-const idleTimeout = 1000 * 60 * 1 ; // milliseconds until idle warning will appear
+const idleTimeout = 1000 * 60 * 15 ; // milliseconds until idle warning will appear
 const idleWarningTimeout = 1000 * 60 * 1; // milliseconds until logout is automatically processed from idle warning
 
 class SecureRoute extends React.Component {
