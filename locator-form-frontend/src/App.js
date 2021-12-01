@@ -81,8 +81,8 @@ class App extends React.Component {
             <Layout onChangeLanguage={this.onChangeLanguage} logout={this.logout} isLoggedIn={this.isLoggedIn} >
                 <Switch>
                 <Route path="/" exact component={LocatorForm} />
-                <SecureRoute path="/health-desk" exact component={() => <HealthDesk keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} isLoggedIn={this.isLoggedIn}/>
-                <SecureRoute path="/swab-screen" exact component={() => <SwabScreen keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} isLoggedIn={this.isLoggedIn}/>
+                <SecureRoute path="/health-desk" exact component={() => <HealthDesk keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} logout={this.logout} isLoggedIn={this.isLoggedIn}/>
+                <SecureRoute path="/swab-screen" exact component={() => <SwabScreen keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} logout={this.logout} isLoggedIn={this.isLoggedIn}/>
                 </Switch>
             </Layout>
             {/* <Footer /> */}
