@@ -52,6 +52,10 @@ export const airlines = [
     "label": "Corsair International"
   },
   {
+    "value": "Edelweiss Air",
+    "label": "Edelweiss Air"
+  },
+  {
     "value": "Egypt Air",
     "label": "Egypt Air"
   },
