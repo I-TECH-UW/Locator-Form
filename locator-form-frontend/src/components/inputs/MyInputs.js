@@ -13,6 +13,7 @@ export const StyledSelect = styled(MultiCapableSelect)`
 //	  width : 150px;
     `;
 
+
 export const StyledPhoneInput = styled(PhoneInputField)`
 	  color: var(--blue);	
 //	  width : 150px;
@@ -72,7 +73,7 @@ export const MyTextInput = ({ label, ...props }) => {
     <>
       <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
       <div className="input-group">
-        <input className="text-input form-control" {...field} {...props} />
+        <input className="text-input form-control" onKeyPress={e => { e.which === 13 && e.preventDefault() }} {...field} {...props} />
         {props.iconClickable &&
           <span className="input-group-btn">
             <button className="input-icon-button" 
