@@ -368,7 +368,7 @@ class Summary extends React.Component {
 					</div>
 				</div>
 			</div>
-				{/* {familyTravelCompanions.length > 0 && */}
+				{familyTravelCompanions.length > 0 &&
 			<div id="travelCompanionsInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
@@ -409,8 +409,8 @@ class Summary extends React.Component {
 					</>;
 				})}
 				</div>
-	{/* } */}
-				{/* {nonFamilyTravelCompanions.length > 0 && */}
+	} 
+				{nonFamilyTravelCompanions.length > 0 &&
 			<div id="nonFamilyTravelCompanionInformation" className="section">
 				<div className="row">
 					<div className="col-lg-12 ">
@@ -451,7 +451,7 @@ class Summary extends React.Component {
 					</>;
 				})}
 				</div>
-	{/* } */}
+	}
 		</div>
 	}
 
