@@ -84,13 +84,13 @@ class SecureRoute extends React.Component {
 				console.log('refreshed '+ new Date());
 				localStorage.setItem("react-token", this.props.keycloak.token);
 				localStorage.setItem("react-refresh-token", this.props.keycloak.refreshToken);
-				this.setRefreshTokenTimer();
 			} else {
-				console.log('not refreshed '+ new Date());
+				console.log('not refreshed ' + new Date());
 			}
 		}).error(() => {
-			 console.error('Failed to refresh token '+ new Date());
+			 console.error('Failed to refresh token ' + new Date());
 		});
+		this.setRefreshTokenTimer();
 	  }
 	  
 	  render() {

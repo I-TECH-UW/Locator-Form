@@ -20,6 +20,7 @@ import org.itech.locator.form.webapp.email.service.EmailService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService.TransactionObjects;
+import org.itech.locator.form.webapp.logging.LogUtil;
 import org.itech.locator.form.webapp.security.recaptcha.service.RecaptchaService;
 import org.itech.locator.form.webapp.summary.LabelContentPair;
 import org.itech.locator.form.webapp.summary.security.SummaryAccessInfo;
@@ -67,13 +68,20 @@ public class LocatorFormController {
 			@RequestBody @Valid LocatorFormDTO locatorFormDTO, BindingResult result, HttpServletRequest request)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 
-		if (!recaptchaService.verifyRecaptcha(request.getRemoteAddr(), recaptchaToken)) {
+		if (result.hasErrors()) {
+			result.getFieldErrors().stream().forEach(
+					e -> log.error("Validation error for field " + e.getField() + ": " + e.getDefaultMessage() + " '"
+							+ LogUtil.sanitizeUntrustedInputMessageForLog(e.getRejectedValue().toString()) + "'"));
+			result.getGlobalErrors().stream()
+					.forEach(e -> log.error("Validation error for global object: " + e.getDefaultMessage()));
 			return ResponseEntity.badRequest().build();
 		}
-		if (result.hasErrors()) {
+		if (!recaptchaService.verifyRecaptcha(request.getRemoteAddr(), recaptchaToken)) {
+			log.error("reCAPTCHA token could not be verified");
 			return ResponseEntity.badRequest().build();
 		}
 		if (!locatorFormDTO.getAcceptedTerms()) {
+			log.error("Accepted terms could not be detected");
 			return ResponseEntity.badRequest().build();
 		}
 
