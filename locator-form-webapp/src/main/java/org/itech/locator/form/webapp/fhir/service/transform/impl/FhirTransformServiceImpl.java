@@ -596,11 +596,19 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireResponseItemComponent healthOfficeItem = questionnaireResponse.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
 		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
+
+		QuestionnaireResponseItemComponent testKitIdItem = questionnaireResponse.addItem();
+		testKitIdItem.setLinkId(FhirConstants.TEST_KIT_ID_LINK_ID).setText("Test Kit Id");
+		QuestionnaireResponseItemAnswerComponent testKitIdAnswer = testKitIdItem.addAnswer();
 		if (locatorFormDTO instanceof HealthDeskDTO) {
 			HealthDeskDTO healthDeskDto = (HealthDeskDTO) locatorFormDTO;
 			if (StringUtils.isNotBlank(healthDeskDto.getHealthOffice())) {
 				healthOfficeAnswer.setValue(new StringType(healthDeskDto.getHealthOffice()));
 			}
+			if (StringUtils.isNotBlank(healthDeskDto.getTestKitId())) {
+				testKitIdAnswer.setValue(new StringType(healthDeskDto.getHealthOffice()));
+			}
+
 		}
 
 		return questionnaireResponse;
@@ -699,7 +707,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		QuestionnaireItemComponent healthOfficeItem = questionnaire.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office")
-						.setType(QuestionnaireItemType.TEXT);		
+				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent testKitIdItem = questionnaire.addItem();
+		testKitIdItem.setLinkId(FhirConstants.TEST_KIT_ID_LINK_ID).setText("Test Kit Id")
+						.setType(QuestionnaireItemType.TEXT);
 
 		return questionnaire;
 	}

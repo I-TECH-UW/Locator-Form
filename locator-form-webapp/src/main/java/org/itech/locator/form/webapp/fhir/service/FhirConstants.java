@@ -49,4 +49,6 @@ public class FhirConstants {
     public static final String PURPOSE_OF_VIST_LINK_ID = "455e47e8-16d7-46ff-98fc-f9823d1cbf50";
 
     public static final String HEALTH_OFFICE_LINK_ID = "be3de5e0-ad7b-4241-b1e9-84d7a17f900a";
+
+	public static final String TEST_KIT_ID_LINK_ID = "a844764b-afe5-4a8f-8219-4f0245e26e87";
 }
