@@ -95,7 +95,7 @@ class SecureRoute extends React.Component {
 		}).error(() => {
 			 console.error('Failed to refresh token ' + new Date());
 			 if (retries > 0) {
-				refreshToken(retries - 1);
+				this.refreshToken(retries - 1);
 			 }
 		});
 		if (!this.state.refreshTimeoutSet) {
