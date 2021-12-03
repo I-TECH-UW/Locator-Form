@@ -44,12 +44,12 @@ public class Traveller {
 	private String questionnaireResponseId;
 
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 255)
 	@JsonDeserialize(using = CapitalizeDeserializer.class)
 	private String lastName;
 
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 255)
 	@JsonDeserialize(using = CapitalizeDeserializer.class)
 	private String firstName;
 
@@ -67,7 +67,7 @@ public class Traveller {
 	@NotNull
 	private Sex sex;
 
-	@Size(max = 50)
+	@Size(max = 255)
 	private String nationality;
 
 	@OneOf(resourcePath = "countries.js")
@@ -76,7 +76,7 @@ public class Traveller {
 	@OneOf(resourcePath = "countries.js")
 	private String countryOfPassportIssue;
 
-	@Size(max = 50)
+	@Size(max = 255)
 	@JsonDeserialize(using = CapitalizeDeserializer.class)
 	private String passportNumber;
 

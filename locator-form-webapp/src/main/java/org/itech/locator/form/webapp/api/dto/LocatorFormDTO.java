@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.itech.locator.form.webapp.validation.annotation.OneOf;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -37,7 +38,7 @@ public class LocatorFormDTO extends Traveller {
 	}
 
 	public enum VisitPurpose {
-		
+
 		CITIZEN,
 		CREW_FOR_RESIDENT,
 		BUSINESS,
@@ -48,7 +49,7 @@ public class LocatorFormDTO extends Traveller {
 		SPOUSE_OF_MAURITIAN ,
 		RESIDENT_PERMIT_HOLDER ,
 		OCCUPATION_PERMIT_HOLDER;
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -82,12 +83,12 @@ public class LocatorFormDTO extends Traveller {
     private TravellerType travellerType;
 
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 255)
     private String airlineName;
 	@NotBlank
-	@Size(max = 15)
+	@Size(max = 255)
     private String flightNumber;
-	
+
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate arrivalDate;
@@ -101,9 +102,9 @@ public class LocatorFormDTO extends Traveller {
 	private Integer lengthOfStay;
 	@Valid
 	private List<@OneOf(resourcePath = "countries.js") String> countriesVisited;
-	@Size(max = 50)
+	@Size(max = 255)
 	private String portOfEmbarkation;
-	@Size(max = 50)
+	@Size(max = 255)
     private String profession;
 
 	@JsonSerialize(using = StringBooleanSerializer.class)
@@ -128,7 +129,7 @@ public class LocatorFormDTO extends Traveller {
 
 	@NotNull
 	private VisitPurpose visitPurpose;
-	
+
 	@Size(max = 15)
 	private String mobilePhone;
 	@Size(max = 15)
@@ -137,18 +138,18 @@ public class LocatorFormDTO extends Traveller {
     private String businessPhone;
 
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 255)
 	@Email
 	private String confirmEmail;
 
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 255)
 	@Email
 	private String email;
 
-	@Size(max = 50)
+	@Size(max = 255)
 	private String nationalID;
-	
+
 	@Valid
 	private List<@OneOf(resourcePath = "nationality.js") String> passengerNationality;
 
