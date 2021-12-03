@@ -5,6 +5,8 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 const accessTokenTimeout = 1000 * 60 * 1; // milliseconds between refreshing access token (disabled once idle)
+const accessTokenTimeoutBuffer = 1000 * 10; // buffer for refreshing acces token (subtracted from accessTokenTimeout)
+const accessTokenNumRetries = 3; // retry for refreshing tokens
 const idleTimeout = 1000 * 60 * 15 ; // milliseconds until idle warning will appear
 const idleWarningTimeout = 1000 * 60 * 1; // milliseconds until logout is automatically processed from idle warning
 
@@ -16,6 +18,7 @@ class SecureRoute extends React.Component {
 	    this.state = { 
 	    	      authenticated: false,
 				  isIdle: false,
+				  refreshTimeoutSet: false,
 	    }
 	  }
 	
@@ -71,14 +74,16 @@ class SecureRoute extends React.Component {
 	  }
 
 	  setRefreshTokenTimer = () =>  {
+		  this.setState({refreshTimeoutSet: true});
 		setTimeout(() => {
+			this.setState({refreshTimeoutSet: false});
 			if (!this.state.isIdle) {
 				this.refreshToken();
 			}
-		}, accessTokenTimeout);
+		}, accessTokenTimeout - (accessTokenTimeoutBuffer));
 	  }
 
-	  refreshToken = () => {
+	  refreshToken = (retries=accessTokenNumRetries) => {
 		this.props.keycloak.updateToken(accessTokenTimeout / 1000).success((refreshed)=>{
 			if (refreshed){
 				console.log('refreshed '+ new Date());
@@ -89,8 +94,13 @@ class SecureRoute extends React.Component {
 			}
 		}).error(() => {
 			 console.error('Failed to refresh token ' + new Date());
+			 if (retries > 0) {
+				refreshToken(retries - 1);
+			 }
 		});
-		this.setRefreshTokenTimer();
+		if (!this.state.refreshTimeoutSet) {
+			this.setRefreshTokenTimer();
+		}
 	  }
 	  
 	  render() {
