@@ -84,20 +84,21 @@ class SecureRoute extends React.Component {
 	  }
 
 	  refreshToken = (retries=accessTokenNumRetries) => {
-		this.props.keycloak.updateToken(accessTokenTimeout / 1000).success((refreshed)=>{
+		this.props.keycloak.updateToken(accessTokenTimeout / 1000).then(async refreshed => {
 			if (refreshed){
 				console.log('refreshed '+ new Date());
 				localStorage.setItem("react-token", this.props.keycloak.token);
 				localStorage.setItem("react-refresh-token", this.props.keycloak.refreshToken);
 			} else {
 				console.log('not refreshed ' + new Date());
+				throw new Error("couln't refresh token");
 			}
-		}).error(() => {
-			 console.error('Failed to refresh token ' + new Date());
-			 if (retries > 0) {
-				this.refreshToken(retries - 1);
-			 }
-		});
+		  }).catch(err => {
+			console.error('Failed to refresh token ' + new Date());
+			if (retries > 0) {
+			   this.refreshToken(retries - 1);
+			}
+		  });
 		if (!this.state.refreshTimeoutSet) {
 			this.setRefreshTokenTimer();
 		}

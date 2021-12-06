@@ -593,6 +593,110 @@ public class FhirTransformServiceImpl implements FhirTransformService {
             dateOfArrivalAnswer.setValue(new StringType(locatorFormDTO.getArrivalDate().toString()));
         }
 
+		// Permanent address
+		QuestionnaireResponseItemComponent permAddrNumAndStreetItem = questionnaireResponse.addItem();
+		permAddrNumAndStreetItem.setLinkId(FhirConstants.PERM_ADDRESS_NUMBER_AND_STREET_LINK_ID)
+				.setText("Permanent Address: Number and Street");
+		QuestionnaireResponseItemAnswerComponent permAddrNumAndStreetAnswer = permAddrNumAndStreetItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPermanentAddress().getNumberAndStreet())) {
+			permAddrNumAndStreetAnswer
+					.setValue(new StringType(locatorFormDTO.getPermanentAddress().getNumberAndStreet()));
+		}
+
+		QuestionnaireResponseItemComponent permAddrAptmNumItem = questionnaireResponse.addItem();
+		permAddrAptmNumItem.setLinkId(FhirConstants.PERM_ADDRESS_APARTMENT_NUMBER_LINK_ID)
+				.setText("Permanent Address: Apartment Number");
+		QuestionnaireResponseItemAnswerComponent permAddrAptmNumAnswer = permAddrAptmNumItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPermanentAddress().getApartmentNumber())) {
+			permAddrAptmNumAnswer.setValue(new StringType(locatorFormDTO.getPermanentAddress().getApartmentNumber()));
+		}
+
+		QuestionnaireResponseItemComponent permAddrCityItem = questionnaireResponse.addItem();
+		permAddrCityItem.setLinkId(FhirConstants.PERM_ADDRESS_CITY_LINK_ID).setText("Permanent Address: City");
+		QuestionnaireResponseItemAnswerComponent permAddrCityAnswer = permAddrCityItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPermanentAddress().getCity())) {
+			permAddrCityAnswer.setValue(new StringType(locatorFormDTO.getPermanentAddress().getCity()));
+		}
+
+		QuestionnaireResponseItemComponent permAddrStateProvItem = questionnaireResponse.addItem();
+		permAddrStateProvItem.setLinkId(FhirConstants.PERM_ADDRESS_STATE_PROVINCE_LINK_ID)
+				.setText("Permanent Address: State/Province");
+		QuestionnaireResponseItemAnswerComponent permAddrStateProvAnswer = permAddrStateProvItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPermanentAddress().getStateProvince())) {
+			permAddrStateProvAnswer.setValue(new StringType(locatorFormDTO.getPermanentAddress().getStateProvince()));
+		}
+
+		QuestionnaireResponseItemComponent permAddrCountryItem = questionnaireResponse.addItem();
+		permAddrCountryItem.setLinkId(FhirConstants.PERM_ADDRESS_COUNTRY_LINK_ID).setText("Permanent Address: Country");
+		QuestionnaireResponseItemAnswerComponent permAddrCountryAnswer = permAddrCountryItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPermanentAddress().getCountry())) {
+			permAddrCountryAnswer.setValue(new StringType(locatorFormDTO.getPermanentAddress().getCountry()));
+		}
+
+		QuestionnaireResponseItemComponent permAddrZIPPostalItem = questionnaireResponse.addItem();
+		permAddrZIPPostalItem.setLinkId(FhirConstants.PERM_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
+				.setText("Permanent Address: ZIP/Postal Code");
+		QuestionnaireResponseItemAnswerComponent permAddrZIPPostalAnswer = permAddrZIPPostalItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPermanentAddress().getZipPostalCode())) {
+			permAddrZIPPostalAnswer.setValue(new StringType(locatorFormDTO.getPermanentAddress().getZipPostalCode()));
+		}
+
+		// Temp address
+		QuestionnaireResponseItemComponent tempAddrHotelNameItem = questionnaireResponse.addItem();
+		tempAddrHotelNameItem.setLinkId(FhirConstants.TEMP_ADDRESS_HOTEL_NAME_LINK_ID)
+				.setText("Temp Address: Hotel Name");
+		QuestionnaireResponseItemAnswerComponent tempAddrHotelNameAnswer = tempAddrHotelNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getHotelName())) {
+			tempAddrHotelNameAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getHotelName()));
+		}
+
+		QuestionnaireResponseItemComponent tempAddrNumAndStreetItem = questionnaireResponse.addItem();
+		tempAddrNumAndStreetItem.setLinkId(FhirConstants.TEMP_ADDRESS_NUMBER_AND_STREET_LINK_ID)
+				.setText("Temp Address: Number and Street");
+		QuestionnaireResponseItemAnswerComponent tempAddrNumAndStreetAnswer = tempAddrNumAndStreetItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getNumberAndStreet())) {
+			tempAddrNumAndStreetAnswer
+					.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getNumberAndStreet()));
+		}
+
+		QuestionnaireResponseItemComponent tempAddrAptmNumItem = questionnaireResponse.addItem();
+		tempAddrAptmNumItem.setLinkId(FhirConstants.TEMP_ADDRESS_APARTMENT_NUMBER_LINK_ID)
+				.setText("Temp Address: Apartment Number");
+		QuestionnaireResponseItemAnswerComponent tempAddrAptmNumAnswer = tempAddrAptmNumItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getApartmentNumber())) {
+			tempAddrAptmNumAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getApartmentNumber()));
+		}
+
+		QuestionnaireResponseItemComponent tempAddrCityItem = questionnaireResponse.addItem();
+		tempAddrCityItem.setLinkId(FhirConstants.TEMP_ADDRESS_CITY_LINK_ID).setText("Temp Address: City");
+		QuestionnaireResponseItemAnswerComponent tempAddrCityAnswer = tempAddrCityItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getCity())) {
+			tempAddrCityAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getCity()));
+		}
+
+		QuestionnaireResponseItemComponent tempAddrStateProvItem = questionnaireResponse.addItem();
+		tempAddrStateProvItem.setLinkId(FhirConstants.TEMP_ADDRESS_STATE_PROVINCE_LINK_ID)
+				.setText("Temp Address: State/Province");
+		QuestionnaireResponseItemAnswerComponent tempAddrStateProvAnswer = tempAddrStateProvItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getStateProvince())) {
+			tempAddrStateProvAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getStateProvince()));
+		}
+
+		QuestionnaireResponseItemComponent tempAddrCountryItem = questionnaireResponse.addItem();
+		tempAddrCountryItem.setLinkId(FhirConstants.TEMP_ADDRESS_COUNTRY_LINK_ID).setText("Temp Address: Country");
+		QuestionnaireResponseItemAnswerComponent tempAddrCountryAnswer = tempAddrCountryItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getCountry())) {
+			tempAddrCountryAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getCountry()));
+		}
+
+		QuestionnaireResponseItemComponent tempAddrZIPPostalItem = questionnaireResponse.addItem();
+		tempAddrZIPPostalItem.setLinkId(FhirConstants.TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
+				.setText("Temp Address: ZIP/Postal Code");
+		QuestionnaireResponseItemAnswerComponent tempAddrZIPPostalAnswer = tempAddrZIPPostalItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getZipPostalCode())) {
+			tempAddrZIPPostalAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getZipPostalCode()));
+		}
+
 		QuestionnaireResponseItemComponent healthOfficeItem = questionnaireResponse.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
 		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
@@ -606,7 +710,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				healthOfficeAnswer.setValue(new StringType(healthDeskDto.getHealthOffice()));
 			}
 			if (StringUtils.isNotBlank(healthDeskDto.getTestKitId())) {
-				testKitIdAnswer.setValue(new StringType(healthDeskDto.getHealthOffice()));
+				testKitIdAnswer.setValue(new StringType(healthDeskDto.getTestKitId()));
 			}
 
 		}
@@ -687,10 +791,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent emailItem = questionnaire.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
+		emailItem.setLinkId(FhirConstants.EMAIL_LINK_ID).setText("Email").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent nationalIdItem = questionnaire.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID")
+		nationalIdItem.setLinkId(FhirConstants.NATIONAL_ID_LINK_ID).setText("National ID")
 				.setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent passportCountryItem = questionnaire.addItem();
@@ -712,6 +816,60 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent testKitIdItem = questionnaire.addItem();
 		testKitIdItem.setLinkId(FhirConstants.TEST_KIT_ID_LINK_ID).setText("Test Kit Id")
 						.setType(QuestionnaireItemType.TEXT);
+
+		// Permanent address
+		QuestionnaireItemComponent permAddrNumAndStreetItem = questionnaire.addItem();
+		permAddrNumAndStreetItem.setLinkId(FhirConstants.PERM_ADDRESS_NUMBER_AND_STREET_LINK_ID)
+				.setText("Permanent Address: Number and Street").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent permAddrAptmNumItem = questionnaire.addItem();
+		permAddrAptmNumItem.setLinkId(FhirConstants.PERM_ADDRESS_APARTMENT_NUMBER_LINK_ID)
+				.setText("Permanent Address: Apartment Number").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent permAddrCityItem = questionnaire.addItem();
+		permAddrCityItem.setLinkId(FhirConstants.PERM_ADDRESS_CITY_LINK_ID).setText("Permanent Address: City")
+				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent permAddrStateProvItem = questionnaire.addItem();
+		permAddrStateProvItem.setLinkId(FhirConstants.PERM_ADDRESS_STATE_PROVINCE_LINK_ID)
+				.setText("Permanent Address: State/Province").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent permAddrCountryItem = questionnaire.addItem();
+		permAddrCountryItem.setLinkId(FhirConstants.PERM_ADDRESS_COUNTRY_LINK_ID).setText("Permanent Address: Country")
+				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent permAddrZIPPostalItem = questionnaire.addItem();
+		permAddrZIPPostalItem.setLinkId(FhirConstants.PERM_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
+				.setText("Permanent Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
+
+		// Temp address
+		QuestionnaireItemComponent tempAddrHotelNameItem = questionnaire.addItem();
+		tempAddrHotelNameItem.setLinkId(FhirConstants.TEMP_ADDRESS_HOTEL_NAME_LINK_ID)
+				.setText("Temp Address: Hotel Name").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent tempAddrNumAndStreetItem = questionnaire.addItem();
+		tempAddrNumAndStreetItem.setLinkId(FhirConstants.TEMP_ADDRESS_NUMBER_AND_STREET_LINK_ID)
+				.setText("Temp Address: Number and Street").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent tempAddrAptmNumItem = questionnaire.addItem();
+		tempAddrAptmNumItem.setLinkId(FhirConstants.TEMP_ADDRESS_APARTMENT_NUMBER_LINK_ID)
+				.setText("Temp Address: Apartment Number").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent tempAddrCityItem = questionnaire.addItem();
+		tempAddrCityItem.setLinkId(FhirConstants.TEMP_ADDRESS_CITY_LINK_ID).setText("Temp Address: City")
+				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent tempAddrStateProvItem = questionnaire.addItem();
+		tempAddrStateProvItem.setLinkId(FhirConstants.TEMP_ADDRESS_STATE_PROVINCE_LINK_ID)
+				.setText("Temp Address: State/Province").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent tempAddrCountryItem = questionnaire.addItem();
+		tempAddrCountryItem.setLinkId(FhirConstants.TEMP_ADDRESS_COUNTRY_LINK_ID).setText("Temp Address: Country")
+				.setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent tempAddrZIPPostalItem = questionnaire.addItem();
+		tempAddrZIPPostalItem.setLinkId(FhirConstants.TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
+				.setText("Temp Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
 
 		return questionnaire;
 	}
