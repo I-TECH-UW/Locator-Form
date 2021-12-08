@@ -24,7 +24,7 @@ class SecureRoute extends React.Component {
 	
 	  componentDidMount() {
 		  const keycloak = this.props.keycloak;
-		  keycloak.init({onLoad: 'login-required'}).success((authenticated) => {
+		  keycloak.init({onLoad: 'login-required'}).then(async authenticated => {
 		        if (authenticated) {
 				    console.info("Authenticated");
 				    this.setState({ authenticated: true });
@@ -34,7 +34,7 @@ class SecureRoute extends React.Component {
 					
 					this.setRefreshTokenTimer(keycloak);
 				}
-			}).error(() => {
+			}).catch(err => {
 				  console.error("Authenticated Failed");
 		    });  
 	

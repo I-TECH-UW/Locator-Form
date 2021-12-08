@@ -402,6 +402,29 @@ export const testKit = {
 		testKitId: Yup.string()
 			.max(25, 'error.char.max.exceeded')
 			.matches("^[A-Za-z0-9]+$", "error.alphanum")
+			.test('checkDuplicateTestKit', 'error.duplicate', async function (searchValue) {
+				if (!searchValue) {
+					return true;
+				}
+				const unique = await fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/swab/servicerequest/${searchValue}`, {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
+					},
+				}).then(async response => {
+					if (response.status === 404) {
+						return true;
+					} else if (response.ok) {
+						return false;
+					} else {
+						throw new Error("couldn't reach the backend service to see if test kit is unique")
+					}
+				}).catch(err => {
+					console.log(err)
+					return false;
+				});
+				return unique;
+			})
 			//.required('error.required')
 };
 
