@@ -324,6 +324,7 @@ class HealthDesk extends React.Component {
 										label={<FormattedMessage id="nav.item.testKitId" defaultMessage="Test Kit ID" />}
 										name="testKitId"
 										requireField={false}
+										displayErrorBeforeTouched={true}
 										type="text"
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder.testkit' })}
 										// disabled={this.state.searching || this.state.confirming} 

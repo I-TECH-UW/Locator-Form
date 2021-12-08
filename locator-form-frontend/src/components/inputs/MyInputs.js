@@ -92,7 +92,7 @@ export const MyTextInput = ({ label, ...props }) => {
           {props.additionalErrorMessage}
         </StyledErrorMessage>
       </div>
-      {meta.touched && meta.error ? (
+      {(meta.touched || props.displayErrorBeforeTouched) && meta.error ? (
         <div className="error">
           <StyledErrorMessage>
             <FormattedMessage id={meta.error} defaultMessage={meta.error} />
