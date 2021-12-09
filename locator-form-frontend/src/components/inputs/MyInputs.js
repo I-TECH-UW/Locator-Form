@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import { FormattedMessage } from 'react-intl';
 import MultiCapableSelect from "./MultiCapableSelect"
 import { PhoneInputField } from './PhoneInputField'
+import TimePicker from 'rc-time-picker';
+import moment from 'moment';
 
 
 // Styled components ....
@@ -12,7 +14,6 @@ export const StyledSelect = styled(MultiCapableSelect)`
 	  color: var(--blue);	
 //	  width : 150px;
     `;
-
 
 export const StyledPhoneInput = styled(PhoneInputField)`
 	  color: var(--blue);	
@@ -228,3 +229,59 @@ export const MyPhoneInput = ({ label, options, ...props }) => {
     </>
   );
 };
+
+const MyTimePicker = ({ 
+  field,
+  form: { setFieldValue, setFieldTouched },
+  ...props }) => {
+  const [meta] = useField(props);
+  const format = "HH:mm";
+  const value = field.value;
+  
+  return(
+        <TimePicker 
+                  showSecond={false}
+                  style={{"border": "0px", "padding": "0"}}
+                  id="arrival-time"
+                  className="form-control" 
+                  onChange={e => {
+                    console.log(e)
+                    setFieldValue(field.name, e && e.format(format));
+                  }}
+                  onClose={()=> {
+                    setFieldTouched(field.name);
+                  }} 
+                  defaultValue={field.value ? moment(field.value, 'HH:mm') : null}
+                  format={format}
+                  allowEmpty
+                />
+    )
+  }
+
+  export const StyledTimePicker = styled(MyTimePicker)`
+  color: var(--blue);	
+  //	  width : 150px;
+  `;
+
+export const MyTimeInput = ({ label,
+  field,
+  placeholder,
+  ...props }) => {
+  const [meta] = useField(props);
+  const format = "HH:mm";
+
+  return(
+  <>
+      <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
+      <div className="input-group">
+      <StyledTimePicker {...field} {...props}
+        field={field}
+        form={props.form}
+      />
+        </div>  
+        {meta.touched && meta.error ? (
+          <div className="error"><StyledErrorMessage><FormattedMessage id={meta.error} defaultMessage={meta.error} /></StyledErrorMessage></div>
+        ) : null}
+    </>
+  )
+}

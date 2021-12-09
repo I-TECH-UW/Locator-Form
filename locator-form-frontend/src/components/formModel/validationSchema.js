@@ -13,13 +13,18 @@ function isBlankOrValidPhoneNumber(phoneNumber) {
 
 function parseDateString(value, originalValue) {
 	const parsedDate = isDate(originalValue)
-    ? originalValue
-    : parse(originalValue, "yyyy-MM-dd", new Date());
+    	? originalValue
+    	: originalValue.length === 10 
+			? parse(originalValue, "yyyy-MM-dd", new Date()) 
+			: originalValue;
 
   return parsedDate;
 }
 
 function parseTimeString(value, originalValue) {
+	if (originalValue === null) {
+		return '';
+	}
   return parse(originalValue, "HH:mm", new Date()).getHours() + ":" + parse(originalValue, "HH:mm", new Date()).getMinutes() ;
 }
 
@@ -53,7 +58,8 @@ export const step2Validation = {
 		.min(today, "error.date.past")
 		.required('error.required'),
     arrivalTime: Yup.string().transform(parseTimeString)
-	.notOneOf(['NaN:NaN']),
+		.typeError("error.time.invalidformat")
+		.notOneOf(['NaN:NaN']),
 	visitPurpose: Yup.string()
 		.required('error.required')
 		.when('travellerType', {

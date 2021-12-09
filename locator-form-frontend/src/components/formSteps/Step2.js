@@ -1,7 +1,8 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, dateInputToday } from '../inputs/MyInputs'
+import { MyTextInput, MyTimeInput, MySelect, dateInputToday } from '../inputs/MyInputs'
+import 'rc-time-picker/assets/index.css';
 import { airlines } from '../data/airlines'
 
 class Step2 extends React.Component {
@@ -56,12 +57,17 @@ class Step2 extends React.Component {
 							/>
 						</div>
 						<div className="col-lg-4  form-group">
-							<MyTextInput
-								label={<FormattedMessage id="nav.item.timeOfArrival" defaultMessage="Time of Arrival" />}
-								name="arrivalTime"
-								requireField={false}
-								type="time"
-							/>
+							<Field name="arrivalTime">
+								{({ field, form, meta }) =>
+									<MyTimeInput
+										label={<FormattedMessage id="nav.item.timeOfArrival" defaultMessage="Time of Arrival" />}
+										form={form}
+										field={field}
+										name={field.name}
+										form={form}
+									/>
+								}
+							</Field>
 						</div>
 						<div className="col-lg-4 form-group ">
 							<Field name="visitPurpose">
