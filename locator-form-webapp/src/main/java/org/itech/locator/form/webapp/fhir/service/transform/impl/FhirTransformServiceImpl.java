@@ -493,7 +493,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		soreThroatAnswer.setValue(new BooleanType(soreThroat));
 
 		QuestionnaireResponseItemComponent jointPainItem = questionnaireResponse.addItem();
-		jointPainItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID).setText("Joint Pain");
+		jointPainItem.setLinkId(FhirConstants.JOINT_PAIN_LINK_ID).setText("Joint Pain");
 		QuestionnaireResponseItemAnswerComponent jointPainAnswer = jointPainItem.addAnswer();
 		Boolean jointPain = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getJointPain()));
 		jointPainAnswer.setValue(new BooleanType(jointPain));
