@@ -551,14 +551,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 
 		QuestionnaireResponseItemComponent emailItem = questionnaireResponse.addItem();
-		emailItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("Email");
+		emailItem.setLinkId(FhirConstants.EMAIL_LINK_ID).setText("Email");
 		QuestionnaireResponseItemAnswerComponent emailAnswer = emailItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getEmail())) {
 			emailAnswer.setValue(new StringType(locatorFormDTO.getEmail()));
 		}
 
 		QuestionnaireResponseItemComponent nationalIdItem = questionnaireResponse.addItem();
-		nationalIdItem.setLinkId(FhirConstants.WORK_PHONE_LINK_ID).setText("National ID");
+		nationalIdItem.setLinkId(FhirConstants.NATIONAL_ID_LINK_ID).setText("National ID");
 		QuestionnaireResponseItemAnswerComponent nationalIdAnswer = nationalIdItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getNationalID())) {
 			nationalIdAnswer.setValue(new StringType(locatorFormDTO.getNationalID()));
