@@ -714,6 +714,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			}
 
 		}
+		
+		QuestionnaireResponseItemComponent lastNameItem = questionnaireResponse.addItem();
+		lastNameItem.setLinkId(FhirConstants.LAST_NAME_LINK_ID).setText("Last Name");
+		QuestionnaireResponseItemAnswerComponent lastNameAnswer = healthOfficeItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getLastName())) {
+			lastNameAnswer.setValue(new StringType(locatorFormDTO.getLastName()));
+		}
 
 		return questionnaireResponse;
 	}
@@ -722,7 +729,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	public Questionnaire createQuestionnaire() {
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.setId(questionnaireId);
-		// questionnaire.setStatus(PublicationStatus.DRAFT);
+		
 		questionnaire.addIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(questionnaireId));
 		questionnaire.setTitle("Locator Form Questionnaire");
 		questionnaire.setDate(new Date());

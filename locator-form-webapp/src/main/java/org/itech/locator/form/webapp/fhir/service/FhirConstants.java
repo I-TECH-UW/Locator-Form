@@ -78,4 +78,43 @@ public class FhirConstants {
 
 	public static final String TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "03db31d6-a1cb-4199-9555-647649291894";
 
+    public static final String LAST_NAME_LINK_ID = "9b58dbb3-9d4b-4530-b4fb-4ce67f5f1124";
+
+    public static final String FIRST_NAME_LINK_ID = "eba416ab-9b7b-4fe6-abb2-993e89a1b623";
+
+    public static final String MIDDLE_INITIAL_LINK_ID = "3a5d2f7c-e0c2-4e56-9450-46d5b015d90b";
+
+    public static final String DATE_OF_BIRTH_LINK_ID = "ca90314d-dabc-4c87-bb14-533c3dbac8da";
+
+    public static final String SEX_LINK_ID = "c7374d7f-6fb6-4471-a489-927148301ce6";
+
+    public static final String VACCINATED_LINK_ID = "cda0184d-c5d3-45ac-af70-c69ea1fbcf9c";
+
+    public static final String FIRST_VACCINE_NAME_LINK_ID = "6add5064-36f7-4189-8ce1-6a79b7b14b28";
+
+    public static final String SECOND_VACCINE_NAME_LINK_ID = "3d19a58a-aa31-4c40-aed0-ee766ab857d4";
+
+    public static final String DATE_OF_FIRST_DOSE_LINK_ID = "fd173269-7079-462b-9e18-30680b457dd6";
+
+    public static final String DATE_OF_SECOND_DOSE_LINK_ID = "c8d84a28-9c33-4d08-ad6a-4c39cfa0331f";
+
+    public static final String TRAVELLER_TYPE_LINK_ID = "1a95bf63-0e8f-4c4d-91a2-3f7ea10344e1";
+
+    public static final String ARRIVAL_DATE_LINK_ID = "6f20e7e8-929d-4576-9c52-93c90964cffa";
+
+    public static final String ARRIVAL_TIME_LINK_ID = "f957ac0c-5c15-11ec-bf63-0242ac130002";
+
+    public static final String TITLE_LINK_ID = "4906ee7d-817d-4ae4-ab2d-87231363d985";
+
+    public static final String LENGTH_OF_STAY_LINK_ID = "2599d6ac-19c6-409d-a4d8-b03b8a491bf6";
+
+    public static final String PORT_OF_EMBARKATION_LINK_ID = "56c7423d-5928-46c0-ac0a-ca6d287c5727";
+
+    public static final String PROFESSION_LINK_ID = "98b32b17-7e5d-469d-b9b0-683f7d8bd98c";
+
+    public static final String CONFRIM_EMAIL_LINK_ID = "49e59f4a-aa33-4242-bbdb-00ab46328af5";
+
+    public static final String COUNTRY_OF_BIRTH_LINK_ID = "87b6cb05-a243-43b1-86b8-d4bbfce4abf2";
+
+    public static final String PASSPORT_EXPIRY_DATE_LINK_ID = "af81b563-90b7-4299-a697-65820fcd7d86";
 }
