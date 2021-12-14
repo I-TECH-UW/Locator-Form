@@ -583,13 +583,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 
 		QuestionnaireResponseItemComponent purposeOfVisitItem = questionnaireResponse.addItem();
-        purposeOfVisitItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit");
-        QuestionnaireResponseItemAnswerComponent purposeOfVisitAnswer = purposeOfVisitItem.addAnswer();
-        if (StringUtils.isNotBlank(locatorFormDTO.getVisitPurpose().toString())) {
-            purposeOfVisitAnswer.setValue(new StringType(locatorFormDTO.getVisitPurpose().toString()));
-        }
-
-        QuestionnaireResponseItemComponent dateOfArrivalItem = questionnaireResponse.addItem();
+		purposeOfVisitItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit");
+		QuestionnaireResponseItemAnswerComponent purposeOfVisitAnswer = purposeOfVisitItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getVisitPurpose().toString())) {
+			purposeOfVisitAnswer.setValue(new StringType(locatorFormDTO.getVisitPurpose().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent dateOfArrivalItem = questionnaireResponse.addItem();
 		dateOfArrivalItem.setLinkId(FhirConstants.DATE_OF_ARRIVAL_LINK_ID).setText("Date Of Arrival");
 		QuestionnaireResponseItemAnswerComponent dateOfArrivalAnswer = dateOfArrivalItem.addAnswer();
 		if (locatorFormDTO.getArrivalDate() != null) {
