@@ -832,7 +832,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		countryOfBirthItem.setLinkId(FhirConstants.COUNTRY_OF_BIRTH_LINK_ID).setText("Country Of Birth");
 		QuestionnaireResponseItemAnswerComponent countryOfBirthAnswer = countryOfBirthItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getCountryOfBirth())) {
-			countryOfBirthAnswer.setValue(new StringType(locatorFormDTO.getCountryOfBirth()));
+			String country = LocatorFormUtil.getCountryLabelForValue(locatorFormDTO.getCountryOfBirth());
+			countryOfBirthAnswer.setValue(new StringType(country));
 		}
 		
 		QuestionnaireResponseItemComponent passportExpiryDateItem = questionnaireResponse.addItem();
@@ -871,7 +872,8 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		        .setText("Emergency Contact : Country");
 		QuestionnaireResponseItemAnswerComponent emergenceContactCountryAnswer = emergenceContactCountryItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getEmergencyContact().getCountry())) {
-			emergenceContactCountryAnswer.setValue(new StringType(locatorFormDTO.getEmergencyContact().getCountry()));
+			String country = LocatorFormUtil.getCountryLabelForValue(locatorFormDTO.getEmergencyContact().getCountry());
+			emergenceContactCountryAnswer.setValue(new StringType(country));
 		}
 
 		QuestionnaireResponseItemComponent emergenceContactMobilePhoneItem = questionnaireResponse.addItem();
