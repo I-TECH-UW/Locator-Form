@@ -135,16 +135,18 @@ class HealthDesk extends React.Component {
 		          key={this.state.formKey}
 				  onReset={this.handleReset}
 		        >{formikProps => {
-					useEffect(() => {
-						const validateFormik = async () => {
-							const formikErrors = await formikProps.validateForm();
-							if (Object.keys(formikErrors).length > 0) {
-								formikProps.setTouched(setNestedObjectValues(formikErrors, true));
-								this.scrollToElement(document.getElementsByName(Object.keys(formikErrors)[0])[0]);
+					if (!formikProps.values.finalized) {
+						useEffect(() => {
+							const validateFormik = async () => {
+								const formikErrors = await formikProps.validateForm();
+								if (Object.keys(formikErrors).length > 0) {
+									formikProps.setTouched(setNestedObjectValues(formikErrors, true));
+									this.scrollToElement(document.getElementsByName(Object.keys(formikErrors)[0])[0]);
+								}
 							}
-						  }
-						validateFormik();
-						}, [this.state.formKey]);
+							validateFormik();
+							}, [this.state.formKey]);
+					}
 						
 					return (
 		          <Form>
