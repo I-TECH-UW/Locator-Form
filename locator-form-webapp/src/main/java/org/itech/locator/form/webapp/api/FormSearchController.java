@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,12 +45,14 @@ public class FormSearchController {
 	private ObjectMapper objectMapper;
 
 	@GetMapping("/servicerequest/{serviceRequestId}")
-	public ResponseEntity<LocatorFormDTO> searchByServiceRequestId(@PathVariable String serviceRequestId)
+	public ResponseEntity<LocatorFormDTO> searchByServiceRequestId(@PathVariable String serviceRequestId,
+			@RequestParam(defaultValue = "false") Boolean allForms)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		log.trace("Received: " + serviceRequestId);
 		Optional<Task> task = fhirPersistingService.getTaskFromServiceRequest(serviceRequestId);
-		if (task.isPresent() && TaskStatus.DRAFT.equals(task.get().getStatus())) {
+		if (task.isPresent() && (TaskStatus.DRAFT.equals(task.get().getStatus()) || allForms)) {
 			LocatorFormDTO locatorFormDTO = objectMapper.readValue(task.get().getDescription(), LocatorFormDTO.class);
+			locatorFormDTO.setFinalized(!TaskStatus.DRAFT.equals(task.get().getStatus()));
 			return ResponseEntity.ok(locatorFormDTO);
 		} else {
 			return ResponseEntity.notFound().build();

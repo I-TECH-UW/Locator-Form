@@ -35,6 +35,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -49,6 +50,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -64,6 +66,7 @@ class Step10 extends React.Component {
 																		{ "value": "male", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.male' }) },
 																		{ "value": "female", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.female' }) },
 																	]}
+																	disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -79,6 +82,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -94,6 +98,7 @@ class Step10 extends React.Component {
 																type="date"
 																placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 																max={dateInputToday()}
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -110,7 +115,8 @@ class Step10 extends React.Component {
 																isSearchable={true}
 																requireField={true}
 																placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
-																label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
+																label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality"/>}
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -124,6 +130,7 @@ class Step10 extends React.Component {
 																name={field.name}
 																requireField={true}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -189,6 +196,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -203,6 +211,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -218,6 +227,7 @@ class Step10 extends React.Component {
 																		{ "value": "male", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.male' }) },
 																		{ "value": "female", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.female' }) },
 																	]}
+																	disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -233,6 +243,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -248,6 +259,7 @@ class Step10 extends React.Component {
 																type="date"
 																placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 																max={dateInputToday()}
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -265,6 +277,7 @@ class Step10 extends React.Component {
 																isSearchable={true}
 																placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 																label={<FormattedMessage id="nav.item.nationality" defaultMessage="Nationality" />}
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>
@@ -278,6 +291,7 @@ class Step10 extends React.Component {
 																label={<FormattedMessage id="nav.item.passportNumber" defaultMessage="Passport Number" />}
 																name={field.name}
 																type="text"
+																disabled={this.props.disabled}
 															/>
 														}
 													</Field>

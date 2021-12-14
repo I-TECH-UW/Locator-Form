@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Field, Formik, Form, setNestedObjectValues } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
@@ -8,13 +8,7 @@ import {Search} from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
 import FormikErrorFocus from 'formik-error-focus'
 import { healthOfficesList } from './data/healthOffices'
-import formInitialValues from './formModel/formInitialValues'
-import {
-  createMuiTheme,
-  MobileStepper,
-  CircularProgress, 
-  MuiThemeProvider
-} from '@material-ui/core'
+import { CircularProgress } from '@material-ui/core'
 
 class HealthDesk extends React.Component {
 
@@ -29,7 +23,7 @@ class HealthDesk extends React.Component {
       passengerSelected: false,
 	  newSearch:true,
       formValues: {},
-	  formKey: '1'
+	  formKey: '1',
     }
   }
 
@@ -83,7 +77,7 @@ class HealthDesk extends React.Component {
   }
   
   searchSuccess = (locatorForm, key) => {
-	  this.setState({newSearch: true, passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key});
+	  this.setState({newSearch: true, passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key,});
   }
 
   handleReset= () => {
@@ -159,35 +153,35 @@ class HealthDesk extends React.Component {
 						<StyledFieldSet>
 							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.passenderDetails' })}</StyledLegend>
 							{this.props.keycloak.hasRealmRole('health-desk-user') &&
-								<Step1 formikProps={formikProps} intl={this.props.intl} />
+								<Step1 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 							}
-							<Step3 formikProps={formikProps} intl={this.props.intl} />
-							<Step7 formikProps={formikProps} intl={this.props.intl} />
-							<Step8 formikProps={formikProps} intl={this.props.intl} />
+							<Step3 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
+							<Step7 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
+							<Step8 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 							{this.props.keycloak.hasRealmRole('health-desk-user') &&
-								<Step9 formikProps={formikProps} intl={this.props.intl} />
+								<Step9 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 							}
 						</StyledFieldSet>
 						<StyledFieldSet>
 							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.flightDetails' })}</StyledLegend>
-							<Step2 role={role} formikProps={formikProps} intl={this.props.intl} />
+							<Step2 role={role} formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 						</StyledFieldSet>
 						<StyledFieldSet>
 							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.details' })}</StyledLegend>
-							<Step4 formikProps={formikProps} intl={this.props.intl} />
+							<Step4 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 							{this.props.keycloak.hasRealmRole('health-desk-user') &&
-								<Step5 formikProps={formikProps} intl={this.props.intl} />
+								<Step5 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 							}
 						</StyledFieldSet>
 
 						{this.props.keycloak.hasRealmRole('health-desk-user') &&
 							<StyledFieldSet>
 								<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.vaccine' })}</StyledLegend>
-								<Step6 formikProps={formikProps} intl={this.props.intl} />
+								<Step6 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
 							</StyledFieldSet>
 						}
 					 
-		            	{/* <Step10 formikProps={formikProps} intl={this.props.intl} /> */}
+		            	{/* <Step10 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} /> */}
 						<div className="row">
 						<div className="col-lg-4 form-group">
 							<MyHiddenInput
@@ -315,6 +309,7 @@ class HealthDesk extends React.Component {
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										label={<FormattedMessage id="nav.item.form.label.healthOffice" defaultMessage="Health Office" />}
+										disabled={this.state.formValues.finalized}
 									/>}
 							     </Field>
 							 </StyledFieldSet>
@@ -327,6 +322,7 @@ class HealthDesk extends React.Component {
 										displayErrorBeforeTouched={true}
 										type="text"
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.form.search.placeholder.testkit' })}
+										disabled={this.state.formValues.finalized}
 										// disabled={this.state.searching || this.state.confirming} 
 									/>
 								</StyledFieldSet>

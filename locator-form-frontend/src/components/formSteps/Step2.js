@@ -23,6 +23,7 @@ class Step2 extends React.Component {
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={airlines}
+										disabled={this.props.disabled}
 									/>
 								}
 							</Field>
@@ -33,6 +34,7 @@ class Step2 extends React.Component {
 								name="flightNumber"
 								requireField={true}
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 					  {(this.props.role =='healthDesk'||this.props.role ==undefined)&& (
@@ -41,6 +43,7 @@ class Step2 extends React.Component {
 								label={<FormattedMessage id="nav.item.seat" defaultMessage="Seat" />}
 								name="seatNumber"
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 						)}
@@ -54,6 +57,7 @@ class Step2 extends React.Component {
 								type="date"
 								placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 								min={dateInputToday()}
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-4  form-group">
@@ -65,6 +69,7 @@ class Step2 extends React.Component {
 										field={field}
 										name={field.name}
 										form={form}
+										disabled={this.props.disabled}
 									/>
 								}
 							</Field>
@@ -94,6 +99,7 @@ class Step2 extends React.Component {
 												{ "value": "occupation_permit_holder", "label": this.props.intl.formatMessage({ id: 'nav.item.purposeOfVisit.option.occupation_permit_holder' }) },
 											]
 										}
+										disabled={this.props.disabled}
 									/>								 							 			
 								}
 							</Field>

@@ -29,6 +29,7 @@ class Step8 extends React.Component {
 								name="permanentAddress.numberAndStreet"
 								requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-4 form-group">
@@ -36,6 +37,7 @@ class Step8 extends React.Component {
 								label={<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />}
 								name="permanentAddress.apartmentNumber"
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-4 form-group">
@@ -44,6 +46,7 @@ class Step8 extends React.Component {
 								name="permanentAddress.city"
 								requireField={false}
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 					</div>
@@ -54,6 +57,7 @@ class Step8 extends React.Component {
 									label={<FormattedMessage id="nav.item.state/Province" defaultMessage="State/Province" />}
 									name="permanentAddress.stateProvince"
 									type="text"
+									disabled={this.props.disabled}
 								/>
 							</div>
 							<div className="col-lg-4 form-group ">
@@ -63,6 +67,7 @@ class Step8 extends React.Component {
 											name={field.name} form={form} placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 											options={countriesList} isSearchable={true}
 									requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
+									disabled={this.props.disabled}
 										/>
 									}
 								</Field>
@@ -73,6 +78,7 @@ class Step8 extends React.Component {
 									name="permanentAddress.zipPostalCode"
 									requireField={this.props.formikProps.values.travellerType === 'resident' ? true : false}
 									type="text"
+									disabled={this.props.disabled}
 								/>
 							</div>
 						</div>
@@ -87,7 +93,8 @@ class Step8 extends React.Component {
 					</div>
 					{/* <div className="row">
 						<div className="col-lg-5 form-group ">
-							<MyCheckbox name="tempAddrCheckbox" onClick={e => this.toggleTempAddress(this.props.formikProps)}>
+							<MyCheckbox name="tempAddrCheckbox"
+								disabled={this.props.disabled} onClick={e => this.toggleTempAddress(this.props.formikProps)}>
 								<FormattedMessage id="nav.item.tempAddrCheckbox" defaultMessage="Temporary Address Same as Permanent Address" />
 							</MyCheckbox>
 						</div>
@@ -101,6 +108,7 @@ class Step8 extends React.Component {
 									keyboardType="numeric"
 									type="text"
 									requireField={true}
+									disabled={this.props.disabled}
 								/>
 							</div>
 						</div>
@@ -117,6 +125,7 @@ class Step8 extends React.Component {
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={hotelList}
+										disabled={this.props.disabled}
 									/>
 								}
 							</Field>
@@ -127,6 +136,7 @@ class Step8 extends React.Component {
 								name="temporaryAddress.hotelName"
 								type="text"
 								requireField={false}
+								disabled={this.props.disabled}
 							/>
 						  }
 						</div>
@@ -136,6 +146,7 @@ class Step8 extends React.Component {
 								name="temporaryAddress.numberAndStreet"
 								type="text"
 								requireField={false}
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-2 form-group ">
@@ -143,6 +154,7 @@ class Step8 extends React.Component {
 								label={<FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />}
 								name="temporaryAddress.apartmentNumber"
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 					</div>
@@ -162,7 +174,8 @@ class Step8 extends React.Component {
 					   </div>
 					   <div className="col-lg-12 form-group">
 							<MyCheckbox
-								className="required-field-field" name="hotelSearchCheck">
+								className="required-field-field" name="hotelSearchCheck"
+								disabled={this.props.disabled}>
 								<FormattedMessage id="nav.item.noHotel" defaultMessage="I am not staying at a hotel / my hotel isn't listed" 
 								/>						   		
 							</MyCheckbox>

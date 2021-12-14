@@ -22,6 +22,7 @@ class Step6 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 							</div>
 						</div>
@@ -36,6 +37,7 @@ class Step6 extends React.Component {
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={vaccines}
+										disabled={this.props.disabled}
 									/>
 								}
 							  </Field>
@@ -49,6 +51,7 @@ class Step6 extends React.Component {
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 									max={dateInputToday()}
+									disabled={this.props.disabled}
 								/>
 						  </div>
 						</div>
@@ -63,6 +66,7 @@ class Step6 extends React.Component {
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										options={vaccines}
+										disabled={this.props.disabled}
 									/>
 								}
 							  </Field>
@@ -75,6 +79,7 @@ class Step6 extends React.Component {
 									type="date"
 									placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 									max={dateInputToday()}
+									disabled={this.props.disabled}
 								/>
 						  </div>
 						</div>

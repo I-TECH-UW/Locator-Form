@@ -142,7 +142,7 @@ class Step3 extends React.Component {
 
 		const nationalIDInput = () => {
 			return (
-			<div className="row align-items-end">
+			<div className="row">
 				<div className="col-lg-4 form-group">
 					<MyTextInput
 						label={<FormattedMessage id="nav.item.nationalId" defaultMessage="National ID" />}
@@ -164,7 +164,10 @@ class Step3 extends React.Component {
 						/>
 					)}
 				</div>
+				<div className="col-lg-8 form-group">
+					<label>&nbsp;</label>
 					{getInstructions()}
+				</div>
 			</div>
 			);
 		};
@@ -196,6 +199,7 @@ class Step3 extends React.Component {
 												{ "value": "miss", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.miss' }) },
 												{ "value": "dr", "label": this.props.intl.formatMessage({ id: 'nav.item.title.option.dr' }) },
 											]}
+											disabled={this.props.disabled}
 									/>
 								}
 							</Field>
@@ -207,6 +211,7 @@ class Step3 extends React.Component {
 								name="lastName"
 								requireField={true}
 								type="text"
+								disabled={this.props.disabled}
 								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
@@ -216,6 +221,7 @@ class Step3 extends React.Component {
 								name="firstName"
 								requireField={true}
 								type="text"
+								disabled={this.props.disabled}
 								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
@@ -225,6 +231,7 @@ class Step3 extends React.Component {
 								label={<FormattedMessage id="nav.item.middleInitial" defaultMessage="Middle Initial" />}
 								name="middleInitial"
 								type="text"
+								disabled={this.props.disabled}
 								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
@@ -243,6 +250,7 @@ class Step3 extends React.Component {
 												{ "value": "male", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.male' }) },
 												{ "value": "female", "label": this.props.intl.formatMessage({ id: 'nav.item.sex.option.female' }) },
 											]}
+										disabled={this.props.disabled}
 									/>
 								}
 							</Field>
@@ -255,6 +263,7 @@ class Step3 extends React.Component {
 								placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
 								requireField={true}
 								max={dateInputToday()}
+								disabled={this.props.disabled}
 								// disabled={this.state.searching || this.state.confirming} 
 							/>
 						</div>
@@ -263,6 +272,7 @@ class Step3 extends React.Component {
 							label={<FormattedMessage id="nav.item.profession" defaultMessage="Profession" />}
 							name="profession"
 							type="text"
+							disabled={this.props.disabled}
 							// disabled={this.state.searching || this.state.confirming} 
 						/>
 					</div>

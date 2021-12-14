@@ -22,6 +22,7 @@ class Step4 extends React.Component {
 										isSearchable={true}
 										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
 										label={<FormattedMessage id="nav.item.countriesVisited" defaultMessage="Countries visited during last 6 months" />}
+										disabled={this.props.disabled}
 									/>}
 							</Field>
 						</div>
@@ -30,6 +31,7 @@ class Step4 extends React.Component {
 								label={<FormattedMessage id="nav.item.portOfEmbarkation" defaultMessage="Port Of Embarkation" />}
 								name="portOfEmbarkation"
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 					</div>
