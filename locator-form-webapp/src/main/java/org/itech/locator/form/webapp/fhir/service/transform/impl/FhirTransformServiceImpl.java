@@ -728,7 +728,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		firstNameItem.setLinkId(FhirConstants.FIRST_NAME_LINK_ID).setText("First Name");
 		QuestionnaireResponseItemAnswerComponent firstNameAnswer = firstNameItem.addAnswer();
 		if (StringUtils.isNotBlank(locatorFormDTO.getFirstName())) {
-			firstNameAnswer.setValue(new StringType(locatorFormDTO.getLastName()));
+			firstNameAnswer.setValue(new StringType(locatorFormDTO.getFirstName()));
 		}
 		
 		QuestionnaireResponseItemComponent middleInitialItem = questionnaireResponse.addItem();
