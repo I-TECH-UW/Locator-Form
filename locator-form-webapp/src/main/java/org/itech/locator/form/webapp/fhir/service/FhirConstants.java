@@ -117,4 +117,16 @@ public class FhirConstants {
     public static final String COUNTRY_OF_BIRTH_LINK_ID = "87b6cb05-a243-43b1-86b8-d4bbfce4abf2";
 
     public static final String PASSPORT_EXPIRY_DATE_LINK_ID = "af81b563-90b7-4299-a697-65820fcd7d86";
+
+    public static final String EMERG_CONTACT_LAST_NAME_LINK_ID = "527549f9-f63b-4844-a361-3bea2436735a";
+
+    public static final String EMERG_CONTACT_FIRST_NAME_LINK_ID = "dc84a2bf-8abc-42af-af0f-5329f6e874fe";
+
+    public static final String EMERG_CONTACT_ADDRES_LINK_ID = "36e159c8-589f-4de2-a7ea-c9f9e526e5d5";
+
+    public static final String EMERG_CONTACT_COUNTRY_LINK_ID = "f8f82ce6-356b-4e00-b0ee-7fb75ba712b4";
+
+    public static final String EMERG_CONTACT_MOBILE_PHONE_LINK_ID = "75ed141f-20e0-40ae-815e-2b5325441f2c";
+
+    public static final String ACCEPTED_TERMS_LINK_ID = "bc5142ba-2b55-42c0-8929-fcd121eb8fb8";
 }
