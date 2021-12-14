@@ -55,7 +55,7 @@ public class FormSearchController {
 			LocatorFormDTO locatorFormDTO = objectMapper.readValue(task.get().getDescription(), LocatorFormDTO.class);
 			locatorFormDTO.setFinalized(!TaskStatus.DRAFT.equals(task.get().getStatus()));
 			return ResponseEntity.ok(locatorFormDTO);
-		} else if (task.isPresent() && !TaskStatus.DRAFT.equals(task.get().getStatus())) {
+		} else if (task.isPresent() && (!TaskStatus.DRAFT.equals(task.get().getStatus()) && allForms)) {
 			HealthDeskDTO dto = objectMapper.readValue(task.get().getDescription(), HealthDeskDTO.class);
 			dto.setFinalized(!TaskStatus.DRAFT.equals(task.get().getStatus()));
 			return ResponseEntity.ok(dto);
