@@ -51,32 +51,32 @@ public class FhirConstants {
     public static final String HEALTH_OFFICE_LINK_ID = "be3de5e0-ad7b-4241-b1e9-84d7a17f900a";
 
 	public static final String TEST_KIT_ID_LINK_ID = "a844764b-afe5-4a8f-8219-4f0245e26e87";
-
-	public static final String PERM_ADDRESS_NUMBER_AND_STREET_LINK_ID = "6928894a-0b14-4358-a121-3186acfe3f83";
-
-	public static final String PERM_ADDRESS_APARTMENT_NUMBER_LINK_ID = "315277b9-0d20-4073-8e57-59889d7ce8ff";
-
-	public static final String PERM_ADDRESS_CITY_LINK_ID = "def4076e-32c6-409f-80a5-49357cf938b8";
-
-	public static final String PERM_ADDRESS_STATE_PROVINCE_LINK_ID = "f4e3f75a-2a21-4bb8-9fcd-cf8a0250e0a2";
-
-	public static final String PERM_ADDRESS_COUNTRY_LINK_ID = "5692cdd6-dbf2-4c45-ac1a-ea6635e4e439";
-
-	public static final String PERM_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "72bf20d2-c096-4bdb-b93c-1f98958af588";
-
-	public static final String TEMP_ADDRESS_HOTEL_NAME_LINK_ID = "d6e29219-9167-44d1-84db-797aa3fb9a7a";
-
-	public static final String TEMP_ADDRESS_NUMBER_AND_STREET_LINK_ID = "556cec94-35e6-4f86-8d49-cfc72ce45e3e";
-
-	public static final String TEMP_ADDRESS_APARTMENT_NUMBER_LINK_ID = "ec69bcc1-b718-4e6d-a1c1-db3812fc95ec";
-
-	public static final String TEMP_ADDRESS_CITY_LINK_ID = "c22fe2a4-dc61-439b-9058-8a10a0b6c909";
-
-	public static final String TEMP_ADDRESS_STATE_PROVINCE_LINK_ID = "09f3e16c-984e-4c2a-a9fc-24e2f31a44d3";
-
-	public static final String TEMP_ADDRESS_COUNTRY_LINK_ID = "8d8fb3af-96da-4405-8884-50553e0f54c7";
-
-	public static final String TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "03db31d6-a1cb-4199-9555-647649291894";
+    
+    public static final String PERM_ADDRESS_NUMBER_AND_STREET_LINK_ID = "6928894a-0b14-4358-a121-3186acfe3f83";
+    
+    public static final String PERM_ADDRESS_APARTMENT_NUMBER_LINK_ID = "315277b9-0d20-4073-8e57-59889d7ce8ff";
+    
+    public static final String PERM_ADDRESS_CITY_LINK_ID = "def4076e-32c6-409f-80a5-49357cf938b8";
+    
+    public static final String PERM_ADDRESS_STATE_PROVINCE_LINK_ID = "f4e3f75a-2a21-4bb8-9fcd-cf8a0250e0a2";
+    
+    public static final String PERM_ADDRESS_COUNTRY_LINK_ID = "5692cdd6-dbf2-4c45-ac1a-ea6635e4e439";
+    
+    public static final String PERM_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "72bf20d2-c096-4bdb-b93c-1f98958af588";
+    
+    public static final String TEMP_ADDRESS_HOTEL_NAME_LINK_ID = "d6e29219-9167-44d1-84db-797aa3fb9a7a";
+    
+    public static final String TEMP_ADDRESS_NUMBER_AND_STREET_LINK_ID = "556cec94-35e6-4f86-8d49-cfc72ce45e3e";
+    
+    public static final String TEMP_ADDRESS_APARTMENT_NUMBER_LINK_ID = "ec69bcc1-b718-4e6d-a1c1-db3812fc95ec";
+    
+    public static final String TEMP_ADDRESS_CITY_LINK_ID = "c22fe2a4-dc61-439b-9058-8a10a0b6c909";
+    
+    public static final String TEMP_ADDRESS_STATE_PROVINCE_LINK_ID = "09f3e16c-984e-4c2a-a9fc-24e2f31a44d3";
+    
+    public static final String TEMP_ADDRESS_COUNTRY_LINK_ID = "8d8fb3af-96da-4405-8884-50553e0f54c7";
+    
+    public static final String TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "03db31d6-a1cb-4199-9555-647649291894";
 
     public static final String LAST_NAME_LINK_ID = "9b58dbb3-9d4b-4530-b4fb-4ce67f5f1124";
 
