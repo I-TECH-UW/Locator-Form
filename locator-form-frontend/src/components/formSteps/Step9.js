@@ -35,6 +35,7 @@ class Step9 extends React.Component {
 								name="emergencyContact.lastName"
 								requireField={true}
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-3 form-group ">
@@ -43,6 +44,7 @@ class Step9 extends React.Component {
 								name="emergencyContact.firstName"
 								requireField={true}
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-3 form-group ">
@@ -51,6 +53,7 @@ class Step9 extends React.Component {
 								name="emergencyContact.address"
 								requireField={true}
 								type="text"
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-lg-3 form-group ">
@@ -63,6 +66,7 @@ class Step9 extends React.Component {
 										options={countriesList} 
 										isSearchable={true}
 										requireField={false}
+										disabled={this.props.disabled}
 									/>
 								}
 							</Field>
@@ -77,6 +81,7 @@ class Step9 extends React.Component {
 										defaultCountryCode={this.getDefaultCountryCode()}
 										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
 										form={form} name="emergencyContact.mobilePhone"
+										disabled={this.props.disabled}
 									/>
 								}
 							</Field>

@@ -12,6 +12,7 @@ import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.FormPersonSearchDTO;
+import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
 import org.itech.locator.form.webapp.api.dto.Traveller;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,13 +46,19 @@ public class FormSearchController {
 	private ObjectMapper objectMapper;
 
 	@GetMapping("/servicerequest/{serviceRequestId}")
-	public ResponseEntity<LocatorFormDTO> searchByServiceRequestId(@PathVariable String serviceRequestId)
+	public ResponseEntity<LocatorFormDTO> searchByServiceRequestId(@PathVariable String serviceRequestId,
+			@RequestParam(defaultValue = "false") Boolean allForms)
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		log.trace("Received: " + serviceRequestId);
 		Optional<Task> task = fhirPersistingService.getTaskFromServiceRequest(serviceRequestId);
 		if (task.isPresent() && TaskStatus.DRAFT.equals(task.get().getStatus())) {
 			LocatorFormDTO locatorFormDTO = objectMapper.readValue(task.get().getDescription(), LocatorFormDTO.class);
+			locatorFormDTO.setFinalized(!TaskStatus.DRAFT.equals(task.get().getStatus()));
 			return ResponseEntity.ok(locatorFormDTO);
+		} else if (task.isPresent() && (!TaskStatus.DRAFT.equals(task.get().getStatus()) && allForms)) {
+			HealthDeskDTO dto = objectMapper.readValue(task.get().getDescription(), HealthDeskDTO.class);
+			dto.setFinalized(!TaskStatus.DRAFT.equals(task.get().getStatus()));
+			return ResponseEntity.ok(dto);
 		} else {
 			return ResponseEntity.notFound().build();
 		}

@@ -25,6 +25,7 @@ class Step5 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 						</div>
 
@@ -36,6 +37,7 @@ class Step5 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-xl-2 col-lg-4 form-group ">
@@ -46,6 +48,7 @@ class Step5 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-xl-2 col-lg-4 form-group ">
@@ -56,6 +59,7 @@ class Step5 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-xl-2 col-lg-4 form-group ">
@@ -66,6 +70,7 @@ class Step5 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 						</div>
 						<div className="col-xl-2 col-lg-4 form-group ">
@@ -76,6 +81,7 @@ class Step5 extends React.Component {
 									{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 									{ key: 'nav.item.symptoms.option.no', value: 'false'}
 								]}
+								disabled={this.props.disabled}
 							/>
 						</div>
 					</div>
@@ -88,6 +94,7 @@ class Step5 extends React.Component {
 										{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 										{ key: 'nav.item.symptoms.option.no', value: 'false'}
 									]}
+									disabled={this.props.disabled}
 								/>
 							   </div>
 									<div className="col-xl-3 col-lg-4 form-group ">
@@ -98,6 +105,7 @@ class Step5 extends React.Component {
 											{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 											{ key: 'nav.item.symptoms.option.no', value: 'false'}
 										]}
+										disabled={this.props.disabled}
 									/>
 								</div>
 								<div className="col-lg-6 form-group ">
@@ -108,6 +116,7 @@ class Step5 extends React.Component {
 										{ key: 'nav.item.symptoms.option.yes', value: 'true' },
 										{ key: 'nav.item.symptoms.option.no', value: 'false'}
 									]}
+									disabled={this.props.disabled}
 								/>
 							</div>
 					</div>

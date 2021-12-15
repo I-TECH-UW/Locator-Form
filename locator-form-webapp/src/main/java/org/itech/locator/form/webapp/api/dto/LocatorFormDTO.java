@@ -66,6 +66,16 @@ public class LocatorFormDTO extends Traveller {
 			return this.name().toLowerCase();
 		}
 	}
+
+	public enum Stage {
+		PASSENGER, PIO, HEALTH_DESK;
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.name().toLowerCase();
+		}
+	}
 	public String taskId;
 
 	@JsonSerialize(using = StringBooleanSerializer.class)
@@ -170,6 +180,10 @@ public class LocatorFormDTO extends Traveller {
 	private Boolean acceptedTerms;
 
 	private Boolean hotelSearchCheck;
+
+	private Boolean finalized;
+
+	private Stage stage;
 
 	public static class StringBooleanSerializer extends JsonSerializer<Boolean> {
 

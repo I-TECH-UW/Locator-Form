@@ -893,6 +893,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			emergenceContactMobilePhoneAnswer.setValue(new StringType(locatorFormDTO.getEmergencyContact().getMobilePhone()));
 		}
 
+		QuestionnaireResponseItemComponent stageItem = questionnaireResponse.addItem();
+		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage");
+		QuestionnaireResponseItemAnswerComponent stageAnswer = stageItem.addAnswer();
+		if (locatorFormDTO.getStage() != null) {
+			stageAnswer.setValue(new StringType(locatorFormDTO.getStage().toString()));
+		}
+
 		return questionnaireResponse;
 	}
 
@@ -1139,6 +1146,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent emergenceContactMobilePhoneItem = questionnaire.addItem();
 		emergenceContactMobilePhoneItem.setLinkId(FhirConstants.EMERG_CONTACT_MOBILE_PHONE_LINK_ID)
 		        .setText("Emergency Contact : Mobile Phone").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent stageItem = questionnaire.addItem();
+		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage").setType(QuestionnaireItemType.TEXT);
+
 		return questionnaire;
 	}
 }

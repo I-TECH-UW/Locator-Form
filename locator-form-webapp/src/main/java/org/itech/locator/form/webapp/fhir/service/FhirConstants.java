@@ -49,7 +49,7 @@ public class FhirConstants {
     public static final String PURPOSE_OF_VIST_LINK_ID = "455e47e8-16d7-46ff-98fc-f9823d1cbf50";
     
     public static final String HEALTH_OFFICE_LINK_ID = "be3de5e0-ad7b-4241-b1e9-84d7a17f900a";
-    
+   
     public static final String TEST_KIT_ID_LINK_ID = "a844764b-afe5-4a8f-8219-4f0245e26e87";
     
     public static final String PERM_ADDRESS_NUMBER_AND_STREET_LINK_ID = "6928894a-0b14-4358-a121-3186acfe3f83";
@@ -129,4 +129,7 @@ public class FhirConstants {
     public static final String EMERG_CONTACT_MOBILE_PHONE_LINK_ID = "75ed141f-20e0-40ae-815e-2b5325441f2c";
     
     public static final String ACCEPTED_TERMS_LINK_ID = "bc5142ba-2b55-42c0-8929-fcd121eb8fb8";
+
+    public static final String STAGE_LINK_ID = "f8ba10fe-ffed-4e56-828e-f0414ebefe78";
+
 }

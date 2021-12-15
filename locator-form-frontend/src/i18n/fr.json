@@ -157,6 +157,9 @@
 	"error.search.patient.notfound" : "Aucun patient trouvé avec cet identifiant TestKit",
 
 	"nav.item.form.label.searchResults": "Résultats de recherche",
+	"nav.item.form.search.label": "Rechercher",
+	"nav.item.form.search.all.label": "Rechercher tout",
+
 	"nav.item.form.label.passenderDetails": "Détails du passager",
 	"nav.item.form.label.flightDetails": "Détails du vol et du prétest",
 	"nav.item.form.label.details": "Des détails",

@@ -39,6 +39,7 @@ class Step1 extends React.Component {
 									onInputChange(e, this.props.formikProps)
 								}}
 								requireField={true}
+								disabled={this.props.disabled}
 								options={[
 									{ key: 'nav.item.resident', value: 'resident' },
 									{ key: 'nav.item.nonresident', value: 'nonresident'}

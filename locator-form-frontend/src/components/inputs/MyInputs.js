@@ -74,7 +74,10 @@ export const MyTextInput = ({ label, ...props }) => {
     <>
       <StyledLabel className={`${props.requireField ? 'required-field' : ''} input-label`} htmlFor={props.id || props.name}>{label}</StyledLabel>
       <div className="input-group">
-        <input className="text-input form-control" onKeyPress={e => { e.which === 13 && e.preventDefault() }} {...field} {...props} />
+        <input className="text-input form-control" 
+          onKeyPress={e => { e.which === 13 && e.preventDefault() }} 
+          {...field} 
+          {...props} />
         {props.iconClickable &&
           <span className="input-group-btn">
             <button className="input-icon-button" 
@@ -134,6 +137,7 @@ export const MyRadioInputGroup = ({ label, ...props }) => {
               value={option.value}
               onChange={inputChange}
               checked={field.value === option.value}
+              disabled={props.disabled}
             />
             <FormattedMessage id={option.key} defaultMessage={option.value} />
           </label>
@@ -177,6 +181,7 @@ export const MyCheckbox = ({ children, ...props }) => {
     <>
       <label className="checkbox">
         <input {...field} {...props} type="checkbox" className="form-control" />
+        {props.checkboxDescription}
       </label>
         {children}
       {meta.touched && meta.error ? (
@@ -240,21 +245,22 @@ const MyTimePicker = ({
   
   return(
         <TimePicker 
-                  showSecond={false}
-                  style={{"border": "0px", "padding": "0"}}
-                  id="arrival-time"
-                  className="form-control" 
-                  onChange={e => {
-                    console.log(e)
-                    setFieldValue(field.name, e && e.format(format));
-                  }}
-                  onClose={()=> {
-                    setFieldTouched(field.name);
-                  }} 
-                  defaultValue={field.value ? moment(field.value, 'HH:mm') : null}
-                  format={format}
-                  allowEmpty
-                />
+          showSecond={false}
+          style={{"border": "0px", "padding": "0"}}
+          id="arrival-time"
+          className="form-control" 
+          onChange={e => {
+            console.log(e)
+            setFieldValue(field.name, e && e.format(format));
+          }}
+          onClose={()=> {
+            setFieldTouched(field.name);
+          }} 
+          defaultValue={field.value ? moment(field.value, 'HH:mm') : null}
+          format={format}
+          allowEmpty
+          disabled={props.disabled}
+      />
     )
   }
 
@@ -277,6 +283,7 @@ export const MyTimeInput = ({ label,
       <StyledTimePicker {...field} {...props}
         field={field}
         form={props.form}
+        disabled={props.disabled}
       />
         </div>  
         {meta.touched && meta.error ? (

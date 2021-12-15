@@ -55,6 +55,7 @@ export const MultiCapableSelect = ({
       placeholder={placeholder}
       options={options}
       isSearchable={isSearchable}
+      isDisabled={props.disabled}
       onBlur={(e) => {
         e.preventDefault();
         setFieldTouched (field.name)

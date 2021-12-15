@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.HealthDeskDTO;
+import org.itech.locator.form.webapp.api.dto.LocatorFormDTO.Stage;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService.TransactionObjects;
@@ -53,6 +54,7 @@ public class HealthDeskController {
 		}
 
 		log.trace("Received: " + healthDeskDTO.toString());
+		healthDeskDTO.setStage(Stage.HEALTH_DESK);
 		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(healthDeskDTO, false,
 				TaskStatus.REQUESTED);
 		Bundle transactionResponseBundle = fhirPersistingService.executeTransaction(transactionObjects.bundle);
