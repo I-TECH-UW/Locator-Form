@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -480,57 +479,66 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireResponseItemComponent infectionItem = questionnaireResponse.addItem();
 		infectionItem.setLinkId(FhirConstants.PREVIOUS_INFECTION_LINK_ID).setText("Previous Infection");
 		QuestionnaireResponseItemAnswerComponent infectionAnswer = infectionItem.addAnswer();
-		Boolean previousInfection = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getHadCovidBefore()));
-		infectionAnswer.setValue(new BooleanType(previousInfection));
+		if (locatorFormDTO.getHadCovidBefore() != null) {
+			infectionAnswer.setValue(new BooleanType(locatorFormDTO.getHadCovidBefore()));
+		}
 
 		QuestionnaireResponseItemComponent feverItem = questionnaireResponse.addItem();
 		feverItem.setLinkId(FhirConstants.FEVER_LINK_ID).setText("Fever");
 		QuestionnaireResponseItemAnswerComponent feverAnswer = feverItem.addAnswer();
-		Boolean feverInfection = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getFever()));
-		feverAnswer.setValue(new BooleanType(feverInfection));
+		if (locatorFormDTO.getFever() != null) {
+			feverAnswer.setValue(new BooleanType(locatorFormDTO.getFever()));
+		}
 
 		QuestionnaireResponseItemComponent soreThroatItem = questionnaireResponse.addItem();
 		soreThroatItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID).setText("Sore Throat");
 		QuestionnaireResponseItemAnswerComponent soreThroatAnswer = soreThroatItem.addAnswer();
-		Boolean soreThroat = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getSoreThroat()));
-		soreThroatAnswer.setValue(new BooleanType(soreThroat));
+		if (locatorFormDTO.getSoreThroat() != null) {
+			soreThroatAnswer.setValue(new BooleanType(locatorFormDTO.getSoreThroat()));
+		}
 
 		QuestionnaireResponseItemComponent jointPainItem = questionnaireResponse.addItem();
 		jointPainItem.setLinkId(FhirConstants.JOINT_PAIN_LINK_ID).setText("Joint Pain");
 		QuestionnaireResponseItemAnswerComponent jointPainAnswer = jointPainItem.addAnswer();
-		Boolean jointPain = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getJointPain()));
-		jointPainAnswer.setValue(new BooleanType(jointPain));
-
+		if (locatorFormDTO.getJointPain() != null) {
+			jointPainAnswer.setValue(new BooleanType(locatorFormDTO.getJointPain()));
+		}
+		
 		QuestionnaireResponseItemComponent coughItem = questionnaireResponse.addItem();
 		coughItem.setLinkId(FhirConstants.COUGH_LINK_ID).setText("Cough");
 		QuestionnaireResponseItemAnswerComponent coughAnswer = coughItem.addAnswer();
-		Boolean cough = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getCough()));
-		coughAnswer.setValue(new BooleanType(cough));
+		if (locatorFormDTO.getCough() != null) {
+			coughAnswer.setValue(new BooleanType(locatorFormDTO.getCough()));
+		}
 
 		QuestionnaireResponseItemComponent breathingDifficultyItem = questionnaireResponse.addItem();
 		breathingDifficultyItem.setLinkId(FhirConstants.BREATHING_LINK_ID).setText("Breathing Difficulty");
 		QuestionnaireResponseItemAnswerComponent breathingDifficultyAnswer = breathingDifficultyItem.addAnswer();
-		Boolean breathingDifficulty = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getBreathingDifficulties()));
-		breathingDifficultyAnswer.setValue(new BooleanType(breathingDifficulty));
+		if (locatorFormDTO.getBreathingDifficulties() != null) {
+			breathingDifficultyAnswer.setValue(new BooleanType(locatorFormDTO.getBreathingDifficulties()));
+		}
 
 		QuestionnaireResponseItemComponent rashItem = questionnaireResponse.addItem();
 		rashItem.setLinkId(FhirConstants.RASH_LINK_ID).setText("Rash");
 		QuestionnaireResponseItemAnswerComponent rashAnswer = rashItem.addAnswer();
-		Boolean rash = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getRash()));
-		rashAnswer.setValue(new BooleanType(rash));
+		if (locatorFormDTO.getRash() != null) {
+			rashAnswer.setValue(new BooleanType(locatorFormDTO.getRash()));
+		}
 
 		QuestionnaireResponseItemComponent senseOfSmellItem = questionnaireResponse.addItem();
 		senseOfSmellItem.setLinkId(FhirConstants.SENSE_OF_SMELL_LINK_ID).setText("Sense of Smell or Taste");
 		QuestionnaireResponseItemAnswerComponent senseOfSmellAnswer = senseOfSmellItem.addAnswer();
-		Boolean senseOfSmell = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getSmellOrTaste()));
-		senseOfSmellAnswer.setValue(new BooleanType(senseOfSmell));
+		if (locatorFormDTO.getSmellOrTaste() != null) {
+			senseOfSmellAnswer.setValue(new BooleanType(locatorFormDTO.getSmellOrTaste()));
+		}
 
 		QuestionnaireResponseItemComponent contactWithInfectedItem = questionnaireResponse.addItem();
 		contactWithInfectedItem.setLinkId(FhirConstants.CONTACT_WITH_NFECTED_LINK_ID)
-				.setText("Contact with Infected Individual");
+		        .setText("Contact with Infected Individual");
 		QuestionnaireResponseItemAnswerComponent contactWithInfectedAnswer = contactWithInfectedItem.addAnswer();
-		Boolean contactWithInfected = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getContact()));
-		contactWithInfectedAnswer.setValue(new BooleanType(contactWithInfected));
+		if (locatorFormDTO.getContact() != null) {
+			contactWithInfectedAnswer.setValue(new BooleanType(locatorFormDTO.getContact()));
+		}
 
 		QuestionnaireResponseItemComponent mobilePhoneItem = questionnaireResponse.addItem();
 		mobilePhoneItem.setLinkId(FhirConstants.MOBILE_PHONE_LINK_ID).setText("Mobile Phone");
@@ -585,7 +593,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireResponseItemComponent purposeOfVisitItem = questionnaireResponse.addItem();
 		purposeOfVisitItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit");
 		QuestionnaireResponseItemAnswerComponent purposeOfVisitAnswer = purposeOfVisitItem.addAnswer();
-		if (StringUtils.isNotBlank(locatorFormDTO.getVisitPurpose().toString())) {
+		if (locatorFormDTO.getVisitPurpose() != null) {
 			purposeOfVisitAnswer.setValue(new StringType(locatorFormDTO.getVisitPurpose().toString()));
 		}
 		
@@ -748,15 +756,16 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireResponseItemComponent sexItem = questionnaireResponse.addItem();
 		sexItem.setLinkId(FhirConstants.SEX_LINK_ID).setText("Sex");
 		QuestionnaireResponseItemAnswerComponent sexAnswer = sexItem.addAnswer();
-		if (StringUtils.isNotBlank(locatorFormDTO.getSex().toString())) {
+		if (locatorFormDTO.getSex() != null) {
 			sexAnswer.setValue(new StringType(locatorFormDTO.getSex().toString()));
 		}
 		
 		QuestionnaireResponseItemComponent vaccinatedItem = questionnaireResponse.addItem();
 		vaccinatedItem.setLinkId(FhirConstants.VACCINATED_LINK_ID).setText("Vaccinated");
 		QuestionnaireResponseItemAnswerComponent vaccinatedAnswer = vaccinatedItem.addAnswer();
-		Boolean vaccinated = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getVaccinated()));
-		vaccinatedAnswer.setValue(new BooleanType(vaccinated));
+		if (locatorFormDTO.getVaccinated() != null) {
+			vaccinatedAnswer.setValue(new BooleanType(locatorFormDTO.getVaccinated()));
+		}
 		
 		QuestionnaireResponseItemComponent firstVaccineItem = questionnaireResponse.addItem();
 		firstVaccineItem.setLinkId(FhirConstants.FIRST_VACCINE_NAME_LINK_ID).setText("Name of First Vaccine");
@@ -789,7 +798,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireResponseItemComponent travellerTypeItem = questionnaireResponse.addItem();
 		travellerTypeItem.setLinkId(FhirConstants.TRAVELLER_TYPE_LINK_ID).setText("Traveller Type");
 		QuestionnaireResponseItemAnswerComponent travellerTypeAnswer = travellerTypeItem.addAnswer();
-		if (StringUtils.isNotBlank(locatorFormDTO.getTravellerType().toString())) {
+		if (locatorFormDTO.getTravellerType() != null) {
 			travellerTypeAnswer.setValue(new StringType(locatorFormDTO.getTravellerType().toString()));
 		}
 		
@@ -800,11 +809,11 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			timeOfArrivalAnswer.setValue(new TimeType(locatorFormDTO.getArrivalTime().toString()));
 		}
 		
-		QuestionnaireResponseItemComponent tittleItem = questionnaireResponse.addItem();
-		tittleItem.setLinkId(FhirConstants.TITLE_LINK_ID).setText("Tittle");
-		QuestionnaireResponseItemAnswerComponent tittleAnswer = tittleItem.addAnswer();
-		if (StringUtils.isNotBlank(locatorFormDTO.getTitle().toString())) {
-			tittleAnswer.setValue(new StringType(locatorFormDTO.getTitle().toString()));
+		QuestionnaireResponseItemComponent titleItem = questionnaireResponse.addItem();
+		titleItem.setLinkId(FhirConstants.TITLE_LINK_ID).setText("Title");
+		QuestionnaireResponseItemAnswerComponent titleAnswer = titleItem.addAnswer();
+		if (locatorFormDTO.getTitle() != null) {
+			titleAnswer.setValue(new StringType(locatorFormDTO.getTitle().toString()));
 		}
 		
 		QuestionnaireResponseItemComponent lengthOfStayItem = questionnaireResponse.addItem();
