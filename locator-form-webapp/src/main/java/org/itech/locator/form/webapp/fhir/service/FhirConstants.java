@@ -78,4 +78,6 @@ public class FhirConstants {
 
 	public static final String TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "03db31d6-a1cb-4199-9555-647649291894";
 
+	public static final String STAGE_LINK_ID = "f8ba10fe-ffed-4e56-828e-f0414ebefe78";
+
 }

@@ -5,7 +5,6 @@ import { Step1, Step2, Step3, Step4, Step5, Step11, Step6, Step7, Step8, Step9, 
 import { validationSchemaSteps } from './formModel/validationSchema'
 import formInitialValues from './formModel/formInitialValues'
 import ReCAPTCHA from "react-google-recaptcha";
-import Layout from './layout/Layout';
 import {
   createMuiTheme,
   MobileStepper,

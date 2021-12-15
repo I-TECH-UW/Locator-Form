@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Field, Formik, Form, setNestedObjectValues } from 'formik'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Confirmation, Success } from './formSteps'
-import { MyTextInput, MyHiddenInput ,StyledFieldSet ,StyledLegend ,MySelect} from './inputs/MyInputs'
+import { MyTextInput, MyHiddenInput ,StyledFieldSet ,StyledLegend ,MySelect, MyCheckbox} from './inputs/MyInputs'
 import {Search} from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
 import FormikErrorFocus from 'formik-error-focus'
@@ -59,7 +59,9 @@ class HealthDesk extends React.Component {
   }
 
   scrollToTopOfPage = () => {
-    window.scrollTo(0, 0)
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	  }, [])
   }
 
   scrollToElement = (element) => {
@@ -71,9 +73,29 @@ class HealthDesk extends React.Component {
    });
   }
 
+  scrollToHighestError = (formikErrors) => {
+	  const errorKeys = Object.keys(formikErrors);
+	  var topElementPosition;
+	  for (var i = 0; i < errorKeys.length; i++) {
+		const elementName = errorKeys[i];
+		const element = document.getElementsByName(elementName)[0];
+		const curElementPosition = element.getBoundingClientRect().top;
+		if (!topElementPosition || topElementPosition > curElementPosition) {
+			topElementPosition = curElementPosition;
+		}
+	  }
+
+    const offsetPosition = topElementPosition - 175;
+	window.scrollBy({
+		top: offsetPosition,
+		behavior: "smooth"
+   });
+  }
+
   onSuccess = (summaryAccessInfo) => {
-    this.setState({ submitErrorKey: '', submitSuccess: true, passengerSelected: false, formValues: {}, formKey: "1"  })
-    this.scrollToTopOfPage();
+    this.setState({ submitErrorKey: '', submitSuccess: true, passengerSelected: false, formValues: {}, formKey: "1"  });
+	this.scrollToTopOfPage();
+    
   }
   
   searchSuccess = (locatorForm, key) => {
@@ -139,9 +161,10 @@ class HealthDesk extends React.Component {
 						useEffect(() => {
 							const validateFormik = async () => {
 								const formikErrors = await formikProps.validateForm();
+								delete formikErrors.reviewed;
 								if (Object.keys(formikErrors).length > 0) {
 									formikProps.setTouched(setNestedObjectValues(formikErrors, true));
-									this.scrollToElement(document.getElementsByName(Object.keys(formikErrors)[0])[0]);
+									this.scrollToHighestError(formikErrors);
 								}
 							}
 							validateFormik();
@@ -332,6 +355,16 @@ class HealthDesk extends React.Component {
 						</div>
 								</div>
 								</div>
+								{this.props.keycloak.hasRealmRole('health-desk-user') && 
+									<div className="row">
+									<div className="col-lg-4 form-group">
+									<MyCheckbox
+										name="reviewed"
+										checkboxDescription={<FormattedMessage id="nav.item.healthdesk.reviewed" defaultMessage="All Information Reviewed" />}
+									/>
+									</div>
+									</div>
+								}
 								<div className="row">
 								<div className="col-lg-4 form-group">
 		                  <button

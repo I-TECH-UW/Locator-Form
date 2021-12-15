@@ -16,6 +16,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.dto.LocatorFormDTO;
+import org.itech.locator.form.webapp.api.dto.LocatorFormDTO.Stage;
 import org.itech.locator.form.webapp.email.service.EmailService;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
@@ -86,6 +87,7 @@ public class LocatorFormController {
 		}
 
 		log.trace("Received: " + locatorFormDTO.toString());
+		locatorFormDTO.setStage(Stage.PASSENGER);
 		TransactionObjects transactionObjects = fhirTransformService.createTransactionObjects(locatorFormDTO, true,
 				TaskStatus.DRAFT);
 		Bundle transactionResponseBundle = fhirPersistingService.executeTransaction(transactionObjects.bundle);

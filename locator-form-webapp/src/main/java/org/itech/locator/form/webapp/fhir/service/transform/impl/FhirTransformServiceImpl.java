@@ -715,6 +715,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		}
 
+		QuestionnaireResponseItemComponent stageItem = questionnaireResponse.addItem();
+		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage");
+		QuestionnaireResponseItemAnswerComponent stageAnswer = stageItem.addAnswer();
+		if (locatorFormDTO.getStage() != null) {
+			stageAnswer.setValue(new StringType(locatorFormDTO.getStage().toString()));
+		}
+
 		return questionnaireResponse;
 	}
 
@@ -870,6 +877,9 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent tempAddrZIPPostalItem = questionnaire.addItem();
 		tempAddrZIPPostalItem.setLinkId(FhirConstants.TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
 				.setText("Temp Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
+
+		QuestionnaireItemComponent stageItem = questionnaire.addItem();
+		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage").setType(QuestionnaireItemType.TEXT);
 
 		return questionnaire;
 	}
