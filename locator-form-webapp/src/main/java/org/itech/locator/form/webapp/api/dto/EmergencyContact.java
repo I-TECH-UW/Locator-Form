@@ -20,6 +20,6 @@ public class EmergencyContact {
 	@Size(max = 255)
     private String country;
 	@NotBlank
-	@Size(max = 15)
+	@Size(max = 16)
     private String mobilePhone;
 }
