@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -23,10 +22,12 @@ import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.Bundle.HTTPVerb;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateType;
 import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Patient.ContactComponent;
 import org.hl7.fhir.r4.model.Questionnaire;
@@ -44,6 +45,7 @@ import org.hl7.fhir.r4.model.Specimen;
 import org.hl7.fhir.r4.model.Specimen.SpecimenStatus;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
+import org.hl7.fhir.r4.model.TimeType;
 import org.hl7.fhir.r4.model.Task.TaskRestrictionComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.itech.locator.form.webapp.api.LocatorFormUtil;
@@ -477,57 +479,66 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireResponseItemComponent infectionItem = questionnaireResponse.addItem();
 		infectionItem.setLinkId(FhirConstants.PREVIOUS_INFECTION_LINK_ID).setText("Previous Infection");
 		QuestionnaireResponseItemAnswerComponent infectionAnswer = infectionItem.addAnswer();
-		Boolean previousInfection = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getHadCovidBefore()));
-		infectionAnswer.setValue(new BooleanType(previousInfection));
+		if (locatorFormDTO.getHadCovidBefore() != null) {
+			infectionAnswer.setValue(new BooleanType(locatorFormDTO.getHadCovidBefore()));
+		}
 
 		QuestionnaireResponseItemComponent feverItem = questionnaireResponse.addItem();
 		feverItem.setLinkId(FhirConstants.FEVER_LINK_ID).setText("Fever");
 		QuestionnaireResponseItemAnswerComponent feverAnswer = feverItem.addAnswer();
-		Boolean feverInfection = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getFever()));
-		feverAnswer.setValue(new BooleanType(feverInfection));
+		if (locatorFormDTO.getFever() != null) {
+			feverAnswer.setValue(new BooleanType(locatorFormDTO.getFever()));
+		}
 
 		QuestionnaireResponseItemComponent soreThroatItem = questionnaireResponse.addItem();
 		soreThroatItem.setLinkId(FhirConstants.SORE_THROAT_LINK_ID).setText("Sore Throat");
 		QuestionnaireResponseItemAnswerComponent soreThroatAnswer = soreThroatItem.addAnswer();
-		Boolean soreThroat = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getSoreThroat()));
-		soreThroatAnswer.setValue(new BooleanType(soreThroat));
+		if (locatorFormDTO.getSoreThroat() != null) {
+			soreThroatAnswer.setValue(new BooleanType(locatorFormDTO.getSoreThroat()));
+		}
 
 		QuestionnaireResponseItemComponent jointPainItem = questionnaireResponse.addItem();
 		jointPainItem.setLinkId(FhirConstants.JOINT_PAIN_LINK_ID).setText("Joint Pain");
 		QuestionnaireResponseItemAnswerComponent jointPainAnswer = jointPainItem.addAnswer();
-		Boolean jointPain = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getJointPain()));
-		jointPainAnswer.setValue(new BooleanType(jointPain));
-
+		if (locatorFormDTO.getJointPain() != null) {
+			jointPainAnswer.setValue(new BooleanType(locatorFormDTO.getJointPain()));
+		}
+		
 		QuestionnaireResponseItemComponent coughItem = questionnaireResponse.addItem();
 		coughItem.setLinkId(FhirConstants.COUGH_LINK_ID).setText("Cough");
 		QuestionnaireResponseItemAnswerComponent coughAnswer = coughItem.addAnswer();
-		Boolean cough = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getCough()));
-		coughAnswer.setValue(new BooleanType(cough));
+		if (locatorFormDTO.getCough() != null) {
+			coughAnswer.setValue(new BooleanType(locatorFormDTO.getCough()));
+		}
 
 		QuestionnaireResponseItemComponent breathingDifficultyItem = questionnaireResponse.addItem();
 		breathingDifficultyItem.setLinkId(FhirConstants.BREATHING_LINK_ID).setText("Breathing Difficulty");
 		QuestionnaireResponseItemAnswerComponent breathingDifficultyAnswer = breathingDifficultyItem.addAnswer();
-		Boolean breathingDifficulty = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getBreathingDifficulties()));
-		breathingDifficultyAnswer.setValue(new BooleanType(breathingDifficulty));
+		if (locatorFormDTO.getBreathingDifficulties() != null) {
+			breathingDifficultyAnswer.setValue(new BooleanType(locatorFormDTO.getBreathingDifficulties()));
+		}
 
 		QuestionnaireResponseItemComponent rashItem = questionnaireResponse.addItem();
 		rashItem.setLinkId(FhirConstants.RASH_LINK_ID).setText("Rash");
 		QuestionnaireResponseItemAnswerComponent rashAnswer = rashItem.addAnswer();
-		Boolean rash = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getRash()));
-		rashAnswer.setValue(new BooleanType(rash));
+		if (locatorFormDTO.getRash() != null) {
+			rashAnswer.setValue(new BooleanType(locatorFormDTO.getRash()));
+		}
 
 		QuestionnaireResponseItemComponent senseOfSmellItem = questionnaireResponse.addItem();
 		senseOfSmellItem.setLinkId(FhirConstants.SENSE_OF_SMELL_LINK_ID).setText("Sense of Smell or Taste");
 		QuestionnaireResponseItemAnswerComponent senseOfSmellAnswer = senseOfSmellItem.addAnswer();
-		Boolean senseOfSmell = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getSmellOrTaste()));
-		senseOfSmellAnswer.setValue(new BooleanType(senseOfSmell));
+		if (locatorFormDTO.getSmellOrTaste() != null) {
+			senseOfSmellAnswer.setValue(new BooleanType(locatorFormDTO.getSmellOrTaste()));
+		}
 
 		QuestionnaireResponseItemComponent contactWithInfectedItem = questionnaireResponse.addItem();
 		contactWithInfectedItem.setLinkId(FhirConstants.CONTACT_WITH_NFECTED_LINK_ID)
-				.setText("Contact with Infected Individual");
+		        .setText("Contact with Infected Individual");
 		QuestionnaireResponseItemAnswerComponent contactWithInfectedAnswer = contactWithInfectedItem.addAnswer();
-		Boolean contactWithInfected = Boolean.parseBoolean(Objects.toString(locatorFormDTO.getContact()));
-		contactWithInfectedAnswer.setValue(new BooleanType(contactWithInfected));
+		if (locatorFormDTO.getContact() != null) {
+			contactWithInfectedAnswer.setValue(new BooleanType(locatorFormDTO.getContact()));
+		}
 
 		QuestionnaireResponseItemComponent mobilePhoneItem = questionnaireResponse.addItem();
 		mobilePhoneItem.setLinkId(FhirConstants.MOBILE_PHONE_LINK_ID).setText("Mobile Phone");
@@ -580,18 +591,18 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		}
 
 		QuestionnaireResponseItemComponent purposeOfVisitItem = questionnaireResponse.addItem();
-        purposeOfVisitItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit");
-        QuestionnaireResponseItemAnswerComponent purposeOfVisitAnswer = purposeOfVisitItem.addAnswer();
-        if (StringUtils.isNotBlank(locatorFormDTO.getVisitPurpose().toString())) {
-            purposeOfVisitAnswer.setValue(new StringType(locatorFormDTO.getVisitPurpose().toString()));
-        }
-
-        QuestionnaireResponseItemComponent dateOfArrivalItem = questionnaireResponse.addItem();
-        dateOfArrivalItem.setLinkId(FhirConstants.DATE_OF_ARRIVAL_LINK_ID).setText("Date Of Arrival");
-        QuestionnaireResponseItemAnswerComponent dateOfArrivalAnswer = dateOfArrivalItem.addAnswer();
-        if (StringUtils.isNotBlank(locatorFormDTO.getArrivalDate().toString())) {
-            dateOfArrivalAnswer.setValue(new StringType(locatorFormDTO.getArrivalDate().toString()));
-        }
+		purposeOfVisitItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit");
+		QuestionnaireResponseItemAnswerComponent purposeOfVisitAnswer = purposeOfVisitItem.addAnswer();
+		if (locatorFormDTO.getVisitPurpose() != null) {
+			purposeOfVisitAnswer.setValue(new StringType(locatorFormDTO.getVisitPurpose().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent dateOfArrivalItem = questionnaireResponse.addItem();
+		dateOfArrivalItem.setLinkId(FhirConstants.DATE_OF_ARRIVAL_LINK_ID).setText("Date Of Arrival");
+		QuestionnaireResponseItemAnswerComponent dateOfArrivalAnswer = dateOfArrivalItem.addAnswer();
+		if (locatorFormDTO.getArrivalDate() != null) {
+			dateOfArrivalAnswer.setValue(new DateType(locatorFormDTO.getArrivalDate().toString()));
+		}
 
 		// Permanent address
 		QuestionnaireResponseItemComponent permAddrNumAndStreetItem = questionnaireResponse.addItem();
@@ -714,6 +725,173 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			}
 
 		}
+		
+		QuestionnaireResponseItemComponent lastNameItem = questionnaireResponse.addItem();
+		lastNameItem.setLinkId(FhirConstants.LAST_NAME_LINK_ID).setText("Last Name");
+		QuestionnaireResponseItemAnswerComponent lastNameAnswer = lastNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getLastName())) {
+			lastNameAnswer.setValue(new StringType(locatorFormDTO.getLastName()));
+		}
+		QuestionnaireResponseItemComponent firstNameItem = questionnaireResponse.addItem();
+		firstNameItem.setLinkId(FhirConstants.FIRST_NAME_LINK_ID).setText("First Name");
+		QuestionnaireResponseItemAnswerComponent firstNameAnswer = firstNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getFirstName())) {
+			firstNameAnswer.setValue(new StringType(locatorFormDTO.getFirstName()));
+		}
+		
+		QuestionnaireResponseItemComponent middleInitialItem = questionnaireResponse.addItem();
+		middleInitialItem.setLinkId(FhirConstants.MIDDLE_INITIAL_LINK_ID).setText("Middle Initial");
+		QuestionnaireResponseItemAnswerComponent middleInitialAnswer = middleInitialItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getMiddleInitial())) {
+			middleInitialAnswer.setValue(new StringType(locatorFormDTO.getMiddleInitial()));
+		}
+		
+		QuestionnaireResponseItemComponent dateOfBirthItem = questionnaireResponse.addItem();
+		dateOfBirthItem.setLinkId(FhirConstants.DATE_OF_BIRTH_LINK_ID).setText("Date Of Birth");
+		QuestionnaireResponseItemAnswerComponent dateOfBirthAnswer = dateOfBirthItem.addAnswer();
+		if (locatorFormDTO.getDateOfBirth() != null) {
+			dateOfBirthAnswer.setValue(new DateType(locatorFormDTO.getDateOfBirth().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent sexItem = questionnaireResponse.addItem();
+		sexItem.setLinkId(FhirConstants.SEX_LINK_ID).setText("Sex");
+		QuestionnaireResponseItemAnswerComponent sexAnswer = sexItem.addAnswer();
+		if (locatorFormDTO.getSex() != null) {
+			sexAnswer.setValue(new StringType(locatorFormDTO.getSex().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent vaccinatedItem = questionnaireResponse.addItem();
+		vaccinatedItem.setLinkId(FhirConstants.VACCINATED_LINK_ID).setText("Vaccinated");
+		QuestionnaireResponseItemAnswerComponent vaccinatedAnswer = vaccinatedItem.addAnswer();
+		if (locatorFormDTO.getVaccinated() != null) {
+			vaccinatedAnswer.setValue(new BooleanType(locatorFormDTO.getVaccinated()));
+		}
+		
+		QuestionnaireResponseItemComponent firstVaccineItem = questionnaireResponse.addItem();
+		firstVaccineItem.setLinkId(FhirConstants.FIRST_VACCINE_NAME_LINK_ID).setText("Name of First Vaccine");
+		QuestionnaireResponseItemAnswerComponent firstVaccineAnswer = firstVaccineItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getFirstVaccineName())) {
+			firstVaccineAnswer.setValue(new StringType(locatorFormDTO.getFirstVaccineName()));
+		}
+		
+		QuestionnaireResponseItemComponent secondVaccineItem = questionnaireResponse.addItem();
+		secondVaccineItem.setLinkId(FhirConstants.SECOND_VACCINE_NAME_LINK_ID).setText("Name of Second Vaccine");
+		QuestionnaireResponseItemAnswerComponent secondVaccineAnswer = secondVaccineItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getSecondVaccineName())) {
+			secondVaccineAnswer.setValue(new StringType(locatorFormDTO.getSecondVaccineName()));
+		}
+		
+		QuestionnaireResponseItemComponent dateOfFirstDoseItem = questionnaireResponse.addItem();
+		dateOfFirstDoseItem.setLinkId(FhirConstants.DATE_OF_FIRST_DOSE_LINK_ID).setText("Date Of First Dose");
+		QuestionnaireResponseItemAnswerComponent dateOfFirstDoseAnswer = dateOfFirstDoseItem.addAnswer();
+		if (locatorFormDTO.getDateOfFirstDose() != null) {
+			dateOfFirstDoseAnswer.setValue(new DateType(locatorFormDTO.getDateOfFirstDose().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent dateOfSecondDoseItem = questionnaireResponse.addItem();
+		dateOfSecondDoseItem.setLinkId(FhirConstants.DATE_OF_SECOND_DOSE_LINK_ID).setText("Date Of Second Dose");
+		QuestionnaireResponseItemAnswerComponent dateOfSecondDoseAnswer = dateOfSecondDoseItem.addAnswer();
+		if (locatorFormDTO.getDateOfSecondDose() != null) {
+			dateOfSecondDoseAnswer.setValue(new DateType(locatorFormDTO.getDateOfSecondDose().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent travellerTypeItem = questionnaireResponse.addItem();
+		travellerTypeItem.setLinkId(FhirConstants.TRAVELLER_TYPE_LINK_ID).setText("Traveller Type");
+		QuestionnaireResponseItemAnswerComponent travellerTypeAnswer = travellerTypeItem.addAnswer();
+		if (locatorFormDTO.getTravellerType() != null) {
+			travellerTypeAnswer.setValue(new StringType(locatorFormDTO.getTravellerType().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent timeOfArrivalItem = questionnaireResponse.addItem();
+		timeOfArrivalItem.setLinkId(FhirConstants.ARRIVAL_TIME_LINK_ID).setText("Time of Arrival");
+		QuestionnaireResponseItemAnswerComponent timeOfArrivalAnswer = timeOfArrivalItem.addAnswer();
+		if (locatorFormDTO.getArrivalTime() != null) {
+			timeOfArrivalAnswer.setValue(new TimeType(locatorFormDTO.getArrivalTime().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent titleItem = questionnaireResponse.addItem();
+		titleItem.setLinkId(FhirConstants.TITLE_LINK_ID).setText("Title");
+		QuestionnaireResponseItemAnswerComponent titleAnswer = titleItem.addAnswer();
+		if (locatorFormDTO.getTitle() != null) {
+			titleAnswer.setValue(new StringType(locatorFormDTO.getTitle().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent lengthOfStayItem = questionnaireResponse.addItem();
+		lengthOfStayItem.setLinkId(FhirConstants.LENGTH_OF_STAY_LINK_ID).setText("Length Of Stay");
+		QuestionnaireResponseItemAnswerComponent lengthOfStayAnswer = lengthOfStayItem.addAnswer();
+		if (locatorFormDTO.getLengthOfStay() != null) {
+			lengthOfStayAnswer.setValue(new IntegerType(locatorFormDTO.getLengthOfStay()));
+		}
+		
+		QuestionnaireResponseItemComponent portOfEmbarkationItem = questionnaireResponse.addItem();
+		portOfEmbarkationItem.setLinkId(FhirConstants.PORT_OF_EMBARKATION_LINK_ID).setText("Port Of Embarkation");
+		QuestionnaireResponseItemAnswerComponent portOfEmbarkationAnswer = portOfEmbarkationItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getPortOfEmbarkation())) {
+			portOfEmbarkationAnswer.setValue(new StringType(locatorFormDTO.getPortOfEmbarkation()));
+		}
+		
+		QuestionnaireResponseItemComponent professionItem = questionnaireResponse.addItem();
+		professionItem.setLinkId(FhirConstants.PROFESSION_LINK_ID).setText("Profession");
+		QuestionnaireResponseItemAnswerComponent professionAnswer = professionItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getProfession())) {
+			professionAnswer.setValue(new StringType(locatorFormDTO.getProfession()));
+		}
+
+		QuestionnaireResponseItemComponent countryOfBirthItem = questionnaireResponse.addItem();
+		countryOfBirthItem.setLinkId(FhirConstants.COUNTRY_OF_BIRTH_LINK_ID).setText("Country Of Birth");
+		QuestionnaireResponseItemAnswerComponent countryOfBirthAnswer = countryOfBirthItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getCountryOfBirth())) {
+			String country = LocatorFormUtil.getCountryLabelForValue(locatorFormDTO.getCountryOfBirth());
+			countryOfBirthAnswer.setValue(new StringType(country));
+		}
+		
+		QuestionnaireResponseItemComponent passportExpiryDateItem = questionnaireResponse.addItem();
+		passportExpiryDateItem.setLinkId(FhirConstants.PASSPORT_EXPIRY_DATE_LINK_ID).setText("Passport Expiry Date");
+		QuestionnaireResponseItemAnswerComponent passportExpiryDateAnswer = passportExpiryDateItem.addAnswer();
+		if (locatorFormDTO.getPassportExpiryDate() != null) {
+			passportExpiryDateAnswer.setValue(new DateType(locatorFormDTO.getPassportExpiryDate().toString()));
+		}
+		
+		QuestionnaireResponseItemComponent emergenceContactLastNameItem = questionnaireResponse.addItem();
+		emergenceContactLastNameItem.setLinkId(FhirConstants.EMERG_CONTACT_LAST_NAME_LINK_ID)
+		        .setText("Emergency Contact : Last Name");
+		QuestionnaireResponseItemAnswerComponent emergenceContactLastNameAnswer = emergenceContactLastNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getEmergencyContact().getLastName())) {
+			emergenceContactLastNameAnswer.setValue(new StringType(locatorFormDTO.getEmergencyContact().getLastName()));
+		}
+
+		QuestionnaireResponseItemComponent emergenceContactFirstNameItem = questionnaireResponse.addItem();
+		emergenceContactFirstNameItem.setLinkId(FhirConstants.EMERG_CONTACT_FIRST_NAME_LINK_ID)
+		        .setText("Emergency Contact : First Name");
+		QuestionnaireResponseItemAnswerComponent emergenceContactFirstNameAnswer = emergenceContactFirstNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getEmergencyContact().getFirstName())) {
+			emergenceContactFirstNameAnswer.setValue(new StringType(locatorFormDTO.getEmergencyContact().getFirstName()));
+		}
+		
+		QuestionnaireResponseItemComponent emergenceContactAddressItem = questionnaireResponse.addItem();
+		emergenceContactAddressItem.setLinkId(FhirConstants.EMERG_CONTACT_ADDRES_LINK_ID)
+		        .setText("Emergency Contact : Address");
+		QuestionnaireResponseItemAnswerComponent emergenceContactAddressAnswer = emergenceContactAddressItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getEmergencyContact().getAddress())) {
+			emergenceContactAddressAnswer.setValue(new StringType(locatorFormDTO.getEmergencyContact().getAddress()));
+		}
+
+		QuestionnaireResponseItemComponent emergenceContactCountryItem = questionnaireResponse.addItem();
+		emergenceContactCountryItem.setLinkId(FhirConstants.EMERG_CONTACT_COUNTRY_LINK_ID)
+		        .setText("Emergency Contact : Country");
+		QuestionnaireResponseItemAnswerComponent emergenceContactCountryAnswer = emergenceContactCountryItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getEmergencyContact().getCountry())) {
+			String country = LocatorFormUtil.getCountryLabelForValue(locatorFormDTO.getEmergencyContact().getCountry());
+			emergenceContactCountryAnswer.setValue(new StringType(country));
+		}
+
+		QuestionnaireResponseItemComponent emergenceContactMobilePhoneItem = questionnaireResponse.addItem();
+		emergenceContactMobilePhoneItem.setLinkId(FhirConstants.EMERG_CONTACT_MOBILE_PHONE_LINK_ID)
+		        .setText("Emergency Contact : Mobile Phone");
+		QuestionnaireResponseItemAnswerComponent emergenceContactMobilePhoneAnswer = emergenceContactMobilePhoneItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getEmergencyContact().getMobilePhone())) {
+			emergenceContactMobilePhoneAnswer.setValue(new StringType(locatorFormDTO.getEmergencyContact().getMobilePhone()));
+		}
 
 		QuestionnaireResponseItemComponent stageItem = questionnaireResponse.addItem();
 		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage");
@@ -729,7 +907,7 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 	public Questionnaire createQuestionnaire() {
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.setId(questionnaireId);
-		// questionnaire.setStatus(PublicationStatus.DRAFT);
+		
 		questionnaire.addIdentifier(new Identifier().setSystem(locatorFormFhirSystem).setValue(questionnaireId));
 		questionnaire.setTitle("Locator Form Questionnaire");
 		questionnaire.setDate(new Date());
@@ -816,6 +994,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		visitPurposeItem.setLinkId(FhirConstants.PURPOSE_OF_VIST_LINK_ID).setText("Purpose of Visit")
 				.setType(QuestionnaireItemType.TEXT);
 
+		QuestionnaireItemComponent dateOfArrivalItem = questionnaire.addItem();
+		dateOfArrivalItem.setLinkId(FhirConstants.DATE_OF_ARRIVAL_LINK_ID).setText("Date Of Arrival")
+		        .setType(QuestionnaireItemType.DATE);
+
 		QuestionnaireItemComponent healthOfficeItem = questionnaire.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office")
 				.setType(QuestionnaireItemType.TEXT);
@@ -876,7 +1058,94 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		QuestionnaireItemComponent tempAddrZIPPostalItem = questionnaire.addItem();
 		tempAddrZIPPostalItem.setLinkId(FhirConstants.TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
-				.setText("Temp Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
+		        .setText("Temp Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent lastNameItem = questionnaire.addItem();
+		lastNameItem.setLinkId(FhirConstants.LAST_NAME_LINK_ID).setText("Last Name").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent firstNameItem = questionnaire.addItem();
+		firstNameItem.setLinkId(FhirConstants.FIRST_NAME_LINK_ID).setText("First Name").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent middleInitialItem = questionnaire.addItem();
+		middleInitialItem.setLinkId(FhirConstants.MIDDLE_INITIAL_LINK_ID).setText("Middle Initial")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent dateOfBirthItem = questionnaire.addItem();
+		dateOfBirthItem.setLinkId(FhirConstants.DATE_OF_BIRTH_LINK_ID).setText("Date Of Birth")
+		        .setType(QuestionnaireItemType.DATE);
+		
+		QuestionnaireItemComponent sexItem = questionnaire.addItem();
+		sexItem.setLinkId(FhirConstants.SEX_LINK_ID).setText("Sex").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent vaccinatedItem = questionnaire.addItem();
+		vaccinatedItem.setLinkId(FhirConstants.VACCINATED_LINK_ID).setText("Vaccinated")
+		        .setType(QuestionnaireItemType.BOOLEAN);
+		
+		QuestionnaireItemComponent firstVaccineItem = questionnaire.addItem();
+		firstVaccineItem.setLinkId(FhirConstants.FIRST_VACCINE_NAME_LINK_ID).setText("Name of First Vaccine")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent secondVaccineItem = questionnaire.addItem();
+		secondVaccineItem.setLinkId(FhirConstants.SECOND_VACCINE_NAME_LINK_ID).setText("Name of Second Vaccine")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent dateOfFirstDoseItem = questionnaire.addItem();
+		dateOfFirstDoseItem.setLinkId(FhirConstants.DATE_OF_FIRST_DOSE_LINK_ID).setText("Date Of First Dose")
+		        .setType(QuestionnaireItemType.DATE);
+		
+		QuestionnaireItemComponent dateOfSecondDoseItem = questionnaire.addItem();
+		dateOfSecondDoseItem.setLinkId(FhirConstants.DATE_OF_SECOND_DOSE_LINK_ID).setText("Date Of Second Dose")
+		        .setType(QuestionnaireItemType.DATE);
+		
+		QuestionnaireItemComponent travellerTypeItem = questionnaire.addItem();
+		travellerTypeItem.setLinkId(FhirConstants.TRAVELLER_TYPE_LINK_ID).setText("Traveller Type")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent timeOfArrivalItem = questionnaire.addItem();
+		timeOfArrivalItem.setLinkId(FhirConstants.ARRIVAL_TIME_LINK_ID).setText("Time of Arrival")
+		        .setType(QuestionnaireItemType.TIME);
+		
+		QuestionnaireItemComponent tittleItem = questionnaire.addItem();
+		tittleItem.setLinkId(FhirConstants.TITLE_LINK_ID).setText("Tittle").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent lengthOfStayItem = questionnaire.addItem();
+		lengthOfStayItem.setLinkId(FhirConstants.LENGTH_OF_STAY_LINK_ID).setText("Length Of Stay")
+		        .setType(QuestionnaireItemType.INTEGER);
+		
+		QuestionnaireItemComponent portOfEmbarkationItem = questionnaire.addItem();
+		portOfEmbarkationItem.setLinkId(FhirConstants.PORT_OF_EMBARKATION_LINK_ID).setText("Port Of Embarkation")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent professionItem = questionnaire.addItem();
+		professionItem.setLinkId(FhirConstants.PROFESSION_LINK_ID).setText("Profession").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent countryOfBirthItem = questionnaire.addItem();
+		countryOfBirthItem.setLinkId(FhirConstants.COUNTRY_OF_BIRTH_LINK_ID).setText("Country Of Birth")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent passportExpiryDateItem = questionnaire.addItem();
+		passportExpiryDateItem.setLinkId(FhirConstants.PASSPORT_EXPIRY_DATE_LINK_ID).setText("Passport Expiry Date")
+		        .setType(QuestionnaireItemType.DATE);
+		
+		QuestionnaireItemComponent emergenceContactLastNameItem = questionnaire.addItem();
+		emergenceContactLastNameItem.setLinkId(FhirConstants.EMERG_CONTACT_LAST_NAME_LINK_ID)
+		        .setText("Emergency Contact : Last Name").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent emergenceContactFirstNameItem = questionnaire.addItem();
+		emergenceContactFirstNameItem.setLinkId(FhirConstants.EMERG_CONTACT_FIRST_NAME_LINK_ID)
+		        .setText("Emergency Contact : First Name").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent emergenceContactAddressItem = questionnaire.addItem();
+		emergenceContactAddressItem.setLinkId(FhirConstants.EMERG_CONTACT_ADDRES_LINK_ID)
+		        .setText("Emergency Contact : Address").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent emergenceContactCountryItem = questionnaire.addItem();
+		emergenceContactCountryItem.setLinkId(FhirConstants.EMERG_CONTACT_COUNTRY_LINK_ID)
+		        .setText("Emergency Contact : Country").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent emergenceContactMobilePhoneItem = questionnaire.addItem();
+		emergenceContactMobilePhoneItem.setLinkId(FhirConstants.EMERG_CONTACT_MOBILE_PHONE_LINK_ID)
+		        .setText("Emergency Contact : Mobile Phone").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent stageItem = questionnaire.addItem();
 		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage").setType(QuestionnaireItemType.TEXT);
