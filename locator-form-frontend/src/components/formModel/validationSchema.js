@@ -24,8 +24,10 @@ function parseDateString(value, originalValue) {
 function parseTimeString(value, originalValue) {
 	if (originalValue === null) {
 		return '';
+	} else if (originalValue.length !== 5) {
+		return new Date();
 	}
-  return parse(originalValue, "HH:mm", new Date()).getHours() + ":" + parse(originalValue, "HH:mm", new Date()).getMinutes() ;
+	return parse(originalValue, "HH:mm", new Date()).getHours() + ":" + parse(originalValue, "HH:mm", new Date()).getMinutes() ;
 }
 
 const today = new Date();
