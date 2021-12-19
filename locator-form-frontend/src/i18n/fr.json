@@ -152,6 +152,7 @@
 	"error.search.infohighway.error": "Une erreur est survenue",
 	"error.search.infohighway.notfound": "Aucun résident trouvé avec ce numéro d'identification",
 	"error.date.invalidformat":"La date doit correspondre à aaaa-mm-jj",
+	"error.time.invalidformat":"HH:mm",
 	"error.duplicate":"Cette valeur est déjà utilisée",
 	"date.format":"aaaa-jj-mm",
 	"error.search.patient.notfound" : "Aucun patient trouvé avec cet identifiant TestKit",

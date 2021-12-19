@@ -69,6 +69,7 @@
 	"error.search.form.error": "An error occurred while searching",
 	"error.search.form.notfound": "No form could be found with that search value",
 	"error.date.invalidformat":"Date must match yyyy-mm-dd",
+	"error.time.invalidformat":"Time must match HH:mm in 24 hour notation",
 	"error.duplicate":"This value is already used",
 	"error.alphanum":"Only accepts alphanumeric characters",
 	"date.format": "yyyy-dd-mm",
