@@ -19,13 +19,17 @@ import org.apache.velocity.app.VelocityEngine;
 import org.itech.locator.form.webapp.email.service.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class EmailServiceImpl implements EmailService {
 
 	@Value("${org.itech.locator.form.email.from:noreply@itech.org}")
@@ -50,7 +54,11 @@ public class EmailServiceImpl implements EmailService {
 		message.setBcc(bcc);
 		message.setSubject(subject);
 		message.setText(text);
-		javaMailSender.send(message);
+		try {
+			javaMailSender.send(message);
+		} catch (MailException e) {
+			log.error("error sending email to " + to + ": " + e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -68,7 +76,11 @@ public class EmailServiceImpl implements EmailService {
 		helper.setText(text);
 		FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
 		helper.addAttachment(attachmentFileName, file);
-		javaMailSender.send(message);
+		try {
+			javaMailSender.send(message);
+		} catch (MailException e) {
+			log.error("error sending email to " + to + ": " + e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -85,7 +97,11 @@ public class EmailServiceImpl implements EmailService {
 		helper.setSubject(subject);
 		helper.setText(text);
 		helper.addAttachment(attachment.getName(), attachment);
-		javaMailSender.send(message);
+		try {
+			javaMailSender.send(message);
+		} catch (MailException e) {
+			log.error("error sending email to " + to + ": " + e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -104,7 +120,11 @@ public class EmailServiceImpl implements EmailService {
 		for (File attachment : attachments) {
 			helper.addAttachment(attachment.getName(), attachment);
 		}
-		javaMailSender.send(message);
+		try {
+			javaMailSender.send(message);
+		} catch (MailException e) {
+			log.error("error sending email to " + to + ": " + e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -124,7 +144,11 @@ public class EmailServiceImpl implements EmailService {
 			DataSource dataSource = new ByteArrayDataSource(pdfByName.getValue().toByteArray(), "application/pdf");
 			helper.addAttachment(pdfByName.getKey(), dataSource);
 		}
-		javaMailSender.send(message);
+		try {
+			javaMailSender.send(message);
+		} catch (MailException e) {
+			log.error("error sending email to " + to + ": " + e.getMessage(), e);
+		}
 	}
 
 	@Override
@@ -159,7 +183,11 @@ public class EmailServiceImpl implements EmailService {
 			DataSource dataSource = new ByteArrayDataSource(pdfByName.getValue().toByteArray(), "application/pdf");
 			helper.addAttachment(pdfByName.getKey(), dataSource);
 		}
-		javaMailSender.send(message);
+		try {
+			javaMailSender.send(message);
+		} catch (MailException e) {
+			log.error("error sending email to " + to + ": " + e.getMessage(), e);
+		}
 	}
 
 }

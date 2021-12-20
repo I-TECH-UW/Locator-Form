@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import org.itech.locator.form.webapp.api.dto.Resident;
 import org.itech.locator.form.webapp.resident.service.ResidentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,11 +39,16 @@ public class ResidentController {
 			throws OutputException, BarcodeException, MessagingException, DocumentException, JsonProcessingException {
 		log.debug("searching for nationalID: " + nationalID);
 
-		Optional<Resident> resident = residentService.getResidentByNationalID(nationalID);
-		if (resident.isEmpty()) {
-			return ResponseEntity.notFound().build();
+		try {
+			Optional<Resident> resident = residentService.getResidentByNationalID(nationalID);
+			if (resident.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			}
+			return ResponseEntity.ok(resident.get());
+		} catch (RuntimeException e) {
+			log.error("error searching for resident by national ID: " + e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		return ResponseEntity.ok(resident.get());
 	}
 
 }
