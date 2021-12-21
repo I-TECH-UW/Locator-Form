@@ -72,6 +72,7 @@
 	"error.time.invalidformat":"Time must match HH:mm in 24 hour notation",
 	"error.duplicate":"This value is already used",
 	"error.alphanum":"Only accepts alphanumeric characters",
+	"error.pattern.match.testkit":"Invalid Format of Test Kit ID. Please Enter Correctly",
 	"date.format": "yyyy-dd-mm",
 	"submit.success.msg": "Thank you for filling out the online locator form. Please check your email for any further instructions.\nYou are also requested to bring a printed copy of the Summary PDF with the barcode at the Airport.\nNote: Click on \"Print Summary\" button to get a copy of the Summary PDF" ,
 	"error.search.patient.notfound" : "No patient Found with this TestKit Id" ,

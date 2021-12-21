@@ -409,8 +409,7 @@ export const step11Validation = {
 
 export const testKit = {
 		testKitId: Yup.string()
-			.max(25, 'error.char.max.exceeded')
-			.matches("^[A-Za-z0-9]+$", "error.alphanum")
+			.matches( process.env.REACT_APP_TEST_KIT_REGEX ? `${process.env.REACT_APP_TEST_KIT_REGEX}` : "^[0-9]{20}$", 'error.pattern.match.testkit')
 			.test('checkDuplicateTestKit', 'error.duplicate', async function (searchValue) {
 				if (!searchValue) {
 					return true;
