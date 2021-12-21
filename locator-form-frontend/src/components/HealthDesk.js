@@ -99,7 +99,8 @@ class HealthDesk extends React.Component {
   }
   
   searchSuccess = (locatorForm, key) => {
-	  this.setState({newSearch: true, passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key,});
+	locatorForm.arrivalDateOverride = false;
+	this.setState({newSearch: true, passengerSelected: true, submitSuccess: false, formValues: locatorForm, formKey: key,});
   }
 
   handleReset= () => {
@@ -190,6 +191,14 @@ class HealthDesk extends React.Component {
 						<StyledFieldSet>
 							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.flightDetails' })}</StyledLegend>
 							<Step2 role={role} formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} />
+							{(formikProps.errors.arrivalDate === 'error.date.future' 
+								|| (formikProps.values.arrivalDateOverride && !formikProps.errors.arrivalDate )) 
+								&& 
+								<MyCheckbox
+									name="arrivalDateOverride"
+									checkboxDescription={<FormattedMessage id="nav.item.overrideArrival" defaultMessage="Date of Arrival is in the future" />}
+								/>
+							}
 						</StyledFieldSet>
 						<StyledFieldSet>
 							<StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.details' })}</StyledLegend>
@@ -209,6 +218,10 @@ class HealthDesk extends React.Component {
 		            	{/* <Step10 formikProps={formikProps} intl={this.props.intl} disabled={this.state.formValues.finalized} /> */}
 						<div className="row">
 						<div className="col-lg-4 form-group">
+							<MyHiddenInput
+								name="arrivalDateOverride"
+								type="hidden"
+							/>
 							<MyHiddenInput
 								name="taskId"
 								type="hidden"

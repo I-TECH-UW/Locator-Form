@@ -413,9 +413,13 @@ export const healthDesk = {
 
 	arrivalDate: Yup.date().transform(parseDateString)
 		.typeError("error.date.invalidformat")
+		.required('error.required')
 		.min(today, "error.date.past")
-		.max(today, "error.date.future")
-		.required('error.required'),
+		.when('arrivalDateOverride', {
+			is: false,
+			then: Yup.date().transform(parseDateString)
+				.max(today, "error.date.future")
+		}),
 	
 	testKitId: Yup.string()
 		.matches( process.env.REACT_APP_TEST_KIT_REGEX ? `${process.env.REACT_APP_TEST_KIT_REGEX}` : "^[0-9]{20}$", 'error.pattern.match.testkit')
