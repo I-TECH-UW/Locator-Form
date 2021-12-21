@@ -407,46 +407,46 @@ export const step11Validation = {
 		.oneOf([true], 'error.terms.unaccepted'),
 };
 
-export const testKit = {
-		testKitId: Yup.string()
-			.matches( process.env.REACT_APP_TEST_KIT_REGEX ? `${process.env.REACT_APP_TEST_KIT_REGEX}` : "^[0-9]{20}$", 'error.pattern.match.testkit')
-			.test('checkDuplicateTestKit', 'error.duplicate', async function (searchValue) {
-				if (!searchValue) {
-					return true;
-				}
-				const unique = await fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/swab/servicerequest/${searchValue}`, {
-					method: 'GET',
-					headers: {
-						'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
-					},
-				}).then(async response => {
-					if (response.status === 404) {
-						return true;
-					} else if (response.ok) {
-						return false;
-					} else {
-						throw new Error("couldn't reach the backend service to see if test kit is unique")
-					}
-				}).catch(err => {
-					console.log(err)
-					return false;
-				});
-				return unique;
-			})
-			//.required('error.required')
-};
-
-export const healthOffice = {
+export const healthDesk = {
 	healthOffice: Yup.string()
-		.max(50, 'error.char.max.exceeded')
-};
+		.max(50, 'error.char.max.exceeded'),
 
-export const reviewed = {
+	arrivalDate: Yup.date().transform(parseDateString)
+		.typeError("error.date.invalidformat")
+		.min(today, "error.date.past")
+		.max(today, "error.date.future")
+		.required('error.required'),
+	
+	testKitId: Yup.string()
+		.matches( process.env.REACT_APP_TEST_KIT_REGEX ? `${process.env.REACT_APP_TEST_KIT_REGEX}` : "^[0-9]{20}$", 'error.pattern.match.testkit')
+		.test('checkDuplicateTestKit', 'error.duplicate', async function (searchValue) {
+			if (!searchValue) {
+				return true;
+			}
+			const unique = await fetch(`${process.env.REACT_APP_DATA_IMPORT_API}/swab/servicerequest/${searchValue}`, {
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${localStorage.getItem("react-token")}`,
+				},
+			}).then(async response => {
+				if (response.status === 404) {
+					return true;
+				} else if (response.ok) {
+					return false;
+				} else {
+					throw new Error("couldn't reach the backend service to see if test kit is unique")
+				}
+			}).catch(err => {
+				console.log(err)
+				return false;
+			});
+			return unique;
+		}),
+
 	reviewed: Yup.boolean()
 		.required('error.required')
 		.oneOf([true], 'error.required'),
 };
-
 
 export const validationSchemaSteps = [
 	//step 1
@@ -474,6 +474,6 @@ export const validationSchemaSteps = [
 
 ]
 
-export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation, ...testKit, ...healthOffice, ...reviewed});
+export const healthDeskValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation, ...healthDesk});
 
 export const pioValidationSchema = Yup.object().shape({...step1Validation, ...step2Validation, ...step3Validation, ...step4Validation, ...step5Validation, ...step6Validation, ...step7Validation, ...step8Validation, ...step9Validation, ...step10Validation, ...step11Validation});
