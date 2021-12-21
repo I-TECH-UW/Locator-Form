@@ -84,6 +84,10 @@ export const airlines = [
     "label": "Lufthansa"
   },
   {
+    "value": "Private Jet",
+    "label": "Private Jet"
+  },
+  {
     "value": "Saudi Arabian Airlines",
     "label": "Saudi Arabian Airlines"
   },
