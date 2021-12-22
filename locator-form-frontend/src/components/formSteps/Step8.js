@@ -142,6 +142,13 @@ class Step8 extends React.Component {
 								disabled={this.props.disabled}
 							/>
 						  }
+							<span className="form-group">
+								<MyCheckbox
+									className="required-field-field" name="hotelSearchCheck"
+									disabled={this.props.disabled}
+									checkboxDescription={<FormattedMessage id="nav.item.noHotel" defaultMessage="I am not staying at a hotel / my hotel isn't listed" />}
+								/>
+							</span>
 						</div>
 						<div className="col-lg-5 form-group ">
 							<MyTextInput
@@ -162,20 +169,11 @@ class Step8 extends React.Component {
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-lg-6 form-group ">
-							<MyHiddenInput
-								name="temporaryAddress.country"
-								type="hidden"
-							/>
-					   </div>
-
-					   <div className="col-lg-6 form-group ">
-							<MyHiddenInput
-								name="temporaryAddress.country"
-								type="hidden"
-							/>
-					   </div>
 					   <div className="col-lg-4 form-group ">
+							<MyHiddenInput
+								name="temporaryAddress.country"
+								type="hidden"
+							/>
 							<Field name="temporaryAddress.localPhone">
 								{({ field, form, meta }) =>
 									<MyPhoneInput
@@ -186,14 +184,6 @@ class Step8 extends React.Component {
 									/>
 								}
 							</Field>
-						</div>
-					   <div className="col-lg-4 form-group">
-							<MyCheckbox
-								className="required-field-field" name="hotelSearchCheck"
-								disabled={this.props.disabled}>
-								<FormattedMessage id="nav.item.noHotel" defaultMessage="I am not staying at a hotel / my hotel isn't listed" 
-								/>						   		
-							</MyCheckbox>
 						</div>
 						
 						{/* <div className="col-lg-4 form-group ">
