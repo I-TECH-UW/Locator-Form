@@ -6,20 +6,28 @@ import lombok.Data;
 
 @Data
 public class Address {
+	
 	@Size(max = 255)
 	private String hotelName;
+	
 	@Size(max = 255)
-    private String numberAndStreet;
+	private String numberAndStreet;
+	
 	@Size(max = 255)
-    private String apartmentNumber;
+	private String apartmentNumber;
+	
 	@Size(max = 255)
-    private String city;
+	private String city;
+	
 	@Size(max = 255)
-    private String stateProvince;
+	private String stateProvince;
+	
 	@Size(max = 255)
-    private String country;
+	private String country;
+	
 	@Size(max = 255)
-    private String zipPostalCode;
+	private String zipPostalCode;
+	
 	@Size(max = 21)
-    private String localPhone;
+	private String localPhone;
 }
