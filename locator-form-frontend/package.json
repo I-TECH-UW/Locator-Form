@@ -22,7 +22,7 @@
     "html2canvas": "^1.0.0-rc.7",
     "http-proxy-middleware": "^1.0.4",
     "jquery": "^3.5.1",
-    "jspdf": "^2.1.1",
+    "jspdf": "^2.5.0",
     "keycloak-js": "^15.0.2",
     "multiselect-react-dropdown": "^1.5.7",
     "popper.js": "^1.16.1",

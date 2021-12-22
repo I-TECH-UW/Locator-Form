@@ -77,6 +77,8 @@ public class FhirConstants {
     public static final String TEMP_ADDRESS_COUNTRY_LINK_ID = "8d8fb3af-96da-4405-8884-50553e0f54c7";
     
     public static final String TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "03db31d6-a1cb-4199-9555-647649291894";
+
+    public static final String TEMP_ADDRESS_LOCAL_PHONE_LINK_ID = "5f6fff9b-b13a-4f13-8c6b-ae064813712a";
     
     public static final String LAST_NAME_LINK_ID = "9b58dbb3-9d4b-4530-b4fb-4ce67f5f1124";
     

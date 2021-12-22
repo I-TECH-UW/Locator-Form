@@ -1,11 +1,14 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MySelect, MyHiddenInput , MyCheckbox} from '../inputs/MyInputs'
+import { MyTextInput, MySelect, MyHiddenInput , MyCheckbox ,MyPhoneInput} from '../inputs/MyInputs'
 import { countriesList } from '../data/countries.js'
 import {getHotelAddress ,hotelList } from '../data/hotels'
 
 class Step8 extends React.Component {
+	getDefaultCountryCode = () => {
+		return this.props.formikProps.values.travellerType === 'resident' ? 'MU' : 'US';
+	}
   
 	render() {
     	console.log("errors: " + JSON.stringify(this.props.formikProps.errors))
@@ -172,7 +175,19 @@ class Step8 extends React.Component {
 								type="hidden"
 							/>
 					   </div>
-					   <div className="col-lg-12 form-group">
+					   <div className="col-lg-4 form-group ">
+							<Field name="temporaryAddress.localPhone">
+								{({ field, form, meta }) =>
+									<MyPhoneInput
+										label={<FormattedMessage id="nav.item.localPhone" defaultMessage="Local Phone" />}
+										defaultCountryCode={this.getDefaultCountryCode()}
+										form={form} name="temporaryAddress.localPhone"
+										disabled={this.props.disabled}
+									/>
+								}
+							</Field>
+						</div>
+					   <div className="col-lg-4 form-group">
 							<MyCheckbox
 								className="required-field-field" name="hotelSearchCheck"
 								disabled={this.props.disabled}>

@@ -20,4 +20,6 @@ public class Address {
     private String country;
 	@Size(max = 255)
     private String zipPostalCode;
+	@Size(max = 21)
+    private String localPhone;
 }

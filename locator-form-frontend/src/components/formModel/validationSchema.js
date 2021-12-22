@@ -211,7 +211,7 @@ export const step7Validation = {
 			'error.phone.invalid',
 			value => isBlankOrValidPhoneNumber(value)
 		),
-	fixedPhone: Yup.string()
+	    fixedPhone: Yup.string()
 		.test('is-phone',
 			'error.phone.invalid',
 			value => isBlankOrValidPhoneNumber(value)
@@ -318,6 +318,11 @@ export const step8Validation = {
 			country: Yup.string()
 				.max(50, 'error.char.max.exceeded'),
 				// .required('error.required'),
+			localPhone: Yup.string()
+				.test('is-phone',
+					'error.phone.invalid',
+					value => isBlankOrValidPhoneNumber(value)
+				),	
 		}),
 	};
 
