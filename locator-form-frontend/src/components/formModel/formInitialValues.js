@@ -34,6 +34,7 @@ export default {
     country: 'MU',
     city: '',
     stateProvince: '',
+    localPhone: '',
   },
 
 

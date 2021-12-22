@@ -708,6 +708,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			tempAddrZIPPostalAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getZipPostalCode()));
 		}
 
+		QuestionnaireResponseItemComponent tempAddrLocalPhoneItem = questionnaireResponse.addItem();
+		tempAddrLocalPhoneItem.setLinkId(FhirConstants.TEMP_ADDRESS_LOCAL_PHONE_LINK_ID)
+		        .setText("Temp Address: Local Phone");
+		QuestionnaireResponseItemAnswerComponent tempAddrLocalPhoneAnswer = tempAddrLocalPhoneItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getLocalPhone())) {
+			tempAddrLocalPhoneAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getLocalPhone()));
+		}
+
 		QuestionnaireResponseItemComponent healthOfficeItem = questionnaireResponse.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
 		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
@@ -1059,6 +1067,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		QuestionnaireItemComponent tempAddrZIPPostalItem = questionnaire.addItem();
 		tempAddrZIPPostalItem.setLinkId(FhirConstants.TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID)
 		        .setText("Temp Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent tempAddrLocalPhoneItem = questionnaire.addItem();
+		tempAddrLocalPhoneItem.setLinkId(FhirConstants.TEMP_ADDRESS_LOCAL_PHONE_LINK_ID)
+		        .setText("Temp Address: Local Phone").setType(QuestionnaireItemType.TEXT);
 		
 		QuestionnaireItemComponent lastNameItem = questionnaire.addItem();
 		lastNameItem.setLinkId(FhirConstants.LAST_NAME_LINK_ID).setText("Last Name").setType(QuestionnaireItemType.TEXT);
