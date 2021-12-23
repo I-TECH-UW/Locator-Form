@@ -11,6 +11,14 @@ function isBlankOrValidPhoneNumber(phoneNumber) {
 	}
 }
 
+function isBlankOrValidMauritiusPhoneNumber(phoneNumber) {
+	if (phoneNumber === undefined || phoneNumber.startsWith('+230') || phoneNumber === '') {
+		return true;
+	} else {
+	    return false;
+	}
+}
+
 function parseDateString(value, originalValue) {
 	const parsedDate = isDate(originalValue)
     	? originalValue
@@ -319,6 +327,10 @@ export const step8Validation = {
 				.max(50, 'error.char.max.exceeded'),
 				// .required('error.required'),
 			localPhone: Yup.string()
+			.test('is-mauritius',
+				'error.phone.invalid.mauritius',
+				value => isBlankOrValidMauritiusPhoneNumber(value)
+			)
 				.test('is-phone',
 					'error.phone.invalid',
 					value => isBlankOrValidPhoneNumber(value)

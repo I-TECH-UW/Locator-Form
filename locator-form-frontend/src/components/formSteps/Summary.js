@@ -319,7 +319,7 @@ class Summary extends React.Component {
 						<span className="confirm-field"><FormattedMessage id="nav.item.apartmentNumber" defaultMessage="Apartment Number" />: </span><span className="confirm-value">{temporaryAddress.apartmentNumber}</span>
 					</div>
 					<div className="col-lg-3 form-group ">
-						<span className="confirm-field"><FormattedMessage id="nav.item.localPhone" defaultMessage="Local Phone" />: </span><span className="confirm-value">{temporaryAddress.localPhone}</span>
+						<span className="confirm-field"><FormattedMessage id="nav.item.localPhone" defaultMessage="Telephone No. in Mauritius" />: </span><span className="confirm-value">{temporaryAddress.localPhone}</span>
 					</div>
 				</div>
 				<div className="row">

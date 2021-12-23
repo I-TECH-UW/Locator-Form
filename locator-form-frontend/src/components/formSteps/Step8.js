@@ -102,20 +102,37 @@ class Step8 extends React.Component {
 							</MyCheckbox>
 						</div>
 					</div> */}
-					{this.props.formikProps.values.travellerType !== 'resident' &&
-						<div className="row">
-							<div className="col-lg-4 form-group ">
-								<MyTextInput
-									label={<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)" />}
-									name="lengthOfStay"
-									keyboardType="numeric"
-									type="text"
-									requireField={true}
-									disabled={this.props.disabled}
-								/>
-							</div>
+					<div className="row">
+						{this.props.formikProps.values.travellerType !== 'resident' &&
+							
+								<div className="col-lg-4 form-group ">
+									<MyTextInput
+										label={<FormattedMessage id="nav.item.proposedLengthOfStay" defaultMessage="Proposed Length of Stay in Mauritius (days)" />}
+										name="lengthOfStay"
+										keyboardType="numeric"
+										type="text"
+										requireField={true}
+										disabled={this.props.disabled}
+									/>
+								</div>
+						}
+					   <div className="col-lg-4 form-group ">
+							<MyHiddenInput
+								name="temporaryAddress.country"
+								type="hidden"
+							/>
+							<Field name="temporaryAddress.localPhone">
+								{({ field, form, meta }) =>
+									<MyPhoneInput
+										label={<FormattedMessage id="nav.item.localPhone" defaultMessage="Telephone No. in Mauritius" />}
+										defaultCountryCode='MU'
+										form={form} name="temporaryAddress.localPhone"
+										disabled={this.props.disabled}
+									/>
+								}
+							</Field>
 						</div>
-					}
+					</div>
 					<div className="row">
 						<div className="col-lg-5 form-group ">
 						{!hotelSearch  &&
@@ -169,22 +186,6 @@ class Step8 extends React.Component {
 						</div>
 					</div>
 					<div className="row">
-					   <div className="col-lg-4 form-group ">
-							<MyHiddenInput
-								name="temporaryAddress.country"
-								type="hidden"
-							/>
-							<Field name="temporaryAddress.localPhone">
-								{({ field, form, meta }) =>
-									<MyPhoneInput
-										label={<FormattedMessage id="nav.item.localPhone" defaultMessage="Local Phone" />}
-										defaultCountryCode={this.getDefaultCountryCode()}
-										form={form} name="temporaryAddress.localPhone"
-										disabled={this.props.disabled}
-									/>
-								}
-							</Field>
-						</div>
 						
 						{/* <div className="col-lg-4 form-group ">
 				<MySelect
