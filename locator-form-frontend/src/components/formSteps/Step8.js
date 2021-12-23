@@ -127,6 +127,7 @@ class Step8 extends React.Component {
 										label={<FormattedMessage id="nav.item.localPhone" defaultMessage="Telephone No. in Mauritius" />}
 										defaultCountryCode='MU'
 										form={form} name="temporaryAddress.localPhone"
+										requireField={true}
 										disabled={this.props.disabled}
 									/>
 								}
@@ -161,7 +162,7 @@ class Step8 extends React.Component {
 						  }
 							<span className="form-group">
 								<MyCheckbox
-									className="required-field-field" name="hotelSearchCheck"
+									name="hotelSearchCheck"
 									disabled={this.props.disabled}
 									checkboxDescription={<FormattedMessage id="nav.item.noHotel" defaultMessage="I am not staying at a hotel / my hotel isn't listed" />}
 								/>

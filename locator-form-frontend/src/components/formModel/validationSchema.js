@@ -327,14 +327,15 @@ export const step8Validation = {
 				.max(50, 'error.char.max.exceeded'),
 				// .required('error.required'),
 			localPhone: Yup.string()
-			.test('is-mauritius',
-				'error.phone.invalid.mauritius',
-				value => isBlankOrValidMauritiusPhoneNumber(value)
-			)
+				.test('is-mauritius',
+					'error.phone.invalid.mauritius',
+					value => isBlankOrValidMauritiusPhoneNumber(value)
+				)
 				.test('is-phone',
 					'error.phone.invalid',
 					value => isBlankOrValidPhoneNumber(value)
-				),	
+				)
+				.required('error.required'),	
 		}),
 	};
 
