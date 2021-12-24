@@ -42,6 +42,9 @@ function parseTimeString(value, originalValue) {
 const today = new Date();
 today.setHours(0,0,0,0);
 
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
 export const step1Validation = {
 		travellerType: Yup.string()
 		.oneOf(
@@ -57,7 +60,7 @@ export const step2Validation = {
 			'error.invalid.selection')
 		.required('error.required'),
 	airlineName: Yup.string()
-		.max(50, 'error.char.max.exceeded')
+		.max(50, 'error.dateInputTodaychar.max.exceeded')
 		.required('error.required'),
 	flightNumber: Yup.string()
 		.max(15, 'error.char.max.exceeded')
@@ -66,7 +69,7 @@ export const step2Validation = {
 		.max(15, 'error.char.max.exceeded'),
 	arrivalDate: Yup.date().transform(parseDateString)
 		.typeError("error.date.invalidformat")
-		.min(today, "error.date.past")
+		.min(yesterday, "error.date.past")
 		.required('error.required'),
     arrivalTime: Yup.string().transform(parseTimeString)
 		.typeError("error.time.invalidformat")
@@ -432,11 +435,11 @@ export const healthDesk = {
 	arrivalDate: Yup.date().transform(parseDateString)
 		.typeError("error.date.invalidformat")
 		.required('error.required')
-		.min(today, "error.date.past")
 		.when('arrivalDateOverride', {
 			is: false,
 			then: Yup.date().transform(parseDateString)
 				.max(today, "error.date.future")
+				.min(today, "error.date.past")
 		}),
 	
 	testKitId: Yup.string()

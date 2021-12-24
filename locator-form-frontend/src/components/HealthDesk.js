@@ -196,7 +196,7 @@ class HealthDesk extends React.Component {
 								&& 
 								<MyCheckbox
 									name="arrivalDateOverride"
-									checkboxDescription={<FormattedMessage id="nav.item.overrideArrival" defaultMessage="Date of Arrival is in the future" />}
+									checkboxDescription={<FormattedMessage id="nav.item.overrideArrival" defaultMessage="Date of Arrival is not today" />}
 								/>
 							}
 						</StyledFieldSet>

@@ -49,10 +49,26 @@ export const StyledLegend =styled.legend`
 `;
   
 export const dateInputToday = () => {
+  var now = new Date()
+
+  var month = now.getMonth() + 1
+  var day = now.getDate()
+  var year = now.getFullYear()
+
+  if (month < 10)
+    month = '0' + month.toString()
+  if (day < 10)
+    day = '0' + day.toString()
+
+  var minDate = year + '-' + month + '-' + day
+  return minDate
+}
+
+export const dateInputYesterday = () => {
 		var now = new Date()
 
 		var month = now.getMonth() + 1
-		var day = now.getDate()
+		var day = now.getDate() - 1;
 		var year = now.getFullYear()
 
 		if (month < 10)

@@ -1,7 +1,7 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MyTimeInput, MySelect, dateInputToday } from '../inputs/MyInputs'
+import { MyTextInput, MyTimeInput, MySelect, dateInputYesterday } from '../inputs/MyInputs'
 import 'rc-time-picker/assets/index.css';
 import { airlines } from '../data/airlines'
 
@@ -56,7 +56,7 @@ class Step2 extends React.Component {
 								requireField={true}
 								type="date"
 								placeholder={this.props.intl.formatMessage({ id: 'date.format' })}
-								min={dateInputToday()}
+								min={dateInputYesterday()}
 								disabled={this.props.disabled}
 							/>
 						</div>
