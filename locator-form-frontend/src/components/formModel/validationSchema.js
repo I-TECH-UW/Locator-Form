@@ -44,6 +44,7 @@ today.setHours(0,0,0,0);
 
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
+yesterday.setHours(0,0,0,0);
 
 export const step1Validation = {
 		travellerType: Yup.string()
@@ -439,7 +440,7 @@ export const healthDesk = {
 			is: false,
 			then: Yup.date().transform(parseDateString)
 				.max(today, "error.date.future")
-				.min(today, "error.date.past")
+				.min(yesterday, "error.date.past")
 		}),
 	
 	testKitId: Yup.string()
