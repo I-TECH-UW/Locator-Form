@@ -472,6 +472,10 @@
     "label": "Kuwait"
   },
   {
+    "value": "XK",
+    "label": "Kosovo"
+  },
+  {
     "value": "KG",
     "label": "Kyrgyzstan"
   },
