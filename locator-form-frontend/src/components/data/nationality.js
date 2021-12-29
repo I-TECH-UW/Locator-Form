@@ -480,6 +480,10 @@ const nationalityDetails = [
    "value": "KUWAITI"
  },
  {
+  "label": "KOSOVO",
+  "value": "KOSOVAN"
+ },
+ {
    "label": "KYRGYZSTAN",
    "value": "KYRGYSTANI"
  },
