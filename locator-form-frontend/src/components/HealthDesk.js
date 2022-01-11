@@ -7,7 +7,7 @@ import { MyTextInput, MyHiddenInput ,StyledFieldSet ,StyledLegend ,MySelect, MyC
 import {Search} from './SearchBar';
 import { healthDeskValidationSchema, pioValidationSchema } from './formModel/validationSchema'
 import FormikErrorFocus from 'formik-error-focus'
-import { healthOfficesList } from './data/healthOffices'
+import { healthOfficesList ,LocalityList ,getHealthOffice} from './data/healthOffices'
 import { CircularProgress } from '@material-ui/core'
 
 class HealthDesk extends React.Component {
@@ -171,9 +171,13 @@ class HealthDesk extends React.Component {
 							validateFormik();
 							}, [this.state.formKey]);
 					}
+ 
+							const locality = formikProps.values.locality;
+							const healthOffice = formikProps.values.healthOffice;
+							formikProps.values.healthOffice = locality ? getHealthOffice(locality) : healthOffice 
 						
 					return (
-		          <Form>
+		          <Form>				  	
 				  {console.log(formikProps)}
 		            <div className="questions" id="questions">
 						<StyledFieldSet>
@@ -326,8 +330,7 @@ class HealthDesk extends React.Component {
 														{({ field, form, meta }) =>
 															<MyHiddenInput
 															name={field.name}
-															type="hidden"
-															
+															type="hidden"														
 														/>
 														}
 										</Field>
@@ -335,9 +338,22 @@ class HealthDesk extends React.Component {
 										
 							))}
 							{this.props.keycloak.hasRealmRole('health-desk-user') && 
-							  <>
+							  <>							
 							<StyledFieldSet>
-								 <StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.healthOffice' })}</StyledLegend>			
+								 <StyledLegend>{this.props.intl.formatMessage({ id: 'nav.item.form.label.healthOffice' })}</StyledLegend>			 								 
+									<Field name="locality">
+										{({ field, form, meta }) =>
+											<MySelect form={form} 
+												name={field.name}
+												options={LocalityList}
+												isMulti={false}
+												isSearchable={true}
+												placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+												label={<FormattedMessage id="nav.item.form.label.locality" defaultMessage="Locality" />}
+												disabled={this.state.formValues.finalized}
+												requireField={true} 
+											/>}
+									</Field>								
 								 <Field name="healthOffice">
 								  {({ field, form, meta }) =>
 									<MySelect form={form}

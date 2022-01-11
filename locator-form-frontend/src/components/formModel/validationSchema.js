@@ -432,6 +432,9 @@ export const step11Validation = {
 export const healthDesk = {
 	healthOffice: Yup.string()
 		.max(50, 'error.char.max.exceeded'),
+	locality: Yup.string()
+		.max(50, 'error.char.max.exceeded')
+		.required('error.required'),	
 
 	arrivalDate: Yup.date().transform(parseDateString)
 		.typeError("error.date.invalidformat")

@@ -1,12 +1,13 @@
 export default {
   travellerType: '',
 
-  patientId: '', serviceRequestId: '', taskId: '', subTaskId: '', specimenId: '', testKitId: '',healthOffice: '',
+  patientId: '', serviceRequestId: '', taskId: '', subTaskId: '', specimenId: '', testKitId: '',healthOffice: '',locality: '',
   airlineName: '', flightNumber: '', seatNumber: '',
   title: '',firstName: '', lastName: '', middleInitial: '', 
   acceptedTerms: false,
   tempAddrCheckbox:false,
   hotelSearchCheck:false,
+  flightNumberCheck : false ,
   visitPurpose: '', arrivalDate: '',arrivalTime: '',
   mobilePhone: '', fixedPhone: '', businessPhone: '',
   email: '', confirmEmail: '',

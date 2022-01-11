@@ -181,6 +181,8 @@ public class LocatorFormDTO extends Traveller {
 
 	private Boolean hotelSearchCheck;
 
+	private Boolean flightNumberCheck ;
+
 	private Boolean finalized;
 
 	private Stage stage;
