@@ -53,7 +53,12 @@ class Step2 extends React.Component {
 								type="text"
 								disabled={this.props.disabled}
 							/>
-					   }					   
+					   }			
+							<MyCheckbox
+								name="flightNumberCheck"
+								disabled={this.props.disabled}
+								checkboxDescription={<FormattedMessage id="nav.item.flightNumberCheck" defaultMessage="My flight is not listed" />}
+							/>		   
 								
 						</div>
 						
@@ -67,15 +72,6 @@ class Step2 extends React.Component {
 							/>
 						</div>
 						)}
-					</div>
-					<div className="row">
-						<div className="col-lg-4  form-group">
-							<MyCheckbox
-								name="flightNumberCheck"
-								disabled={this.props.disabled}
-								checkboxDescription={<FormattedMessage id="nav.item.flightNumberCheck" defaultMessage="My flight is not listed" />}
-							/>
-						</div>
 					</div>
 					<div className="row">
 						<div className="col-lg-4  form-group">
