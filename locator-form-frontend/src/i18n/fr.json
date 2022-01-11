@@ -168,6 +168,7 @@
 	"nav.item.form.label.vaccine": "Vaccin",
 	"nav.item.form.label.testkit": "Kit de test",
 	"nav.item.form.label.healthOffice" :  "Bureau de la santé",
+	"nav.item.form.label.locality" : "Localité" ,
 
 	"nationalId.search.instructions.begin": "Veuillez entrer votre numéro d'identification national et cliquez sur la loupe",
 	"nationalId.search.instructions.continue": "Merci, continuez à remplir le formulaire"

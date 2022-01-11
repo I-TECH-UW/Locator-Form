@@ -720,6 +720,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
 		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
 
+		QuestionnaireResponseItemComponent localityItem = questionnaireResponse.addItem();
+		localityItem.setLinkId(FhirConstants.LOCALITY_LINK_ID).setText("Locality");
+		QuestionnaireResponseItemAnswerComponent localityAnswer = localityItem.addAnswer();
+
 		QuestionnaireResponseItemComponent testKitIdItem = questionnaireResponse.addItem();
 		testKitIdItem.setLinkId(FhirConstants.TEST_KIT_ID_LINK_ID).setText("Test Kit Id");
 		QuestionnaireResponseItemAnswerComponent testKitIdAnswer = testKitIdItem.addAnswer();
@@ -728,10 +732,13 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			if (StringUtils.isNotBlank(healthDeskDto.getHealthOffice())) {
 				healthOfficeAnswer.setValue(new StringType(healthDeskDto.getHealthOffice()));
 			}
+			if (StringUtils.isNotBlank(healthDeskDto.getLocality())) {
+				localityAnswer.setValue(new StringType(healthDeskDto.getLocality()));
+			}
 			if (StringUtils.isNotBlank(healthDeskDto.getTestKitId())) {
 				testKitIdAnswer.setValue(new StringType(healthDeskDto.getTestKitId()));
 			}
-
+			
 		}
 		
 		QuestionnaireResponseItemComponent lastNameItem = questionnaireResponse.addItem();
@@ -1008,7 +1015,10 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		QuestionnaireItemComponent healthOfficeItem = questionnaire.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office")
-				.setType(QuestionnaireItemType.TEXT);
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent localityItem = questionnaire.addItem();
+		localityItem.setLinkId(FhirConstants.LOCALITY_LINK_ID).setText("Locality").setType(QuestionnaireItemType.TEXT);
 
 		QuestionnaireItemComponent testKitIdItem = questionnaire.addItem();
 		testKitIdItem.setLinkId(FhirConstants.TEST_KIT_ID_LINK_ID).setText("Test Kit Id")
