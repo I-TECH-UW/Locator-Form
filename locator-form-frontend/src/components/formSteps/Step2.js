@@ -1,13 +1,14 @@
 import React from "react"
 import { FormattedMessage } from 'react-intl'
 import { Field } from 'formik'
-import { MyTextInput, MyTimeInput, MySelect, dateInputYesterday } from '../inputs/MyInputs'
+import { MyTextInput, MyTimeInput, MySelect, dateInputYesterday ,MyCheckbox} from '../inputs/MyInputs'
 import 'rc-time-picker/assets/index.css';
-import { airlines } from '../data/airlines'
+import { airlines ,getFlightList } from '../data/airlines'
 
 class Step2 extends React.Component {
 
 	render() {
+		const flightNumberCheck = this.props.formikProps.values.flightNumberCheck
 		return <div>
 
 			<div className="step" id="step2">
@@ -29,14 +30,33 @@ class Step2 extends React.Component {
 							</Field>
 						</div>
 						<div className="col-lg-4 form-group">
+						{!flightNumberCheck  &&	
+						<Field name="flightNumber">
+								{({ field, form, meta }) =>
+									<MySelect label={<FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight" />}
+										name={field.name} 
+										form={form}
+										requireField={true} 
+										isSearchable={true}
+										placeholder={this.props.intl.formatMessage({ id: 'nav.item.select.placeholder' })}
+										options={getFlightList(this.props.formikProps.values.airlineName)}
+										disabled={this.props.disabled}
+									/>
+								}
+							</Field>
+	                    }	
+					   {flightNumberCheck  &&
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.flightNumber" defaultMessage="Flight" />}
+								label={<FormattedMessage id="nav.item.text.flightNumber" defaultMessage="Please enter your flight number" />}
 								name="flightNumber"
 								requireField={true}
 								type="text"
 								disabled={this.props.disabled}
 							/>
+					   }					   
+								
 						</div>
+						
 					  {(this.props.role =='healthDesk'||this.props.role ==undefined)&& (
 						<div className="col-lg-4  form-group">
 							<MyTextInput
@@ -47,6 +67,15 @@ class Step2 extends React.Component {
 							/>
 						</div>
 						)}
+					</div>
+					<div className="row">
+						<div className="col-lg-4  form-group">
+							<MyCheckbox
+								name="flightNumberCheck"
+								disabled={this.props.disabled}
+								checkboxDescription={<FormattedMessage id="nav.item.flightNumberCheck" defaultMessage="My flight is not listed" />}
+							/>
+						</div>
 					</div>
 					<div className="row">
 						<div className="col-lg-4  form-group">

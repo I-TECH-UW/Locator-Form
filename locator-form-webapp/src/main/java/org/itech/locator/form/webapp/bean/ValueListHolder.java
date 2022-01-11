@@ -4,8 +4,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ValueListHolder implements ValueHolder{
+public class ValueListHolder implements ValueHolder {
+    
     private String value;
-	private String label;
-    private List<String> list ; 
+    
+    private String label;
+    
+    private List<String> list;
 }

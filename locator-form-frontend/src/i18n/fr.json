@@ -22,6 +22,8 @@
 	"nav.item.travellerSection": "Passager",
 	"nav.item.step.passengerType": "Type de Passager",
 	"nav.item.step.flight": "Vol",
+	"nav.item.text.flightNumber" : "Veuillez entrer votre numéro de vol" ,
+	"nav.item.flightNumberCheck" : "Mon numéro de vol n'est pas répertorié" ,
 	"nav.item.step.personalInfo": "Renseignements du passager",
 	"nav.item.step.recentTravel": "Voyage Récent",
 	"nav.item.step.health": "Santé (Optionnel)",

@@ -86,7 +86,7 @@ const containsLocality = (locality) => {
 export const getHealthOffice = (locality) => {
   if (locality) {
     if (containsLocality(locality)) {
-      return healthOfficesList.find((healthOffice) => healthOffice.localities.includes(locality)).value;
+      return healthOfficesList.find((e) => e.localities.includes(locality)).value;
     }
   } else {
     return "";

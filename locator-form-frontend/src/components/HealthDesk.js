@@ -172,9 +172,9 @@ class HealthDesk extends React.Component {
 							}, [this.state.formKey]);
 					}
  
-					const locality = formikProps.values.locality;
-		            const healthOffice =  formikProps.values.healthOffice;
-		            formikProps.values.healthOffice = locality? getHealthOffice(locality) : healthOffice 
+							const locality = formikProps.values.locality;
+							const healthOffice = formikProps.values.healthOffice;
+							formikProps.values.healthOffice = locality ? getHealthOffice(locality) : healthOffice 
 						
 					return (
 		          <Form>				  	

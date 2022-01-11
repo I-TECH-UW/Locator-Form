@@ -7,6 +7,7 @@ export default {
   acceptedTerms: false,
   tempAddrCheckbox:false,
   hotelSearchCheck:false,
+  flightNumberCheck : false ,
   visitPurpose: '', arrivalDate: '',arrivalTime: '',
   mobilePhone: '', fixedPhone: '', businessPhone: '',
   email: '', confirmEmail: '',
