@@ -34,8 +34,6 @@ services:
        context: ./locator-form-webapp
        dockerfile: docker/docker-build/Dockerfile
     restart: always
-    ports:
-      - 8449:8443
     extra_hosts:
       - infohighway.govmu.org:192.168.6.91
     volumes:
@@ -75,8 +73,6 @@ services:
       DB_SCHEMA: keycloak
       DB_USER_FILE: /var/lib/keycloak/db/username
       DB_PASSWORD_FILE: /var/lib/keycloak/db/password
-    ports:
-      - 8446:8443
     networks:
       - frontend-network
       - backend-network
