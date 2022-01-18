@@ -2,17 +2,17 @@ export const airlines = [
   {
     "value": "Air Austral",
     "label": "Air Austral",
-    "flight": ["UU103", "UU119", "UU105", "UU109"]
+    "flight": ["UU104", "UU103", "UU119", "UU105", "UU109"]
   },
   {
     "value": "Air Belgium",
     "label": "Air Belgium",
-    "flight": []
+    "flight": ["KF2301"]
   },
   {
     "value": "Air France",
     "label": "Air France",
-    "flight": ["AF473"]
+    "flight": ["AF7964", "AF7941", "AF470", "AF7943",  "AF473"]
   },
   {
     "value": "Air India",
@@ -27,7 +27,7 @@ export const airlines = [
   {
     "value": "Air Mauritius",
     "label": "Air Mauritius",
-    "flight": ["MK120", "MK851", "MK851", "MK126", "MK218", "MK130", "MK228", "MK140", "MK238", "MK150", "MK042", "MK014"]
+    "flight": ["MK015", "MK053", "MK113", "MK145", "MK135", "MK219", "MK911", "MK933", "MK749", "MK289", "MK239", "MK852", "MK120", "MK851",  "MK126", "MK218", "MK130", "MK228", "MK140", "MK238", "MK150", "MK042", "MK014"]
   },
   {
     "value": "Air Seychelles",
@@ -37,12 +37,12 @@ export const airlines = [
   {
     "value": "Austrian Airlines",
     "label": "Austrian Airlines",
-    "flight": ["OS018"]
+    "flight": ["OS017", "OS018"]
   },
   {
     "value": "British Airways",
     "label": "British Airways",
-    "flight": ['BA2062', 'BA230']
+    "flight": ["BA2063", 'BA2062', 'BA230']
   },
   {
     "value": "China Eastern",
@@ -57,7 +57,7 @@ export const airlines = [
   {
     "value": "Condor Flugdienst",
     "label": "Condor Flugdienst",
-    "flight": ["DE2315"]
+    "flight": ["DE2314", "DE2315"]
   },
   {
     "value": "Corsair International",
@@ -67,7 +67,7 @@ export const airlines = [
   {
     "value": "Edelweiss Air",
     "label": "Edelweiss Air",
-    "flight": []
+    "flight": ["WK70"]
   },
   {
     "value": "Egypt Air",
@@ -77,7 +77,7 @@ export const airlines = [
   {
     "value": "Emirates",
     "label": "Emirates",
-    "flight": ["EK702", "EK704"]
+    "flight": ["EK701", "EK702", "EK704"]
   },
   {
     "value": "Eurowings",
@@ -102,7 +102,7 @@ export const airlines = [
   {
     "value": "Lufthansa",
     "label": "Lufthansa",
-    "flight": []
+    "flight": ["LH4516"]
   },
   {
     "value": "Private Jet",
@@ -122,7 +122,12 @@ export const airlines = [
   {
     "value": "South African Airways",
     "label": "South African Airways",
-    "flight": []
+    "flight": ["SA7109"]
+  },
+  {
+    "value": "Swiss Airlines",
+    "label": "Swiss Airlines",
+    "flight": ["LX8070"]
   },
   {
     "value": "TUI Airways",
@@ -132,7 +137,7 @@ export const airlines = [
   {
     "value": "Turkish Airlines",
     "label": "Turkish Airlines",
-    "flight": []
+    "flight": ["TK176"]
   },
 ]
 
