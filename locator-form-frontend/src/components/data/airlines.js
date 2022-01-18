@@ -62,7 +62,7 @@ export const airlines = [
   {
     "value": "Corsair International",
     "label": "Corsair International",
-    "flight": ["SS953"]
+    "flight": ["SS952", "SS953"]
   },
   {
     "value": "Edelweiss Air",
@@ -82,7 +82,7 @@ export const airlines = [
   {
     "value": "Eurowings",
     "label": "Eurowings",
-    "flight": ["4Y153"]
+    "flight": ["4Y153", "4Y152"]
   },
   {
     "value": "Hong Kong Airlines",
@@ -92,7 +92,7 @@ export const airlines = [
   {
     "value": "Kenya Airways",
     "label": "Kenya Airways",
-    "flight": ["KQ271"]
+    "flight": ["KQ270", "KQ271"]
   },
   {
     "value": "KLM",
