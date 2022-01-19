@@ -32,7 +32,7 @@ export const airlines = [
   {
     "value": "Air Seychelles",
     "label": "Air Seychelles",
-    "flight": []
+    "flight": ["HM049"]
   },
   {
     "value": "Austrian Airlines",
@@ -152,6 +152,6 @@ export const getFlightList = (alirline) => {
       flights.forEach(f => flightList.push({ "value": f, "label": f }));
     }
 
-    return flightList;
+    return flightList.sort((a, b) => a.label.localeCompare(b.label));
   }
 }
