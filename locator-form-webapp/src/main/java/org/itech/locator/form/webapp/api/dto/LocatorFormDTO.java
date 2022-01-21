@@ -167,8 +167,12 @@ public class LocatorFormDTO extends Traveller {
     private Address permanentAddress;
 	@Valid
 	private Address temporaryAddress;
+
 	@Valid
-    private EmergencyContact emergencyContact;
+    private Contact emergencyContact;
+
+	@Valid
+    private Contact contactPerson;
 
 	@Valid
     private Traveller[] familyTravelCompanions;

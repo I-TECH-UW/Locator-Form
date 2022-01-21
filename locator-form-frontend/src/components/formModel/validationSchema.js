@@ -339,7 +339,9 @@ export const step8Validation = {
 					'error.phone.invalid',
 					value => isBlankOrValidPhoneNumber(value)
 				)
-				.required('error.required'),	
+				.required('error.required'),
+			quarantineSite: Yup.string()
+				.max(80, 'error.char.max.exceeded'),		
 		}),
 	};
 
@@ -362,6 +364,24 @@ export const step9Validation = {
 					'error.phone.invalid',
 					value => isBlankOrValidPhoneNumber(value)
 				).required('error.required'),
+		}),
+		contactPerson: Yup.object().shape({
+			lastName: Yup.string()
+				.max(50, 'error.char.max.exceeded')
+				.required('error.required'),
+			firstName: Yup.string()
+				.max(50, 'error.char.max.exceeded')
+				.required('error.required'),
+			address: Yup.string()
+				.max(50, 'error.char.max.exceeded')
+				.required('error.required'),
+			mobilePhone: Yup.string()
+				.test('is-phone',
+					'error.phone.invalid',
+					value => isBlankOrValidPhoneNumber(value)
+				).required('error.required'),
+			email: Yup.string()
+				.email('error.email.invalid')	
 		}),
 	};
 

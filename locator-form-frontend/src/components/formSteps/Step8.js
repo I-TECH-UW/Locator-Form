@@ -91,7 +91,7 @@ class Step8 extends React.Component {
 				<div id="temporaryAddressInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">
-							<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address (Quarantine site or hotel address)" /></h5>
+							<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address in Mauritius" /></h5>
 						</div>
 					</div>
 					{/* <div className="row">
@@ -133,13 +133,21 @@ class Step8 extends React.Component {
 								}
 							</Field>
 						</div>
+						<div className="col-lg-4 form-group ">
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.quarantineSite" defaultMessage="Quarantine Site" />}
+								name="temporaryAddress.quarantineSite"
+								type="text"
+								disabled={this.props.disabled}
+							/>
+						</div>
 					</div>
 					<div className="row">
 						<div className="col-lg-5 form-group ">
 						{!hotelSearch  &&
 							<Field name="temporaryAddress.hotelName">
 								{({ field, form, meta }) =>
-									<MySelect label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
+									<MySelect label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name in Mauritius" />}
 										name={field.name} 
 										form={form}
 										requireField={false} 
@@ -153,7 +161,7 @@ class Step8 extends React.Component {
                           }
 						  {hotelSearch &&
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
+								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name in Mauritius" />}
 								name="temporaryAddress.hotelName"
 								type="text"
 								requireField={false}
@@ -170,7 +178,7 @@ class Step8 extends React.Component {
 						</div>
 						<div className="col-lg-5 form-group ">
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />}
+								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Address / Guesthouse / Villa / Residence in Mauritius" />}
 								name="temporaryAddress.numberAndStreet"
 								type="text"
 								requireField={false}

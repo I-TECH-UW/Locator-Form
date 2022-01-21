@@ -30,4 +30,7 @@ public class Address {
 	
 	@Size(max = 21)
 	private String localPhone;
+
+	@Size(max = 255)
+	private String quarantineSite;
 }

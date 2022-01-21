@@ -36,10 +36,21 @@ export default {
     city: '',
     stateProvince: '',
     localPhone: '',
+    quarantineSite : '' ,
   },
 
 
   emergencyContact:
+  {
+    lastName: '',
+    firstName: '',
+    address: '',
+    country: '',
+    email: '',
+    mobilePhone: '',
+  },
+
+  contactPerson:
   {
     lastName: '',
     firstName: '',
