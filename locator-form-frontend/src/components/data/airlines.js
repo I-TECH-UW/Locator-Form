@@ -2,7 +2,7 @@ export const airlines = [
   {
     "value": "Air Austral",
     "label": "Air Austral",
-    "flight": ["UU104", "UU103", "UU119", "UU105", "UU109"]
+    "flight": ["UU102", "UU108", "UU130", "UU104", "UU103", "UU119", "UU105", "UU109"]
   },
   {
     "value": "Air Belgium",
@@ -27,7 +27,7 @@ export const airlines = [
   {
     "value": "Air Mauritius",
     "label": "Air Mauritius",
-    "flight": ["MK015", "MK053", "MK113", "MK145", "MK135", "MK219", "MK911", "MK933", "MK749", "MK289", "MK239", "MK852", "MK120", "MK851",  "MK126", "MK218", "MK130", "MK228", "MK140", "MK238", "MK150", "MK042", "MK014"]
+    "flight": ["MK261", "MK015", "MK053", "MK113", "MK145", "MK135", "MK219", "MK911", "MK933", "MK749", "MK289", "MK239", "MK852", "MK120", "MK851",  "MK126", "MK218", "MK130", "MK228", "MK140", "MK238", "MK150", "MK042", "MK014"]
   },
   {
     "value": "Air Seychelles",
@@ -42,7 +42,7 @@ export const airlines = [
   {
     "value": "British Airways",
     "label": "British Airways",
-    "flight": ["BA2063", 'BA2062', 'BA230']
+    "flight": ["BA7762", "BA2063", "BA2062", "BA230"]
   },
   {
     "value": "China Eastern",
