@@ -119,7 +119,8 @@
 	"nav.item.submit": "Soumettre",
 	"nav.item.cancel" : "Annuler et réinitialiser le formulaire",
 	"nav.item.localPhone" : "Téléphone local",
-	
+	"nav.item.contactPerson" : "Personne de contact à Maurice" ,	
+
 	"nav.item.profession": "Métier",
 	"nav.item.breathingDifficulties": "Difficultés respiratoires",
 	"nav.item.smellOrTaste": "Perte de l'odorat ou du goût",

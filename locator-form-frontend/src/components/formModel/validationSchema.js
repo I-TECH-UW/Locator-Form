@@ -343,6 +343,21 @@ export const step8Validation = {
 			quarantineSite: Yup.string()
 				.max(80, 'error.char.max.exceeded'),		
 		}),
+		contactPerson: Yup.object().shape({
+			lastName: Yup.string()
+				.max(50, 'error.char.max.exceeded'),
+			firstName: Yup.string()
+				.max(50, 'error.char.max.exceeded'),
+			address: Yup.string()
+				.max(50, 'error.char.max.exceeded'),
+			mobilePhone: Yup.string()
+				.test('is-phone',
+					'error.phone.invalid',
+					value => isBlankOrValidPhoneNumber(value)
+				),
+			email: Yup.string()
+				.email('error.email.invalid')	
+		}),
 	};
 
 export const step9Validation = {
@@ -357,22 +372,6 @@ export const step9Validation = {
 				.max(50, 'error.char.max.exceeded')
 				.required('error.required'),
 			country: Yup.string()
-				.max(50, 'error.char.max.exceeded'),
-//				.required('error.required'),
-			mobilePhone: Yup.string()
-				.test('is-phone',
-					'error.phone.invalid',
-					value => isBlankOrValidPhoneNumber(value)
-				).required('error.required'),
-		}),
-		contactPerson: Yup.object().shape({
-			lastName: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
-			firstName: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
-			address: Yup.string()
 				.max(50, 'error.char.max.exceeded')
 				.required('error.required'),
 			mobilePhone: Yup.string()
@@ -380,8 +379,6 @@ export const step9Validation = {
 					'error.phone.invalid',
 					value => isBlankOrValidPhoneNumber(value)
 				).required('error.required'),
-			email: Yup.string()
-				.email('error.email.invalid')	
 		}),
 	};
 

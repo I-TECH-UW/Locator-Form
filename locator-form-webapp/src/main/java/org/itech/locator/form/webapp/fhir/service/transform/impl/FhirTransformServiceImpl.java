@@ -716,6 +716,14 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			tempAddrLocalPhoneAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getLocalPhone()));
 		}
 
+		QuestionnaireResponseItemComponent tempAddrQuarantineSiteItem = questionnaireResponse.addItem();
+		tempAddrQuarantineSiteItem.setLinkId(FhirConstants.TEMP_ADDRESS_QUARANTINE_SITE_LINK_ID)
+		        .setText("Temp Address : Quarantine Site");
+		QuestionnaireResponseItemAnswerComponent tempAddrQuarantineSiteAnswer = tempAddrQuarantineSiteItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getTemporaryAddress().getQuarantineSite())) {
+			tempAddrQuarantineSiteAnswer.setValue(new StringType(locatorFormDTO.getTemporaryAddress().getQuarantineSite()));
+		}
+
 		QuestionnaireResponseItemComponent healthOfficeItem = questionnaireResponse.addItem();
 		healthOfficeItem.setLinkId(FhirConstants.HEALTH_OFFICE_LINK_ID).setText("Health Office");
 		QuestionnaireResponseItemAnswerComponent healthOfficeAnswer = healthOfficeItem.addAnswer();
@@ -915,6 +923,45 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 			stageAnswer.setValue(new StringType(locatorFormDTO.getStage().toString()));
 		}
 
+		// Contact person
+		QuestionnaireResponseItemComponent contactPersonLastNameItem = questionnaireResponse.addItem();
+		contactPersonLastNameItem.setLinkId(FhirConstants.CONTACT_PERSON_LAST_NAME_LINK_ID)
+		        .setText("Contact Person : Last Name");
+		QuestionnaireResponseItemAnswerComponent contactPersonLastNameAnswer = contactPersonLastNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getContactPerson().getLastName())) {
+			contactPersonLastNameAnswer.setValue(new StringType(locatorFormDTO.getContactPerson().getLastName()));
+		}
+		
+		QuestionnaireResponseItemComponent contactPersonFirstNameItem = questionnaireResponse.addItem();
+		contactPersonFirstNameItem.setLinkId(FhirConstants.CONTACT_PERSON_FIRST_NAME_LINK_ID)
+		        .setText("Contact Person : First Name");
+		QuestionnaireResponseItemAnswerComponent contactPersonFirstNameAnswer = contactPersonFirstNameItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getContactPerson().getFirstName())) {
+			contactPersonFirstNameAnswer.setValue(new StringType(locatorFormDTO.getContactPerson().getFirstName()));
+		}
+		
+		QuestionnaireResponseItemComponent contactPersonAddressItem = questionnaireResponse.addItem();
+		contactPersonAddressItem.setLinkId(FhirConstants.CONTACT_PERSON_ADDRES_LINK_ID).setText("Contact Person : Address");
+		QuestionnaireResponseItemAnswerComponent contactPersonAddressAnswer = contactPersonAddressItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getContactPerson().getAddress())) {
+			contactPersonAddressAnswer.setValue(new StringType(locatorFormDTO.getContactPerson().getAddress()));
+		}
+		
+		QuestionnaireResponseItemComponent contactPersonEmailItem = questionnaireResponse.addItem();
+		contactPersonEmailItem.setLinkId(FhirConstants.CONTACT_PERSON_EMAIL_LINK_ID).setText("Contact Person : Email");
+		QuestionnaireResponseItemAnswerComponent contactPersonEmailAnswer = contactPersonEmailItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getContactPerson().getEmail())) {
+			contactPersonEmailAnswer.setValue(new StringType(locatorFormDTO.getContactPerson().getEmail()));
+		}
+		
+		QuestionnaireResponseItemComponent contactPersonMobilePhoneItem = questionnaireResponse.addItem();
+		contactPersonMobilePhoneItem.setLinkId(FhirConstants.CONTACT_PERSON_MOBILE_PHONE_LINK_ID)
+		        .setText("Contact Person : Mobile Phone");
+		QuestionnaireResponseItemAnswerComponent contactPersonMobilePhoneAnswer = contactPersonMobilePhoneItem.addAnswer();
+		if (StringUtils.isNotBlank(locatorFormDTO.getContactPerson().getMobilePhone())) {
+			contactPersonMobilePhoneAnswer.setValue(new StringType(locatorFormDTO.getContactPerson().getMobilePhone()));
+		}
+
 		return questionnaireResponse;
 	}
 
@@ -1079,8 +1126,12 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 		        .setText("Temp Address: ZIP/Postal Code").setType(QuestionnaireItemType.TEXT);
 		
 		QuestionnaireItemComponent tempAddrLocalPhoneItem = questionnaire.addItem();
-		tempAddrLocalPhoneItem.setLinkId(FhirConstants.TEMP_ADDRESS_LOCAL_PHONE_LINK_ID)
-		        .setText("Temp Address: Local Phone").setType(QuestionnaireItemType.TEXT);
+		tempAddrLocalPhoneItem.setLinkId(FhirConstants.TEMP_ADDRESS_LOCAL_PHONE_LINK_ID).setText("Temp Address: Local Phone")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent tempAddrQuarantineSiteItem = questionnaire.addItem();
+		tempAddrQuarantineSiteItem.setLinkId(FhirConstants.TEMP_ADDRESS_QUARANTINE_SITE_LINK_ID)
+		        .setText("Temp Address : Quarantine Site").setType(QuestionnaireItemType.TEXT);
 		
 		QuestionnaireItemComponent lastNameItem = questionnaire.addItem();
 		lastNameItem.setLinkId(FhirConstants.LAST_NAME_LINK_ID).setText("Last Name").setType(QuestionnaireItemType.TEXT);
@@ -1171,6 +1222,27 @@ public class FhirTransformServiceImpl implements FhirTransformService {
 
 		QuestionnaireItemComponent stageItem = questionnaire.addItem();
 		stageItem.setLinkId(FhirConstants.STAGE_LINK_ID).setText("Stage").setType(QuestionnaireItemType.TEXT);
+
+		// Contact person
+		QuestionnaireItemComponent contactPersonLastNameItem = questionnaire.addItem();
+		contactPersonLastNameItem.setLinkId(FhirConstants.CONTACT_PERSON_LAST_NAME_LINK_ID)
+		        .setText("Contact Person : Last Name").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent contactPersonFirstNameItem = questionnaire.addItem();
+		contactPersonFirstNameItem.setLinkId(FhirConstants.CONTACT_PERSON_FIRST_NAME_LINK_ID)
+		        .setText("Contact Person : First Name").setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent contactPersonAddressItem = questionnaire.addItem();
+		contactPersonAddressItem.setLinkId(FhirConstants.CONTACT_PERSON_ADDRES_LINK_ID).setText("Contact Person : Address")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent contactPersonEmailItem = questionnaire.addItem();
+		contactPersonEmailItem.setLinkId(FhirConstants.CONTACT_PERSON_EMAIL_LINK_ID).setText("Contact Person : Email")
+		        .setType(QuestionnaireItemType.TEXT);
+		
+		QuestionnaireItemComponent contactPersonMobilePhoneItem = questionnaire.addItem();
+		contactPersonMobilePhoneItem.setLinkId(FhirConstants.CONTACT_PERSON_MOBILE_PHONE_LINK_ID)
+		        .setText("Contact Person : Mobile Phone").setType(QuestionnaireItemType.TEXT);
 
 		return questionnaire;
 	}

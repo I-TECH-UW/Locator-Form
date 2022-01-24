@@ -55,7 +55,6 @@ export default {
     lastName: '',
     firstName: '',
     address: '',
-    country: '',
     email: '',
     mobilePhone: '',
   },
