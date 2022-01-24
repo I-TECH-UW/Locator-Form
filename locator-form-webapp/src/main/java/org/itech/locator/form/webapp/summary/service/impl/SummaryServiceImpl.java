@@ -332,6 +332,13 @@ public class SummaryServiceImpl implements SummaryService {
 		    table);
 		addCellToTable("Local Phone: " + Objects.toString(dto.getTemporaryAddress().getLocalPhone(), ""), 1,
 		    table);	
+			
+		addSectionCellToTable("Contact person in Mauritius", 4, table);
+		addCellToTable("Last (Family) Name: " + Objects.toString(dto.getContactPerson().getLastName(), ""), 2, table);
+		addCellToTable("First (Given) Name: " + Objects.toString(dto.getContactPerson().getFirstName(), ""), 2, table);
+		addCellToTable("Address: " + Objects.toString(dto.getContactPerson().getAddress(), ""), 1, table);
+		addCellToTable("Email: " + Objects.toString(dto.getContactPerson().getEmail(), ""), 1, table);
+		addCellToTable("Mobile Phone: " + Objects.toString(dto.getContactPerson().getMobilePhone(), ""), 2, table);
 
 		addSectionCellToTable("Emergency Contact ", 4, table);
 		addCellToTable("Last (Family) Name: " + Objects.toString(dto.getEmergencyContact().getLastName(), ""), 1,
