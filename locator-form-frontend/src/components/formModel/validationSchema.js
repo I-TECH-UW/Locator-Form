@@ -372,8 +372,8 @@ export const step9Validation = {
 				.max(50, 'error.char.max.exceeded')
 				.required('error.required'),
 			country: Yup.string()
-				.max(50, 'error.char.max.exceeded')
-				.required('error.required'),
+				.max(50, 'error.char.max.exceeded'),
+				//.required('error.required'),
 			mobilePhone: Yup.string()
 				.test('is-phone',
 					'error.phone.invalid',
