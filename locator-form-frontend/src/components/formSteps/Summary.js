@@ -323,6 +323,9 @@ class Summary extends React.Component {
 					</div>
 				</div>
 				<div className="row">
+				   <div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.quarantineSite" defaultMessage="Quarantine Site" />: </span><span className="confirm-value">{temporaryAddress.quarantineSite}</span>
+					</div>
 					{/* <div className="col-lg-6 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{temporaryAddress.city}</span>
 					</div> */}
