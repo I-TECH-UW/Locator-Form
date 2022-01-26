@@ -19,6 +19,7 @@ class SecureRoute extends React.Component {
 	    	      authenticated: false,
 				  isIdle: false,
 				  refreshTimeoutSet: false,
+				  requiredPermission: props.requiredPermission,
 	    }
 	  }
 	
@@ -105,23 +106,25 @@ class SecureRoute extends React.Component {
 	  }
 	  
 	  render() {
-		      if (this.state.authenticated) {
-				  return (
-					  	<>
-						  <IdleTimer
-							ref={ref => { this.idleTimer = ref }}
-							timeout={idleTimeout}
-							onActive={this.handleOnActive}
-							onIdle={this.handleOnIdle}
-							onAction={this.handleOnAction}
-							debounce={250}
-							/>
-						<Route {...this.props}/>
-						</>
-				  );
-    	      } else {
-    			  return (<div>Not authenticated</div>);
-    		  }
+		      if (!this.state.authenticated) {
+				return (<div>Not authenticated</div>);
+				} else if (this.state.requiredPermission && !this.props.keycloak.hasRealmRole(this.state.requiredPermission)) {
+					return (<div>Not allowed to access page</div>);
+				} else {
+					return (
+							<>
+							<IdleTimer
+							  ref={ref => { this.idleTimer = ref }}
+							  timeout={idleTimeout}
+							  onActive={this.handleOnActive}
+							  onIdle={this.handleOnIdle}
+							  onAction={this.handleOnAction}
+							  debounce={250}
+							  />
+						  <Route {...this.props}/>
+						  </>
+					);
+				}
 	  }
 }
 

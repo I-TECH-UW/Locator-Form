@@ -37,6 +37,7 @@
     "react-google-recaptcha": "^2.1.0",
     "react-idle-timer": "^4.6.4",
     "react-intl": "^5.20.12",
+    "react-json-view": "^1.21.3",
     "react-localization": "^1.0.15",
     "react-phone-number-input": "^3.1.0",
     "react-router-dom": "^5.2.0",

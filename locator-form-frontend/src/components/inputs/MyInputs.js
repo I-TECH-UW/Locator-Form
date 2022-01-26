@@ -47,6 +47,25 @@ export const StyledLegend =styled.legend`
   padding: 5px;
   color: #3366ff;
 `;
+
+export const datetimeNow = () => {
+  var now = new Date();
+
+  var year = now.getFullYear();
+  var month = now.getMonth() + 1;
+  var day = now.getDate();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+
+  if (month < 10)
+    month = '0' + month.toString();
+  if (day < 10)
+    day = '0' + day.toString();
+
+  var minDate = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
+  return minDate;
+}
   
 export const dateInputToday = () => {
   var now = new Date()

@@ -1,6 +1,8 @@
 package org.itech.locator.form.webapp.fhir.service.impl;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,6 +15,7 @@ import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Task;
+import org.itech.locator.form.webapp.api.dto.DataFlowSummary;
 import org.itech.locator.form.webapp.fhir.service.FhirPersistingService;
 import org.itech.locator.form.webapp.fhir.service.transform.FhirTransformService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
+import ca.uhn.fhir.rest.api.SummaryEnum;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import lombok.extern.slf4j.Slf4j;
 
@@ -145,6 +149,50 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 			}
 		}
 		return Optional.empty();
+	}
+
+	@Override
+	public DataFlowSummary getDataFlowSummary(Instant since, Instant until, Instant flaggedUntil) {
+		// since cannot be after until
+		since = since.compareTo(until) < 0 ? since : until;
+		// flagging until cannot be less than since, or greater than until
+		flaggedUntil = flaggedUntil.compareTo(since) > 0 ? flaggedUntil : since;
+		flaggedUntil = flaggedUntil.compareTo(until) < 0 ? flaggedUntil : until;
+
+		Bundle rejectedCountBundle = getFhirClient().search().forResource(Task.class)
+				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
+				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(until)))
+				.where(Task.STATUS.exactly().code(Task.TaskStatus.REJECTED.toCode())).summaryMode(SummaryEnum.COUNT)
+				.returnBundle(Bundle.class).execute();
+
+		Bundle successCountBundle = getFhirClient().search().forResource(Task.class)
+				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
+				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(until)))
+				.where(Task.STATUS.exactly().code(Task.TaskStatus.ACCEPTED.toCode())).summaryMode(SummaryEnum.COUNT)
+				.returnBundle(Bundle.class).execute();
+
+		Bundle waitingCountBundle = getFhirClient().search().forResource(Task.class)
+				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
+				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(until)))
+				.where(Task.STATUS.exactly().code(Task.TaskStatus.REQUESTED.toCode())).summaryMode(SummaryEnum.COUNT)
+				.returnBundle(Bundle.class).execute();
+
+		Bundle waitingFlaggedCountBundle = getFhirClient().search().forResource(Task.class)
+				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
+				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(flaggedUntil)))
+				.where(Task.STATUS.exactly().code(Task.TaskStatus.REQUESTED.toCode())).summaryMode(SummaryEnum.COUNT)
+				.returnBundle(Bundle.class).execute();
+
+		DataFlowSummary summary = new DataFlowSummary();
+		summary.setSince(since);
+		summary.setUntil(until);
+		summary.setFlaggedUntil(flaggedUntil);
+		summary.setCountRejected(rejectedCountBundle.getTotal());
+		summary.setCountSuccess(successCountBundle.getTotal());
+		summary.setCountWaiting(waitingCountBundle.getTotal());
+		summary.setCountWaitingFlagged(waitingFlaggedCountBundle.getTotal());
+
+		return summary;
 	}
 
 	private IGenericClient getFhirClient() {

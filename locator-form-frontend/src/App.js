@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from './components/layout/Layout';
 import { LocatorForm } from "./components";
 import { HealthDesk } from "./components";
+import { Support } from "./components";
 import { SwabScreen } from "./components";
 import { SecureRoute } from "./components/security";
 import { IntlProvider } from 'react-intl';
@@ -82,6 +83,7 @@ class App extends React.Component {
                 <Switch>
                 <Route path="/" exact component={LocatorForm} />
                 <SecureRoute path="/health-desk" exact component={() => <HealthDesk keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} logout={this.logout} isLoggedIn={this.isLoggedIn}/>
+                <SecureRoute path="/support" exact component={() => <Support keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} requiredPermission="support" onAuth={this.onAuth} logout={this.logout} isLoggedIn={this.isLoggedIn}/>
                 <SecureRoute path="/swab-screen" exact component={() => <SwabScreen keycloak={this.state.keycloak}/>} keycloak={this.state.keycloak} onAuth={this.onAuth} logout={this.logout} isLoggedIn={this.isLoggedIn}/>
                 </Switch>
             </Layout>
