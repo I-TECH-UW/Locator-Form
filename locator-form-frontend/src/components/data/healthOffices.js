@@ -68,6 +68,11 @@ export const healthOfficesList = [
     "label": "St Pierre Health Office",
     "value": "St Pierre Health Office",
     "localities": ["Alma", "Bagatelle", "Beau Bois", "Belle Rive", "Camp Thorel", "Dagotiere", "Dubreuil", "Esperance ( Quartier Militaire)", "GRNW (part)", "Hermitage", "L'Assurance", "L'Avenir", "La Laura-Malenga", "La Pipe", "Melrose", "Moka", "Montagne Blanche", "Montagne Ory", "Monetebello", "Nouvelle Decouverte", "Pailles", "Petit Paquet", "Petit Verger", "Providence", "Quartier Militaire", "Reduit", "Ripailles", "Salazie", "Soreze", "St Pierre", "Valetta", "Verdun", "Vuillemin"]
+  },
+  {
+    "label": "Rodrigues Health Office",
+    "value": "Rodrigues Health Office",
+    "localities": ["Rodrigues"]
   }
 ]
 

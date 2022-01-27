@@ -81,6 +81,8 @@ public class FhirConstants {
     public static final String TEMP_ADDRESS_ZIP_POSTAL_CODE_LINK_ID = "03db31d6-a1cb-4199-9555-647649291894";
 
     public static final String TEMP_ADDRESS_LOCAL_PHONE_LINK_ID = "5f6fff9b-b13a-4f13-8c6b-ae064813712a";
+
+    public static final String TEMP_ADDRESS_QUARANTINE_SITE_LINK_ID = "30331d11-fbca-4959-965a-edaf72ea6589";
     
     public static final String LAST_NAME_LINK_ID = "9b58dbb3-9d4b-4530-b4fb-4ce67f5f1124";
     
@@ -135,5 +137,16 @@ public class FhirConstants {
     public static final String ACCEPTED_TERMS_LINK_ID = "bc5142ba-2b55-42c0-8929-fcd121eb8fb8";
 
     public static final String STAGE_LINK_ID = "f8ba10fe-ffed-4e56-828e-f0414ebefe78";
+
+    public static final String CONTACT_PERSON_LAST_NAME_LINK_ID = "e95bf2c0-08d5-429f-aaf3-85afa9fb877c";
+    
+    public static final String CONTACT_PERSON_FIRST_NAME_LINK_ID = "c1412559-089d-4f22-b41e-ac9456fa349b";
+    
+    public static final String CONTACT_PERSON_ADDRES_LINK_ID = "31a349d4-5f99-427e-8927-41e65657c9f7";
+    
+    public static final String CONTACT_PERSON_EMAIL_LINK_ID = "ea4708ff-0429-4435-b18a-22a87f1d077f";
+    
+    public static final String CONTACT_PERSON_MOBILE_PHONE_LINK_ID = "5a8a559f-2bed-406e-8d60-2401c0b39b42";
+
 
 }

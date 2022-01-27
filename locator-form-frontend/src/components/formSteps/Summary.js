@@ -14,7 +14,7 @@ class Summary extends React.Component {
 			vaccinated, firstVaccineName, secondVaccineName, dateOfFirstDose, dateOfSecondDose,
 			mobilePhone, fixedPhone, businessPhone, email, passportNumber, passportExpiryDate, 
 			nationality, countryOfBirth, countryOfPassportIssue,  permanentAddress, temporaryAddress, 
-			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions, passengerNationality
+			emergencyContact, familyTravelCompanions, nonFamilyTravelCompanions, passengerNationality ,contactPerson
 		} = this.props.formikProps.values;
 
 		const convertBoolean = (value) => {
@@ -323,6 +323,9 @@ class Summary extends React.Component {
 					</div>
 				</div>
 				<div className="row">
+				   <div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.quarantineSite" defaultMessage="Quarantine Site" />: </span><span className="confirm-value">{temporaryAddress.quarantineSite}</span>
+					</div>
 					{/* <div className="col-lg-6 form-group ">
 						<span className="confirm-field"><FormattedMessage id="nav.item.city" defaultMessage="City" />: </span><span className="confirm-value">{temporaryAddress.city}</span>
 					</div> */}
@@ -340,6 +343,32 @@ class Summary extends React.Component {
 					{/* <div className="col-lg-4 form-group ">
 				<span className="confirm-field"><FormattedMessage id="nav.item.zipPostalCode" defaultMessage="Zip/Postal Code" />: </span><span className="confirm-value">{temporaryAddress.zipPostalCode}</span>
 				</div> */}
+				</div>
+			</div>
+			<div id="contactPersonInformation" className="section">
+			    <div className="row">
+					<div className="col-lg-12 ">
+						<h5 className="confirm-section-header"> <FormattedMessage id="nav.item.contactPerson" defaultMessage="Contact person in Mauritius" /></h5>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />: </span><span className="confirm-value">{contactPerson.lastName}</span>
+					</div>
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />: </span><span className="confirm-value">{contactPerson.firstName}</span>
+					</div>
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.address" defaultMessage="Address" />: </span><span className="confirm-value">{contactPerson.address}</span>
+					</div>
+					<div className="col-lg-3 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />: </span><span className="confirm-value">{contactPerson.email}</span>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-lg-6 form-group ">
+						<span className="confirm-field"><FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />: </span><span className="confirm-value">{contactPerson.mobilePhone}</span>
+					</div>
 				</div>
 			</div>
 			<div id="emergencyContactInformation" className="section">

@@ -98,7 +98,7 @@
 	"nav.item.nationality": "Nationalité",
 	"nav.item.passportNumber": "Numéro du passeport",
 	"nav.item.permanent Address": "Adresse Permanente",
-	"nav.item.numberAndStreet": "Numéro et rue",
+	"nav.item.numberAndStreet": "Adresse / Guesthouse / Villa / Résidence à Maurice",
 	"nav.item.apartmentNumber": "Numéro d’appartement",
 	"nav.item.city": "Ville",
 	"nav.item.address": "Address",
@@ -107,7 +107,8 @@
 	"nav.item.country": "Pays",
 	"nav.item.zipPostalCode": "Code postal",
 	"nav.item.temporaryAddress": "Adresse temporaire à Maurice",
-	"nav.item.hotelName": "Nom de l’hôtel",
+	"nav.item.quarantineSite" : "Site de quarantaine" ,
+	"nav.item.hotelName": "Nom de l'hôtel à Maurice",
 	"nav.item.emergencyContact": "Contact d’urgence : Coordinnées d’une personne qui pourra vous rejoindre au cours de 30 prochains jours",
 	"nav.item.travelCompanionsFamily": "Compagnons de voyage- Membres de la famille",
 	"nav.item.addTravelCompanionFamily": "Ajouter compagnon familial",
@@ -118,7 +119,8 @@
 	"nav.item.submit": "Soumettre",
 	"nav.item.cancel" : "Annuler et réinitialiser le formulaire",
 	"nav.item.localPhone" : "Téléphone local",
-	
+	"nav.item.contactPerson" : "Personne de contact à Maurice" ,	
+
 	"nav.item.profession": "Métier",
 	"nav.item.breathingDifficulties": "Difficultés respiratoires",
 	"nav.item.smellOrTaste": "Perte de l'odorat ou du goût",
