@@ -26,6 +26,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.api.SummaryEnum;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.rest.param.DateRangeParam;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -160,26 +161,27 @@ public class FhirPersistingServiceImpl implements FhirPersistingService {
 		flaggedUntil = flaggedUntil.compareTo(until) < 0 ? flaggedUntil : until;
 
 		Bundle rejectedCountBundle = getFhirClient().search().forResource(Task.class)
-				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
-				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(until)))
+				.lastUpdated(new DateRangeParam().setLowerBoundInclusive(Date.from(since))
+						.setUpperBoundInclusive(Date.from(until)))
 				.where(Task.STATUS.exactly().code(Task.TaskStatus.REJECTED.toCode())).summaryMode(SummaryEnum.COUNT)
 				.returnBundle(Bundle.class).execute();
 
 		Bundle successCountBundle = getFhirClient().search().forResource(Task.class)
-				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
-				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(until)))
+				.lastUpdated(new DateRangeParam().setLowerBoundInclusive(Date.from(since))
+						.setUpperBoundInclusive(Date.from(until)))
 				.where(Task.STATUS.exactly().code(Task.TaskStatus.ACCEPTED.toCode())).summaryMode(SummaryEnum.COUNT)
 				.returnBundle(Bundle.class).execute();
+		log.error("ACCEPTED: " + fhirContext.newJsonParser().encodeResourceToString(successCountBundle));
 
 		Bundle waitingCountBundle = getFhirClient().search().forResource(Task.class)
-				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
-				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(until)))
+				.lastUpdated(new DateRangeParam().setLowerBoundInclusive(Date.from(since))
+						.setUpperBoundInclusive(Date.from(until)))
 				.where(Task.STATUS.exactly().code(Task.TaskStatus.REQUESTED.toCode())).summaryMode(SummaryEnum.COUNT)
 				.returnBundle(Bundle.class).execute();
 
 		Bundle waitingFlaggedCountBundle = getFhirClient().search().forResource(Task.class)
-				.where(Task.MODIFIED.afterOrEquals().millis(Date.from(since)))
-				.where(Task.MODIFIED.beforeOrEquals().millis(Date.from(flaggedUntil)))
+				.lastUpdated(new DateRangeParam().setLowerBoundInclusive(Date.from(since))
+						.setUpperBoundInclusive(Date.from(flaggedUntil)))
 				.where(Task.STATUS.exactly().code(Task.TaskStatus.REQUESTED.toCode())).summaryMode(SummaryEnum.COUNT)
 				.returnBundle(Bundle.class).execute();
 
