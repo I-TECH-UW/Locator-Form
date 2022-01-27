@@ -54,5 +54,9 @@
     {
       "label": "St Pierre Health Office",
       "value": "St Pierre Health Office"
+    },
+    {
+      "label": "Rodrigues Health Office",
+      "value": "Rodrigues Health Office"
     }
    ]

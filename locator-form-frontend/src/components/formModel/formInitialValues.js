@@ -36,6 +36,7 @@ export default {
     city: '',
     stateProvince: '',
     localPhone: '',
+    quarantineSite : '' ,
   },
 
 
@@ -45,6 +46,15 @@ export default {
     firstName: '',
     address: '',
     country: '',
+    email: '',
+    mobilePhone: '',
+  },
+
+  contactPerson:
+  {
+    lastName: '',
+    firstName: '',
+    address: '',
     email: '',
     mobilePhone: '',
   },

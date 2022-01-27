@@ -91,7 +91,7 @@ class Step8 extends React.Component {
 				<div id="temporaryAddressInformation" className="section">
 					<div className="row">
 						<div className="col-lg-12 ">
-							<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address (Quarantine site or hotel address)" /></h5>
+							<h5> <FormattedMessage id="nav.item.temporaryAddress" defaultMessage="Temporary Address in Mauritius" /></h5>
 						</div>
 					</div>
 					{/* <div className="row">
@@ -133,13 +133,21 @@ class Step8 extends React.Component {
 								}
 							</Field>
 						</div>
+						<div className="col-lg-4 form-group ">
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.quarantineSite" defaultMessage="Quarantine Site" />}
+								name="temporaryAddress.quarantineSite"
+								type="text"
+								disabled={this.props.disabled}
+							/>
+						</div>
 					</div>
 					<div className="row">
 						<div className="col-lg-5 form-group ">
 						{!hotelSearch  &&
 							<Field name="temporaryAddress.hotelName">
 								{({ field, form, meta }) =>
-									<MySelect label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
+									<MySelect label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name in Mauritius" />}
 										name={field.name} 
 										form={form}
 										requireField={false} 
@@ -153,7 +161,7 @@ class Step8 extends React.Component {
                           }
 						  {hotelSearch &&
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name" />}
+								label={<FormattedMessage id="nav.item.hotelName" defaultMessage="Hotel Name in Mauritius" />}
 								name="temporaryAddress.hotelName"
 								type="text"
 								requireField={false}
@@ -170,7 +178,7 @@ class Step8 extends React.Component {
 						</div>
 						<div className="col-lg-5 form-group ">
 							<MyTextInput
-								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Number and Street" />}
+								label={<FormattedMessage id="nav.item.numberAndStreet" defaultMessage="Address / Guesthouse / Villa / Residence in Mauritius" />}
 								name="temporaryAddress.numberAndStreet"
 								type="text"
 								requireField={false}
@@ -186,8 +194,8 @@ class Step8 extends React.Component {
 							/>
 						</div>
 					</div>
-					<div className="row">
-						
+				  <div className="row">	
+
 						{/* <div className="col-lg-4 form-group ">
 				<MySelect
 					label={<FormattedMessage id="nav.item.country" defaultMessage="Country" />}
@@ -204,6 +212,69 @@ class Step8 extends React.Component {
 				/>
 				</div> */}
 					</div>
+				</div>
+				<div id="contactPersonInformation" className="section">
+				    <div className="row">
+						<div className="col-lg-12 ">
+							<h5> <FormattedMessage id="nav.item.contactPerson" defaultMessage="Contact person in Mauritius" /></h5>
+						</div>
+					</div>	
+					<div className="row">
+						<div className="col-lg-3 form-group ">
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.lastFamilyName" defaultMessage="Last (Family) Name" />}
+								name="contactPerson.lastName"
+								requireField={false}
+								type="text"
+								disabled={this.props.disabled}
+							/>
+						</div>
+						<div className="col-lg-3 form-group ">
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.firstGivenName" defaultMessage="First (Given) Name" />}
+								name="contactPerson.firstName"
+								requireField={false}
+								type="text"
+								disabled={this.props.disabled}
+							/>
+						</div>
+						<div className="col-lg-3 form-group ">
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.address" defaultMessage="Address" />}
+								name="contactPerson.address"
+								requireField={false}
+								type="text"
+								disabled={this.props.disabled}
+							/>
+						</div>
+						<div className="col-lg-3 form-group ">
+
+							<MyTextInput
+								label={<FormattedMessage id="nav.item.emailAddress" defaultMessage="Email Address" />}
+								requireField={false}
+								name="contactPerson.email"
+								type="email"
+								disabled={this.props.disabled}
+							/>
+						</div>
+					</div>
+
+					<div className="row">
+						<div className="col-lg-6 form-group ">
+							<Field name="contactPerson.mobilePhone">
+								{({ field, form, meta }) =>
+									<MyPhoneInput
+										requireField={false}
+										defaultCountryCode={this.getDefaultCountryCode()}
+										label={<FormattedMessage id="nav.item.mobilePhone" defaultMessage="Mobile Phone" />}
+										form={form} name="contactPerson.mobilePhone"
+										disabled={this.props.disabled}
+									/>
+								}
+							</Field>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div >

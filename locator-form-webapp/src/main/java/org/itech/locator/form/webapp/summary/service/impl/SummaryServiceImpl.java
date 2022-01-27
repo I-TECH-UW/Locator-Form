@@ -325,13 +325,21 @@ public class SummaryServiceImpl implements SummaryService {
 				table);
 
 		addSectionCellToTable("Temporary Address ", 4, table);
-		addCellToTable("Hotel Name: " + Objects.toString(dto.getTemporaryAddress().getHotelName(), ""), 1, table);
-		addCellToTable("Number and Street: " + Objects.toString(dto.getTemporaryAddress().getNumberAndStreet(), ""), 1,
-				table);
+		addCellToTable("Hotel Name: " + Objects.toString(dto.getTemporaryAddress().getHotelName(), ""), 2, table);
+		addCellToTable("Number and Street: " + Objects.toString(dto.getTemporaryAddress().getNumberAndStreet(), ""), 2,
+		    table);
 		addCellToTable("Apartment Number: " + Objects.toString(dto.getTemporaryAddress().getApartmentNumber(), ""), 1,
 		    table);
-		addCellToTable("Local Phone: " + Objects.toString(dto.getTemporaryAddress().getLocalPhone(), ""), 1,
+		addCellToTable("Quarantine Site: " + Objects.toString(dto.getTemporaryAddress().getQuarantineSite(), ""), 1, table);
+		addCellToTable("Local Phone: " + Objects.toString(dto.getTemporaryAddress().getLocalPhone(), ""), 2,
 		    table);	
+			
+		addSectionCellToTable("Contact person in Mauritius", 4, table);
+		addCellToTable("Last (Family) Name: " + Objects.toString(dto.getContactPerson().getLastName(), ""), 2, table);
+		addCellToTable("First (Given) Name: " + Objects.toString(dto.getContactPerson().getFirstName(), ""), 2, table);
+		addCellToTable("Address: " + Objects.toString(dto.getContactPerson().getAddress(), ""), 1, table);
+		addCellToTable("Email: " + Objects.toString(dto.getContactPerson().getEmail(), ""), 1, table);
+		addCellToTable("Mobile Phone: " + Objects.toString(dto.getContactPerson().getMobilePhone(), ""), 2, table);
 
 		addSectionCellToTable("Emergency Contact ", 4, table);
 		addCellToTable("Last (Family) Name: " + Objects.toString(dto.getEmergencyContact().getLastName(), ""), 1,
