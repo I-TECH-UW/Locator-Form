@@ -11,10 +11,22 @@ services:
       - ./prod/database/postgres/init/:/docker-entrypoint-initdb.d/
     networks:
       - backend-network
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      timeout: 10s
+      interval: 30s
+      retries: 3
 
   fhir.openelis.org:
     container_name: lf-hapi-fhir-jpaserver
-    image: hapiproject/hapi:v5.4.1
+    build:
+      context: ./prod/fhir/
+      dockerfile: Dockerfile
     restart: always
     ports:
       - 8448:8443
@@ -23,10 +35,21 @@ services:
       - ./prod/tomcat/hapi_server.xml:/usr/local/tomcat/conf/server.xml
       - ./prod/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
       - ./prod/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
+      - ./prod/fhir/healthcheck.sh:/healthcheck.sh
     environment: 
       SPRING_CONFIG_LOCATION: file:///data/hapi/application.yaml
     networks:
       - backend-network
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
+    healthcheck:
+      test: ["CMD", "/healthcheck.sh"]
+      timeout: 10s
+      interval: 30s
+      retries: 3
       
   locator-form.openelis.org:
     image: locator-form-webapp
@@ -42,10 +65,21 @@ services:
       - ./prod/ssl/lf_frontend.keystore:/usr/local/tomcat/certs/server.keystore
       - ./prod/ssl/lf.keystore:/usr/local/tomcat/certs/keystore
       - ./prod/ssl/lf.truststore:/usr/local/tomcat/certs/truststore
+      - ./prod/webapp/healthcheck.sh:/healthcheck.sh
     networks:
       - frontend-network
       - backend-network
-    
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
+    healthcheck:
+      test: ["CMD", "/healthcheck.sh"]
+      timeout: 10s
+      interval: 30s
+      retries: 3
+      
   locator-form-frontend:
     image: locator-form
     build:
@@ -57,11 +91,23 @@ services:
     restart: always
     networks:
       - frontend-network
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
+    healthcheck:
+      test: ["CMD", "curl -sSk http://locator-form-frontend || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
       
   auth.openelis.org:
     image:
       quay.io/keycloak/keycloak:15.0.2
     restart: always
+    ports:
+      - 7600:7600
     environment:
       KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
       KEYCLOAK_USER_FILE: /var/lib/keycloak/admin/username
@@ -69,7 +115,7 @@ services:
       DB_VENDOR: postgres
       DB_ADDR: locator-form-data
       DB_PORT: 5432
-      DB_DATABASE: locator-form
+      DB_DATABASE: locator-form?currentSchema=keycloak
       DB_SCHEMA: keycloak
       DB_USER_FILE: /var/lib/keycloak/db/username
       DB_PASSWORD_FILE: /var/lib/keycloak/db/password
@@ -82,6 +128,16 @@ services:
       - ./prod/keycloak/imports:/opt/jboss/keycloak/imports
       - ./prod/keycloak/admin:/var/lib/keycloak/admin
       - ./prod/keycloak/db:/var/lib/keycloak/db
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
+    healthcheck:
+      test: ["CMD", "curl https://auth.openelis.org:8443/auth/realms/Airport || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
     
   nginx:
     image: nginx:latest
@@ -97,6 +153,34 @@ services:
       - ./prod/ssl/key_pass_frontend:/etc/nginx/private/key_pass
     networks:
       - frontend-network
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
+    healthcheck:
+      test: "service nginx status || exit 1"
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    
+  autoheal:
+    container_name: autoheal
+    image: willfarrell/autoheal:1.2.0
+    tty: true
+    restart: always
+    networks:
+      - frontend-network
+      - backend-network
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      driver: "local"
+      options:
+        max-size: "20m"
+        max-file: "50"
     
 networks:
   frontend-network: 
